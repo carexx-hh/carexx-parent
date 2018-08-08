@@ -35,8 +35,6 @@ public class CustomerOrderQueryFormBean extends BasicFormBean {
 
 	private String orderStatus;
 
-	private String selectType;
-
 	private String payType;
 
 	private String instSysId;
@@ -174,14 +172,6 @@ public class CustomerOrderQueryFormBean extends BasicFormBean {
 
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
-	}
-
-	public String getSelectType() {
-		return selectType;
-	}
-
-	public void setSelectType(String selectType) {
-		this.selectType = selectType;
 	}
 
 	public Byte getPayType() {

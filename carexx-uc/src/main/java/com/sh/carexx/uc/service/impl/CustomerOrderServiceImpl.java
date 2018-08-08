@@ -1,11 +1,5 @@
 package com.sh.carexx.uc.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.ErrorCode;
@@ -14,6 +8,11 @@ import com.sh.carexx.common.util.ValidUtils;
 import com.sh.carexx.model.uc.CustomerOrder;
 import com.sh.carexx.uc.dao.CustomerOrderMapper;
 import com.sh.carexx.uc.service.CustomerOrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class CustomerOrderServiceImpl implements CustomerOrderService {
@@ -45,11 +44,6 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 		if (rows != 1) {
 			throw new BizException(ErrorCode.DB_ERROR);
 		}
-	}
-
-	@Override
-	public Integer getByUserIdCount(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
-		return this.customerOrderMapper.selectByUserIdCount(customerOrderQueryFormBean);
 	}
 
 	@Override

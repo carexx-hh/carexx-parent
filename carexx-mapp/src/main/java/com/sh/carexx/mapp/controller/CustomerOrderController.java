@@ -1,13 +1,5 @@
 package com.sh.carexx.mapp.controller;
 
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.sh.carexx.bean.order.CalcServiceFeeFormBean;
 import com.sh.carexx.bean.order.CustomerAppointOrderFormBean;
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
@@ -18,6 +10,13 @@ import com.sh.carexx.common.web.BasicRetVal;
 import com.sh.carexx.common.web.DataRetVal;
 import com.sh.carexx.mapp.wechat.WechatPayManager;
 import com.sh.carexx.model.uc.OrderPayment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/customerorder")
@@ -25,7 +24,7 @@ public class CustomerOrderController extends BaseController {
 	@Autowired
 	private WechatPayManager wechatPayManager;
 
-	@RequestMapping(value = "/list_by_userid")
+	@RequestMapping(value = "/list_order")
 	public String queryForListByCustomerId(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		customerOrderQueryFormBean.setUserId(this.getCurrentUser().getId());
 		return this.ucServiceClient.queryCustomerOrderListByUserId(customerOrderQueryFormBean);

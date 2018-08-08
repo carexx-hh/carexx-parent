@@ -39,17 +39,6 @@ public interface CustomerOrderService {
 
 	/**
 	 * 
-	 * getByUserIdCount:(客户端通过客户id查询服务订单分页总数). <br/>
-	 * 
-	 * @author hetao
-	 * @param customerOrderQueryFormBean
-	 * @return
-	 * @since JDK 1.8
-	 */
-	Integer getByUserIdCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
-
-	/**
-	 * 
 	 * getByUserId:(客户端通过客户id查询服务订单分页). <br/>
 	 * 
 	 * @author hetao

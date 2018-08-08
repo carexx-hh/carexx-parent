@@ -696,7 +696,7 @@ public interface UCServiceClient {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	@RequestMapping(value = "/customerorder/list_by_userid", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/customerorder/list_order", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryCustomerOrderListByUserId(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean);
 
 	/**
