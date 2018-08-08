@@ -53,7 +53,7 @@ public class CareInstServiceImpl implements CareInstService {
 
 	@Override
 	public List<Map<?, ?>> queryAllCareInst(CareInstFormBean careInstFormBean) {
-		return this.careInstMapper.selectAllByInstName(careInstFormBean);
+		return this.careInstMapper.selectAllCareInst(careInstFormBean);
 	}
 
 	@Override

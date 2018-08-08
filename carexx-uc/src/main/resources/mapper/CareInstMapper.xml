@@ -43,10 +43,10 @@
 				inst_name like CONCAT('%', '${instName}', '%')
 			</if>
 			<if test="instStatus != null">
-				and inst_status = #{instStatus,jdbcType=VARCHAR}
+				and inst_status = #{instStatus,jdbcType=TINYINT}
 			</if>
 			<if test="instType != null">
-				and inst_type = #{instType,jdbcType=VARCHAR}
+				and inst_type = #{instType,jdbcType=TINYINT}
 			</if>
 		</where>
 	</select>
@@ -70,16 +70,16 @@
 				inst_name like CONCAT('%', '${instName}', '%')
 			</if>
 			<if test="instStatus != null">
-				and inst_status = #{instStatus,jdbcType=VARCHAR}
+				and inst_status = #{instStatus,jdbcType=TINYINT}
 			</if>
 			<if test="instType != null">
-				and inst_type = #{instType,jdbcType=VARCHAR}
+				and inst_type = #{instType,jdbcType=TINYINT}
 			</if>
 		</where>
 		ORDER BY createTime DESC
 		limit ${rowIndex}, ${pageSize}
 	</select>
-	<select id="selectAllByInstName" parameterType="com.sh.carexx.bean.care.CareInstFormBean" resultType="java.util.Map">
+	<select id="selectAllCareInst" parameterType="com.sh.carexx.bean.care.CareInstFormBean" resultType="java.util.Map">
 		SELECT
 			id id,
 			inst_type instType,
@@ -98,6 +98,9 @@
 			inst_status=1
 		<if test="instName != null and instName != '' ">
 			and inst_name like CONCAT('%', '${instName}', '%')
+		</if>
+		<if test="instRegion != null and instRegion != '' ">
+			and inst_region = #{instRegion,jdbcType=VARCHAR}
 		</if>
 	</select>
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.CareInst">

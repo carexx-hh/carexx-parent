@@ -83,7 +83,7 @@ public interface CareInstMapper {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> selectAllByInstName(CareInstFormBean careInstFormBean);
+	List<Map<?, ?>> selectAllCareInst(CareInstFormBean careInstFormBean);
 	/**
 	 * 
 	 * update:(修改医疗机构方法). <br/>
