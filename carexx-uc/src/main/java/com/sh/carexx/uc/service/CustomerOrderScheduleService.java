@@ -50,6 +50,7 @@ public interface CustomerOrderScheduleService {
 	 */
 	CustomerOrderSchedule getById(Long id);
 
+	CustomerOrderSchedule getNearByOrderNo(String orderNo);
 	/**
 	 * 
 	 * getByOrderNo:(通过订单号查询). <br/>
@@ -85,6 +86,7 @@ public interface CustomerOrderScheduleService {
 	 */
 	List<CustomerOrderSchedule> queryByExistence(String orderNo, Date serviceStartTime, Date serviceEndTime);
 
+	void updateSchedule(CustomerOrderSchedule customerOrderSchedule) throws BizException;
 	/**
 	 * 
 	 * updateStatus:(修改订单状态). <br/>

@@ -1,17 +1,5 @@
 package com.sh.carexx.uc.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.ErrorCode;
@@ -21,6 +9,10 @@ import com.sh.carexx.common.util.ValidUtils;
 import com.sh.carexx.model.uc.CustomerOrderSchedule;
 import com.sh.carexx.uc.dao.CustomerOrderScheduleMapper;
 import com.sh.carexx.uc.service.CustomerOrderScheduleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 @Service
 public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleService {
@@ -52,6 +44,11 @@ public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleSe
 	}
 
 	@Override
+	public CustomerOrderSchedule getNearByOrderNo(String orderNo) {
+		return this.customerOrderScheduleMapper.selectNearByOrderNo(orderNo);
+	}
+
+	@Override
 	public List<CustomerOrderSchedule> getByOrderNo(String orderNo) {
 		return this.customerOrderScheduleMapper.selectByOrderNo(orderNo);
 	}
@@ -64,6 +61,19 @@ public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleSe
 	@Override
 	public List<CustomerOrderSchedule> queryByExistence(String orderNo, Date serviceStartTime, Date serviceEndTime) {
 		return this.customerOrderScheduleMapper.selectByExistence(orderNo, serviceStartTime, serviceEndTime);
+	}
+
+	@Override
+	public void updateSchedule(CustomerOrderSchedule customerOrderSchedule) throws BizException {
+		int rows = 0;
+		try {
+			rows = this.customerOrderScheduleMapper.updateSchedule(customerOrderSchedule);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
 	}
 
 	@Override

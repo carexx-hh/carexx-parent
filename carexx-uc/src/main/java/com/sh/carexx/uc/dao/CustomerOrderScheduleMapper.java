@@ -53,6 +53,16 @@ public interface CustomerOrderScheduleMapper {
 	CustomerOrderSchedule selectById(Long id);
 
 	/**
+	 *
+	 * selectByOrderNo:(通过订单编号查询最近排班). <br/>
+	 *
+	 * @author zhoulei
+	 * @param orderNo
+	 * @return
+	 * @since JDK 1.8
+	 */
+	CustomerOrderSchedule selectNearByOrderNo(String orderNo);
+	/**
 	 * 
 	 * selectByOrderNo:(通过订单编号查询). <br/>
 	 * 
@@ -88,6 +98,8 @@ public interface CustomerOrderScheduleMapper {
 	List<CustomerOrderSchedule> selectByExistence(@Param("orderNo") String orderNo,
 			@Param("serviceStartTime") Date serviceStartTime, @Param("serviceEndTime") Date serviceEndTime);
 
+
+	int updateSchedule(CustomerOrderSchedule customerOrderSchedule);
 	/**
 	 * 
 	 * updateStatus:(修改排班状态). <br/>

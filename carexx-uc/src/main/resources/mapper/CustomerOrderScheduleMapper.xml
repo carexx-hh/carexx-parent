@@ -152,6 +152,18 @@
 		WHERE
 			id = #{id,jdbcType=BIGINT}
 	</select>
+
+	<select id="selectNearByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT
+			<include refid="Base_Column_List" />
+		FROM
+			carexx_customer_order_schedule cos
+		WHERE
+			cos.order_no = #{orderNo,jdbcType=VARCHAR}
+		ORDER BY
+			cos.service_end_time desc
+		LIMIT 0,1
+	</select>
 	
 	<select id="selectByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
 		SELECT
@@ -237,6 +249,17 @@
 			modify_time = now()
 		WHERE
 			id = #{id, jdbcType=BIGINT} and service_status = #{srcStatus, jdbcType=TINYINT}
+	</update>
+
+	<update id="updateSchedule" parameterType="com.sh.carexx.model.uc.CustomerOrderSchedule">
+		UPDATE
+			carexx_customer_order_schedule
+		SET
+			service_end_time = #{serviceEndTime,jdbcType=TIMESTAMP},
+			service_duration = #{serviceDuration,jdbcType=INTEGER},
+			modify_time = now()
+		WHERE
+			id = #{id, jdbcType=BIGINT}
 	</update>
 	
 	<update id="deleteOrderSchedule">
