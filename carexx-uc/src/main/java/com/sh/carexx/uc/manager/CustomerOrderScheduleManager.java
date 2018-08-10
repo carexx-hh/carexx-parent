@@ -120,31 +120,43 @@ public class CustomerOrderScheduleManager {
                     amountEndDate = DateUtils.addHour(amountStartDate, 12);
                     amountNum += 12;
                     this.doShedule(customerOrderScheduleFormBean, amountStartDate, amountEndDate);
-                }
-                customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(customerOrderScheduleFormBean.getOrderNo());
-                Date startTime = customerOrderSchedule.getServiceStartTime();
-                Date endTime = serviceEndTime;
-                int checkTime = DateUtils.getHourDiff(startTime, endTime);
-                if (checkTime >= 24) {
-                    CustomerOrderSchedule orderSchedule = new CustomerOrderSchedule();
-                    orderSchedule.setId(customerOrderSchedule.getId());
-                    Date time = DateUtils.addHour(customerOrderSchedule.getServiceEndTime(), 12);
-                    orderSchedule.setServiceEndTime(time);
-                    orderSchedule.setServiceDuration(24);
-                    amountEndDate = time;
-                    amountNum += 12;
-                    this.customerOrderScheduleService.updateSchedule(orderSchedule);
-                }
-                while (amountNum < hourNum) {
-                    if (hourNum - amountNum < 24) {
-                        this.doShedule(customerOrderScheduleFormBean, amountEndDate, serviceEndTime);
-                        break;
+                    while (amountNum < hourNum) {
+                        if (hourNum - amountNum < 24) {
+                            this.doShedule(customerOrderScheduleFormBean, amountEndDate, serviceEndTime);
+                            break;
+                        }
+                        amountStartDate = amountEndDate;
+                        amountEndDate = DateUtils.addDay(amountStartDate, 1);
+                        amountNum += 24;
+                        this.doShedule(customerOrderScheduleFormBean, amountStartDate, amountEndDate);
                     }
-                    amountStartDate = amountEndDate;
-                    amountEndDate = DateUtils.addDay(amountStartDate, 1);
-                    amountNum += 24;
-                    this.doShedule(customerOrderScheduleFormBean, amountStartDate, amountEndDate);
+                }else{
+                    customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(customerOrderScheduleFormBean.getOrderNo());
+                    Date startTime = customerOrderSchedule.getServiceStartTime();
+                    Date endTime = serviceEndTime;
+                    int checkTime = DateUtils.getHourDiff(startTime, endTime);
+                    if (checkTime >= 24) {
+                        CustomerOrderSchedule orderSchedule = new CustomerOrderSchedule();
+                        orderSchedule.setId(customerOrderSchedule.getId());
+                        Date time = DateUtils.addHour(customerOrderSchedule.getServiceEndTime(), 12);
+                        orderSchedule.setServiceEndTime(time);
+                        orderSchedule.setServiceDuration(24);
+                        amountEndDate = time;
+                        amountNum += 12;
+                        this.customerOrderScheduleService.updateSchedule(orderSchedule);
+                    }
+                    while (amountNum < hourNum) {
+                        if (hourNum - amountNum < 24) {
+                            this.doShedule(customerOrderScheduleFormBean, amountEndDate, serviceEndTime);
+                            break;
+                        }
+                        amountStartDate = amountEndDate;
+                        amountEndDate = DateUtils.addDay(amountStartDate, 1);
+                        amountNum += 24;
+                        this.doShedule(customerOrderScheduleFormBean, amountStartDate, amountEndDate);
+                    }
                 }
+
             }
         }
     }
