@@ -672,7 +672,7 @@ public interface UCServiceClient {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	@RequestMapping(value = "/customerorder/addappointorder", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/customerorder/add_appointorder", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal addCustomerAppointOrder(@RequestBody CustomerAppointOrderFormBean customerAppointOrderFormBean);
 
 	/**

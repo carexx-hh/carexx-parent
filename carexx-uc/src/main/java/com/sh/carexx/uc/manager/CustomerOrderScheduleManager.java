@@ -162,6 +162,10 @@ public class CustomerOrderScheduleManager {
      */
     private void doShedule(CustomerOrderScheduleFormBean customerOrderScheduleFormBean, Date amountStartDate,
                            Date amountEndDate) throws BizException {
+        CustomerOrder customerOrder = this.customerOrderService.getByOrderNo(customerOrderScheduleFormBean.getOrderNo());
+        if(customerOrder.getOrderType()==1){
+            throw new BizException(ErrorCode.ORDER_SCHEDULE_FAIL_ERROR);
+        }
         CustomerOrderSchedule customerOrderSchedule = new CustomerOrderSchedule();
         customerOrderSchedule.setOrderNo(customerOrderScheduleFormBean.getOrderNo());
         customerOrderSchedule.setServiceStaffId(customerOrderScheduleFormBean.getServiceStaffId());
@@ -182,8 +186,6 @@ public class CustomerOrderScheduleManager {
         this.orderSettleManager.add(customerOrderSchedule);
 
         //检查订单全部排班完成时将订单状态从待排班改为服务中
-        CustomerOrder customerOrder = this.customerOrderService
-                .getByOrderNo(customerOrderScheduleFormBean.getOrderNo());
         List<CustomerOrderSchedule> orderScheduleList = this.customerOrderScheduleService
                 .getByOrderNo(customerOrderScheduleFormBean.getOrderNo());
         int hourNum = DateUtils.getHourDiff(customerOrder.getServiceStartTime(), customerOrder.getServiceEndTime());

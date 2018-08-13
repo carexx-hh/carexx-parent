@@ -30,11 +30,11 @@ public class CustomerOrderController extends BaseController {
 		return this.ucServiceClient.queryCustomerOrderListByUserId(customerOrderQueryFormBean);
 	}
 
-	@RequestMapping(value = "/addappointorder")
+	@RequestMapping(value = "/add_appointorder")
 	public BasicRetVal addAppointOrder(@Valid CustomerAppointOrderFormBean customerAppointOrderFormBean,
 			BindingResult bindingResult) {
-		if (customerAppointOrderFormBean.getCustomerId() == null) {
-			customerAppointOrderFormBean.setCustomerId(this.getCurrentUser().getId().toString());
+		if (customerAppointOrderFormBean.getuserId() == null) {
+			customerAppointOrderFormBean.setuserId(this.getCurrentUser().getId().toString());
 		}
 		if (bindingResult.hasErrors()) {
 			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
