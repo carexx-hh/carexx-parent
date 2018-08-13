@@ -47,7 +47,7 @@ public class CustomerOrderController {
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
 
-	@RequestMapping(value = "/addappointorder", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/add_appointorder", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public BasicRetVal addAppointOrder(@RequestBody CustomerAppointOrderFormBean customerAppointOrderFormBean) {
 		try {
 			this.customerOrderManager.addAppointOrder(customerAppointOrderFormBean);

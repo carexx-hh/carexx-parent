@@ -1,53 +1,32 @@
 package com.sh.carexx.uc.manager;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
+import com.sh.carexx.bean.order.*;
+import com.sh.carexx.common.ErrorCode;
+import com.sh.carexx.common.enums.TimeUnit;
+import com.sh.carexx.common.enums.UseStatus;
+import com.sh.carexx.common.enums.order.*;
+import com.sh.carexx.common.exception.BizException;
+import com.sh.carexx.common.keygen.KeyGenerator;
+import com.sh.carexx.common.util.DateUtils;
+import com.sh.carexx.common.util.ValidUtils;
+import com.sh.carexx.model.uc.*;
+import com.sh.carexx.uc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sh.carexx.bean.order.ConfirmCompletedOrderFormBean;
-import com.sh.carexx.bean.order.CustomerAppointOrderFormBean;
-import com.sh.carexx.bean.order.CustomerOrderAdjustFormBean;
-import com.sh.carexx.bean.order.CustomerOrderFormBean;
-import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
-import com.sh.carexx.common.ErrorCode;
-import com.sh.carexx.common.enums.TimeUnit;
-import com.sh.carexx.common.enums.UseStatus;
-import com.sh.carexx.common.enums.order.OrderScheduleStatus;
-import com.sh.carexx.common.enums.order.OrderSettleStatus;
-import com.sh.carexx.common.enums.order.OrderStatus;
-import com.sh.carexx.common.enums.order.OrderType;
-import com.sh.carexx.common.enums.order.ProofType;
-import com.sh.carexx.common.exception.BizException;
-import com.sh.carexx.common.keygen.KeyGenerator;
-import com.sh.carexx.common.util.DateUtils;
-import com.sh.carexx.common.util.ValidUtils;
-import com.sh.carexx.model.uc.CustomerOrder;
-import com.sh.carexx.model.uc.CustomerOrderSchedule;
-import com.sh.carexx.model.uc.InstCareService;
-import com.sh.carexx.model.uc.InstCustomer;
-import com.sh.carexx.model.uc.InstHoliday;
-import com.sh.carexx.model.uc.UserInfo;
-import com.sh.carexx.uc.service.CustomerOrderScheduleService;
-import com.sh.carexx.uc.service.CustomerOrderService;
-import com.sh.carexx.uc.service.InstCareServiceService;
-import com.sh.carexx.uc.service.InstCustomerService;
-import com.sh.carexx.uc.service.InstHolidayService;
-import com.sh.carexx.uc.service.InstSettleService;
-import com.sh.carexx.uc.service.OrderSettleService;
-import com.sh.carexx.uc.service.UserService;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
- * 
+ *
  * ClassName: CustomerOrderManager <br/>
  * Function: 客户订单 <br/>
  * Date: 2018年5月29日 下午5:29:57 <br/>
- * 
+ *
  * @author hetao
  * @since JDK 1.8
  */
@@ -75,9 +54,9 @@ public class CustomerOrderManager {
 	private InstSettleService instSettleService;
 
 	/**
-	 * 
+	 *
 	 * calcServiceFee:(计算订单金额). <br/>
-	 * 
+	 *
 	 * @author hetao
 	 * @param instId：机构id
 	 * @param serviceId：服务id
@@ -123,11 +102,11 @@ public class CustomerOrderManager {
 		return normalServiceFeeAmt.add(holidayServiceFeeAmt).setScale(2, BigDecimal.ROUND_HALF_UP);
 	}
 
-	
+
 	/**
-	 * 
+	 *
 	 * holidayCount:(统计订单中节假日天数). <br/>
-	 * 
+	 *
 	 * @author hetao
 	 * @param instId:机构id
 	 * @param serviceStartTime:服务开始时间
@@ -155,9 +134,9 @@ public class CustomerOrderManager {
 	}
 
 	/**
-	 * 
+	 *
 	 * add:(客户端代客下单). <br/>
-	 * 
+	 *
 	 * @author hetao
 	 * @param customerOrderFormBean
 	 * @throws BizException
@@ -223,9 +202,9 @@ public class CustomerOrderManager {
 	}
 
 	/**
-	 * 
+	 *
 	 * addAppointOrder:(移动端下单). <br/>
-	 * 
+	 *
 	 * @author hetao
 	 * @param customerAppointOrderFormBean
 	 * @throws BizException
@@ -234,19 +213,11 @@ public class CustomerOrderManager {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void addAppointOrder(CustomerAppointOrderFormBean customerAppointOrderFormBean) throws BizException {
 		Date serviceStartTime = null;
-		Date serviceEndTime = null;
 		if (ValidUtils.isDateTime(customerAppointOrderFormBean.getServiceStartTime())) {
 			serviceStartTime = DateUtils.toDate(customerAppointOrderFormBean.getServiceStartTime(),
 					DateUtils.YYYY_MM_DD_HH_MM_SS);
 		}
-		if (ValidUtils.isDateTime(customerAppointOrderFormBean.getServiceEndTime())) {
-			serviceEndTime = DateUtils.toDate(customerAppointOrderFormBean.getServiceEndTime(),
-					DateUtils.YYYY_MM_DD_HH_MM_SS);
-		}
-		//检查结束时间必须大于开始时间
-		if (!serviceStartTime.before(serviceEndTime)) {
-			throw new BizException(ErrorCode.TIME_END_BEFORE_START_ERROR);
-		}
+		Date serviceEndTime = DateUtils.addHour(serviceStartTime,12);
 		//检查下单时间是否已关账
 		Date da = this.instSettleService.queryMaxSettleDateBySettleStatus(customerAppointOrderFormBean.getInstId());
 		if (da != null) {
@@ -260,21 +231,20 @@ public class CustomerOrderManager {
 		customerOrderQueryFormBean.setRealName(customerAppointOrderFormBean.getPatientName());
 		customerOrderQueryFormBean.setServiceId(customerAppointOrderFormBean.getServiceId().toString());
 		customerOrderQueryFormBean.setServiceStartTime(customerAppointOrderFormBean.getServiceStartTime());
-		customerOrderQueryFormBean.setServiceEndTime(customerAppointOrderFormBean.getServiceEndTime());
 		List<Map<?, ?>> orderlist = this.customerOrderService.queryOrderExistence(customerOrderQueryFormBean);
 		if (orderlist.size() > 0) {
 			throw new BizException(ErrorCode.CUSTOMER_ORDER_EXISTS_ERROR);
 		}
 		//客户下单同时添加一条客户信息
 		Integer customerId = 0;
-		UserInfo userInfo = this.userService.getById(customerAppointOrderFormBean.getCustomerId());
+		UserInfo userInfo = this.userService.getById(customerAppointOrderFormBean.getuserId());
 		InstCustomer instCustomer = this.instCustomerService.queryCustomerExistence(
-				customerAppointOrderFormBean.getInstId(), customerAppointOrderFormBean.getCustomerId(),
+				customerAppointOrderFormBean.getInstId(), customerAppointOrderFormBean.getuserId(),
 				customerAppointOrderFormBean.getPatientName());
 		if (instCustomer == null) {
 			instCustomer = new InstCustomer();
 			instCustomer.setInstId(customerAppointOrderFormBean.getInstId());
-			instCustomer.setUserId(customerAppointOrderFormBean.getCustomerId());
+			instCustomer.setUserId(customerAppointOrderFormBean.getuserId());
 			instCustomer.setRealName(customerAppointOrderFormBean.getPatientName());
 			instCustomer.setPhone(userInfo.getMobile());
 			instCustomer.setSex(userInfo.getSex());
@@ -289,7 +259,7 @@ public class CustomerOrderManager {
 		CustomerOrder customerOrder = new CustomerOrder();
 		customerOrder.setOrderType(OrderType.ONLINE_ORDER.getValue());
 		customerOrder.setInstId(customerAppointOrderFormBean.getInstId());
-		customerOrder.setUserId(customerAppointOrderFormBean.getCustomerId());
+		customerOrder.setUserId(customerAppointOrderFormBean.getuserId());
 		customerOrder.setCustomerId(customerId);
 		customerOrder.setServiceId(customerAppointOrderFormBean.getServiceId());
 		String orderNo = this.keyGenerator.generateOrderNo();
@@ -297,11 +267,10 @@ public class CustomerOrderManager {
 		customerOrder.setInpatientAreaId(customerAppointOrderFormBean.getInpatientAreaId());
 		customerOrder.setInpatientWard(customerAppointOrderFormBean.getInpatientWard());
 		customerOrder.setServiceStartTime(serviceStartTime);
-		customerOrder.setServiceEndTime(serviceEndTime);
 		customerOrder.setOrderAmt(this.calcServiceFee(customerOrder.getInstId(), customerOrder.getServiceId(),
-				customerOrder.getServiceStartTime(), customerOrder.getServiceEndTime()));
+				customerOrder.getServiceStartTime(), serviceEndTime));
 		customerOrder.setHoliday(this.holidayCount(customerOrder.getInstId(), customerOrder.getServiceStartTime(),
-				customerOrder.getServiceEndTime()));
+				serviceEndTime));
 		customerOrder.setAdjustAmt(new BigDecimal(0));
 		customerOrder.setOrderStatus(OrderStatus.WAIT_SCHEDULE.getValue());
 		customerOrder.setOrderRemark(customerAppointOrderFormBean.getOrderRemark());
@@ -312,9 +281,9 @@ public class CustomerOrderManager {
 	}
 
 	/**
-	 * 
+	 *
 	 * cancel:(取消订单). <br/>
-	 * 
+	 *
 	 * @author hetao
 	 * @param orderNo：订单号
 	 * @throws BizException
@@ -333,12 +302,12 @@ public class CustomerOrderManager {
 		}
 	}
 	/**
-	 * 
-	 * throughPay:(订单支付). <br/> 
-	 * 
-	 * @author hetao 
+	 *
+	 * throughPay:(订单支付). <br/>
+	 *
+	 * @author hetao
 	 * @param orderNo
-	 * @throws BizException 
+	 * @throws BizException
 	 * @since JDK 1.8
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
@@ -357,7 +326,7 @@ public class CustomerOrderManager {
 
 	/**
 	 * confirmCompleted:(确认完成订单). <br/>
-	 * 
+	 *
 	 * @author hetao
 	 * @param confirmCompletedOrderFormBean
 	 * @throws BizException
@@ -384,9 +353,9 @@ public class CustomerOrderManager {
 	}
 
 	/**
-	 * 
+	 *
 	 * adjustAmt:(调整订单). <br/>
-	 * 
+	 *
 	 * @author zhoulei
 	 * @param customerOrderAdjustFormBean
 	 * @throws BizException
@@ -400,7 +369,7 @@ public class CustomerOrderManager {
 		if (customerOrder.getOrderAmt().add(adjustAmt).compareTo(BigDecimal.ZERO) < 1) {
 			throw new BizException(ErrorCode.ADJUST_AMT_GRERTER_ORDER_AMT_ERROR);
 		}
-		
+
 		customerOrder.setAdjustAmt(adjustAmt);
 		customerOrder.setProofType(customerOrderAdjustFormBean.getProofType());
 		if (customerOrderAdjustFormBean.getProofType() == ProofType.RECEIPT.getValue()) {
