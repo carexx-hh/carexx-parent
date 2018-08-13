@@ -53,7 +53,17 @@ public class InstStaffServiceImpl implements InstStaffService {
 	public List<Map<?, ?>> queryInstStaffListByServiceId(InstStaffQueryFormBean instStaffQueryFormBean) {
 		return this.instStaffMapper.selectInstStaffListByServiceId(instStaffQueryFormBean);
 	}
+	
+	@Override
+	public List<Map<?, ?>> queryInstStaffIdle(InstStaffQueryFormBean instStaffQueryFormBean) {
+		return this.instStaffMapper.selectInstStaffIdle(instStaffQueryFormBean);
+	}
 
+	@Override
+	public List<Map<?, ?>> queryInstStaffBusy(InstStaffQueryFormBean instStaffQueryFormBean) {
+		return this.instStaffMapper.selectInstStaffBusy(instStaffQueryFormBean);
+	}
+	
 	@Override
 	public Integer getInstStaffCount(InstStaffQueryFormBean instStaffQueryFormBean) {
 		return instStaffMapper.selectInstStaffCount(instStaffQueryFormBean);

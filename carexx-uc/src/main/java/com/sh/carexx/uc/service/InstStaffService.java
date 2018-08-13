@@ -72,7 +72,28 @@ public interface InstStaffService {
 	 * @since JDK 1.8
 	 */
 	List<Map<?, ?>> queryInstStaffListByServiceId(InstStaffQueryFormBean instStaffQueryFormBean);
+	
+	/**
+	 * 
+	 * queryInstStaffIdle:(移动端查询会该项技能的员工并统计服务人数（空闲）). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param instStaffQueryFormBean
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> queryInstStaffIdle(InstStaffQueryFormBean instStaffQueryFormBean);
 
+	/**
+	 * 
+	 * queryInstStaffBusy:(移动端查询会该项技能的员工并统计服务人数（忙碌）). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param instStaffQueryFormBean
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> queryInstStaffBusy(InstStaffQueryFormBean instStaffQueryFormBean);
 	/**
 	 * 
 	 * getInstStaffCount:(员工信息分页统计). <br/>

@@ -1,5 +1,7 @@
 package com.sh.carexx.bean.staff;
 
+import java.util.Date;
+
 import org.apache.commons.lang.StringUtils;
 
 import com.sh.carexx.bean.BasicFormBean;
@@ -22,7 +24,11 @@ public class InstStaffQueryFormBean extends BasicFormBean {
 	private String realName;
 
 	private String idNo;
+	
+	private Date currentTime;
 
+	private String orderNo;
+	
 	public Integer getInstId() {
 		return instId;
 	}
@@ -102,4 +108,21 @@ public class InstStaffQueryFormBean extends BasicFormBean {
 		this.idNo = idNo;
 	}
 
+	public Date getCurrentTime() {
+		return currentTime;
+	}
+
+	public void setCurrentTime(Date currentTime) {
+		this.currentTime = currentTime;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	
 }

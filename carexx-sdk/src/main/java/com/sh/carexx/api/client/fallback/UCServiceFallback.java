@@ -697,4 +697,10 @@ public class UCServiceFallback implements UCServiceClient {
 		return null;
 	}
 
+	@Override
+	public String queryInstStaffServiceNum(InstStaffQueryFormBean instStaffQueryFormBean) {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
 }
