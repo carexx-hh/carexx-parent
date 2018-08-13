@@ -1,18 +1,17 @@
 package com.sh.carexx.bean.order;
 
+import com.sh.carexx.bean.BasicFormBean;
+import com.sh.carexx.common.CarexxConstant;
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.validator.constraints.NotBlank;
-
-import com.sh.carexx.bean.BasicFormBean;
-import com.sh.carexx.common.CarexxConstant;
-
 public class CustomerAppointOrderFormBean extends BasicFormBean {
 
-	private String customerId;
+	private String userId;
 
 	@NotBlank
 	private String patientName;
@@ -40,22 +39,18 @@ public class CustomerAppointOrderFormBean extends BasicFormBean {
 	@Pattern(regexp = CarexxConstant.Regex.DATETIME)
 	private String serviceStartTime;
 
-	@NotBlank
-	@Pattern(regexp = CarexxConstant.Regex.DATETIME)
-	private String serviceEndTime;
-
 	@Size(max = 255)
 	private String orderRemark;
 
-	public Integer getCustomerId() {
-		if (StringUtils.isNotBlank(customerId)) {
-			return Integer.parseInt(customerId);
+	public Integer getuserId() {
+		if (StringUtils.isNotBlank(userId)) {
+			return Integer.parseInt(userId);
 		}
 		return null;
 	}
 
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
+	public void setuserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getPatientName() {
@@ -121,14 +116,6 @@ public class CustomerAppointOrderFormBean extends BasicFormBean {
 
 	public void setServiceStartTime(String serviceStartTime) {
 		this.serviceStartTime = serviceStartTime;
-	}
-
-	public String getServiceEndTime() {
-		return serviceEndTime;
-	}
-
-	public void setServiceEndTime(String serviceEndTime) {
-		this.serviceEndTime = serviceEndTime;
 	}
 
 	public String getOrderRemark() {
