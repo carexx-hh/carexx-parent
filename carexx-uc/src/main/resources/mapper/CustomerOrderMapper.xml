@@ -32,6 +32,16 @@
 		service_end_time, holiday, order_status, operator, order_remark, inst_sys_id, proof_type, receipt_no, invoice_no, signing_person, create_time, modify_time
 	</sql>
 
+	<select id="selectAllOrder" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		FROM
+			carexx_customer_order
+		where
+			order_type = 1 and order_status = 3
+		and	service_start_time <![CDATA[<=]]> '2018-08-13 20:00:00'
+	</select>
+
 	<select id="selectByUserId" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">
 		SELECT
 			co.id id,
@@ -42,6 +52,7 @@
 			cs.service_name serviceName,
 			co.order_no orderNo,
 			co.order_amt orderAmt,
+			ics.service_price servicePrice,
 			cia.inpatient_area inpatientArea,
 			co.inpatient_ward inpatientWard,
 			co.service_start_time serviceStartTime,
@@ -55,6 +66,8 @@
 		LEFT JOIN carexx_care_inst ci ON co.inst_id = ci.id
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
 		LEFT JOIN carexx_inst_inpatient_area cia ON cia.id = co.inpatient_area_id
+		LEFT JOIN carexx_inst_care_service ics ON co.inst_id = ics.inst_id
+		AND co.service_id = ics.service_id
 		WHERE
 			co.user_id = #{userId,jdbcType=INTEGER}
         and
@@ -64,7 +77,6 @@
         </if>
 		ORDER BY
 			co.create_time DESC
-		LIMIT ${rowIndex}, ${pageSize}
 	</select>
 
 	<select id="selectCustomerOrderCount" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.lang.Integer">
@@ -415,6 +427,17 @@
 			modify_time = now()
 		where
 			order_no = #{orderNo,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateServiceEndTime" parameterType="com.sh.carexx.model.uc.CustomerOrder">
+		update
+			carexx_customer_order
+		set
+			order_amt = #{orderAmt,jdbcType=DECIMAL},
+			holiday = #{holiday,jdbcType=DECIMAL},
+			modify_time = now()
+	  	where
+	  		order_no = #{orderNo,jdbcType=VARCHAR}
 	</update>
 
 </mapper>
