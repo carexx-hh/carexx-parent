@@ -109,4 +109,14 @@ public class CustomerOrderScheduleController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
+	
+	@RequestMapping(value = "/mapp_add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public BasicRetVal mappAdd(@RequestBody CustomerOrderScheduleFormBean customerOrderScheduleFormBean) {
+		try {
+			this.customerOrderScheduleManager.mappAdd(customerOrderScheduleFormBean);
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+		}
+		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+	}
 }

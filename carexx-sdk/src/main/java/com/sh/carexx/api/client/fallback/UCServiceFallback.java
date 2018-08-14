@@ -699,7 +699,11 @@ public class UCServiceFallback implements UCServiceClient {
 
 	@Override
 	public String queryInstStaffServiceNum(InstStaffQueryFormBean instStaffQueryFormBean) {
-		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	@Override
+	public BasicRetVal mappAddCustomerOrderSchedule(CustomerOrderScheduleFormBean customerOrderScheduleFormBean) {
 		return null;
 	}
 

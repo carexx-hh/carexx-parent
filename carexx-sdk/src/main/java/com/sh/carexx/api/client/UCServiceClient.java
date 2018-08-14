@@ -1079,6 +1079,9 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/customerorderschedule/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal addCustomerOrderSchedule(@RequestBody CustomerOrderScheduleFormBean customerOrderScheduleFormBean);
 
+	@RequestMapping(value = "/customerorderschedule/mapp_add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	BasicRetVal mappAddCustomerOrderSchedule(@RequestBody CustomerOrderScheduleFormBean customerOrderScheduleFormBean);
+	
 	/**
 	 * 
 	 * queryOrderScheduleStaff:(通过订单号查询订单排班). <br/>
