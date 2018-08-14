@@ -58,4 +58,15 @@ public interface OrderPaymentService {
 	 * @since JDK 1.8
 	 */
 	void update(OrderPayment orderPayment) throws BizException;
+
+	/**
+	 *
+	 * updatePayAmt:(修改订单支付金额). <br/>
+	 *
+	 * @author hetao
+	 * @param orderPayment
+	 * @return
+	 * @since JDK 1.8
+	 */
+	void updatePayAmt(OrderPayment orderPayment) throws BizException;
 }

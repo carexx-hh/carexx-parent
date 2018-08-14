@@ -1,11 +1,11 @@
 package com.sh.carexx.uc.service;
 
-import java.util.List;
-import java.util.Map;
-
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.CustomerOrder;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -36,6 +36,15 @@ public interface CustomerOrderService {
 	 * @since JDK 1.8
 	 */
 	void confirmCompleted(CustomerOrder customerOrder) throws BizException;
+
+	/**
+	 *
+	 * confirmCompleted:(查询所有线上订单). <br/>
+	 *
+	 * @author hetao
+	 * @since JDK 1.8
+	 */
+	List<CustomerOrder> getAllOrder();
 
 	/**
 	 * 
@@ -97,7 +106,6 @@ public interface CustomerOrderService {
 	 * updateStatus:(修改订单状态). <br/>
 	 * 
 	 * @author hetao
-	 * @param orderStatus
 	 * @param orderNo
 	 * @throws BizException
 	 * @since JDK 1.8
@@ -137,4 +145,15 @@ public interface CustomerOrderService {
 	 * @since JDK 1.8
 	 */
 	void update(CustomerOrder customerOrder) throws BizException;
+
+	/**
+	 *
+	 * updateServiceEndTime:(修改订单结束时间). <br/>
+	 *
+	 * @author hetao
+	 * @param customerOrder
+	 * @return
+	 * @since JDK 1.8
+	 */
+	void updateServiceEndTime(CustomerOrder customerOrder) throws BizException;
 }

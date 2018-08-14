@@ -66,4 +66,13 @@
 		where
 			order_no = #{orderNo,jdbcType=VARCHAR} and pay_status = 1
 	</update>
+	
+	<update id="updatePayAmt" parameterType="com.sh.carexx.model.uc.OrderPayment">
+		update
+			carexx_order_payment
+		set
+			pay_amt = #{payAmt,jdbcType=DECIMAL}
+		where
+			order_no = #{orderNo,jdbcType=VARCHAR}
+	</update>
 </mapper>

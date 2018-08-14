@@ -57,4 +57,15 @@ public interface OrderPaymentMapper {
 	 * @since JDK 1.8
 	 */
 	int update(OrderPayment orderPayment);
+
+	/**
+	 *
+	 * updatePayAmt:(修改订单支付金额). <br/>
+	 *
+	 * @author hetao
+	 * @param orderPayment
+	 * @return
+	 * @since JDK 1.8
+	 */
+	int updatePayAmt(OrderPayment orderPayment);
 }
