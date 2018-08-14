@@ -47,6 +47,11 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	}
 
 	@Override
+	public List<CustomerOrder> getAllOrder(){
+		return this.customerOrderMapper.selectAllOrder();
+	}
+
+	@Override
 	public List<Map<?, ?>> getByUserId(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		return this.customerOrderMapper.selectByUserId(customerOrderQueryFormBean);
 	}
@@ -132,4 +137,16 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 		}
 	}
 
+	@Override
+	public void updateServiceEndTime(CustomerOrder customerOrder) throws BizException{
+		int rows = 0;
+		try {
+			rows = this.customerOrderMapper.updateServiceEndTime(customerOrder);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+	}
 }

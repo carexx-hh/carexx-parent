@@ -1,12 +1,11 @@
 package com.sh.carexx.uc.dao;
 
-import java.util.List;
-import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.model.uc.CustomerOrder;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -38,6 +37,16 @@ public interface CustomerOrderMapper {
 	 * @since JDK 1.8
 	 */
 	int confirmCompleted(CustomerOrder customerOrder);
+
+	/**
+	 *
+	 * confirmCompleted:(查询所有线上订单). <br/>
+	 *
+	 * @author hetao
+	 * @return
+	 * @since JDK 1.8
+	 */
+	List<CustomerOrder> selectAllOrder();
 
 	/**
 	 * 
@@ -98,8 +107,7 @@ public interface CustomerOrderMapper {
 	 * 
 	 * updateStatus:(修改订单状态). <br/> 
 	 * 
-	 * @author hetao 
-	 * @param serviceStatus
+	 * @author hetao
 	 * @param orderNo
 	 * @return 
 	 * @since JDK 1.8
@@ -139,4 +147,15 @@ public interface CustomerOrderMapper {
 	 * @since JDK 1.8
 	 */
 	int update(CustomerOrder customerOrder);
+
+	/**
+	 *
+	 * updateServiceEndTime:(修改订单结束时间). <br/>
+	 *
+	 * @author hetao
+	 * @param customerOrder
+	 * @return
+	 * @since JDK 1.8
+	 */
+	int updateServiceEndTime(CustomerOrder customerOrder);
 }
