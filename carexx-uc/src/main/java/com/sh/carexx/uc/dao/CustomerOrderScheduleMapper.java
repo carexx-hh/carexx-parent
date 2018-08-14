@@ -1,13 +1,12 @@
 package com.sh.carexx.uc.dao;
 
+import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
+import com.sh.carexx.model.uc.CustomerOrderSchedule;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
-
-import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
-import com.sh.carexx.model.uc.CustomerOrderSchedule;
 
 /**
  * 
@@ -105,8 +104,6 @@ public interface CustomerOrderScheduleMapper {
 	 * updateStatus:(修改排班状态). <br/>
 	 * 
 	 * @author hetao
-	 * @param serviceStatus
-	 * @param orderNo
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -116,8 +113,7 @@ public interface CustomerOrderScheduleMapper {
 	 * 
 	 * updateOrderScheduleCancel:(取消订单时同时删除排班). <br/> 
 	 * 
-	 * @author hetao 
-	 * @param orderNo
+	 * @author hetao
 	 * @param targetStatus
 	 * @return 
 	 * @since JDK 1.8
@@ -128,8 +124,7 @@ public interface CustomerOrderScheduleMapper {
 	 * 
 	 * selectByTimeBefore:(通过时间查询排班). <br/> 
 	 * 
-	 * @author hetao 
-	 * @param month
+	 * @author hetao
 	 * @return 
 	 * @since JDK 1.8
 	 */

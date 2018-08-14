@@ -1,12 +1,12 @@
 package com.sh.carexx.uc.service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.CustomerOrderSchedule;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -86,14 +86,21 @@ public interface CustomerOrderScheduleService {
 	 */
 	List<CustomerOrderSchedule> queryByExistence(String orderNo, Date serviceStartTime, Date serviceEndTime);
 
+	/**
+	 *
+	 * updateSchedule:(合并排班,修改排班信息). <br/>
+	 *
+	 * @author hetao
+	 * @return
+	 * @since JDK 1.8
+	 */
 	void updateSchedule(CustomerOrderSchedule customerOrderSchedule) throws BizException;
+
 	/**
 	 * 
 	 * updateStatus:(修改订单状态). <br/>
 	 * 
 	 * @author hetao
-	 * @param serviceStatus
-	 * @param orderNo
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -104,7 +111,6 @@ public interface CustomerOrderScheduleService {
 	 * deleteOrderSchedule:(取消订单时同时删除排班). <br/>
 	 * 
 	 * @author hetao
-	 * @param orderNo
 	 * @param targetStatus
 	 * @throws BizException
 	 * @since JDK 1.8
@@ -116,7 +122,6 @@ public interface CustomerOrderScheduleService {
 	 * getByTimeBefore:(通过时间查询排班). <br/>
 	 * 
 	 * @author hetao
-	 * @param month
 	 * @return
 	 * @since JDK 1.8
 	 */
