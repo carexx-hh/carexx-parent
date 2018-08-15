@@ -5,7 +5,6 @@ import com.sh.carexx.common.CarexxConstant;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -16,6 +15,9 @@ public class CustomerAppointOrderFormBean extends BasicFormBean {
 	@NotBlank
 	private String patientName;
 
+	@Size(max = 20)
+	private String phone;
+
 	@NotBlank
 	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
 	private String instId;
@@ -23,9 +25,6 @@ public class CustomerAppointOrderFormBean extends BasicFormBean {
 	@NotBlank
 	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
 	private String serviceId;
-
-	@DecimalMin(value = CarexxConstant.DecimalMin.ZERO)
-	private String adjustAmt;
 
 	@NotBlank
 	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
@@ -51,6 +50,15 @@ public class CustomerAppointOrderFormBean extends BasicFormBean {
 
 	public void setuserId(String userId) {
 		this.userId = userId;
+	}
+
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getPatientName() {
@@ -81,14 +89,6 @@ public class CustomerAppointOrderFormBean extends BasicFormBean {
 
 	public void setServiceId(String serviceId) {
 		this.serviceId = serviceId;
-	}
-
-	public String getAdjustAmt() {
-		return adjustAmt;
-	}
-
-	public void setAdjustAmt(String adjustAmt) {
-		this.adjustAmt = adjustAmt;
 	}
 
 	public Integer getInpatientAreaId() {

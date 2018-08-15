@@ -223,16 +223,6 @@ public class CustomerOrderManager {
                 throw new BizException(ErrorCode.ORDER_SETTLE_EXISTS_ERROR);
             }
         }
-        //检查客户下单是否重复
-        CustomerOrderQueryFormBean customerOrderQueryFormBean = new CustomerOrderQueryFormBean();
-        customerOrderQueryFormBean.setInstId(customerAppointOrderFormBean.getInstId());
-        customerOrderQueryFormBean.setRealName(customerAppointOrderFormBean.getPatientName());
-        customerOrderQueryFormBean.setServiceId(customerAppointOrderFormBean.getServiceId().toString());
-        customerOrderQueryFormBean.setServiceStartTime(customerAppointOrderFormBean.getServiceStartTime());
-        List<Map<?, ?>> orderlist = this.customerOrderService.queryOrderExistence(customerOrderQueryFormBean);
-        if (orderlist.size() > 0) {
-            throw new BizException(ErrorCode.CUSTOMER_ORDER_EXISTS_ERROR);
-        }
         //客户下单同时添加一条客户信息
         Integer customerId = 0;
         UserInfo userInfo = this.userService.getById(customerAppointOrderFormBean.getuserId());
@@ -244,7 +234,7 @@ public class CustomerOrderManager {
             instCustomer.setInstId(customerAppointOrderFormBean.getInstId());
             instCustomer.setUserId(customerAppointOrderFormBean.getuserId());
             instCustomer.setRealName(customerAppointOrderFormBean.getPatientName());
-            instCustomer.setPhone(userInfo.getMobile());
+            instCustomer.setPhone(customerAppointOrderFormBean.getPhone());
             instCustomer.setSex(userInfo.getSex());
             instCustomer.setAddress(userInfo.getRegion());
             instCustomer.setCustomerStatus(UseStatus.ENABLED.getValue());
