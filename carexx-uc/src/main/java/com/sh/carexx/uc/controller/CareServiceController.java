@@ -1,16 +1,5 @@
 package com.sh.carexx.uc.controller;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.sh.carexx.bean.care.CareServiceFormBean;
 import com.sh.carexx.bean.care.InstCareServiceFormBean;
 import com.sh.carexx.bean.care.InstServiceQueryFormBean;
@@ -23,6 +12,12 @@ import com.sh.carexx.model.uc.CareService;
 import com.sh.carexx.uc.manager.CareServiceManager;
 import com.sh.carexx.uc.service.CareServiceService;
 import com.sh.carexx.uc.service.InstCareServiceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/careservice")
@@ -122,7 +117,7 @@ public class CareServiceController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, new PagerBean(totalNum, result)).toJSON();
 	}
 
-	@RequestMapping(value = "/list_all_inst", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/list_all_service", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryAllAvailableInstCareService(@RequestBody InstServiceQueryFormBean instServiceQueryFormBean) {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, instCareServiceService.queryAllAvailable(instServiceQueryFormBean)).toJSON();
 	}

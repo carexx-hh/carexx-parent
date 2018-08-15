@@ -10,7 +10,7 @@ import com.sh.carexx.common.web.BasicRetVal;
 @RestController
 @RequestMapping("/careservice")
 public class CareServiceController extends BaseController {
-	@RequestMapping(value = "/list_all_inst")
+	@RequestMapping(value = "/list_all_service")
 	public String queryAllAvailableInstCareService(InstServiceQueryFormBean instServiceQueryFormBean) {
 		if (instServiceQueryFormBean.getInstId() == null) {
 			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT).toJSON();

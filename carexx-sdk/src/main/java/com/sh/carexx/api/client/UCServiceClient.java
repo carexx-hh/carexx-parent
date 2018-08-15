@@ -589,7 +589,7 @@ public interface UCServiceClient {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	@RequestMapping(value = "/careservice/list_all_inst", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/careservice/list_all_service", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryAllAvailableInstCareService(@RequestBody InstServiceQueryFormBean instServiceQueryFormBean);
 
 	/**
