@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sh.carexx.bean.order.CustomerOrderScheduleFormBean;
+import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
 import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.enums.order.OrderScheduleStatus;
@@ -352,30 +353,27 @@ public class CustomerOrderScheduleManager {
 		this.orderSettleService.updateSettleAmt(orderSettle);
 	}
 
-	public void mappAdd(CustomerOrderScheduleFormBean customerOrderScheduleFormBean) throws BizException {
-		Date serviceStartTime = null;
-		Date serviceEndTime = null;
-		if (ValidUtils.isDateTime(customerOrderScheduleFormBean.getServiceStartTime())) {
-			serviceStartTime = DateUtils.toDate(customerOrderScheduleFormBean.getServiceStartTime(),
-					DateUtils.YYYY_MM_DD_HH_MM_SS);
-		}
-		serviceEndTime = DateUtils.addHour(serviceStartTime, 12);
+	public void mappAdd(MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean) throws BizException {
+		//获取订单开始结束时间
+		CustomerOrder customerOrder = customerOrderService.getByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
+		Date serviceStartTime = customerOrder.getServiceStartTime();
+		Date serviceEndTime = DateUtils.addHour(serviceStartTime, 12);
 
 		CustomerOrderSchedule customerOrderSchedule = new CustomerOrderSchedule();
-		customerOrderSchedule.setOrderNo(customerOrderScheduleFormBean.getOrderNo());
-		customerOrderSchedule.setServiceStaffId(customerOrderScheduleFormBean.getServiceStaffId());
+		customerOrderSchedule.setOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
+		customerOrderSchedule.setServiceStaffId(mappCustomerOrderScheduleFormBean.getServiceStaffId());
 		customerOrderSchedule.setServiceStartTime(serviceStartTime);
 		customerOrderSchedule.setServiceEndTime(serviceEndTime);
 		customerOrderSchedule.setServiceDuration(DateUtils.getHourDiff(serviceStartTime, serviceEndTime));
 		
-		customerOrderSchedule.setWorkTypeSettleId(customerOrderScheduleFormBean.getWorkTypeSettleId());
+		customerOrderSchedule.setWorkTypeSettleId(mappCustomerOrderScheduleFormBean.getWorkTypeSettleId());
 		customerOrderSchedule.setServiceStatus(OrderScheduleStatus.IN_SERVICE.getValue());
-		// 添加排班记录
+		// 添加排班一条记录
 		this.customerOrderScheduleService.save(customerOrderSchedule);
 		// 添加结算记录
 		this.orderSettleManager.add(customerOrderSchedule);
 		//将订单状态从待排班改为服务中
-		this.customerOrderService.updateStatus(customerOrderScheduleFormBean.getOrderNo(),
+		this.customerOrderService.updateStatus(mappCustomerOrderScheduleFormBean.getOrderNo(),
 				OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.IN_SERVICE.getValue());
 		
 	}

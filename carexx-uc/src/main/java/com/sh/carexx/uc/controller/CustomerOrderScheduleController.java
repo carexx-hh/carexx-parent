@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sh.carexx.bean.order.CustomerOrderScheduleFormBean;
+import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
 import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
 import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
 import com.sh.carexx.common.CarexxConstant;
@@ -111,9 +112,9 @@ public class CustomerOrderScheduleController {
 	}
 	
 	@RequestMapping(value = "/mapp_add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public BasicRetVal mappAdd(@RequestBody CustomerOrderScheduleFormBean customerOrderScheduleFormBean) {
+	public BasicRetVal mappAdd(@RequestBody MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean) {
 		try {
-			this.customerOrderScheduleManager.mappAdd(customerOrderScheduleFormBean);
+			this.customerOrderScheduleManager.mappAdd(mappCustomerOrderScheduleFormBean);
 		} catch (BizException e) {
 			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
 		}

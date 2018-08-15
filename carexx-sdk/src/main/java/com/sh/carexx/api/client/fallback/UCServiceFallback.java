@@ -28,6 +28,7 @@ import com.sh.carexx.bean.order.CustomerOrderFormBean;
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.bean.order.CustomerOrderScheduleFormBean;
 import com.sh.carexx.bean.order.InstSettleQueryFormBean;
+import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
 import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
 import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
@@ -703,7 +704,7 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
-	public BasicRetVal mappAddCustomerOrderSchedule(CustomerOrderScheduleFormBean customerOrderScheduleFormBean) {
+	public BasicRetVal mappAddCustomerOrderSchedule(MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean) {
 		return null;
 	}
 

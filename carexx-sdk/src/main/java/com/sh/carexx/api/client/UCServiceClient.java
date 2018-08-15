@@ -35,6 +35,7 @@ import com.sh.carexx.bean.order.CustomerOrderFormBean;
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.bean.order.CustomerOrderScheduleFormBean;
 import com.sh.carexx.bean.order.InstSettleQueryFormBean;
+import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
 import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
 import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
@@ -1080,7 +1081,7 @@ public interface UCServiceClient {
 	BasicRetVal addCustomerOrderSchedule(@RequestBody CustomerOrderScheduleFormBean customerOrderScheduleFormBean);
 
 	@RequestMapping(value = "/customerorderschedule/mapp_add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	BasicRetVal mappAddCustomerOrderSchedule(@RequestBody CustomerOrderScheduleFormBean customerOrderScheduleFormBean);
+	BasicRetVal mappAddCustomerOrderSchedule(@RequestBody MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean);
 	
 	/**
 	 * 
