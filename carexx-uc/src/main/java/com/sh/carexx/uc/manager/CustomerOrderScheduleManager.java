@@ -1,14 +1,5 @@
 package com.sh.carexx.uc.manager;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.sh.carexx.bean.order.CustomerOrderScheduleFormBean;
 import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
 import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
@@ -25,6 +16,14 @@ import com.sh.carexx.model.uc.OrderSettle;
 import com.sh.carexx.uc.service.CustomerOrderScheduleService;
 import com.sh.carexx.uc.service.CustomerOrderService;
 import com.sh.carexx.uc.service.OrderSettleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 /**
  * ClassName: CustomerOrderScheduleManager <br/>
@@ -110,6 +109,10 @@ public class CustomerOrderScheduleManager {
 					orderSchedule.setServiceEndTime(serviceEndTime);
 					orderSchedule.setServiceDuration(24);
 					this.customerOrderScheduleService.updateSchedule(orderSchedule);
+					OrderSettle orderSettle = this.orderSettleService.getByScheduleId(customerOrderSchedule.getId());
+					orderSettle.setInstSettleAmt(orderSettle.getInstSettleAmt().multiply(new BigDecimal(2)));
+					orderSettle.setStaffSettleAmt(orderSettle.getStaffSettleAmt().multiply(new BigDecimal(2)));
+					this.orderSettleService.updateSettleAmt(orderSettle);
 				}
 			} else {
 				CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService
@@ -138,6 +141,10 @@ public class CustomerOrderScheduleManager {
 					amountEndDate = time;
 					amountNum += 12;
 					this.customerOrderScheduleService.updateSchedule(orderSchedule);
+					OrderSettle orderSettle = this.orderSettleService.getByScheduleId(customerOrderSchedule.getId());
+					orderSettle.setInstSettleAmt(orderSettle.getInstSettleAmt().multiply(new BigDecimal(2)));
+					orderSettle.setStaffSettleAmt(orderSettle.getStaffSettleAmt().multiply(new BigDecimal(2)));
+					this.orderSettleService.updateSettleAmt(orderSettle);
 					while (amountNum < hourNum) {
 						if (hourNum - amountNum < 24) {
 							this.doShedule(customerOrderScheduleFormBean, amountEndDate, serviceEndTime);
