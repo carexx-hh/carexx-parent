@@ -97,7 +97,14 @@ public interface CustomerOrderScheduleMapper {
 	List<CustomerOrderSchedule> selectByExistence(@Param("orderNo") String orderNo,
 			@Param("serviceStartTime") Date serviceStartTime, @Param("serviceEndTime") Date serviceEndTime);
 
-
+	/**
+	 *
+	 * updateSchedule:(合并排班,修改排班信息). <br/>
+	 *
+	 * @author hetao
+	 * @return
+	 * @since JDK 1.8
+	 */
 	int updateSchedule(CustomerOrderSchedule customerOrderSchedule);
 	/**
 	 * 

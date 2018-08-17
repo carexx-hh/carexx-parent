@@ -50,6 +50,15 @@ public interface CustomerOrderScheduleService {
 	 */
 	CustomerOrderSchedule getById(Long id);
 
+	/**
+	 *
+	 * getNearByOrderNo:(查询当前订单最近排班). <br/>
+	 *
+	 * @author hetao
+	 * @param orderNo
+	 * @return
+	 * @since JDK 1.8
+	 */
 	CustomerOrderSchedule getNearByOrderNo(String orderNo);
 	/**
 	 * 
