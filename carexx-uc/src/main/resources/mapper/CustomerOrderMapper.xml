@@ -39,7 +39,7 @@
 			carexx_customer_order
 		where
 			order_type = 1 and order_status = 3
-		and	service_start_time <![CDATA[<=]]> '2018-08-13 20:00:00'
+		and	service_start_time <![CDATA[<=]]> now()
 	</select>
 
 	<select id="selectByUserId" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">

@@ -290,6 +290,7 @@ public class CustomerOrderManager {
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
     public void updateServiceEndTime() throws BizException{
+    	System.out.println("订单");
         List<CustomerOrder> list = this.customerOrderService.getAllOrder();
         for (CustomerOrder order : list) {
             CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(order.getOrderNo());

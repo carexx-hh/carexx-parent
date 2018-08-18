@@ -215,6 +215,7 @@ public class CustomerOrderScheduleManager {
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void timingShedule() throws BizException {
+		System.out.println("排班");
 		List<CustomerOrderSchedule> customerOrderScheduleList = null;
 		customerOrderScheduleList = this.customerOrderScheduleService.queryLatelyCustomerOrderSchedule();
 		if(customerOrderScheduleList == null) {
