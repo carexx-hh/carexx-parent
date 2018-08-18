@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +51,6 @@ import com.sh.carexx.uc.service.UserService;
  * @since JDK 1.8
  */
 @Service
-@Component
 public class CustomerOrderManager {
     @Autowired
     private KeyGenerator keyGenerator;
@@ -290,7 +288,6 @@ public class CustomerOrderManager {
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
     public void updateServiceEndTime() throws BizException{
-    	System.out.println("订单");
         List<CustomerOrder> list = this.customerOrderService.getAllOrder();
         for (CustomerOrder order : list) {
             CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(order.getOrderNo());

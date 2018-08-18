@@ -17,14 +17,11 @@ public class TimingWorkManager {
 	@Autowired
 	private CustomerOrderScheduleManager customerOrderScheduleManager;
 	
-    @Scheduled(cron = "0/5 0 0 * * ? ")
+    @Scheduled(cron = "0 0 08,20 * * ?")
 	public void extendedOrder() {
-    	System.out.println("1");
 		try {
-			System.out.println("2");
 			this.customerOrderScheduleManager.timingShedule();
 			this.customerOrderManager.updateServiceEndTime();
-			
 		} catch (BizException e) {
 			e.printStackTrace();
 		}
