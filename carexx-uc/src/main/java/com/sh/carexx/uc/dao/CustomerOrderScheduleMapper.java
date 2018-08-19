@@ -148,15 +148,4 @@ public interface CustomerOrderScheduleMapper {
 	 * @since JDK 1.8
 	 */
 	List<Map<?,?>> selectWorkQuantityReport(WorkQuantityReportFormBean workQuantityReportFormBean);
-	
-	/**
-	 * 
-	 * selectLatelyCustomerOrderSchedule:(通过当前时间查询最近排班). <br/> 
-	 * 
-	 * @author zhoulei 
-	 * @param currentDate
-	 * @return 
-	 * @since JDK 1.8
-	 */
-	List<CustomerOrderSchedule> selectLatelyCustomerOrderSchedule();
 }

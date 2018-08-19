@@ -147,14 +147,4 @@ public interface CustomerOrderScheduleService {
 	 */
 	List<Map<String, Object>> queryWorkQuantityReport(WorkQuantityReportFormBean workQuantityReportFormBean);
 	
-	/**
-	 * 
-	 * queryLatelyCustomerOrderSchedule:(通过当前时间查询最近排班). <br/> 
-	 * 
-	 * @author zhoulei 
-	 * @param currentDate
-	 * @return 
-	 * @since JDK 1.8
-	 */
-	List<CustomerOrderSchedule> queryLatelyCustomerOrderSchedule();
 }

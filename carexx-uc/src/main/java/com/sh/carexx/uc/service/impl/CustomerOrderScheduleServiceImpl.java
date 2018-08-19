@@ -142,9 +142,4 @@ public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleSe
 		}
 		return result;
 	}
-
-	@Override
-	public List<CustomerOrderSchedule> queryLatelyCustomerOrderSchedule() {
-		return this.customerOrderScheduleMapper.selectLatelyCustomerOrderSchedule();
-	}
 }

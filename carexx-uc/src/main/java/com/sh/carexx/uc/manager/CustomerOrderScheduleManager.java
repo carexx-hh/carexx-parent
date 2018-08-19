@@ -215,15 +215,15 @@ public class CustomerOrderScheduleManager {
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void timingShedule() throws BizException {
-		List<CustomerOrderSchedule> customerOrderScheduleList = null;
-		customerOrderScheduleList = this.customerOrderScheduleService.queryLatelyCustomerOrderSchedule();
-		if(customerOrderScheduleList == null) {
-			return;
-		} 
-		for(CustomerOrderSchedule customerOrderSchedule: customerOrderScheduleList) {
-			SimpleDateFormat sdfHour = new SimpleDateFormat("HH"); 
-			int hour = Integer.parseInt(sdfHour.format(customerOrderSchedule.getServiceEndTime()));
-			if(hour == 8) {
+		  List<CustomerOrder> list = this.customerOrderService.getAllOrder();
+		  if(list == null) {
+			  return;
+		  }
+		  for (CustomerOrder order : list) {
+			  CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(order.getOrderNo());
+	    	  SimpleDateFormat sdfHour = new SimpleDateFormat("HH"); 
+	    	  int hour = Integer.parseInt(sdfHour.format(customerOrderSchedule.getServiceEndTime()));
+	    	  if(hour == 8) {
 				CustomerOrderSchedule newCustomerOrderSchedule = new CustomerOrderSchedule();
 				newCustomerOrderSchedule.setOrderNo(customerOrderSchedule.getOrderNo());
 				newCustomerOrderSchedule.setServiceStaffId(customerOrderSchedule.getServiceStaffId());
