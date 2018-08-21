@@ -1,43 +1,18 @@
 
 package com.sh.carexx.api.client;
 
-import java.math.BigDecimal;
-
-import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.sh.carexx.api.client.fallback.UCServiceFallback;
 import com.sh.carexx.bean.acl.AclLoginFormBean;
 import com.sh.carexx.bean.acl.AclModifyPwdFormBean;
 import com.sh.carexx.bean.acl.AclRegFormBean;
 import com.sh.carexx.bean.acl.AclRoleFormBean;
-import com.sh.carexx.bean.care.CareInstFormBean;
-import com.sh.carexx.bean.care.CareInstSysFormBean;
-import com.sh.carexx.bean.care.CareServiceFormBean;
-import com.sh.carexx.bean.care.InstCareServiceFormBean;
-import com.sh.carexx.bean.care.InstInpatientAreaFormBean;
-import com.sh.carexx.bean.care.InstServiceQueryFormBean;
+import com.sh.carexx.bean.care.*;
 import com.sh.carexx.bean.customer.CustomerPatientFormBean;
 import com.sh.carexx.bean.customer.InstCustomerFormBean;
 import com.sh.carexx.bean.dict.DictDataFormBean;
 import com.sh.carexx.bean.dict.DictFormBean;
 import com.sh.carexx.bean.holiday.InstHolidayFormBean;
-import com.sh.carexx.bean.order.CalcServiceFeeFormBean;
-import com.sh.carexx.bean.order.ConfirmCompletedOrderFormBean;
-import com.sh.carexx.bean.order.CustomerAppointOrderFormBean;
-import com.sh.carexx.bean.order.CustomerOrderAdjustFormBean;
-import com.sh.carexx.bean.order.CustomerOrderFormBean;
-import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
-import com.sh.carexx.bean.order.CustomerOrderScheduleFormBean;
-import com.sh.carexx.bean.order.InstSettleQueryFormBean;
-import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
-import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
-import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
+import com.sh.carexx.bean.order.*;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffWorkTypeFormBean;
@@ -48,11 +23,12 @@ import com.sh.carexx.bean.worktype.WorkTypeFormBean;
 import com.sh.carexx.bean.worktype.WorkTypeSettleQueryFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.web.BasicRetVal;
-import com.sh.carexx.model.uc.AclUserAcct;
-import com.sh.carexx.model.uc.InstSettle;
-import com.sh.carexx.model.uc.OrderPayment;
-import com.sh.carexx.model.uc.UserInfo;
-import com.sh.carexx.model.uc.UserMsg;
+import com.sh.carexx.model.uc.*;
+import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 @FeignClient(name = CarexxConstant.MSProvider.MS_PROVIDER_UC, fallback = UCServiceFallback.class)
 public interface UCServiceClient {
@@ -502,7 +478,6 @@ public interface UCServiceClient {
 	 * queryCareServiceForList:(分页查询所有平台服务). <br/>
 	 * 
 	 * @author hetao
-	 * @param careServiceFormBean
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -669,7 +644,6 @@ public interface UCServiceClient {
 	 * addCustomerOrder:(移动端添加客户服务预约订单). <br/>
 	 * 
 	 * @author hetao
-	 * @param customerOrderOintmentFormBean
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -710,7 +684,19 @@ public interface UCServiceClient {
 	 * @since JDK 1.8
 	 */
 	@RequestMapping(value = "/customerorder/cancel/{orderNo}", method = RequestMethod.GET)
-	BasicRetVal CancelCustomerOrder(@PathVariable("orderNo") String orderNo);
+	BasicRetVal cancelCustomerOrder(@PathVariable("orderNo") String orderNo);
+
+	/**
+	 *
+	 * mappCanceledCustomerOrder:(取消订单). <br/>
+	 *
+	 * @author hetao
+	 * @param orderNo
+	 * @return
+	 * @since JDK 1.8
+	 */
+	@RequestMapping(value = "/customerorder/mapp_cancel/{orderNo}", method = RequestMethod.GET)
+	BasicRetVal mappCancelCustomerOrder(@PathVariable("orderNo") String orderNo);
 
 	/**
 	 * 
@@ -788,8 +774,7 @@ public interface UCServiceClient {
 	 * 
 	 * customerOrderAdjustAmt:(调整订单金额). <br/> 
 	 * 
-	 * @author hetao 
-	 * @param cooustomerOrderAdjustAmtFormBean
+	 * @author hetao
 	 * @return 
 	 * @since JDK 1.8
 	 */
@@ -849,7 +834,6 @@ public interface UCServiceClient {
 	 * queryInstStaffForList:(查询机构员工信息分页). <br/>
 	 * 
 	 * @author zhoulei
-	 * @param instStaffFormBean
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -863,8 +847,6 @@ public interface UCServiceClient {
 	 * queryInstStaffByServiceId:(通过服务id和机构id查询). <br/>
 	 * 
 	 * @author zhoulei
-	 * @param serviceId
-	 * @param instId
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -1002,7 +984,6 @@ public interface UCServiceClient {
 	 * queryInstWorkTypeSettleForList:(分页连接查询各机构工种结算信息). <br/>
 	 * 
 	 * @author hetao
-	 * @param instSettleQueryFormBean
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -1267,9 +1248,6 @@ public interface UCServiceClient {
 	 * addInstSettle:(添加关账). <br/>
 	 * 
 	 * @author hetao
-	 * @param instId
-	 * @param settleMonth
-	 * @param creator
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -1281,7 +1259,6 @@ public interface UCServiceClient {
 	 * queryInstSettleAll:(查询机构下所有关账). <br/>
 	 * 
 	 * @author hetao
-	 * @param instId
 	 * @return
 	 * @since JDK 1.8
 	 */

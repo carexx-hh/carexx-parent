@@ -1,21 +1,5 @@
 package com.sh.carexx.admin.controller;
 
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.sh.carexx.bean.order.ConfirmCompletedOrderFormBean;
 import com.sh.carexx.bean.order.CustomerOrderAdjustFormBean;
 import com.sh.carexx.bean.order.CustomerOrderFormBean;
@@ -27,6 +11,20 @@ import com.sh.carexx.common.util.ExcelExporter;
 import com.sh.carexx.common.util.JSONUtils;
 import com.sh.carexx.common.web.BasicRetVal;
 import com.sh.carexx.common.web.DataRetVal;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/customerorder")
@@ -50,7 +48,7 @@ public class CustomerOrderController extends BaseController {
 
 	@RequestMapping(value = "/cancel/{orderNo}")
 	public BasicRetVal cancel(@PathVariable("orderNo") String orderNo) {
-		return this.ucServiceClient.CancelCustomerOrder(orderNo);
+		return this.ucServiceClient.cancelCustomerOrder(orderNo);
 	}
 
 	@RequestMapping(value = "/throughPay/{orderNo}")

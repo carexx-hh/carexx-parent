@@ -306,6 +306,18 @@ public class CustomerOrderManager {
     }
 
     /**
+     * mappCancel:(移动端取消订单). <br/>
+     *
+     * @param orderNo：订单号
+     * @throws BizException
+     * @author hetao
+     * @since JDK 1.8
+     */
+    public void mappCancel(String orderNo) throws BizException {
+        this.customerOrderService.mappOrderCancel(orderNo, OrderStatus.CANCELED.getValue());
+    }
+
+    /**
      * throughPay:(订单支付). <br/>
      *
      * @param orderNo

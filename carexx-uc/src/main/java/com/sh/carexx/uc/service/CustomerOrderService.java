@@ -123,6 +123,18 @@ public interface CustomerOrderService {
 	 * @since JDK 1.8
 	 */
 	void updateOrderCancel(String orderNo, Byte targetStatus) throws BizException;
+
+	/**
+	 *
+	 * mappOrderCancel:(取消订单). <br/>
+	 *
+	 * @author hetao
+	 * @param orderNo
+	 * @param targetStatus
+	 * @throws BizException
+	 * @since JDK 1.8
+	 */
+	void mappOrderCancel(String orderNo, Byte targetStatus) throws BizException;
 	
 	/**
 	 * 

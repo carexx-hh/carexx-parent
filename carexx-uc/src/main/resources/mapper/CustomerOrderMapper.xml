@@ -416,6 +416,16 @@
 			order_no = #{orderNo,jdbcType=VARCHAR} and order_status in (1,3)
 	</update>
 
+	<update id="mappOrderCancel">
+		UPDATE
+			carexx_customer_order
+		SET
+			order_status = #{targetStatus, jdbcType=TINYINT},
+			modify_time = now()
+		WHERE
+			order_no = #{orderNo,jdbcType=VARCHAR} and order_status = 1
+	</update>
+
 	<update id="update"  parameterType="com.sh.carexx.model.uc.CustomerOrder">
 		update
 			carexx_customer_order

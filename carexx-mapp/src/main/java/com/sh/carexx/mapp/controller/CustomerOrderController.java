@@ -59,7 +59,7 @@ public class CustomerOrderController extends BaseController {
 
 	@RequestMapping(value = "/cancel/{orderNo}")
 	public BasicRetVal cancel(@PathVariable("orderNo") String orderNo) {
-		return this.ucServiceClient.CancelCustomerOrder(orderNo);
+		return this.ucServiceClient.mappCancelCustomerOrder(orderNo);
 	}
 
 	@RequestMapping(value = "/calc_service_fee")

@@ -125,6 +125,18 @@ public interface CustomerOrderMapper {
 	 * @since JDK 1.8
 	 */
 	int updateOrderCancel(@Param("orderNo") String orderNo, @Param("targetStatus") Byte targetStatus);
+
+	/**
+	 *
+	 * mappOrderCancel:(移动端取消订单). <br/>
+	 *
+	 * @author hetao
+	 * @param orderNo
+	 * @param targetStatus
+	 * @return
+	 * @since JDK 1.8
+	 */
+	int mappOrderCancel(@Param("orderNo") String orderNo, @Param("targetStatus") Byte targetStatus);
 	
 	/**
 	 * 
