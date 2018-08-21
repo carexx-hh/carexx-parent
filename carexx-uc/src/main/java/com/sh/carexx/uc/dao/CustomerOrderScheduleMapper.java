@@ -1,12 +1,13 @@
 package com.sh.carexx.uc.dao;
 
-import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
-import com.sh.carexx.model.uc.CustomerOrderSchedule;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
+import com.sh.carexx.model.uc.CustomerOrderSchedule;
 
 /**
  * 
@@ -147,4 +148,15 @@ public interface CustomerOrderScheduleMapper {
 	 * @since JDK 1.8
 	 */
 	List<Map<?,?>> selectWorkQuantityReport(WorkQuantityReportFormBean workQuantityReportFormBean);
+	
+	/**
+	 * 
+	 * selectLatelyCustomerOrderSchedule:(通过当前时间查询最近排班). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param currentDate
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<CustomerOrderSchedule> selectLatelyCustomerOrderSchedule(@Param("currentDate") Date currentDate);
 }
