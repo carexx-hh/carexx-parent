@@ -57,6 +57,11 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	}
 
 	@Override
+	public List<Map<?, ?>> getOrderDetail(String orderNo) {
+		return this.customerOrderMapper.selectOrderDetail(orderNo);
+	}
+
+	@Override
 	public Integer getCustomerOrderCount(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		if (ValidUtils.isDate(customerOrderQueryFormBean.getServiceStartTime())) {
 			customerOrderQueryFormBean.setServiceStartTime(

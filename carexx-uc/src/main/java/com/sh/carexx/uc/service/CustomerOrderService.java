@@ -58,6 +58,16 @@ public interface CustomerOrderService {
 	List<Map<?, ?>> getByUserId(CustomerOrderQueryFormBean customerOrderQueryFormBean);
 
 	/**
+	 *
+	 * selectOrderDetail:(患者端通过订单号查询订单详情). <br/>
+	 *
+	 * @author hetao
+	 * @return
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> getOrderDetail(String orderNo);
+
+	/**
 	 * 
 	 * getCustomerOrderCount:(查询客户预约服务订单总数). <br/>
 	 * 

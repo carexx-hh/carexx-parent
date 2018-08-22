@@ -50,7 +50,7 @@ public interface CustomerOrderMapper {
 
 	/**
 	 * 
-	 * selectByUserId:(客户端通过客户id查询服务订单分页). <br/>
+	 * selectByUserId:(患者端通过客户id查询服务订单分页). <br/>
 	 * 
 	 * @author hetao
 	 * @param customerOrderQueryFormBean
@@ -59,6 +59,16 @@ public interface CustomerOrderMapper {
 	 */
 	List<Map<?, ?>> selectByUserId(CustomerOrderQueryFormBean customerOrderQueryFormBean);
 
+
+	/**
+	 *
+	 * selectOrderDetail:(患者端通过订单号查询订单详情). <br/>
+	 *
+	 * @author hetao
+	 * @return
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> selectOrderDetail(@Param("orderNo") String orderNo);
 	/**
 	 * 
 	 * selectCustomerOrderCount:(查询客户预约服务订单总数). <br/>

@@ -47,7 +47,7 @@ public class CustomerOrderController {
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
 
-	@RequestMapping(value = "/add_appointorder", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/add_appointOrder", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public BasicRetVal addAppointOrder(@RequestBody CustomerAppointOrderFormBean customerAppointOrderFormBean) {
 		try {
 			this.customerOrderManager.addAppointOrder(customerAppointOrderFormBean);
@@ -70,6 +70,12 @@ public class CustomerOrderController {
 	@RequestMapping(value = "/list_order", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryForListByUserId(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		List<Map<?, ?>> result = this.customerOrderService.getByUserId(customerOrderQueryFormBean);
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,result).toJSON();
+	}
+
+	@RequestMapping(value = "/detail/{orderNo}", method = RequestMethod.GET)
+	public String queryOrderDetail(@PathVariable("orderNo") String orderNo) {
+		List<Map<?, ?>> result = this.customerOrderService.getOrderDetail(orderNo);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,result).toJSON();
 	}
 

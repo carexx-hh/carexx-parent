@@ -45,27 +45,17 @@
 	<select id="selectByUserId" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">
 		SELECT
 			co.id id,
-			co.order_type orderType,
-			co.inst_id instId,
-			ci.inst_name instName,
-			co.service_id serviceId,
-			cs.service_name serviceName,
 			co.order_no orderNo,
+			cs.service_name serviceName,
 			co.order_amt orderAmt,
 			ics.service_price servicePrice,
-			cia.inpatient_area inpatientArea,
-			co.inpatient_ward inpatientWard,
 			co.service_start_time serviceStartTime,
 			co.service_end_time serviceEndTime,
 			co.order_status orderStatus,
-			co.order_remark orderRemark,
-			co.create_time createTime,
-			co.modify_time modifyTime
+			co.create_time createTime
 		FROM
 			carexx_customer_order co
-		LEFT JOIN carexx_care_inst ci ON co.inst_id = ci.id
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
-		LEFT JOIN carexx_inst_inpatient_area cia ON cia.id = co.inpatient_area_id
 		LEFT JOIN carexx_inst_care_service ics ON co.inst_id = ics.inst_id
 		AND co.service_id = ics.service_id
 		WHERE
@@ -77,6 +67,40 @@
         </if>
 		ORDER BY
 			co.create_time DESC
+	</select>
+
+	<select id="selectOrderDetail" parameterType="java.lang.String" resultType="java.util.Map">
+		SELECT
+			co.id id,
+			co.order_no orderNo,
+			cs.service_name serviceName,
+			ics.service_price servicePrice,
+			ic.real_name patientName,
+			ic.phone patientPhone,
+			cia.inpatient_area inpatientArea,
+			co.inpatient_ward inpatientWard,
+			co.service_start_time serviceStartTime,
+			co.service_end_time serviceEndTime,
+			co.order_remark orderRemark,
+			cis.real_name staffName,
+			cis.phone staffPhone,
+			ci.inst_name instName,
+			cos.service_status serviceStatus
+		FROM
+			carexx_customer_order co
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_inst_care_service ics ON co.inst_id = ics.inst_id
+		AND co.service_id = ics.service_id
+		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
+		LEFT JOIN carexx_inst_inpatient_area cia ON cia.id = co.inpatient_area_id
+		LEFT JOIN carexx_inst_staff cis ON cos.service_staff_id = cis.id
+		LEFT JOIN carexx_care_inst ci ON cis.service_inst_id = ci.id
+		WHERE
+			co.order_no = #{orderNo,jdbcType=VARCHAR}
+		ORDER BY
+			cos.service_end_time DESC
+		LIMIT 0,1
 	</select>
 
 	<select id="selectCustomerOrderCount" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.lang.Integer">

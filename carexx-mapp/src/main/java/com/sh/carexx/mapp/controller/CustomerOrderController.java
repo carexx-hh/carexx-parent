@@ -30,7 +30,12 @@ public class CustomerOrderController extends BaseController {
 		return this.ucServiceClient.queryCustomerOrderListByUserId(customerOrderQueryFormBean);
 	}
 
-	@RequestMapping(value = "/add_appointorder")
+	@RequestMapping(value="/detail/{orderNo}")
+	public String queryOrderDetailByOrderNo(@PathVariable("orderNo") String orderNo){
+		return this.ucServiceClient.queryOrderDetailByOrderNo(orderNo);
+	}
+
+	@RequestMapping(value = "/add_appointOrder")
 	public BasicRetVal addAppointOrder(@Valid CustomerAppointOrderFormBean customerAppointOrderFormBean,
 			BindingResult bindingResult) {
 		if (customerAppointOrderFormBean.getuserId() == null) {
