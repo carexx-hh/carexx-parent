@@ -1,5 +1,15 @@
 package com.sh.carexx.uc.manager;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.sh.carexx.bean.order.CustomerOrderScheduleFormBean;
 import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
 import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
@@ -16,14 +26,6 @@ import com.sh.carexx.model.uc.OrderSettle;
 import com.sh.carexx.uc.service.CustomerOrderScheduleService;
 import com.sh.carexx.uc.service.CustomerOrderService;
 import com.sh.carexx.uc.service.OrderSettleService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
 
 /**
  * ClassName: CustomerOrderScheduleManager <br/>
@@ -210,6 +212,44 @@ public class CustomerOrderScheduleManager {
 					OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.IN_SERVICE.getValue());
 		}
 	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
+	public void timingShedule() throws BizException {
+		List<CustomerOrderSchedule> customerOrderScheduleList = null;
+		customerOrderScheduleList = this.customerOrderScheduleService.queryLatelyCustomerOrderSchedule();
+		if(customerOrderScheduleList == null) {
+			return;
+		} 
+		for(CustomerOrderSchedule customerOrderSchedule: customerOrderScheduleList) {
+			SimpleDateFormat sdfHour = new SimpleDateFormat("HH"); 
+			int hour = Integer.parseInt(sdfHour.format(customerOrderSchedule.getServiceEndTime()));
+			if(hour == 8) {
+				CustomerOrderSchedule newCustomerOrderSchedule = new CustomerOrderSchedule();
+				newCustomerOrderSchedule.setOrderNo(customerOrderSchedule.getOrderNo());
+				newCustomerOrderSchedule.setServiceStaffId(customerOrderSchedule.getServiceStaffId());
+				newCustomerOrderSchedule.setServiceStartTime(customerOrderSchedule.getServiceEndTime());
+				newCustomerOrderSchedule.setServiceEndTime(DateUtils.addHour(customerOrderSchedule.getServiceEndTime(), 12));
+				newCustomerOrderSchedule.setServiceDuration(12);
+				newCustomerOrderSchedule.setWorkTypeSettleId(customerOrderSchedule.getWorkTypeSettleId());
+				newCustomerOrderSchedule.setServiceStatus(OrderScheduleStatus.IN_SERVICE.getValue());
+				// 添加排班一条记录
+				this.customerOrderScheduleService.save(newCustomerOrderSchedule);
+				// 添加结算记录
+				this.orderSettleManager.add(newCustomerOrderSchedule);
+			} else if(hour == 20) {
+				CustomerOrderSchedule orderSchedule = new CustomerOrderSchedule();
+				orderSchedule.setId(customerOrderSchedule.getId());
+				Date time = DateUtils.addHour(customerOrderSchedule.getServiceEndTime(), 12);
+				orderSchedule.setServiceEndTime(time);
+				orderSchedule.setServiceDuration(24);
+				this.customerOrderScheduleService.updateSchedule(orderSchedule);
+				OrderSettle orderSettle = this.orderSettleService.getByScheduleId(customerOrderSchedule.getId());
+				orderSettle.setInstSettleAmt(orderSettle.getInstSettleAmt().multiply(new BigDecimal(2)));
+				orderSettle.setStaffSettleAmt(orderSettle.getStaffSettleAmt().multiply(new BigDecimal(2)));
+				this.orderSettleService.updateSettleAmt(orderSettle);
+			}
+		}
+	}
 
 	/**
 	 * delete:(删除排班). <br/>
@@ -360,6 +400,16 @@ public class CustomerOrderScheduleManager {
 		this.orderSettleService.updateSettleAmt(orderSettle);
 	}
 
+	/**
+	 * 
+	 * mappAdd:(移动端添加订单). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param mappCustomerOrderScheduleFormBean
+	 * @throws BizException 
+	 * @since JDK 1.8
+	 */
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void mappAdd(MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean) throws BizException {
 		//获取订单开始结束时间
 		CustomerOrder customerOrder = customerOrderService.getByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());

@@ -44,7 +44,7 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
 	@Override
 	public void updatePayAmt(OrderPayment orderPayment) throws BizException {
 		try {
-			int rows = this.orderPaymentMapper.updatePayAmt(orderPayment);
+			this.orderPaymentMapper.updatePayAmt(orderPayment);
 		} catch (Exception e) {
 			throw new BizException(ErrorCode.DB_ERROR, e);
 		}

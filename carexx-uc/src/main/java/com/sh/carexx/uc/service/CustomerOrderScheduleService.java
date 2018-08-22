@@ -1,12 +1,12 @@
 package com.sh.carexx.uc.service;
 
-import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
-import com.sh.carexx.common.exception.BizException;
-import com.sh.carexx.model.uc.CustomerOrderSchedule;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
+import com.sh.carexx.common.exception.BizException;
+import com.sh.carexx.model.uc.CustomerOrderSchedule;
 
 /**
  * 
@@ -146,4 +146,15 @@ public interface CustomerOrderScheduleService {
 	 * @since JDK 1.8
 	 */
 	List<Map<String, Object>> queryWorkQuantityReport(WorkQuantityReportFormBean workQuantityReportFormBean);
+	
+	/**
+	 * 
+	 * queryLatelyCustomerOrderSchedule:(通过当前时间查询最近排班). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param currentDate
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<CustomerOrderSchedule> queryLatelyCustomerOrderSchedule();
 }

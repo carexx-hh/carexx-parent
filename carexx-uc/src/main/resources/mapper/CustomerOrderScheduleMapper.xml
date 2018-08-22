@@ -241,6 +241,41 @@
 		LEFT JOIN carexx_care_inst ci ON isf.inst_id = ci.id
 	</select>
 	
+	<select id="selectLatelyCustomerOrderSchedule" resultMap="BaseResultMap">
+		SELECT
+			cos1.id,
+			cos1.order_no,
+			cos1.service_staff_id,
+			cos1.service_start_time,
+			cos1.service_end_time,
+			cos1.service_duration,
+			cos1.work_type_settle_id,
+			cos1.service_status,
+			cos1.create_time,
+			cos1.modify_time
+		FROM
+			carexx_customer_order_schedule cos1,
+			(
+				SELECT
+					order_no,
+					max(service_end_time) service_end_time
+				FROM
+					carexx_customer_order_schedule
+				GROUP BY
+					order_no
+			) cos2
+		WHERE
+			cos1.order_no = cos2.order_no
+		AND cos1.service_end_time = cos2.service_end_time
+		AND DATE_FORMAT(
+			cos1.service_end_time,
+			<![CDATA['%Y-%m-%d %H']]>
+		) = DATE_FORMAT(
+			now(),
+			<![CDATA['%Y-%m-%d %H']]>
+		)
+	</select>
+	
 	<update id="updateStatus">
 		UPDATE
 			carexx_customer_order_schedule

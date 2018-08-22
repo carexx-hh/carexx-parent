@@ -158,5 +158,5 @@ public interface CustomerOrderScheduleMapper {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<CustomerOrderSchedule> selectLatelyCustomerOrderSchedule(@Param("currentDate") Date currentDate);
+	List<CustomerOrderSchedule> selectLatelyCustomerOrderSchedule();
 }
