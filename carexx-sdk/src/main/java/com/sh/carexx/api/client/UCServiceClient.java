@@ -647,7 +647,7 @@ public interface UCServiceClient {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	@RequestMapping(value = "/customerorder/add_appointorder", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/customerorder/add_appointOrder", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal addCustomerAppointOrder(@RequestBody CustomerAppointOrderFormBean customerAppointOrderFormBean);
 
 	/**
@@ -674,6 +674,16 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/customerorder/list_order", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryCustomerOrderListByUserId(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean);
 
+	/**
+	 *
+	 * queryOrderDetail:(移动端通过客户id查询客户预约服务订单). <br/>
+	 *
+	 * @author hetao
+	 * @return
+	 * @since JDK 1.8
+	 */
+	@RequestMapping(value = "/customerorder/detail/{orderNo}", method = RequestMethod.GET)
+	String queryOrderDetailByOrderNo(@PathVariable("orderNo") String orderNo);
 	/**
 	 * 
 	 * CanceledCustomerOrder:(取消订单). <br/>
