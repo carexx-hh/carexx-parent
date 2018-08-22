@@ -689,7 +689,7 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
-	public String queryInstStaffServiceNum(InstStaffQueryFormBean instStaffQueryFormBean) {
+	public String queryInstStaffServiceNum(String orderNo) {
 		return null;
 	}
 

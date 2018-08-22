@@ -68,11 +68,11 @@ public class InstStaffController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, new PagerBean(totalNum, resultList)).toJSON();
 	}
 
-	@RequestMapping(value = "/serviceNum", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String queryForServiceNum(@RequestBody InstStaffQueryFormBean instStaffQueryFormBean) {
+	@RequestMapping(value = "/serviceNum/{orderNo}", method = RequestMethod.GET)
+	public String queryForServiceNum(@PathVariable("orderNo") String orderNo) {
 		List<Map<?, ?>> instStaffList = null;
 		try {
-		instStaffList = this.instStaffManager.serviceNum(instStaffQueryFormBean);
+		instStaffList = this.instStaffManager.serviceNum(orderNo);
 		} catch (BizException e) {
 			return new DataRetVal(CarexxConstant.RetCode.SERVER_ERROR, null).toJSON();
 		}

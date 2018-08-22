@@ -863,8 +863,8 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/inststaff/list_by_serviceid", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryInstStaffByServiceId(@RequestBody InstStaffQueryFormBean instStaffQueryFormBean);
 	
-	@RequestMapping(value = "/inststaff/serviceNum", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	String queryInstStaffServiceNum(@RequestBody InstStaffQueryFormBean instStaffQueryFormBean);
+	@RequestMapping(value = "/inststaff/serviceNum/{orderNo}", method = RequestMethod.GET)
+	String queryInstStaffServiceNum(@PathVariable("orderNo") String orderNo);
 	
 
 	/**

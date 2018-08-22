@@ -1,5 +1,6 @@
 package com.sh.carexx.uc.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -55,13 +56,13 @@ public class InstStaffServiceImpl implements InstStaffService {
 	}
 	
 	@Override
-	public List<Map<?, ?>> queryInstStaffIdle(InstStaffQueryFormBean instStaffQueryFormBean) {
-		return this.instStaffMapper.selectInstStaffIdle(instStaffQueryFormBean);
+	public List<Map<?, ?>> queryInstStaffIdle(Integer serviceId,Integer serviceInstId,Date currentTime) {
+		return this.instStaffMapper.selectInstStaffIdle(serviceId,serviceInstId,currentTime);
 	}
 
 	@Override
-	public List<Map<?, ?>> queryInstStaffBusy(InstStaffQueryFormBean instStaffQueryFormBean) {
-		return this.instStaffMapper.selectInstStaffBusy(instStaffQueryFormBean);
+	public List<Map<?, ?>> queryInstStaffBusy(Integer serviceId,Integer serviceInstId,Date currentTime) {
+		return this.instStaffMapper.selectInstStaffBusy(serviceId,serviceInstId,currentTime);
 	}
 	
 	@Override

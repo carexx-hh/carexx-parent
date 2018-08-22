@@ -1,5 +1,6 @@
 package com.sh.carexx.uc.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -84,7 +85,7 @@ public interface InstStaffMapper {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> selectInstStaffIdle(InstStaffQueryFormBean instStaffQueryFormBean);
+	List<Map<?, ?>> selectInstStaffIdle(@Param("serviceId")Integer serviceId,@Param("serviceInstId")Integer serviceInstId,@Param("currentTime")Date currentTime);
 	
 	/**
 	 * 
@@ -95,7 +96,7 @@ public interface InstStaffMapper {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> selectInstStaffBusy(InstStaffQueryFormBean instStaffQueryFormBean);
+	List<Map<?, ?>> selectInstStaffBusy(@Param("serviceId")Integer serviceId,@Param("serviceInstId")Integer serviceInstId,@Param("currentTime")Date currentTime);
 
 	/**
 	 * 

@@ -1,5 +1,6 @@
 package com.sh.carexx.uc.manager;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -7,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sh.carexx.bean.staff.InstStaffFormBean;
-import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.enums.UseStatus;
 import com.sh.carexx.common.enums.staff.StaffStatus;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.util.DateUtils;
 import com.sh.carexx.common.util.ValidUtils;
+import com.sh.carexx.model.uc.CustomerOrder;
 import com.sh.carexx.model.uc.CustomerOrderSchedule;
 import com.sh.carexx.model.uc.InstStaff;
 import com.sh.carexx.model.uc.InstStaffWorkType;
@@ -131,17 +132,22 @@ public class InstStaffManager {
 		this.instStaffService.update(instStaff);
 	}
 	
-	public List<Map<?, ?>> serviceNum(InstStaffQueryFormBean instStaffQueryFormBean) throws BizException {
+	public List<Map<?, ?>> serviceNum(String orderNo) throws BizException {
+		CustomerOrder customerOrder = new CustomerOrder();
+		customerOrder = customerOrderService.getByOrderNo(orderNo);
 		List<Map<?, ?>> instStaffList = null;
-		CustomerOrderSchedule customerOrderSchedule = customerOrderScheduleService.getNearByOrderNo(instStaffQueryFormBean.getOrderNo());
+		CustomerOrderSchedule customerOrderSchedule = customerOrderScheduleService.getNearByOrderNo(orderNo);
+		Integer serviceId = customerOrder.getServiceId();
+		Integer serviceInstId = customerOrder.getInstId();
+		Date currentTime = null;
 		if(customerOrderSchedule != null) {
-			instStaffQueryFormBean.setCurrentTime(customerOrderSchedule.getServiceEndTime());
+			currentTime = customerOrderSchedule.getServiceEndTime();
 		} else {
-			instStaffQueryFormBean.setCurrentTime(customerOrderService.getByOrderNo(instStaffQueryFormBean.getOrderNo()).getServiceStartTime());
+			currentTime = customerOrder.getServiceStartTime();
 		}
-		List<Map<?, ?>> idleList = instStaffService.queryInstStaffIdle(instStaffQueryFormBean);
+		List<Map<?, ?>> idleList = instStaffService.queryInstStaffIdle(serviceId,serviceInstId,currentTime);
 		instStaffList = idleList;
-		List<Map<?, ?>> busyList = instStaffService.queryInstStaffBusy(instStaffQueryFormBean);
+		List<Map<?, ?>> busyList = instStaffService.queryInstStaffBusy(serviceId,serviceInstId,currentTime);
 		for (Map<?, ?> map : busyList) {
 			if(map.get("id") != null) {
 				instStaffList.add(map);

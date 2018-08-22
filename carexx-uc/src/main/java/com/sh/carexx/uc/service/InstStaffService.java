@@ -1,5 +1,6 @@
 package com.sh.carexx.uc.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -82,7 +83,7 @@ public interface InstStaffService {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> queryInstStaffIdle(InstStaffQueryFormBean instStaffQueryFormBean);
+	List<Map<?, ?>> queryInstStaffIdle(Integer serviceId,Integer serviceInstId,Date currentTime);
 
 	/**
 	 * 
@@ -93,7 +94,7 @@ public interface InstStaffService {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> queryInstStaffBusy(InstStaffQueryFormBean instStaffQueryFormBean);
+	List<Map<?, ?>> queryInstStaffBusy(Integer serviceId,Integer serviceInstId,Date currentTime);
 	/**
 	 * 
 	 * getInstStaffCount:(员工信息分页统计). <br/>

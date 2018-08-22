@@ -254,7 +254,8 @@
 			cos1.create_time,
 			cos1.modify_time
 		FROM
-			carexx_customer_order_schedule cos1,
+			carexx_customer_order_schedule cos1
+			LEFT JOIN carexx_customer_order co ON cos1.order_no = co.order_no,
 			(
 				SELECT
 					order_no,
@@ -267,6 +268,7 @@
 		WHERE
 			cos1.order_no = cos2.order_no
 		AND cos1.service_end_time = cos2.service_end_time
+		AND co.order_type = 1
 		AND DATE_FORMAT(
 			cos1.service_end_time,
 			<![CDATA['%Y-%m-%d %H']]>
