@@ -1,17 +1,16 @@
 package com.sh.carexx.uc.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sh.carexx.bean.customer.InstCustomerFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.InstCustomer;
 import com.sh.carexx.uc.dao.InstCustomerMapper;
 import com.sh.carexx.uc.service.InstCustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class InstCustomerServiceImpl implements InstCustomerService {
@@ -68,8 +67,8 @@ public class InstCustomerServiceImpl implements InstCustomerService {
 	}
 
 	@Override
-	public InstCustomer queryCustomerExistence(Integer instId, Integer userId, String realName) {
-		return this.instCustomerMapper.selectCustomerExistence(instId, userId, realName);
+	public InstCustomer queryCustomerExistence(InstCustomer instCustomer) {
+		return this.instCustomerMapper.selectCustomerExistence(instCustomer);
 	}
 
 }

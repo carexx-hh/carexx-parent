@@ -223,9 +223,12 @@ public class CustomerOrderManager {
         //客户下单同时添加一条客户信息
         Integer customerId = 0;
         UserInfo userInfo = this.userService.getById(customerAppointOrderFormBean.getuserId());
-        InstCustomer instCustomer = this.instCustomerService.queryCustomerExistence(
-                customerAppointOrderFormBean.getInstId(), customerAppointOrderFormBean.getuserId(),
-                customerAppointOrderFormBean.getPatientName());
+        InstCustomer customer=new InstCustomer();
+        customer.setInstId(customerAppointOrderFormBean.getInstId());
+        customer.setUserId(customerAppointOrderFormBean.getuserId());
+        customer.setRealName(customerAppointOrderFormBean.getPatientName());
+        customer.setPhone(customerAppointOrderFormBean.getPhone());
+        InstCustomer instCustomer = this.instCustomerService.queryCustomerExistence(customer);
         if (instCustomer == null) {
             instCustomer = new InstCustomer();
             instCustomer.setInstId(customerAppointOrderFormBean.getInstId());

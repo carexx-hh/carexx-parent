@@ -1,11 +1,11 @@
 package com.sh.carexx.uc.service;
 
-import java.util.List;
-import java.util.Map;
-
 import com.sh.carexx.bean.customer.InstCustomerFormBean;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.InstCustomer;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -21,7 +21,6 @@ public interface InstCustomerService {
 	 * getInstCustomerCount:(分页条件总数统计). <br/>
 	 * 
 	 * @author hetao
-	 * @param instCustomerFromBean
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -32,7 +31,6 @@ public interface InstCustomerService {
 	 * queryInstCustomerList:(左连接医护机构并分页查询客户信息). <br/>
 	 * 
 	 * @author hetao
-	 * @param instCustomerFromBean
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -73,10 +71,8 @@ public interface InstCustomerService {
 	 * getByInstIdAndRealName:(通过机构id和客户名查客户信息). <br/>
 	 * 
 	 * @author hetao
-	 * @param instId
-	 * @param realName
 	 * @return
 	 * @since JDK 1.8
 	 */
-	InstCustomer queryCustomerExistence(Integer instId, Integer userId, String realName);
+	InstCustomer queryCustomerExistence(InstCustomer instCustomer);
 }
