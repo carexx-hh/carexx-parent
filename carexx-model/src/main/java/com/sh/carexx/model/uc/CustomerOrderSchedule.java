@@ -18,6 +18,8 @@ public class CustomerOrderSchedule {
 	private Integer workTypeSettleId;
 
 	private Byte serviceStatus;
+	
+	private String scheduleRemark;
 
 	private Date createTime;
 
@@ -85,6 +87,14 @@ public class CustomerOrderSchedule {
 
 	public void setServiceStatus(Byte serviceStatus) {
 		this.serviceStatus = serviceStatus;
+	}
+
+	public String getScheduleRemark() {
+		return scheduleRemark;
+	}
+
+	public void setScheduleRemark(String scheduleRemark) {
+		this.scheduleRemark = scheduleRemark;
 	}
 
 	public Date getCreateTime() {

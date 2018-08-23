@@ -10,6 +10,7 @@
 		<result column="service_duration" jdbcType="INTEGER" property="serviceDuration" />
 		<result column="work_type_settle_id" jdbcType="INTEGER" property="workTypeSettleId" />
 		<result column="service_status" jdbcType="TINYINT" property="serviceStatus" />
+		<result column="schedule_remark" jdbcType="VARCHAR" property="scheduleRemark" />
 		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
 		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
 	</resultMap>
@@ -195,7 +196,7 @@
 			order_no,service_staff_id,
 			service_start_time, service_end_time,
 			service_duration, work_type_settle_id,
-			service_status,create_time
+			service_status,schedule_remark,create_time
 		)
 		VALUES (
 			#{orderNo,jdbcType=VARCHAR},
@@ -205,6 +206,7 @@
 			#{serviceDuration,jdbcType=INTEGER},
 			#{workTypeSettleId,jdbcType=INTEGER},
 			#{serviceStatus,jdbcType=TINYINT},
+			#{scheduleRemark,jdbcType=VARCHAR},
 			now()
 		)
 	</insert>

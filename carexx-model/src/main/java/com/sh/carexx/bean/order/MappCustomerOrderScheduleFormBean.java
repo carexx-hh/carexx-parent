@@ -22,6 +22,8 @@ public class MappCustomerOrderScheduleFormBean extends BasicFormBean {
 	@NotBlank
 	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
 	private String workTypeSettleId;
+	
+	private String scheduleRemark;
 
 	public String getOrderNo() {
 		return orderNo;
@@ -53,4 +55,13 @@ public class MappCustomerOrderScheduleFormBean extends BasicFormBean {
 		this.workTypeSettleId = workTypeSettleId;
 	}
 
+	public String getScheduleRemark() {
+		return scheduleRemark;
+	}
+
+	public void setScheduleRemark(String scheduleRemark) {
+		this.scheduleRemark = scheduleRemark;
+	}
+
+	
 }

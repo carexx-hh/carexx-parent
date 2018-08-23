@@ -422,9 +422,9 @@ public class CustomerOrderScheduleManager {
 		customerOrderSchedule.setServiceStartTime(serviceStartTime);
 		customerOrderSchedule.setServiceEndTime(serviceEndTime);
 		customerOrderSchedule.setServiceDuration(DateUtils.getHourDiff(serviceStartTime, serviceEndTime));
-		
 		customerOrderSchedule.setWorkTypeSettleId(mappCustomerOrderScheduleFormBean.getWorkTypeSettleId());
 		customerOrderSchedule.setServiceStatus(OrderScheduleStatus.IN_SERVICE.getValue());
+		customerOrderSchedule.setScheduleRemark(mappCustomerOrderScheduleFormBean.getScheduleRemark());
 		// 添加排班一条记录
 		this.customerOrderScheduleService.save(customerOrderSchedule);
 		// 添加结算记录
