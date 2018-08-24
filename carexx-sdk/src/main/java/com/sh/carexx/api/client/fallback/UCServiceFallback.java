@@ -389,6 +389,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public String queryDoneOrderByUserId(Integer userId) {
+		return null;
+	}
+
+	@Override
 	public String queryOrderDetailByOrderNo(String orderNo) {
 		return null;
 	}

@@ -73,6 +73,12 @@ public class CustomerOrderController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,result).toJSON();
 	}
 
+	@RequestMapping(value = "/done_order/{userId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String queryDoneOrderByUserId(@PathVariable("userId") Integer userId) {
+		List<Map<?, ?>> result = this.customerOrderService.getDoneOrderByUserId(userId);
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,result).toJSON();
+	}
+
 	@RequestMapping(value = "/detail/{orderNo}", method = RequestMethod.GET)
 	public String queryOrderDetail(@PathVariable("orderNo") String orderNo) {
 		List<Map<?, ?>> result = this.customerOrderService.getOrderDetail(orderNo);

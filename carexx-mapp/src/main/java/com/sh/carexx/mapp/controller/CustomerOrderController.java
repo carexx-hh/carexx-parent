@@ -30,6 +30,12 @@ public class CustomerOrderController extends BaseController {
 		return this.ucServiceClient.queryCustomerOrderListByUserId(customerOrderQueryFormBean);
 	}
 
+	@RequestMapping(value = "/done_order")
+	public String queryForListByCustomerId() {
+		Integer userId = this.getCurrentUser().getId();
+		return this.ucServiceClient.queryDoneOrderByUserId(userId);
+	}
+
 	@RequestMapping(value="/detail/{orderNo}")
 	public String queryOrderDetailByOrderNo(@PathVariable("orderNo") String orderNo){
 		return this.ucServiceClient.queryOrderDetailByOrderNo(orderNo);

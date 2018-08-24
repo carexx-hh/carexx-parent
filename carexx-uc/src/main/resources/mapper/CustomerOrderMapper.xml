@@ -68,6 +68,29 @@
 		ORDER BY
 			co.create_time DESC
 	</select>
+	
+	<select id="selectDoneOrderByUserId" parameterType="java.lang.Integer" resultType="java.util.Map">
+		SELECT
+		co.id id,
+		co.order_no orderNo,
+		cs.service_name serviceName,
+		co.order_amt orderAmt,
+		ics.service_price servicePrice,
+		co.service_start_time serviceStartTime,
+		co.service_end_time serviceEndTime,
+		co.order_status orderStatus,
+		co.create_time createTime
+		FROM
+		carexx_customer_order co
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_inst_care_service ics ON co.inst_id = ics.inst_id
+		AND co.service_id = ics.service_id
+		WHERE
+		co.user_id = #{userId,jdbcType=INTEGER}
+		and co.order_status in (5,6)
+		ORDER BY
+		co.create_time DESC
+	</select>
 
 	<select id="selectOrderDetail" parameterType="java.lang.String" resultType="java.util.Map">
 		SELECT

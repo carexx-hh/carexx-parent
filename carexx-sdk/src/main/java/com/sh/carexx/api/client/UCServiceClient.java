@@ -676,6 +676,16 @@ public interface UCServiceClient {
 
 	/**
 	 *
+	 * queryDoneOrderByUserId:(移动端通过客户id查询完成和已支付订单). <br/>
+	 *
+	 * @author hetao
+	 * @return
+	 * @since JDK 1.8
+	 */
+	@RequestMapping(value = "/customerorder/done_order/{userId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String queryDoneOrderByUserId(@PathVariable("userId") Integer userId);
+	/**
+	 *
 	 * queryOrderDetail:(移动端通过客户id查询客户预约服务订单). <br/>
 	 *
 	 * @author hetao

@@ -57,6 +57,17 @@ public interface CustomerOrderService {
 	 */
 	List<Map<?, ?>> getByUserId(CustomerOrderQueryFormBean customerOrderQueryFormBean);
 
+
+	/**
+	 *
+	 * selectDoneOrderByUserId:(患者端通过客户id查询已支付和完成订单). <br/>
+	 *
+	 * @author hetao
+	 * @return
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> getDoneOrderByUserId(Integer userId);
+
 	/**
 	 *
 	 * selectOrderDetail:(患者端通过订单号查询订单详情). <br/>
