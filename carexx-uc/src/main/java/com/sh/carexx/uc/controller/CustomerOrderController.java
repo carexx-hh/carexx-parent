@@ -172,10 +172,10 @@ public class CustomerOrderController {
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
 	
-	@RequestMapping(value = "/arrange_order/{instId}", method = RequestMethod.GET)
-	public String queryMappArrangeOrder(@PathVariable("instId")Integer instId) {
+	@RequestMapping(value = "/arrange_order/{orderStatus}/{instId}", method = RequestMethod.GET)
+	public String queryMappArrangeOrder(@PathVariable("orderStatus")String orderStatus, @PathVariable("instId")Integer instId) {
 		List<Map<?, ?>> resultList = null;
-		resultList = this.customerOrderService.queryMappArrangeOrder(instId);
+		resultList = this.customerOrderService.queryMappArrangeOrder(orderStatus, instId);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
 

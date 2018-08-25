@@ -131,7 +131,7 @@ public interface CustomerOrderService {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?,?>> queryMappArrangeOrder(Integer instId);
+	List<Map<?,?>> queryMappArrangeOrder(String orderStatus, Integer instId);
 	/**
 	 * 
 	 * updateStatus:(修改订单状态). <br/>

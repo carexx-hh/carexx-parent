@@ -130,7 +130,7 @@ public interface CustomerOrderMapper {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?,?>> selectMappArrangeOrder(Integer instId);
+	List<Map<?,?>> selectMappArrangeOrder(@Param("orderStatus") String orderStatus, @Param("instId") Integer instId);
 	
 	/**
 	 * 

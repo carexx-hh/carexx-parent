@@ -131,14 +131,15 @@
 		LIMIT 0,1
 	</select>
 	
-	<select id="selectMappArrangeOrder" parameterType="java.lang.Integer" resultType="java.util.Map">
+	<select id="selectMappArrangeOrder" resultType="java.util.Map">
 	  	SELECT
 			co.id id,
 			co.order_no orderNo,
 			co.customer_id customerId,
-			ic.real_name realName,
-			ic.phone phone,
+			ic.real_name patientName,
+			ic.phone patientPhone,
 			co.inst_id instId,
+			ci.inst_name instName,
 			co.service_id serviceId,
 			cs.service_name serviceName,
 			co.inpatient_area_id inpatientAreaId,
@@ -151,9 +152,10 @@
 		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
 		LEFT JOIN carexx_inst_inpatient_area iia ON co.inpatient_area_id = iia.id
+		LEFT JOIN carexx_care_inst ci ON co.inst_id = ci.id
 		WHERE
 			co.order_type = 1
-		AND co.order_status IN (1, 3)
+		AND co.order_status IN (#{orderStatus,jdbcType=VARCHAR})
 		AND co.inst_id = #{instId,jdbcType=INTEGER}
   	</select>
 
