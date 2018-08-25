@@ -178,4 +178,14 @@ public class CustomerOrderController {
 		resultList = this.customerOrderService.queryMappArrangeOrder(instId);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
+
+	@RequestMapping(value = "/modify_endTime/{order}", method = RequestMethod.GET)
+	public BasicRetVal modifyServiceEndTime(@PathVariable("order") String order) throws BizException{
+		try {
+			this.customerOrderManager.modifyServiceEndTime(order);
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+		}
+		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+	}
 }

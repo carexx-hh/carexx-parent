@@ -107,7 +107,7 @@
 			co.inpatient_ward inpatientWard,
 			co.service_start_time serviceStartTime,
 			co.service_end_time orderServiceEndTime,
-			cos.service_end_time ScheduleServiceEndTime,
+			cos.service_end_time scheduleServiceEndTime,
 			co.order_remark orderRemark,
 			cos.service_staff_id serviceStaffId,
 			cis.real_name staffName,
@@ -518,12 +518,22 @@
 			order_no = #{orderNo,jdbcType=VARCHAR}
 	</update>
 
-	<update id="updateServiceEndTime" parameterType="com.sh.carexx.model.uc.CustomerOrder">
+	<update id="updateOrderAmtAndHoliday" parameterType="com.sh.carexx.model.uc.CustomerOrder">
 		update
 			carexx_customer_order
 		set
 			order_amt = #{orderAmt,jdbcType=DECIMAL},
 			holiday = #{holiday,jdbcType=DECIMAL},
+			modify_time = now()
+	  	where
+	  		order_no = #{orderNo,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateServiceEndTime" parameterType="com.sh.carexx.model.uc.CustomerOrder">
+		update
+			carexx_customer_order
+		set
+			service_end_time = #{serviceEndTime,jdbcType=TIMESTAMP},
 			modify_time = now()
 	  	where
 	  		order_no = #{orderNo,jdbcType=VARCHAR}

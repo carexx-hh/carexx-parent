@@ -21,7 +21,7 @@ public class TimingWorkManager {
 	public void extendedOrder() {
 		try {
 			this.customerOrderScheduleManager.timingShedule();
-			this.customerOrderManager.updateServiceEndTime();
+			this.customerOrderManager.modifyOrderAmtAndHoliday();
 		} catch (BizException e) {
 			e.printStackTrace();
 		}

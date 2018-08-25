@@ -732,6 +732,17 @@ public interface UCServiceClient {
 	BasicRetVal throughPayCustomerOrder(@PathVariable("orderNo") String orderNo);
 
 	/**
+	 *
+	 * modifyOrderServiceEndTime:(修改订单结束时间). <br/>
+	 *
+	 * @author hetao
+	 * @return
+	 * @since JDK 1.8
+	 */
+	@RequestMapping(value = "/customerorder/modify_endTime/{order}", method = RequestMethod.GET)
+	BasicRetVal modifyOrderServiceEndTime(@PathVariable("order") String order);
+
+	/**
 	 * 
 	 * confirmCompletedCustomerOrder:(确认订单完成). <br/> 
 	 * 

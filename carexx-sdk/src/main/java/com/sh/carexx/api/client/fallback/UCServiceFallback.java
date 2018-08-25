@@ -409,6 +409,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public BasicRetVal modifyOrderServiceEndTime(String orderNo) {
+		return null;
+	}
+
+	@Override
 	public BasicRetVal mappCancelCustomerOrder(String orderNo) {
 		return null;
 	}

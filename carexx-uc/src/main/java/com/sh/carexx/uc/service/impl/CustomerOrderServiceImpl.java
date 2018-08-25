@@ -167,6 +167,19 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	}
 
 	@Override
+	public void updateOrderAmtAndHoliday(CustomerOrder customerOrder) throws BizException{
+		int rows = 0;
+		try {
+			rows = this.customerOrderMapper.updateOrderAmtAndHoliday(customerOrder);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+	}
+
+	@Override
 	public void updateServiceEndTime(CustomerOrder customerOrder) throws BizException{
 		int rows = 0;
 		try {

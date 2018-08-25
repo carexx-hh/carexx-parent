@@ -268,8 +268,15 @@ public class CustomerOrderManager {
         this.orderPaymentManager.add(customerOrder);
     }
 
+    /**
+     * updateOrderAmtAndHoliday:(推订单金额和节假日天数). <br/>
+     *
+     * @throws BizException
+     * @author hetao
+     * @since JDK 1.8
+     */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
-    public void updateServiceEndTime() throws BizException {
+    public void modifyOrderAmtAndHoliday() throws BizException {
         List<CustomerOrder> list = this.customerOrderService.getAllOrder();
         if (list == null) {
             return;
@@ -281,9 +288,25 @@ public class CustomerOrderManager {
             customerOrder.setOrderAmt(this.calcServiceFee(order.getInstId(), order.getServiceId(),
                     order.getServiceStartTime(), customerOrderSchedule.getServiceEndTime()));
             customerOrder.setHoliday(this.holidayCount(order.getInstId(), order.getServiceStartTime(), customerOrderSchedule.getServiceEndTime()));
-            this.customerOrderService.updateServiceEndTime(customerOrder);
+            this.customerOrderService.updateOrderAmtAndHoliday(customerOrder);
             this.orderPaymentManager.modifyPayAmt(customerOrder);
         }
+    }
+
+    /**
+     * updateServiceEndTime:(修改订单结束时间). <br/>
+     *
+     * @throws BizException
+     * @author hetao
+     * @since JDK 1.8
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
+    public void modifyServiceEndTime(String order) throws BizException {
+        CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(order);
+        CustomerOrder customerOrder = new CustomerOrder();
+        customerOrder.setOrderNo(order);
+        customerOrder.setServiceEndTime(customerOrderSchedule.getServiceEndTime());
+        this.customerOrderService.updateServiceEndTime(customerOrder);
     }
 
     /**

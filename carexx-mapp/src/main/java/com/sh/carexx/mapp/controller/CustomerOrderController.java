@@ -1,13 +1,5 @@
 package com.sh.carexx.mapp.controller;
 
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.sh.carexx.bean.order.CalcServiceFeeFormBean;
 import com.sh.carexx.bean.order.CustomerAppointOrderFormBean;
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
@@ -18,6 +10,15 @@ import com.sh.carexx.common.web.BasicRetVal;
 import com.sh.carexx.common.web.DataRetVal;
 import com.sh.carexx.mapp.wechat.WechatPayManager;
 import com.sh.carexx.model.uc.OrderPayment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/customerorder")
@@ -55,6 +56,7 @@ public class CustomerOrderController extends BaseController {
 	}
 
 	@RequestMapping(value = "/pay")
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public BasicRetVal pay(@Valid OrderPaymentFormBean orderPaymentFormBean, BindingResult bindingResult) {
 		this.fillFormBean(orderPaymentFormBean);
 		if (bindingResult.hasErrors()) {
@@ -62,6 +64,7 @@ public class CustomerOrderController extends BaseController {
 		}
 		try {
 			OrderPayment orderPayment = this.ucServiceClient.getOrderPayment(orderPaymentFormBean.getOrderNo());
+			this.ucServiceClient.modifyOrderServiceEndTime(orderPaymentFormBean.getOrderNo());
 			return new DataRetVal(CarexxConstant.RetCode.SUCCESS,
 					this.wechatPayManager.getWechatPayInfo(orderPayment, orderPaymentFormBean));
 		} catch (BizException e) {
