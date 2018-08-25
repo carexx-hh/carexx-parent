@@ -1,14 +1,13 @@
 package com.sh.carexx.bean.care;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.validator.constraints.NotBlank;
-
 import com.sh.carexx.bean.BasicFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.util.ValidUtils;
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class CareServiceFormBean extends BasicFormBean {
 	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
@@ -21,6 +20,9 @@ public class CareServiceFormBean extends BasicFormBean {
 	@NotBlank
 	@Size(max = 20)
 	private String serviceName;
+
+	@Size(max = 50)
+	private String serviceExplain;
 
 	private String serviceStatus;
 
@@ -52,6 +54,14 @@ public class CareServiceFormBean extends BasicFormBean {
 
 	public void setServiceName(String serviceName) {
 		this.serviceName = serviceName;
+	}
+
+	public String getServiceExplain() {
+		return serviceExplain;
+	}
+
+	public void setServiceExplain(String serviceExplain) {
+		this.serviceExplain = serviceExplain;
 	}
 
 	public Byte getServiceStatus() {

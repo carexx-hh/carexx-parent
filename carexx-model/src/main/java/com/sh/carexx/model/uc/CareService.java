@@ -9,6 +9,8 @@ public class CareService {
 
     private String serviceName;
 
+    private String serviceExplain;
+
     private Byte serviceStatus;
 
     private Date createTime;
@@ -37,6 +39,14 @@ public class CareService {
 
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName == null ? null : serviceName.trim();
+    }
+
+    public String getServiceExplain() {
+        return serviceExplain;
+    }
+
+    public void setServiceExplain(String serviceExplain) {
+        this.serviceExplain = serviceExplain;
     }
 
     public Byte getServiceStatus() {
