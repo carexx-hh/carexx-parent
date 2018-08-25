@@ -1,10 +1,5 @@
 package com.sh.carexx.uc.manager;
 
-import java.math.BigDecimal;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sh.carexx.bean.care.CareServiceFormBean;
 import com.sh.carexx.bean.care.InstCareServiceFormBean;
 import com.sh.carexx.common.ErrorCode;
@@ -14,6 +9,10 @@ import com.sh.carexx.model.uc.CareService;
 import com.sh.carexx.model.uc.InstCareService;
 import com.sh.carexx.uc.service.CareServiceService;
 import com.sh.carexx.uc.service.InstCareServiceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 
 /**
  * 
@@ -49,6 +48,7 @@ public class CareServiceManager {
 		careService = new CareService();
 		careService.setWorkTypeId(careServiceFormBean.getWorkTypeId());
 		careService.setServiceName(careServiceFormBean.getServiceName());
+		careService.setServiceExplain(careServiceFormBean.getServiceExplain());
 		careService.setServiceStatus(UseStatus.ENABLED.getValue());
 		this.careServiceService.save(careService);
 	}
@@ -72,6 +72,7 @@ public class CareServiceManager {
 		careService.setId(careServiceFormBean.getId());
 		careService.setWorkTypeId(careServiceFormBean.getWorkTypeId());
 		careService.setServiceName(careServiceFormBean.getServiceName());
+		careService.setServiceExplain(careServiceFormBean.getServiceExplain());
 		this.careServiceService.update(careService);
 	}
 

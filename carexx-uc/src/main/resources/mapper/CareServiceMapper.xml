@@ -5,12 +5,13 @@
 		<id column="id" jdbcType="INTEGER" property="id" />
 		<result column="work_type_id" jdbcType="INTEGER" property="workTypeId" />
 		<result column="service_name" jdbcType="VARCHAR" property="serviceName" />
+		<result column="service_explain" jdbcType="VARCHAR" property="serviceExplain" />
 		<result column="service_status" jdbcType="TINYINT" property="serviceStatus" />
 		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
 		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, work_type_id, service_name, service_status, create_time, modify_time
+		id, work_type_id, service_name, service_explain, service_status, create_time, modify_time
 	</sql>
 	
 	<select id="selectByworkTypeIdAndserviceName" resultMap="BaseResultMap">
@@ -67,6 +68,7 @@
 		SELECT
 			cs.id id,
 			cs.service_name serviceName,
+			cs.service_explain serviceExplain,
 			cs.work_type_id workTypeId,
 			wt.work_type_name workTypeName,
 			cs.service_name serviceName,
@@ -97,11 +99,11 @@
 
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.CareService">
 		INSERT INTO carexx_care_service (
-			work_type_id, service_name,
+			work_type_id, service_name, service_explain,
 			service_status, create_time
 		)
 		VALUES (
-			#{workTypeId,jdbcType=INTEGER}, #{serviceName,jdbcType=VARCHAR},
+			#{workTypeId,jdbcType=INTEGER}, #{serviceName,jdbcType=VARCHAR}, #{serviceExplain,jdbcType=VARCHAR},
 			#{serviceStatus,jdbcType=TINYINT}, now()
 		)
 	</insert>
@@ -112,6 +114,7 @@
 		SET
 			work_type_id = #{workTypeId,jdbcType=INTEGER},
 			service_name = #{serviceName,jdbcType=VARCHAR},
+			service_explain = #{serviceExplain,jdbcType=VARCHAR},
 			modify_time = now()
 		WHERE
 			id = #{id,jdbcType=INTEGER}
