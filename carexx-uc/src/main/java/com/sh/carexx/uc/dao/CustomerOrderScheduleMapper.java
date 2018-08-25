@@ -62,6 +62,7 @@ public interface CustomerOrderScheduleMapper {
 	 * @since JDK 1.8
 	 */
 	CustomerOrderSchedule selectNearByOrderNo(String orderNo);
+	
 	/**
 	 * 
 	 * selectByOrderNo:(通过订单编号查询). <br/>

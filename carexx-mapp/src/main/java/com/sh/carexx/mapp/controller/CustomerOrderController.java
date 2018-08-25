@@ -1,5 +1,13 @@
 package com.sh.carexx.mapp.controller;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.sh.carexx.bean.order.CalcServiceFeeFormBean;
 import com.sh.carexx.bean.order.CustomerAppointOrderFormBean;
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
@@ -10,13 +18,6 @@ import com.sh.carexx.common.web.BasicRetVal;
 import com.sh.carexx.common.web.DataRetVal;
 import com.sh.carexx.mapp.wechat.WechatPayManager;
 import com.sh.carexx.model.uc.OrderPayment;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/customerorder")
@@ -77,5 +78,10 @@ public class CustomerOrderController extends BaseController {
 	public BasicRetVal calcServiceFee(@Valid CalcServiceFeeFormBean calcServiceFeeFormBean) {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,
 				this.ucServiceClient.calcServiceFee(calcServiceFeeFormBean));
+	}
+	
+	@RequestMapping(value = "/arrange_order/{instId}")
+	public String queryMappArrangeOrder(@PathVariable("instId")Integer instId) {
+		return this.ucServiceClient.queryMappArrangeOrder(instId);
 	}
 }

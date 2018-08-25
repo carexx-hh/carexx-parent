@@ -124,6 +124,16 @@ public interface CustomerOrderService {
 
 	/**
 	 * 
+	 * selectArrangeOrder:(查询可派单订单). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param instId
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<Map<?,?>> queryMappArrangeOrder(Integer instId);
+	/**
+	 * 
 	 * updateStatus:(修改订单状态). <br/>
 	 * 
 	 * @author hetao

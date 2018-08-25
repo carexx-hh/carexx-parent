@@ -96,15 +96,20 @@
 		SELECT
 			co.id id,
 			co.order_no orderNo,
+			co.service_id serviceId,
 			cs.service_name serviceName,
 			ics.service_price servicePrice,
+			co.customer_id customerId,
 			ic.real_name patientName,
 			ic.phone patientPhone,
+			co.inpatient_area_id inpatientAreaId,
 			cia.inpatient_area inpatientArea,
 			co.inpatient_ward inpatientWard,
 			co.service_start_time serviceStartTime,
-			co.service_end_time serviceEndTime,
+			co.service_end_time orderServiceEndTime,
+			cos.service_end_time ScheduleServiceEndTime,
 			co.order_remark orderRemark,
+			cos.service_staff_id serviceStaffId,
 			cis.real_name staffName,
 			cis.phone staffPhone,
 			ci.inst_name instName,
@@ -332,6 +337,7 @@
 		(co.service_end_time > #{serviceStartTime,jdbcType=TIMESTAMP} AND co.service_end_time <![CDATA[<=]]> #{serviceEndTime,jdbcType=TIMESTAMP})
 				)
   	</select>
+	
 	<select id="selectIncomeCount" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">
 		SELECT
 			co.customer_id customerId,

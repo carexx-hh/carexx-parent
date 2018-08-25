@@ -413,9 +413,23 @@ public class CustomerOrderScheduleManager {
 	public void mappAdd(MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean) throws BizException {
 		//获取订单开始结束时间
 		CustomerOrder customerOrder = customerOrderService.getByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
-		Date serviceStartTime = customerOrder.getServiceStartTime();
-		Date serviceEndTime = DateUtils.addHour(serviceStartTime, 12);
+		Date serviceStartTime = null;
+		Date serviceEndTime = null;
+		if(customerOrder.getOrderStatus() == OrderStatus.WAIT_SCHEDULE.getValue()) {
+			serviceStartTime = customerOrder.getServiceStartTime();
+			serviceEndTime = DateUtils.addHour(serviceStartTime, 12);
 
+			//将订单状态从待排班改为服务中
+			this.customerOrderService.updateStatus(mappCustomerOrderScheduleFormBean.getOrderNo(),
+					OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.IN_SERVICE.getValue());
+		} else if(customerOrder.getOrderStatus() == OrderStatus.IN_SERVICE.getValue()) {
+			 CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
+			 serviceStartTime = customerOrderSchedule.getServiceEndTime();
+			 serviceEndTime = DateUtils.addHour(serviceStartTime, 12);
+		} else {
+			throw new BizException(ErrorCode.ORDER_SCHEDULE_FAIL_ERROR);
+		}
+		
 		CustomerOrderSchedule customerOrderSchedule = new CustomerOrderSchedule();
 		customerOrderSchedule.setOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
 		customerOrderSchedule.setServiceStaffId(mappCustomerOrderScheduleFormBean.getServiceStaffId());
@@ -429,9 +443,5 @@ public class CustomerOrderScheduleManager {
 		this.customerOrderScheduleService.save(customerOrderSchedule);
 		// 添加结算记录
 		this.orderSettleManager.add(customerOrderSchedule);
-		//将订单状态从待排班改为服务中
-		this.customerOrderService.updateStatus(mappCustomerOrderScheduleFormBean.getOrderNo(),
-				OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.IN_SERVICE.getValue());
-		
 	}
 }

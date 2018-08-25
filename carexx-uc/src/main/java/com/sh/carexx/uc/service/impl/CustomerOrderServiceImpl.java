@@ -103,6 +103,11 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	}
 
 	@Override
+	public List<Map<?, ?>> queryMappArrangeOrder(Integer instId) {
+		return this.customerOrderMapper.selectMappArrangeOrder(instId);
+	}
+	
+	@Override
 	public void updateStatus(String orderNo, Byte srcStatus, Byte targetStatus) throws BizException {
 		int rows = 0;
 		try {
@@ -173,4 +178,5 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 			throw new BizException(ErrorCode.DB_ERROR);
 		}
 	}
+
 }
