@@ -130,6 +130,32 @@
 			cos.service_end_time DESC
 		LIMIT 0,1
 	</select>
+	
+	<select id="selectMappArrangeOrder" parameterType="java.lang.Integer" resultType="java.util.Map">
+	  	SELECT
+			co.id id,
+			co.order_no orderNo,
+			co.customer_id customerId,
+			ic.real_name realName,
+			ic.phone phone,
+			co.inst_id instId,
+			co.service_id serviceId,
+			cs.service_name serviceName,
+			co.inpatient_area_id inpatientAreaId,
+			iia.inpatient_area inpatientArea,
+			co.inpatient_ward inpatientWard,
+			co.order_status orderStatus,
+			co.create_time createTime
+		FROM
+			carexx_customer_order co
+		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_inst_inpatient_area iia ON co.inpatient_area_id = iia.id
+		WHERE
+			co.order_type = 1
+		AND co.order_status IN (1, 3)
+		AND co.inst_id = #{instId,jdbcType=INTEGER}
+  	</select>
 
 	<select id="selectCustomerOrderCount" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.lang.Integer">
 		SELECT
