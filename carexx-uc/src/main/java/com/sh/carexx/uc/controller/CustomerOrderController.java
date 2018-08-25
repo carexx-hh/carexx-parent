@@ -171,4 +171,11 @@ public class CustomerOrderController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
+	
+	@RequestMapping(value = "/arrange_order/{instId}", method = RequestMethod.GET)
+	public String queryMappArrangeOrder(@PathVariable("instId")Integer instId) {
+		List<Map<?, ?>> resultList = null;
+		resultList = this.customerOrderService.queryMappArrangeOrder(instId);
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
+	}
 }

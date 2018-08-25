@@ -397,5 +397,4 @@ public class CustomerOrderManager {
         }
         this.customerOrderService.update(customerOrder);
     }
-
 }
