@@ -83,7 +83,7 @@ public interface InstStaffService {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> queryInstStaffIdle(Integer serviceId,Integer serviceInstId,Date currentTime);
+	List<Map<?, ?>> queryInstStaffIdle(Integer serviceId,Integer serviceInstId,Date currentTime, String realName);
 
 	/**
 	 * 
@@ -94,7 +94,7 @@ public interface InstStaffService {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> queryInstStaffBusy(Integer serviceId,Integer serviceInstId,Date currentTime);
+	List<Map<?, ?>> queryInstStaffBusy(Integer serviceId,Integer serviceInstId,Date currentTime, String realName);
 	/**
 	 * 
 	 * getInstStaffCount:(员工信息分页统计). <br/>

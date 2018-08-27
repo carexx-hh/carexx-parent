@@ -85,7 +85,7 @@ public interface InstStaffMapper {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> selectInstStaffIdle(@Param("serviceId")Integer serviceId,@Param("serviceInstId")Integer serviceInstId,@Param("currentTime")Date currentTime);
+	List<Map<?, ?>> selectInstStaffIdle(@Param("serviceId")Integer serviceId,@Param("serviceInstId")Integer serviceInstId,@Param("currentTime")Date currentTime,@Param("realName")String realName);
 	
 	/**
 	 * 
@@ -96,7 +96,7 @@ public interface InstStaffMapper {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> selectInstStaffBusy(@Param("serviceId")Integer serviceId,@Param("serviceInstId")Integer serviceInstId,@Param("currentTime")Date currentTime);
+	List<Map<?, ?>> selectInstStaffBusy(@Param("serviceId")Integer serviceId,@Param("serviceInstId")Integer serviceInstId,@Param("currentTime")Date currentTime,@Param("realName")String realName);
 
 	/**
 	 * 

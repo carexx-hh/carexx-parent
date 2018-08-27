@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.common.CarexxConstant;
@@ -50,7 +51,7 @@ public class InstStaffController {
 		}
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, new PagerBean(totalNum, resultList)).toJSON();
 	}
-	
+
 	@RequestMapping(value = "/all", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryForAll(@RequestBody InstStaffQueryFormBean instStaffQueryFormBean) {
 		List<Map<?, ?>> resultList = null;
@@ -68,18 +69,18 @@ public class InstStaffController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, new PagerBean(totalNum, resultList)).toJSON();
 	}
 
-	@RequestMapping(value = "/serviceNum/{orderNo}", method = RequestMethod.GET)
-	public String queryForServiceNum(@PathVariable("orderNo") String orderNo) {
+	@RequestMapping(value = "/serviceNum", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String queryForServiceNum(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		List<Map<?, ?>> instStaffList = null;
 		try {
-		instStaffList = this.instStaffManager.serviceNum(orderNo);
+			instStaffList = this.instStaffManager.serviceNum(customerOrderQueryFormBean);
 		} catch (BizException e) {
 			return new DataRetVal(CarexxConstant.RetCode.SERVER_ERROR, null).toJSON();
 		}
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, instStaffList).toJSON();
-		
+
 	}
-	
+
 	@RequestMapping(value = "/modify", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public BasicRetVal modify(@RequestBody InstStaffFormBean instStaffFormBean) {
 		try {

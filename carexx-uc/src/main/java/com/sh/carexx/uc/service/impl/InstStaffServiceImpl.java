@@ -56,13 +56,13 @@ public class InstStaffServiceImpl implements InstStaffService {
 	}
 	
 	@Override
-	public List<Map<?, ?>> queryInstStaffIdle(Integer serviceId,Integer serviceInstId,Date currentTime) {
-		return this.instStaffMapper.selectInstStaffIdle(serviceId,serviceInstId,currentTime);
+	public List<Map<?, ?>> queryInstStaffIdle(Integer serviceId,Integer serviceInstId,Date currentTime, String realName) {
+		return this.instStaffMapper.selectInstStaffIdle(serviceId,serviceInstId,currentTime,realName);
 	}
 
 	@Override
-	public List<Map<?, ?>> queryInstStaffBusy(Integer serviceId,Integer serviceInstId,Date currentTime) {
-		return this.instStaffMapper.selectInstStaffBusy(serviceId,serviceInstId,currentTime);
+	public List<Map<?, ?>> queryInstStaffBusy(Integer serviceId,Integer serviceInstId,Date currentTime,String realName) {
+		return this.instStaffMapper.selectInstStaffBusy(serviceId,serviceInstId,currentTime,realName);
 	}
 	
 	@Override

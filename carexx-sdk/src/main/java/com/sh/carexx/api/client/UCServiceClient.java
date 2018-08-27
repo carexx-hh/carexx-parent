@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
+import javax.validation.Valid;
+
 @FeignClient(name = CarexxConstant.MSProvider.MS_PROVIDER_UC, fallback = UCServiceFallback.class)
 public interface UCServiceClient {
 	@RequestMapping(value = "/auth/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -885,8 +887,8 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/inststaff/list_by_serviceid", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryInstStaffByServiceId(@RequestBody InstStaffQueryFormBean instStaffQueryFormBean);
 	
-	@RequestMapping(value = "/inststaff/serviceNum/{orderNo}", method = RequestMethod.GET)
-	String queryInstStaffServiceNum(@PathVariable("orderNo") String orderNo);
+	@RequestMapping(value = "/inststaff/serviceNum", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String queryInstStaffServiceNum(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean);
 	
 
 	/**

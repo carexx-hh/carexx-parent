@@ -1,15 +1,19 @@
 package com.sh.carexx.mapp.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 
 @RestController
 @RequestMapping("/inststaff")
 public class InstStaffController extends BaseController {
 
-	@RequestMapping(value = "/serviceNum/{orderNo}")
-	public String queryInstStaffServiceNum(@PathVariable("orderNo") String orderNo) {
-		return this.ucServiceClient.queryInstStaffServiceNum(orderNo);
+	@RequestMapping(value = "/serviceNum")
+	public String queryInstStaffServiceNum(@Valid CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+
+		return this.ucServiceClient.queryInstStaffServiceNum(customerOrderQueryFormBean);
 	}
 }

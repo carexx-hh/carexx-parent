@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.enums.UseStatus;
@@ -132,7 +133,9 @@ public class InstStaffManager {
 		this.instStaffService.update(instStaff);
 	}
 	
-	public List<Map<?, ?>> serviceNum(String orderNo) throws BizException {
+	public List<Map<?, ?>> serviceNum(CustomerOrderQueryFormBean customerOrderQueryFormBean) throws BizException {
+		String orderNo = customerOrderQueryFormBean.getOrderNo();
+		String realName = customerOrderQueryFormBean.getStaffName();
 		CustomerOrder customerOrder = new CustomerOrder();
 		customerOrder = customerOrderService.getByOrderNo(orderNo);
 		List<Map<?, ?>> instStaffList = null;
@@ -145,9 +148,9 @@ public class InstStaffManager {
 		} else {
 			currentTime = customerOrder.getServiceStartTime();
 		}
-		List<Map<?, ?>> idleList = instStaffService.queryInstStaffIdle(serviceId,serviceInstId,currentTime);
+		List<Map<?, ?>> idleList = instStaffService.queryInstStaffIdle(serviceId,serviceInstId,currentTime,realName);
 		instStaffList = idleList;
-		List<Map<?, ?>> busyList = instStaffService.queryInstStaffBusy(serviceId,serviceInstId,currentTime);
+		List<Map<?, ?>> busyList = instStaffService.queryInstStaffBusy(serviceId,serviceInstId,currentTime,realName);
 		for (Map<?, ?> map : busyList) {
 			if(map.get("id") != null) {
 				instStaffList.add(map);
