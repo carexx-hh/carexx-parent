@@ -1,36 +1,17 @@
 package com.sh.carexx.api.client.fallback;
 
-import java.math.BigDecimal;
-
-import org.springframework.stereotype.Component;
-
 import com.sh.carexx.api.client.UCServiceClient;
 import com.sh.carexx.bean.acl.AclLoginFormBean;
 import com.sh.carexx.bean.acl.AclModifyPwdFormBean;
 import com.sh.carexx.bean.acl.AclRegFormBean;
 import com.sh.carexx.bean.acl.AclRoleFormBean;
-import com.sh.carexx.bean.care.CareInstFormBean;
-import com.sh.carexx.bean.care.CareInstSysFormBean;
-import com.sh.carexx.bean.care.CareServiceFormBean;
-import com.sh.carexx.bean.care.InstCareServiceFormBean;
-import com.sh.carexx.bean.care.InstInpatientAreaFormBean;
-import com.sh.carexx.bean.care.InstServiceQueryFormBean;
+import com.sh.carexx.bean.care.*;
 import com.sh.carexx.bean.customer.CustomerPatientFormBean;
 import com.sh.carexx.bean.customer.InstCustomerFormBean;
 import com.sh.carexx.bean.dict.DictDataFormBean;
 import com.sh.carexx.bean.dict.DictFormBean;
 import com.sh.carexx.bean.holiday.InstHolidayFormBean;
-import com.sh.carexx.bean.order.CalcServiceFeeFormBean;
-import com.sh.carexx.bean.order.ConfirmCompletedOrderFormBean;
-import com.sh.carexx.bean.order.CustomerAppointOrderFormBean;
-import com.sh.carexx.bean.order.CustomerOrderAdjustFormBean;
-import com.sh.carexx.bean.order.CustomerOrderFormBean;
-import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
-import com.sh.carexx.bean.order.CustomerOrderScheduleFormBean;
-import com.sh.carexx.bean.order.InstSettleQueryFormBean;
-import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
-import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
-import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
+import com.sh.carexx.bean.order.*;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffWorkTypeFormBean;
@@ -40,11 +21,10 @@ import com.sh.carexx.bean.worktype.InstWorkTypeSettleFormBean;
 import com.sh.carexx.bean.worktype.WorkTypeFormBean;
 import com.sh.carexx.bean.worktype.WorkTypeSettleQueryFormBean;
 import com.sh.carexx.common.web.BasicRetVal;
-import com.sh.carexx.model.uc.AclUserAcct;
-import com.sh.carexx.model.uc.InstSettle;
-import com.sh.carexx.model.uc.OrderPayment;
-import com.sh.carexx.model.uc.UserInfo;
-import com.sh.carexx.model.uc.UserMsg;
+import com.sh.carexx.model.uc.*;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
 
 @Component
 public class UCServiceFallback implements UCServiceClient {
@@ -600,6 +580,11 @@ public class UCServiceFallback implements UCServiceClient {
 
 	@Override
 	public String queryOrderScheduleByOrderNo(String orderNo) {
+		return null;
+	}
+
+	@Override
+	public String queryNearScheduleByOrderNo(String orderNo) {
 		return null;
 	}
 

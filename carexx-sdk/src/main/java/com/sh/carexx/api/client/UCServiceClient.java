@@ -29,8 +29,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
-import javax.validation.Valid;
-
 @FeignClient(name = CarexxConstant.MSProvider.MS_PROVIDER_UC, fallback = UCServiceFallback.class)
 public interface UCServiceClient {
 	@RequestMapping(value = "/auth/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -1109,6 +1107,18 @@ public interface UCServiceClient {
 	 */
 	@RequestMapping(value = "/customerorderschedule/all_schedule/{orderNo}", method = RequestMethod.GET)
 	String queryOrderScheduleByOrderNo(@PathVariable("orderNo") String orderNo);
+
+	/**
+	 *
+	 * queryNearScheduleByOrderNo:(通过订单号查询最近一条排班). <br/>
+	 *
+	 * @author hetao
+	 * @param orderNo
+	 * @return
+	 * @since JDK 1.8
+	 */
+	@RequestMapping(value = "/near_schedule/{orderNo}", method = RequestMethod.GET)
+	String queryNearScheduleByOrderNo(@PathVariable("orderNo") String orderNo);
 
 	/**
 	 * 

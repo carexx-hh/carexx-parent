@@ -1,17 +1,5 @@
 package com.sh.carexx.uc.controller;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.sh.carexx.bean.order.CustomerOrderScheduleFormBean;
 import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
 import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
@@ -22,6 +10,12 @@ import com.sh.carexx.common.web.BasicRetVal;
 import com.sh.carexx.common.web.DataRetVal;
 import com.sh.carexx.uc.manager.CustomerOrderScheduleManager;
 import com.sh.carexx.uc.service.CustomerOrderScheduleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/customerorderschedule")
@@ -52,6 +46,12 @@ public class CustomerOrderScheduleController {
 	public String queryScheduleByOrderNo(@PathVariable("orderNo") String orderNo) {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,
 				this.customerOrderScheduleService.queryScheduleByOrderNo(orderNo)).toJSON();
+	}
+
+	@RequestMapping(value = "/near_schedule/{orderNo}", method = RequestMethod.GET)
+	public String queryNearScheduleByOrderNo(@PathVariable("orderNo") String orderNo) {
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,
+				this.customerOrderScheduleService.getNearByOrderNo(orderNo)).toJSON();
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
