@@ -1117,7 +1117,7 @@ public interface UCServiceClient {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	@RequestMapping(value = "/near_schedule/{orderNo}", method = RequestMethod.GET)
+	@RequestMapping(value = "/customerorderschedule/near_schedule/{orderNo}", method = RequestMethod.GET)
 	String queryNearScheduleByOrderNo(@PathVariable("orderNo") String orderNo);
 
 	/**
