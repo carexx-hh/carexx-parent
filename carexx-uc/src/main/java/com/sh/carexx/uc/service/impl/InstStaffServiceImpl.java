@@ -105,4 +105,17 @@ public class InstStaffServiceImpl implements InstStaffService {
 		}
 	}
 
+	@Override
+	public void updateCertificationStatus(Integer id, Byte srcStatus, Byte targetStatus) throws BizException {
+		int rows = 0;
+		try {
+			rows = this.instStaffMapper.updateCertificationStatus(id, srcStatus, targetStatus);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+	}
+
 }

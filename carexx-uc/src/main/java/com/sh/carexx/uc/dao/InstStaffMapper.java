@@ -152,4 +152,7 @@ public interface InstStaffMapper {
 	 * @since JDK 1.8
 	 */
 	int delete(Integer id);
+	
+	int updateCertificationStatus(@Param("id") Integer id, @Param("srcStatus") Byte srcStatus,
+			@Param("targetStatus") Byte targetStatus);
 }

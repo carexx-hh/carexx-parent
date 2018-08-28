@@ -29,6 +29,9 @@ public class InstStaffFormBean extends BasicFormBean {
 	@Pattern(regexp = "[1,2]")
 	private String jobStatus;
 
+	@Pattern(regexp = "[0,1,2,3]")
+	private String certificationStatus;
+	
 	private String staffStatus;
 
 	@NotBlank
@@ -117,6 +120,17 @@ public class InstStaffFormBean extends BasicFormBean {
 
 	public void setJobStatus(String jobStatus) {
 		this.jobStatus = jobStatus;
+	}
+
+	public Byte getCertificationStatus() {
+		if (ValidUtils.isInteger(certificationStatus)) {
+			return Byte.parseByte(certificationStatus);
+		}
+		return null;
+	}
+
+	public void setCertificationStatus(String certificationStatus) {
+		this.certificationStatus = certificationStatus;
 	}
 
 	public Byte getStaffStatus() {

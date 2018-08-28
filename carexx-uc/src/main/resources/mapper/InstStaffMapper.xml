@@ -7,6 +7,7 @@
 		<result column="service_inst_id" jdbcType="INTEGER" property="serviceInstId" />
 		<result column="person_type" jdbcType="TINYINT" property="personType" />
 		<result column="job_status" jdbcType="TINYINT" property="jobStatus" />
+		<result column="certification_status" jdbcType="TINYINT" property="certificationStatus" />
 		<result column="staff_status" jdbcType="TINYINT" property="staffStatus" />
 		<result column="real_name" jdbcType="VARCHAR" property="realName" />
 		<result column="id_no" jdbcType="CHAR" property="idNo" />
@@ -320,6 +321,7 @@
 			service_inst_id,
 			person_type,
 			job_status,
+			certification_status,
 			staff_status,
 			real_name,
 			id_no,
@@ -338,6 +340,7 @@
 			#{serviceInstId,jdbcType=INTEGER},
 			#{personType,jdbcType=TINYINT},
 			#{jobStatus,jdbcType=TINYINT},
+			#{certificationStatus,jdbcType=TINYINT},
 			#{staffStatus,jdbcType=TINYINT},
 			#{realName,jdbcType=VARCHAR},
 			#{idNo,jdbcType=VARCHAR},
@@ -379,5 +382,14 @@
 		 	modify_time = now()
 		WHERE
 			id = #{id,jdbcType=INTEGER} and staff_status = 1 
+	</update>
+	<update id="updateCertificationStatus">
+		UPDATE 
+			carexx_inst_staff
+		SET 
+			certification_status = #{targetStatus,jdbcType=TINYINT},
+		 	modify_time = now()
+		WHERE
+			id = #{id,jdbcType=INTEGER} and certification_status = #{srcStatus,jdbcType=TINYINT}
 	</update>
 </mapper>

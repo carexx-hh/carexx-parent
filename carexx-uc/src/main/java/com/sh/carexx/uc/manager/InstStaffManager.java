@@ -11,6 +11,7 @@ import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.enums.UseStatus;
+import com.sh.carexx.common.enums.staff.CertificationStatus;
 import com.sh.carexx.common.enums.staff.StaffStatus;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.util.DateUtils;
@@ -68,6 +69,7 @@ public class InstStaffManager {
 		instStaff.setServiceInstId(instStaffFormBean.getServiceInstId());
 		instStaff.setPersonType(instStaffFormBean.getPersonType());
 		instStaff.setJobStatus(instStaffFormBean.getJobStatus());
+		instStaff.setCertificationStatus(CertificationStatus.NO_CERTIFICATION.getValue());
 		instStaff.setStaffStatus(StaffStatus.NORMAL.getValue());
 		instStaff.setRealName(instStaffFormBean.getRealName());
 		instStaff.setIdNo(instStaffFormBean.getIdNo());
@@ -157,5 +159,9 @@ public class InstStaffManager {
 			}
 		}
 		return instStaffList;
+	}
+	
+	public void AgreeCertification(Integer id) throws BizException {
+		this.instStaffService.updateCertificationStatus(id, CertificationStatus.IN_CERTIFICATION.getValue(), CertificationStatus.HAS_CERTIFICATION.getValue());
 	}
 }

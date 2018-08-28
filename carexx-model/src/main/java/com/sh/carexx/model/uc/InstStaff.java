@@ -13,6 +13,8 @@ public class InstStaff {
 
     private Byte jobStatus;
 
+    private Byte certificationStatus;
+    
     private Byte staffStatus;
 
     private String realName;
@@ -77,7 +79,15 @@ public class InstStaff {
         this.jobStatus = jobStatus;
     }
 
-    public Byte getStaffStatus() {
+    public Byte getCertificationStatus() {
+		return certificationStatus;
+	}
+
+	public void setCertificationStatus(Byte certificationStatus) {
+		this.certificationStatus = certificationStatus;
+	}
+
+	public Byte getStaffStatus() {
         return staffStatus;
     }
 

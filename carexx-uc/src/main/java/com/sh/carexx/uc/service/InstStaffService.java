@@ -148,4 +148,6 @@ public interface InstStaffService {
 	 * @since JDK 1.8
 	 */
 	void delete(Integer id) throws BizException;
+	
+	void updateCertificationStatus(Integer id, Byte srcStatus, Byte targetStatus) throws BizException;
 }
