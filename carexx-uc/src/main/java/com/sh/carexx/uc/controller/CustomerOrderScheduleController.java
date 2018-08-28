@@ -48,12 +48,6 @@ public class CustomerOrderScheduleController {
 				this.customerOrderScheduleService.queryScheduleByOrderNo(orderNo)).toJSON();
 	}
 
-	@RequestMapping(value = "/near_schedule/{orderNo}", method = RequestMethod.GET)
-	public String queryNearScheduleByOrderNo(@PathVariable("orderNo") String orderNo) {
-		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,
-				this.customerOrderScheduleService.getNearByOrderNo(orderNo)).toJSON();
-	}
-
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public BasicRetVal delete(@PathVariable("id") Long id) {
 		try {

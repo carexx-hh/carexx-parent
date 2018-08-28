@@ -584,11 +584,6 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
-	public String queryNearScheduleByOrderNo(String orderNo) {
-		return null;
-	}
-
-	@Override
 	public BasicRetVal deleteCustomerOrderSchedule(Long id) {
 		return null;
 	}

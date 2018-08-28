@@ -1109,18 +1109,6 @@ public interface UCServiceClient {
 	String queryOrderScheduleByOrderNo(@PathVariable("orderNo") String orderNo);
 
 	/**
-	 *
-	 * queryNearScheduleByOrderNo:(通过订单号查询最近一条排班). <br/>
-	 *
-	 * @author hetao
-	 * @param orderNo
-	 * @return
-	 * @since JDK 1.8
-	 */
-	@RequestMapping(value = "/customerorderschedule/near_schedule/{orderNo}", method = RequestMethod.GET)
-	String queryNearScheduleByOrderNo(@PathVariable("orderNo") String orderNo);
-
-	/**
 	 * 
 	 * deleteCustomerOrderSchedule:(修改排班状态为取消). <br/>
 	 * 

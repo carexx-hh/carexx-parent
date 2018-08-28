@@ -19,11 +19,6 @@ public class CustomerOrderScheduleController extends BaseController {
 		return this.ucServiceClient.queryOrderScheduleByOrderNo(orderNo);
 	}
 
-	@RequestMapping(value = "near_schedule/{orderNo}")
-	public String queryNearScheduleByOrderNo(@PathVariable("orderNo") String orderNo){
-		return this.ucServiceClient.queryNearScheduleByOrderNo(orderNo);
-	}
-
 	@RequestMapping("/mapp_add")
 	public BasicRetVal mappAdd(@Valid MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean,
 			BindingResult bindingResult) {
