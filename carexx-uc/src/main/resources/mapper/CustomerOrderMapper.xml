@@ -98,6 +98,7 @@
 			co.order_no orderNo,
 			co.service_id serviceId,
 			cs.service_name serviceName,
+			cs.service_explain serviceExplain;
 			ics.service_price servicePrice,
 			co.customer_id customerId,
 			ic.real_name patientName,
