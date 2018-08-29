@@ -494,6 +494,16 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public BasicRetVal agreeCertification(Integer id) {
+		return null;
+	}
+	
+	@Override
+	public BasicRetVal refusedCertification(Integer id) {
+		return null;
+	}
+	
+	@Override
 	public BasicRetVal addInstStaff(InstStaffFormBean instStaffFormBean) {
 		return null;
 	}

@@ -100,4 +100,24 @@ public class InstStaffController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
+	
+	@RequestMapping(value = "/agree_certification/{id}", method = RequestMethod.GET)
+	public BasicRetVal AgreeCertification(@PathVariable("id") Integer id) {
+		try {
+			this.instStaffManager.agreeCertification(id);
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+		}
+		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+	}
+	
+	@RequestMapping(value = "/refused_certification/{id}", method = RequestMethod.GET)
+	public BasicRetVal RefusedCertification(@PathVariable("id") Integer id) {
+		try {
+			this.instStaffManager.refusedCertification(id);
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+		}
+		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+	}
 }

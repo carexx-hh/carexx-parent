@@ -390,6 +390,6 @@
 			certification_status = #{targetStatus,jdbcType=TINYINT},
 		 	modify_time = now()
 		WHERE
-			id = #{id,jdbcType=INTEGER} and certification_status = #{srcStatus,jdbcType=TINYINT}
+			id = #{id,jdbcType=INTEGER} and certification_status IN (${srcStatus})
 	</update>
 </mapper>

@@ -153,6 +153,6 @@ public interface InstStaffMapper {
 	 */
 	int delete(Integer id);
 	
-	int updateCertificationStatus(@Param("id") Integer id, @Param("srcStatus") Byte srcStatus,
+	int updateCertificationStatus(@Param("id") Integer id, @Param("srcStatus") String srcStatus,
 			@Param("targetStatus") Byte targetStatus);
 }

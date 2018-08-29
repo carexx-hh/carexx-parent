@@ -888,7 +888,11 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/inststaff/serviceNum", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryInstStaffServiceNum(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean);
 	
-
+	@RequestMapping(value = "/inststaff/agree_certification/{id}", method = RequestMethod.GET)
+	BasicRetVal agreeCertification(@PathVariable("id") Integer id);
+	
+	@RequestMapping(value = "/inststaff/refused_certification/{id}", method = RequestMethod.GET)
+	BasicRetVal refusedCertification(@PathVariable("id") Integer id);
 	/**
 	 * 
 	 * addInstStaff:(添加机构员工信息). <br/>

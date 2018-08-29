@@ -161,7 +161,23 @@ public class InstStaffManager {
 		return instStaffList;
 	}
 	
-	public void AgreeCertification(Integer id) throws BizException {
-		this.instStaffService.updateCertificationStatus(id, CertificationStatus.IN_CERTIFICATION.getValue(), CertificationStatus.HAS_CERTIFICATION.getValue());
+	public void agreeCertification(Integer id) throws BizException {
+		Byte srcStatus = CertificationStatus.IN_CERTIFICATION.getValue();
+		this.instStaffService.updateCertificationStatus(id, srcStatus.toString(), CertificationStatus.HAS_CERTIFICATION.getValue());
+	}
+	
+	public void refusedCertification(Integer id) throws BizException {
+		Byte srcStatus = CertificationStatus.IN_CERTIFICATION.getValue();
+		this.instStaffService.updateCertificationStatus(id, srcStatus.toString(), CertificationStatus.REFUSED_CERTIFICATION.getValue());
+	}
+	
+	public void applyCertification(Integer id) throws BizException {
+		Byte noCertification = CertificationStatus.NO_CERTIFICATION.getValue();
+		Byte refusedCertification = CertificationStatus.REFUSED_CERTIFICATION.getValue();
+		StringBuffer srcStatus = new StringBuffer();
+		srcStatus.append(noCertification.toString());
+		srcStatus.append(",");
+		srcStatus.append(refusedCertification.toString());
+		this.instStaffService.updateCertificationStatus(id, srcStatus.toString(), CertificationStatus.IN_CERTIFICATION.getValue());
 	}
 }
