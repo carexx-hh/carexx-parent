@@ -499,6 +499,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public String queryMappAllInstStaff(InstStaffQueryFormBean instStaffQueryFormBean) {
+		return null;
+	}
+	
+	@Override
 	public BasicRetVal agreeCertification(Integer id) {
 		return null;
 	}

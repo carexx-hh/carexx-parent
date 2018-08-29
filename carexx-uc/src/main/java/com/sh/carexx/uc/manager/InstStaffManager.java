@@ -1,5 +1,7 @@
 package com.sh.carexx.uc.manager;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
+import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.enums.UseStatus;
 import com.sh.carexx.common.enums.staff.CertificationStatus;
@@ -133,6 +136,26 @@ public class InstStaffManager {
 			instStaff.setLeaveDate(DateUtils.toDate(instStaffFormBean.getLeaveDate(), DateUtils.YYYY_MM_DD));
 		}
 		this.instStaffService.update(instStaff);
+	}
+	
+	public List<Map<?, ?>> queryMappAllInstStaff(InstStaffQueryFormBean instStaffQueryFormBean) throws BizException {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date currentTime = null;
+		try {
+			currentTime = df.parse(df.format(new Date()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		List<Map<?, ?>> instStaffList = null;
+		List<Map<?, ?>> idleList = instStaffService.queryInstStaffIdle(null,instStaffQueryFormBean.getInstId(),currentTime,instStaffQueryFormBean.getRealName());
+		instStaffList = idleList;
+		List<Map<?, ?>> busyList = instStaffService.queryInstStaffBusy(null,instStaffQueryFormBean.getInstId(),currentTime,instStaffQueryFormBean.getRealName());
+		for (Map<?, ?> map : busyList) {
+			if(map.get("id") != null) {
+				instStaffList.add(map);
+			}
+		}
+		return instStaffList;
 	}
 	
 	public List<Map<?, ?>> serviceNum(CustomerOrderQueryFormBean customerOrderQueryFormBean) throws BizException {

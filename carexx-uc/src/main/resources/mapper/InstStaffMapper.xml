@@ -267,21 +267,26 @@
 			cis.birthday birthday,
 			cis.phone phone,
 			cis.address address,
-			ccs.work_type_id workTypeId, 
+			ciswt.work_type_id workTypeId, 
 			cwt.work_type_name workTypeName,
 			0 patientNum
 		FROM
 			carexx_inst_staff cis
 		JOIN carexx_inst_staff_work_type ciswt ON ciswt.staff_id = cis.id
+		<if test="serviceId != null and serviceId > 0">
 		JOIN carexx_care_service ccs ON ccs.work_type_id = ciswt.work_type_id
+		</if>
 		LEFT JOIN carexx_care_inst cci ON cis.inst_id = cci.id
 		LEFT JOIN carexx_care_inst ccis ON cis.service_inst_id = ccis.id
-		LEFT JOIN carexx_work_type cwt ON ccs.work_type_id = cwt.id
+		LEFT JOIN carexx_work_type cwt ON ciswt.work_type_id = cwt.id
 		WHERE
-			ccs.id =  #{serviceId,jdbcType=INTEGER}
-		AND cis.service_inst_id =  #{serviceInstId,jdbcType=INTEGER}
+			cis.service_inst_id =  #{serviceInstId,jdbcType=INTEGER}
+		<if test="serviceId != null and serviceId > 0">
+			AND ccs.id =  #{serviceId,jdbcType=INTEGER}
+		</if>
 		AND cis.staff_status = 1
 		AND cis.job_status = 1
+		AND cis.certification_status = 3
 		AND cis.id NOT IN (
 			SELECT DISTINCT
 				service_staff_id
@@ -311,23 +316,28 @@
 		cis.birthday birthday,
 		cis.phone phone,
 		cis.address address,
-		ccs.work_type_id workTypeId, 
+		ciswt.work_type_id workTypeId, 
 		cwt.work_type_name workTypeName,
 		count(cos.order_no) patientNum
 	FROM
 		carexx_inst_staff cis
 	JOIN carexx_inst_staff_work_type ciswt ON ciswt.staff_id = cis.id
+	<if test="serviceId != null and serviceId > 0">
 	JOIN carexx_care_service ccs ON ccs.work_type_id = ciswt.work_type_id
+	</if>
 	LEFT JOIN carexx_customer_order_schedule cos ON cos.service_staff_id = cis.id
 	LEFT JOIN carexx_customer_order co ON cos.order_no = co.order_no
 	LEFT JOIN carexx_care_inst cci ON cis.inst_id = cci.id
 	LEFT JOIN carexx_care_inst ccis ON cis.service_inst_id = ccis.id
-	LEFT JOIN carexx_work_type cwt ON ccs.work_type_id = cwt.id
+	LEFT JOIN carexx_work_type cwt ON ciswt.work_type_id = cwt.id
 	<where>
-		ccs.id = #{serviceId,jdbcType=INTEGER} 	
-		AND cis.service_inst_id = #{serviceInstId,jdbcType=INTEGER}
+		cis.service_inst_id = #{serviceInstId,jdbcType=INTEGER}
+		<if test="serviceId != null and serviceId > 0">
+			AND ccs.id = #{serviceId,jdbcType=INTEGER} 	
+		</if>
 		AND cis.staff_status = 1
 		AND cis.job_status = 1
+		AND cis.certification_status = 3
 		AND (
 			cos.service_start_time <![CDATA[<=]]> #{currentTime,jdbcType=TIMESTAMP}
 			AND cos.service_end_time <![CDATA[>]]> #{currentTime,jdbcType=TIMESTAMP}
