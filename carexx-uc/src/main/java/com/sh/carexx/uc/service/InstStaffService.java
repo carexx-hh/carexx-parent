@@ -76,6 +76,17 @@ public interface InstStaffService {
 	
 	/**
 	 * 
+	 * queryInstStaffByCertificationStatus:(通过认证状态查询人员). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param instId
+	 * @param certificationStatus
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> queryInstStaffByCertificationStatus(Integer instId, Byte certificationStatus);
+	/**
+	 * 
 	 * queryInstStaffIdle:(移动端查询会该项技能的员工并统计服务人数（空闲）). <br/> 
 	 * 
 	 * @author zhoulei 

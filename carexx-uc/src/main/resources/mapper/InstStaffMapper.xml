@@ -229,6 +229,29 @@
 		ORDER BY cis.create_time DESC
 		limit ${rowIndex}, ${pageSize}
 	</select>
+	<select id="selectInstStaffByCertificationStatus" resultType="java.util.Map">
+		SELECT
+			cis.id,
+			cis.inst_id,
+			cci.inst_name,
+			cis.service_inst_id,
+			ccis.inst_name,
+			cis.real_name,
+			cis.id_no,
+			cis.sex,
+			cis.birthday,
+			cis.phone,
+			cis.address
+		FROM
+			carexx_inst_staff cis
+		LEFT JOIN carexx_care_inst cci ON cis.inst_id = cci.id
+		LEFT JOIN carexx_care_inst ccis ON cis.service_inst_id = ccis.id
+		WHERE
+			job_status = 1
+		AND staff_status = 1
+		AND service_inst_id = #{instId,jdbcType = INTEGER}
+		AND certification_status = #{certificationStatus, jdbcType = TINYINT}
+	</select>
 	<select id="selectInstStaffIdle" parameterType="com.sh.carexx.bean.staff.InstStaffQueryFormBean" resultType="java.util.Map">
 		SELECT
 			cis.id id,

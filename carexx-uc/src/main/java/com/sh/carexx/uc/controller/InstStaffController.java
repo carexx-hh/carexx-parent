@@ -69,6 +69,13 @@ public class InstStaffController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, new PagerBean(totalNum, resultList)).toJSON();
 	}
 
+	@RequestMapping(value = "/all_by_certification_status/{instId}/{certificationStatus}", method = RequestMethod.GET)
+	public String queryInstStaffByCertificationStatus(@PathVariable("instId") Integer instId, @PathVariable("certificationStatus") Byte certificationStatus) {
+		List<Map<?, ?>> resultList = null;
+		resultList = this.instStaffService.queryInstStaffByCertificationStatus(instId, certificationStatus);
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
+	}
+	
 	@RequestMapping(value = "/serviceNum", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryForServiceNum(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		List<Map<?, ?>> instStaffList = null;

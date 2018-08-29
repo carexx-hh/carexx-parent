@@ -118,4 +118,9 @@ public class InstStaffServiceImpl implements InstStaffService {
 		}
 	}
 
+	@Override
+	public List<Map<?, ?>> queryInstStaffByCertificationStatus(Integer instId, Byte certificationStatus) {
+		return this.instStaffMapper.selectInstStaffByCertificationStatus(instId, certificationStatus);
+	}
+
 }

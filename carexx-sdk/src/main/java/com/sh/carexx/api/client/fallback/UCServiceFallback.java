@@ -489,6 +489,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public String queryInstStaffByCertificationStatus(Integer instId, Byte certificationStatus) {
+		return null;
+	}
+	
+	@Override
 	public String queryInstStaffServiceNum(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		return null;
 	}

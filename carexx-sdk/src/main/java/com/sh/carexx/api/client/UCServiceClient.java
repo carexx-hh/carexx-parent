@@ -885,6 +885,9 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/inststaff/list_by_serviceid", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryInstStaffByServiceId(@RequestBody InstStaffQueryFormBean instStaffQueryFormBean);
 	
+	@RequestMapping(value = "/inststaff/all_by_certification_status/{instId}/{certificationStatus}", method = RequestMethod.GET)
+	String queryInstStaffByCertificationStatus(@PathVariable("instId") Integer instId, @PathVariable("certificationStatus") Byte certificationStatus);
+	
 	@RequestMapping(value = "/inststaff/serviceNum", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryInstStaffServiceNum(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean);
 	

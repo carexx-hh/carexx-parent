@@ -28,4 +28,9 @@ public class InstStaffController extends BaseController {
 	public BasicRetVal RefusedCertification(@PathVariable("id") Integer id) {
 		return this.ucServiceClient.refusedCertification(id);
 	}
+	
+	@RequestMapping(value = "/all_by_certification_status/{instId}/{certificationStatus}")
+	public String queryInstStaffByCertificationStatus(@PathVariable("instId") Integer instId, @PathVariable("certificationStatus") Byte certificationStatus) {
+		return this.ucServiceClient.queryInstStaffByCertificationStatus(instId, certificationStatus);
+	}
 }
