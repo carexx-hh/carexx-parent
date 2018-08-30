@@ -139,4 +139,24 @@ public class InstStaffController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
+	
+	@RequestMapping(value = "/apply_certification/{id}", method = RequestMethod.GET)
+	public BasicRetVal applyCertification(@PathVariable("id") Integer id) {
+		try {
+			this.instStaffManager.applyCertification(id);
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+		}
+		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+	}
+	
+	@RequestMapping(value = "/cancel_certification/{id}", method = RequestMethod.GET)
+	public BasicRetVal cancelCertification(@PathVariable("id") Integer id) {
+		try {
+			this.instStaffManager.cancelCertification(id);
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+		}
+		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+	}
 }

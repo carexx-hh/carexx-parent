@@ -203,4 +203,9 @@ public class InstStaffManager {
 		srcStatus.append(refusedCertification.toString());
 		this.instStaffService.updateCertificationStatus(id, srcStatus.toString(), CertificationStatus.IN_CERTIFICATION.getValue());
 	}
+	
+	public void cancelCertification(Integer id) throws BizException {
+		Byte srcStatus = CertificationStatus.HAS_CERTIFICATION.getValue();
+		this.instStaffService.updateCertificationStatus(id, srcStatus.toString(), CertificationStatus.NO_CERTIFICATION.getValue());
+	}
 }

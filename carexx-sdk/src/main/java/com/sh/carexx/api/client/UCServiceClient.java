@@ -899,6 +899,13 @@ public interface UCServiceClient {
 	
 	@RequestMapping(value = "/inststaff/refused_certification/{id}", method = RequestMethod.GET)
 	BasicRetVal refusedCertification(@PathVariable("id") Integer id);
+	
+	@RequestMapping(value = "/inststaff/apply_certification/{id}", method = RequestMethod.GET)
+	BasicRetVal applyCertification(@PathVariable("id") Integer id);
+	
+	@RequestMapping(value = "/inststaff/cancel_certification/{id}", method = RequestMethod.GET)
+	BasicRetVal cancelCertification(@PathVariable("id") Integer id);
+	
 	/**
 	 * 
 	 * addInstStaff:(添加机构员工信息). <br/>
