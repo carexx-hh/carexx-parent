@@ -34,7 +34,7 @@ public class CustomerOrder {
 
 	private Byte orderStatus;
 
-	private String operator;
+	private Integer operatorId;
 
 	private String orderRemark;
 
@@ -172,12 +172,12 @@ public class CustomerOrder {
 		this.orderStatus = orderStatus;
 	}
 
-	public String getOperator() {
-		return operator;
+	public Integer getOperatorId() {
+		return operatorId;
 	}
 
-	public void setOperator(String operator) {
-		this.operator = operator == null ? null : operator.trim();
+	public void setOperatorId(Integer operatorId) {
+		this.operatorId = operatorId;
 	}
 
 	public String getOrderRemark() {

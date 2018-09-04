@@ -17,7 +17,7 @@
 		<result column="service_end_time" jdbcType="TIMESTAMP" property="serviceEndTime" />
 		<result column="holiday" jdbcType="DECIMAL" property="holiday" />
 		<result column="order_status" jdbcType="TINYINT" property="orderStatus" />
-		<result column="operator" jdbcType="VARCHAR" property="operator" />
+		<result column="operator_id" jdbcType="TINYINT" property="operatorId" />
 		<result column="order_remark" jdbcType="VARCHAR" property="orderRemark" />
 		<result column="inst_sys_id" jdbcType="INTEGER" property="instSysId" />
 		<result column="proof_type" jdbcType="TINYINT" property="proofType" />
@@ -29,7 +29,7 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, order_type, user_id, customer_id, inst_id, service_id, order_no, order_amt, adjust_amt, inpatient_area_id, inpatient_ward, service_start_time,
-		service_end_time, holiday, order_status, operator, order_remark, inst_sys_id, proof_type, receipt_no, invoice_no, signing_person, create_time, modify_time
+		service_end_time, holiday, order_status, operator_id, order_remark, inst_sys_id, proof_type, receipt_no, invoice_no, signing_person, create_time, modify_time
 	</sql>
 
 	<select id="selectAllOrder" resultMap="BaseResultMap">
@@ -235,7 +235,7 @@
 			co.holiday holiday,
 			co.order_status orderStatus,
 			os.settle_status settleStatus,
-			co.operator operator,
+			co.operator_id operatorId,
 			co.order_remark orderRemark,
 			co.proof_type proofType,
 			co.receipt_no receiptNo,
@@ -304,7 +304,7 @@
 		INSERT INTO carexx_customer_order (
 			order_type, user_id, customer_id, inst_id,
 			service_id, order_no, order_amt, adjust_amt, inpatient_area_id, inpatient_ward,
-			service_start_time, service_end_time, holiday, order_status, operator, order_remark,
+			service_start_time, service_end_time, holiday, order_status, operator_id, order_remark,
 			inst_sys_id, proof_type, receipt_no, invoice_no, signing_person, create_time
 			)
 		VALUES (
@@ -314,7 +314,7 @@
 			#{serviceId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{orderAmt,jdbcType=DECIMAL}, #{adjustAmt,jdbcType=DECIMAL},
 			#{inpatientAreaId,jdbcType=INTEGER}, #{inpatientWard,jdbcType=VARCHAR},
 			#{serviceStartTime,jdbcType=TIMESTAMP}, #{serviceEndTime,jdbcType=TIMESTAMP}, #{holiday,jdbcType=DECIMAL},
-			#{orderStatus,jdbcType=TINYINT}, #{operator,jdbcType=VARCHAR}, #{orderRemark,jdbcType=VARCHAR},
+			#{orderStatus,jdbcType=TINYINT}, #{operatorId,jdbcType=INTEGER}, #{orderRemark,jdbcType=VARCHAR},
 			#{instSysId,jdbcType=INTEGER}, #{proofType,jdbcType=TINYINT}, #{receiptNo,jdbcType=VARCHAR},
 			#{invoiceNo,jdbcType=VARCHAR}, #{signingPerson,jdbcType=VARCHAR}, now()
 		)
@@ -376,7 +376,7 @@
 			cia.inpatient_area inpatientArea,
 			co.inpatient_ward inpatientWard,
 			co.order_no orderNo,
-			co.operator operator,
+			co.operator_id operatorId,
 			cis.real_name staffName,
 			wt.id workTypeId,
 			wt.work_type_name workTypeName,

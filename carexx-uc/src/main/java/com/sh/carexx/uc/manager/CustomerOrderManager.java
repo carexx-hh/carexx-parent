@@ -188,7 +188,7 @@ public class CustomerOrderManager {
         customerOrder.setHoliday(this.holidayCount(customerOrder.getInstId(), customerOrder.getServiceStartTime(),
                 customerOrder.getServiceEndTime()));
         customerOrder.setAdjustAmt(new BigDecimal(0));
-        customerOrder.setOperator(customerOrderFormBean.getOperator());
+        customerOrder.setOperatorId(customerOrderFormBean.getOperatorId());
         customerOrder.setOrderRemark(customerOrderFormBean.getOrderRemark());
         customerOrder.setOrderStatus(OrderStatus.WAIT_SCHEDULE.getValue());
         //添加订单

@@ -33,7 +33,7 @@ public class CustomerOrderController extends BaseController {
 	@RequestMapping(value = "/add")
 	public BasicRetVal add(@Valid CustomerOrderFormBean customerOrderFormBean, BindingResult bindingResult) {
 		customerOrderFormBean.setInstId(this.getCurrentUser().getInstId());
-		customerOrderFormBean.setOperator(this.getCurrentUser().getAccount());
+		customerOrderFormBean.setOperatorId(this.getCurrentUser().getId());
 		if (bindingResult.hasErrors()) {
 			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
 		}
