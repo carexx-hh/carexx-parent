@@ -13,12 +13,12 @@ import com.sh.carexx.uc.service.UserMsgStatusService;
 
 /**
  * 
- * ClassName: UserMsgManager <br/> 
- * Function: 消息通知 <br/> 
- * Reason: TODO ADD REASON(可选). <br/> 
- * Date: 2018年7月12日 下午1:59:12 <br/> 
+ * ClassName: UserMsgManager <br/>
+ * Function: 消息通知 <br/>
+ * Reason: TODO ADD REASON(可选). <br/>
+ * Date: 2018年7月12日 下午1:59:12 <br/>
  * 
- * @author zhoulei 
+ * @author zhoulei
  * @since JDK 1.8
  */
 @Service
@@ -32,11 +32,11 @@ public class UserMsgManager {
 
 	/**
 	 * 
-	 * add:(添加消息). <br/> 
+	 * add:(添加消息). <br/>
 	 * 
-	 * @author zhoulei 
+	 * @author zhoulei
 	 * @param userMsgFormBean
-	 * @throws BizException 
+	 * @throws BizException
 	 * @since JDK 1.8
 	 */
 	public void add(UserMsgFormBean userMsgFormBean) throws BizException {
@@ -50,12 +50,12 @@ public class UserMsgManager {
 
 	/**
 	 * 
-	 * addMsgStatus:(读消息). <br/> 
+	 * addMsgStatus:(读消息). <br/>
 	 * 
-	 * @author zhoulei 
+	 * @author zhoulei
 	 * @param userId
 	 * @param msgId
-	 * @throws BizException 
+	 * @throws BizException
 	 * @since JDK 1.8
 	 */
 	public void addMsgStatus(Integer userId, Long msgId) throws BizException {
@@ -72,14 +72,15 @@ public class UserMsgManager {
 
 	/**
 	 * 
-	 * delete:(删除消息). <br/> 
+	 * delete:(删除消息). <br/>
 	 * 
-	 * @author zhoulei 
+	 * @author zhoulei
 	 * @param id
-	 * @throws BizException 
+	 * @throws BizException
 	 * @since JDK 1.8
 	 */
 	public void delete(Long id) throws BizException {
 		this.userMsgStatusService.delete(id);
 	}
+
 }
