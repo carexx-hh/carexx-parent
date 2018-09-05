@@ -3,7 +3,6 @@ package com.sh.carexx.uc.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.sh.carexx.bean.usermsg.UserMsgFormBean;
 import com.sh.carexx.model.uc.UserMsg;
 
 /**
@@ -30,25 +29,14 @@ public interface UserMsgMapper {
 
 	/**
 	 * 
-	 * selectUserMsgCount:(用户消息分页统计). <br/>
+	 * selectAllUserMsg:(查询用户消息). <br/> 
 	 * 
-	 * @author zhoulei
-	 * @param userMsgFormBean
-	 * @return
+	 * @author zhoulei 
+	 * @param UserId
+	 * @return 
 	 * @since JDK 1.8
 	 */
-	Integer selectUserMsgCount(UserMsgFormBean userMsgFormBean);
-
-	/**
-	 * 
-	 * selectUserMsgList:(用户消息分页查询). <br/>
-	 * 
-	 * @author zhoulei
-	 * @param userMsgFormBean
-	 * @return
-	 * @since JDK 1.8
-	 */
-	List<Map<?, ?>> selectUserMsgList(UserMsgFormBean userMsgFormBean);
+	List<Map<?, ?>> selectAllUserMsg(Integer userId);
 
 	/**
 	 * 

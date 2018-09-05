@@ -822,9 +822,9 @@ public interface UCServiceClient {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	@RequestMapping(value = "/msg/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	String queryUserMsgList(@RequestBody UserMsgFormBean userMsgFormBean);
-
+	@RequestMapping(value = "/msg/all/{userId}", method = RequestMethod.GET)
+	String queryAllUserMsg(@PathVariable("userId") Integer userId);
+	
 	/**
 	 * 
 	 * addUserMsg:(添加用户消息). <br/>

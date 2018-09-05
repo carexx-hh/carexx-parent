@@ -16,7 +16,6 @@ import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.web.BasicRetVal;
 import com.sh.carexx.common.web.DataRetVal;
-import com.sh.carexx.common.web.PagerBean;
 import com.sh.carexx.model.uc.UserMsg;
 import com.sh.carexx.uc.manager.UserMsgManager;
 import com.sh.carexx.uc.service.UserMsgService;
@@ -40,14 +39,11 @@ public class UserMsgController {
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String queryForList(@RequestBody UserMsgFormBean userMsgFormBean) {
-		Integer totalNum = this.userMsgService.getUserMsgCount(userMsgFormBean);
-		List<Map<?, ?>> resultList = null;
-		if (totalNum > 0) {
-			resultList = this.userMsgService.queryUserMsgList(userMsgFormBean);
-		}
-		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, new PagerBean(totalNum, resultList)).toJSON();
+	@RequestMapping(value = "/all/{userId}", method = RequestMethod.GET)
+	public String queryAllUserMsg(@PathVariable("userId") Integer userId) {
+		List<Map<?,?>> resultList = null;
+		resultList = this.userMsgService.queryAllUserMsg(userId);
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
 
 	@RequestMapping(value = "/read/{id}", method = RequestMethod.GET)

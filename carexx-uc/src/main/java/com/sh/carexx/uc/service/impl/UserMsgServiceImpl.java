@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sh.carexx.bean.usermsg.UserMsgFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.UserMsg;
@@ -38,13 +37,8 @@ public class UserMsgServiceImpl implements UserMsgService {
 	}
 
 	@Override
-	public Integer getUserMsgCount(UserMsgFormBean userMsgFormBean) {
-		return this.userMsgMapper.selectUserMsgCount(userMsgFormBean);
+	public List<Map<?, ?>> queryAllUserMsg(Integer userId) {
+		return this.userMsgMapper.selectAllUserMsg(userId);
 	}
-
-	@Override
-	public List<Map<?, ?>> queryUserMsgList(UserMsgFormBean userMsgFormBean) {
-		return this.userMsgMapper.selectUserMsgList(userMsgFormBean);
-	}
-
+	
 }

@@ -3,7 +3,6 @@ package com.sh.carexx.uc.service;
 import java.util.List;
 import java.util.Map;
 
-import com.sh.carexx.bean.usermsg.UserMsgFormBean;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.UserMsg;
 
@@ -42,24 +41,13 @@ public interface UserMsgService {
 
 	/**
 	 * 
-	 * getUserMsgCount:(统计符合条件的总数). <br/>
+	 * queryAllUserMsg:(查询用户消息). <br/> 
 	 * 
-	 * @author zhoulei
-	 * @param userMsgFromBean
-	 * @return
+	 * @author zhoulei 
+	 * @param UserId
+	 * @return 
 	 * @since JDK 1.8
 	 */
-	Integer getUserMsgCount(UserMsgFormBean userMsgFormBean);
-
-	/**
-	 * 
-	 * queryUserMsgList:(分页查询信息). <br/>
-	 * 
-	 * @author zhoulei
-	 * @param userMsgFromBean
-	 * @return
-	 * @since JDK 1.8
-	 */
-	List<Map<?, ?>> queryUserMsgList(UserMsgFormBean userMsgFormBean);
+	List<Map<?, ?>> queryAllUserMsg(Integer userId);
 
 }

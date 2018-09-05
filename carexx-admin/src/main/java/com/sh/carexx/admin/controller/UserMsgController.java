@@ -25,12 +25,6 @@ public class UserMsgController extends BaseController {
 		}
 		return this.ucServiceClient.addUserMsg(userMsgFormBean);
 	}
-	
-	@RequestMapping(value = "/list")
-	public String queryForList(UserMsgFormBean userMsgFormBean) {
-		userMsgFormBean.setUserId(SessionHolder.getUserId());
-		return this.ucServiceClient.queryUserMsgList(userMsgFormBean);
-	}
 
 	@RequestMapping(value = "/delete/{id}")
 	public BasicRetVal delete(@PathVariable("id") Long id) {

@@ -454,7 +454,7 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
-	public String queryUserMsgList(UserMsgFormBean userMsgFormBean) {
+	public String queryAllUserMsg(Integer userId) {
 		return null;
 	}
 

@@ -20,52 +20,24 @@
     	carexx_user_msg
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectUserMsgCount" parameterType="com.sh.carexx.bean.usermsg.UserMsgFormBean" resultType="java.lang.Integer">
+	<select id="selectAllUserMsg" parameterType="java.lang.Integer" resultType="java.util.Map">
 		SELECT
-			count(1) totalCount
+			us.id,
+			us.msg_type,
+			us.user_id,
+			us.msg_title,
+			us.msg_content,
+			us.create_time,
+			us.modify_time,
+			ums.msg_status
 		FROM
-			carexx_user_msg um
-		LEFT JOIN carexx_user_msg_status ums ON um.id = ums.msg_id
-		<where>
-			(
-				ums.msg_status IS NULL
-				OR ums.msg_status = 1
-			)
-			<if test="userId != null and userId != '' ">
-			AND um.user_id IN (0, #{userId,jdbcType=INTEGER})
-			</if>
-			<if test="msgType != null and msgType != '' ">
-			AND um.msg_type =  #{msgType,jdbcType=INTEGER}
-			</if>
-		</where>
-	</select>
-	<select id="selectUserMsgList" parameterType="com.sh.carexx.bean.usermsg.UserMsgFormBean" resultType="java.util.Map">
-		SELECT
-			um.id id, 
-			um.msg_type msgType, 
-			um.user_id userId, 
-			um.msg_title msgTitle, 
-			um.msg_content msgContent, 
-			um.create_time createTime, 
-			um.modify_time modifyTime, 
-			IFNULL(ums.msg_status, 0) msgStatus
-		FROM
-			carexx_user_msg um
-		LEFT JOIN carexx_user_msg_status ums ON um.id = ums.msg_id
-		<where>
-			(
-				ums.msg_status IS NULL
-				OR ums.msg_status = 1
-			)
-			<if test="userId != null and userId != '' ">
-			AND um.user_id IN (0, #{userId,jdbcType=INTEGER})
-			</if>
-			<if test="msgType != null and msgType != '' ">
-			AND um.msg_type =  #{msgType,jdbcType=INTEGER}
-			</if>
-		</where>
-		ORDER BY createTime DESC
-		limit ${rowIndex}, ${pageSize}
+			carexx_user_msg us
+		LEFT JOIN carexx_user_msg_status ums ON ums.msg_id = us.id
+		WHERE
+			us.user_id = #{userId,jdbcType=INTEGER}
+		ORDER BY
+			ums.msg_status ASC,
+			us.create_time DESC
 	</select>
 
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.UserMsg">
