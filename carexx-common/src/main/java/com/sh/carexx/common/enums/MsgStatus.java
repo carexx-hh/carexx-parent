@@ -11,9 +11,10 @@ package com.sh.carexx.common.enums;
  * @since JDK 1.8
  */
 public enum MsgStatus {
-	UNREAD((byte) 0, "未读"), 
-	READ((byte) 1, "已读"), 
-	DELETED((byte) 2, "已删除");
+	DELETED((byte) 0, "已删除"),
+	UNREAD((byte) 1, "未读"), 
+	READ((byte) 2, "已读"); 
+	
 
 	private Byte value;
 	private String desc;

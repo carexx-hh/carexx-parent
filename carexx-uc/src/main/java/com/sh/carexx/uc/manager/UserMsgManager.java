@@ -2,6 +2,8 @@ package com.sh.carexx.uc.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sh.carexx.bean.usermsg.UserMsgFormBean;
 import com.sh.carexx.common.enums.MsgStatus;
@@ -39,13 +41,21 @@ public class UserMsgManager {
 	 * @throws BizException
 	 * @since JDK 1.8
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void add(UserMsgFormBean userMsgFormBean) throws BizException {
 		UserMsg userMsg = new UserMsg();
-		userMsg.setMsgType(userMsgFormBean.getMsgType());
+		Byte msgType = 1;
+		userMsg.setMsgType(msgType);
 		userMsg.setUserId(userMsgFormBean.getUserId());
 		userMsg.setMsgTitle(userMsgFormBean.getMsgTitle());
 		userMsg.setMsgContent(userMsgFormBean.getMsgContent());
 		this.userMsgService.save(userMsg);
+		
+		UserMsgStatus userMsgStatus = new UserMsgStatus();
+		userMsgStatus.setUserId(userMsg.getUserId());
+		userMsgStatus.setMsgId(userMsg.getId());
+		userMsgStatus.setMsgStatus(MsgStatus.UNREAD.getValue());
+		this.userMsgStatusService.save(userMsgStatus);
 	}
 
 	/**
@@ -68,6 +78,10 @@ public class UserMsgManager {
 		userMsgStatus.setMsgId(msgId);
 		userMsgStatus.setMsgStatus(MsgStatus.READ.getValue());
 		this.userMsgStatusService.save(userMsgStatus);
+	}
+	
+	public void read(Long msgId, Integer userId) throws BizException {
+		this.userMsgStatusService.updateStatus(msgId, userId, MsgStatus.UNREAD.getValue(), MsgStatus.READ.getValue());
 	}
 
 	/**

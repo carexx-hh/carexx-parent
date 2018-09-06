@@ -38,6 +38,20 @@ public interface UserMsgStatusService {
 
 	/**
 	 * 
+	 * updateStatus:(修改消息状态). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param msgId
+	 * @param userId
+	 * @param srcStatus
+	 * @param targetStatus
+	 * @throws BizException 
+	 * @since JDK 1.8
+	 */
+	void updateStatus(Long msgId, Integer userId, Byte srcStatus, Byte targetStatus) throws BizException;
+	
+	/**
+	 * 
 	 * delete:(删除（修改状态为2）方法). <br/>
 	 * 
 	 * @author zhoulei

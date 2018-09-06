@@ -35,12 +35,13 @@
 		LEFT JOIN carexx_user_msg_status ums ON ums.msg_id = us.id
 		WHERE
 			us.user_id = #{userId,jdbcType=INTEGER}
+			ums.msg_status in (1,2)
 		ORDER BY
 			ums.msg_status ASC,
 			us.create_time DESC
 	</select>
 
-	<insert id="insert" parameterType="com.sh.carexx.model.uc.UserMsg">
+	<insert id="insert" parameterType="com.sh.carexx.model.uc.UserMsg"  useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO carexx_user_msg 
 		(
 			msg_type,

@@ -34,6 +34,19 @@ public class UserMsgStatusServiceImpl implements UserMsgStatusService {
 	}
 
 	@Override
+	public void updateStatus(Long msgId, Integer userId, Byte srcStatus, Byte targetStatus) throws BizException {
+		int rows = 0;
+		try {
+			rows = this.userMsgStatusMapper.updateStatus(msgId, userId, srcStatus, targetStatus);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+	}
+	
+	@Override
 	public void delete(Long id) throws BizException {
 		int rows = 0;
 		try {

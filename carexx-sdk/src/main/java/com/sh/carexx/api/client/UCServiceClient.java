@@ -836,6 +836,19 @@ public interface UCServiceClient {
 	 */
 	@RequestMapping(value = "/msg/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal addUserMsg(@RequestBody UserMsgFormBean userMsgFormBean);
+	
+	/**
+	 * 
+	 * readUserMsg:(读消息). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param msgId
+	 * @param userId
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	@RequestMapping(value = "/msg/read/{msgId}/{userId}", method = RequestMethod.GET)
+	BasicRetVal readUserMsg(@PathVariable("msgId") Long msgId, @PathVariable("userId") Integer userId);
 
 	/**
 	 * 

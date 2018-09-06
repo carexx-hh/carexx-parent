@@ -8,16 +8,11 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.sh.carexx.bean.BasicFormBean;
 import com.sh.carexx.common.CarexxConstant;
-import com.sh.carexx.common.util.ValidUtils;
 
 public class UserMsgFormBean extends BasicFormBean {
 
 	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
 	private String id;
-
-	@NotBlank
-	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
-	private String msgType;
 
 	private Integer userId;
 
@@ -38,17 +33,6 @@ public class UserMsgFormBean extends BasicFormBean {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public Byte getMsgType() {
-		if (ValidUtils.isInteger(msgType)) {
-			return Byte.parseByte(msgType);
-		}
-		return null;
-	}
-
-	public void setMsgType(String msgType) {
-		this.msgType = msgType;
 	}
 
 	public Integer getUserId() {

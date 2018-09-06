@@ -464,6 +464,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public BasicRetVal readUserMsg(Long msgId, Integer userId) {
+		return null;
+	}
+	
+	@Override
 	public BasicRetVal deleteUserMsg(Long id) {
 		return null;
 	}

@@ -16,7 +16,6 @@ import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.web.BasicRetVal;
 import com.sh.carexx.common.web.DataRetVal;
-import com.sh.carexx.model.uc.UserMsg;
 import com.sh.carexx.uc.manager.UserMsgManager;
 import com.sh.carexx.uc.service.UserMsgService;
 
@@ -46,14 +45,14 @@ public class UserMsgController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
 
-	@RequestMapping(value = "/read/{id}", method = RequestMethod.GET)
-	public UserMsg read(@PathVariable("id") Long id) {
-		UserMsg userMsg = this.userMsgService.getById(id);
+	@RequestMapping(value = "/read/{msgId}/{userId}", method = RequestMethod.GET)
+	public BasicRetVal read(@PathVariable("msgId") Long msgId, @PathVariable("userId") Integer userId) {
 		try {
-			this.userMsgManager.addMsgStatus(userMsg.getUserId(), id);
+			this.userMsgManager.read(msgId, userId);
 		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
 		}
-		return userMsg;
+		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
