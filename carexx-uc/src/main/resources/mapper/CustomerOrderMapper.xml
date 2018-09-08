@@ -375,6 +375,7 @@
 			ccis.inst_sys_name instSysName,
 			cia.inpatient_area inpatientArea,
 			co.inpatient_ward inpatientWard,
+			op.pay_type payType,
 			co.order_no orderNo,
 			co.operator_id operatorId,
 			cis.real_name staffName,
@@ -405,6 +406,7 @@
 		AND co.inst_id = ics.inst_id
 		LEFT JOIN carexx_order_settle os ON cos.id = os.schedule_id
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_order_payment op ON co.order_no = op.order_no
 		LEFT JOIN carexx_work_type wt ON cs.work_type_id = wt.id
 		LEFT JOIN carexx_inst_inpatient_area cia ON cia.id = co.inpatient_area_id
 		<where>
@@ -432,6 +434,9 @@
 			</if>
 			<if test="workTypeId != null and workTypeId != '' ">
 				and wt.id = #{workTypeId,jdbcType=INTEGER}
+			</if>
+			<if test="payType != null and payType != '' ">
+				and op.pay_type = #{payType,jdbcType=TINYINT}
 			</if>
 			<if test="realName != null and realName != '' ">
 				and ic.real_name like CONCAT('%', '${realName}', '%')
