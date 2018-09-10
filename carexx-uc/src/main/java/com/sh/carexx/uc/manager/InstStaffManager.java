@@ -158,7 +158,7 @@ public class InstStaffManager {
 		return instStaffList;
 	}
 	
-	public List<Map<?, ?>> serviceNum(CustomerOrderQueryFormBean customerOrderQueryFormBean) throws BizException {
+	public List<Map<?, ?>> staffSchedule(CustomerOrderQueryFormBean customerOrderQueryFormBean) throws BizException {
 		String orderNo = customerOrderQueryFormBean.getOrderNo();
 		String realName = customerOrderQueryFormBean.getStaffName();
 		CustomerOrder customerOrder = new CustomerOrder();

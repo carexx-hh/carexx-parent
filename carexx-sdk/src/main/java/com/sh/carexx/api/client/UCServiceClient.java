@@ -901,8 +901,8 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/inststaff/all_by_certification_status/{instId}/{certificationStatus}", method = RequestMethod.GET)
 	String queryInstStaffByCertificationStatus(@PathVariable("instId") Integer instId, @PathVariable("certificationStatus") Byte certificationStatus);
 	
-	@RequestMapping(value = "/inststaff/service_num", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	String queryInstStaffServiceNum(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	@RequestMapping(value = "/inststaff/staff_schedule", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String queryInstStaffSchedule(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean);
 	
 	@RequestMapping(value = "/inststaff/mapp_all", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryMappAllInstStaff(@RequestBody InstStaffQueryFormBean instStaffQueryFormBean);

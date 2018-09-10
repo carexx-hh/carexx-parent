@@ -76,11 +76,11 @@ public class InstStaffController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
 	
-	@RequestMapping(value = "/service_num", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String queryInstStaffServiceNum(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+	@RequestMapping(value = "/staff_schedule", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String queryInstStaffSchedule(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		List<Map<?, ?>> instStaffList = null;
 		try {
-			instStaffList = this.instStaffManager.serviceNum(customerOrderQueryFormBean);
+			instStaffList = this.instStaffManager.staffSchedule(customerOrderQueryFormBean);
 		} catch (BizException e) {
 			return new DataRetVal(CarexxConstant.RetCode.SERVER_ERROR, null).toJSON();
 		}

@@ -11,7 +11,7 @@ package com.sh.carexx.common.enums.pay;
  * @since JDK 1.8
  */
 public enum PayMethod {
-	ONLINE_PAY((byte) 1, "在线支付"), 
+	ONLINE_PAY((byte) 1, "线上支付"), 
 	UNDERLINE_PAY((byte) 2, "线下支付");
 
 	private Byte value;

@@ -17,10 +17,10 @@ import com.sh.carexx.common.web.BasicRetVal;
 @RequestMapping("/inststaff")
 public class InstStaffController extends BaseController {
 
-	@RequestMapping(value = "/service_num")
-	public String queryInstStaffServiceNum(@Valid CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+	@RequestMapping(value = "/staff_schedule")
+	public String queryInstStaffSchedule(@Valid CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 
-		return this.ucServiceClient.queryInstStaffServiceNum(customerOrderQueryFormBean);
+		return this.ucServiceClient.queryInstStaffSchedule(customerOrderQueryFormBean);
 	}
 	
 	@RequestMapping(value = "/mapp_all")

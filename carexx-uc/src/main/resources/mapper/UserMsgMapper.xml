@@ -22,14 +22,14 @@
   </select>
 	<select id="selectAllUserMsg" parameterType="java.lang.Integer" resultType="java.util.Map">
 		SELECT
-			us.id,
-			us.msg_type,
-			us.user_id,
-			us.msg_title,
-			us.msg_content,
-			us.create_time,
-			us.modify_time,
-			ums.msg_status
+			us.id id,
+			us.msg_type msgType,
+			us.user_id userId,
+			us.msg_title msgTitle,
+			us.msg_content msgContent,
+			us.create_time createTime,
+			us.modify_time modifyTime,
+			ums.msg_status msgStatus
 		FROM
 			carexx_user_msg us
 		LEFT JOIN carexx_user_msg_status ums ON ums.msg_id = us.id
