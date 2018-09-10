@@ -53,6 +53,9 @@ public class CustomerOrderController extends BaseController {
 
 	@RequestMapping(value = "/throughPay/{orderNo}/{payType}")
 	public BasicRetVal throughPay(@PathVariable("orderNo") String orderNo, @PathVariable("payType") Byte payType) {
+		if(orderNo == null || payType == null){
+			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
+		}
 		return this.ucServiceClient.throughPayCustomerOrder(orderNo, payType);
 	}
 
