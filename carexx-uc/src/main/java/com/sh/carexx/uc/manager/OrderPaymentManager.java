@@ -102,10 +102,16 @@ public class OrderPaymentManager {
      * @author zhoulei
      * @since JDK 1.8
      */
-    public void offlinePayment(String orderNo) throws BizException {
+    public void offlinePayment(String orderNo, Byte payType) throws BizException {
         OrderPayment orderPayment = new OrderPayment();
         orderPayment.setOrderNo(orderNo);
-        orderPayment.setPayType(PayMethod.UNDERLINE_PAY.getValue());
+        if(payType == 2){
+            orderPayment.setPayType(PayMethod.SCAN_PAY.getValue());
+        }else if(payType == 3){
+            orderPayment.setPayType(PayMethod.COMPANY_TURN_ACCOUNT.getValue());
+        }else if(payType == 4){
+            orderPayment.setPayType(PayMethod.CASH_PAY.getValue());
+        }
         orderPayment.setPayStatus(PayStatus.PAY_SUCCESS.getValue());
         this.orderPaymentService.update(orderPayment);
     }

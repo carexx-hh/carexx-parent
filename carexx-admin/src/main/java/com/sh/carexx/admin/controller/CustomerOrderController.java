@@ -51,9 +51,9 @@ public class CustomerOrderController extends BaseController {
 		return this.ucServiceClient.cancelCustomerOrder(orderNo);
 	}
 
-	@RequestMapping(value = "/throughPay/{orderNo}")
-	public BasicRetVal throughPay(@PathVariable("orderNo") String orderNo) {
-		return this.ucServiceClient.throughPayCustomerOrder(orderNo);
+	@RequestMapping(value = "/throughPay/{orderNo}/{payType}")
+	public BasicRetVal throughPay(@PathVariable("orderNo") String orderNo, @PathVariable("payType") Byte payType) {
+		return this.ucServiceClient.throughPayCustomerOrder(orderNo, payType);
 	}
 
 	@RequestMapping(value = "/confirmcompleted")

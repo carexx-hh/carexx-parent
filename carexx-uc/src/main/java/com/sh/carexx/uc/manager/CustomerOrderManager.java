@@ -351,14 +351,14 @@ public class CustomerOrderManager {
      * @since JDK 1.8
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
-    public void throughPay(String orderNo) throws BizException {
+    public void throughPay(String orderNo, Byte payType) throws BizException {
         //通过订单号查询出所有排班并将排班结算信息改为已结算
         List<CustomerOrderSchedule> orderScheduleList = this.customerOrderScheduleService.getByOrderNo(orderNo);
         for (CustomerOrderSchedule orderSchedule : orderScheduleList) {
             this.orderSettleService.updateStatus(orderSchedule.getId(), OrderSettleStatus.SETTLING.getValue(),
                     OrderSettleStatus.SETTLED.getValue());
         }
-        this.orderPaymentManager.offlinePayment(orderNo);
+        this.orderPaymentManager.offlinePayment(orderNo, payType);
         //订单状态改为已支付
         this.customerOrderService.updateStatus(orderNo, OrderStatus.WAIT_PAY.getValue(),
                 OrderStatus.ALREADY_PAY.getValue());

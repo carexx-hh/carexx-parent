@@ -419,7 +419,7 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
-	public BasicRetVal throughPayCustomerOrder(String orderNo) {
+	public BasicRetVal throughPayCustomerOrder(String orderNo, Byte payType) {
 		return null;
 	}
 

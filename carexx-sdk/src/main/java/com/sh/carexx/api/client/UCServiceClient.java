@@ -728,8 +728,8 @@ public interface UCServiceClient {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	@RequestMapping(value = "/customerorder/throughPay/{orderNo}", method = RequestMethod.GET)
-	BasicRetVal throughPayCustomerOrder(@PathVariable("orderNo") String orderNo);
+	@RequestMapping(value = "/customerorder/throughPay/{orderNo}/{payType}", method = RequestMethod.GET)
+	BasicRetVal throughPayCustomerOrder(@PathVariable("orderNo") String orderNo, @PathVariable("payType") Byte payType);
 
 	/**
 	 *

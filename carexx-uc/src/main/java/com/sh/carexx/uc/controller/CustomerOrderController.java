@@ -120,10 +120,10 @@ public class CustomerOrderController {
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
 
-	@RequestMapping(value = "/throughPay/{orderNo}", method = RequestMethod.GET)
-	public BasicRetVal throughPay(@PathVariable("orderNo") String orderNo) {
+	@RequestMapping(value = "/throughPay/{orderNo}/{payType}", method = RequestMethod.GET)
+	public BasicRetVal throughPay(@PathVariable("orderNo") String orderNo, @PathVariable("payType") Byte payType) {
 		try {
-			this.customerOrderManager.throughPay(orderNo);
+			this.customerOrderManager.throughPay(orderNo, payType);
 		} catch (BizException e) {
 			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
 		}
