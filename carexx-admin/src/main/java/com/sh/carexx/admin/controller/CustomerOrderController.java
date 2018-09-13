@@ -136,10 +136,10 @@ public class CustomerOrderController extends BaseController {
 			}
 		}
 		String[] heads = { "订单号", "客户姓名", "签单人", "病区/病床", "工种", "护工姓名", "所属公司", "凭证类型", "凭证号", "开始时间", "结束时间", "总天数",
-				"节假日天数", "订单金额", "订单调整", "结算款", "结算调整", "管理费", "备注" };
+				"节假日天数", "订单金额", "订单调整", "结算款", "结算调整", "管理费", "微信手续费", "备注" };
 		String[] cols = { "orderNo", "realName", "signingPerson", "areaWard", "workTypeName", "staffName",
 				"instSysName", "proofType", "receiptInvoice", "startTime", "endTime", "days", "holiday", "orderAmt",
-				"orderAdjustAmt", "staffSettleAmt", "settleAdjustAmt", "instSettleAmt", "orderRemark" };
+				"orderAdjustAmt", "staffSettleAmt", "settleAdjustAmt", "instSettleAmt", "pounDage", "orderRemark" };
 		int[] numColIndexs = {};
 		ExcelExporter<Map<String, Object>> exporter = new ExcelExporter(fileName, heads, cols, resultList,
 				numColIndexs);
