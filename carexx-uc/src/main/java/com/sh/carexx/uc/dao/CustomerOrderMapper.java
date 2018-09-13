@@ -176,7 +176,7 @@ public interface CustomerOrderMapper {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?,?>> selectIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	List<Map<String, Object>> selectIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
 	
 	/**
 	 * 

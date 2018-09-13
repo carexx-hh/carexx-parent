@@ -158,7 +158,7 @@ public class CustomerOrderController {
 
 	@RequestMapping(value = "/income_count", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryIncomeCountForList(@RequestBody CustomerOrderQueryFormBean CustomerOrderQueryFormBean) {
-		List<Map<?, ?>> result = this.customerOrderService.queryIncomeCount(CustomerOrderQueryFormBean);
+		List<Map<String, Object>> result = this.customerOrderService.queryIncomeCount(CustomerOrderQueryFormBean);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, result).toJSON();
 	}
 
