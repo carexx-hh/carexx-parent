@@ -50,7 +50,7 @@ public class UserMsgManager {
 		userMsg.setMsgTitle(userMsgFormBean.getMsgTitle());
 		userMsg.setMsgContent(userMsgFormBean.getMsgContent());
 		this.userMsgService.save(userMsg);
-		
+
 		UserMsgStatus userMsgStatus = new UserMsgStatus();
 		userMsgStatus.setUserId(userMsg.getUserId());
 		userMsgStatus.setMsgId(userMsg.getId());
@@ -79,7 +79,7 @@ public class UserMsgManager {
 		userMsgStatus.setMsgStatus(MsgStatus.READ.getValue());
 		this.userMsgStatusService.save(userMsgStatus);
 	}
-	
+
 	public void read(Long msgId, Integer userId) throws BizException {
 		this.userMsgStatusService.updateStatus(msgId, userId, MsgStatus.UNREAD.getValue(), MsgStatus.READ.getValue());
 	}
@@ -93,8 +93,15 @@ public class UserMsgManager {
 	 * @throws BizException
 	 * @since JDK 1.8
 	 */
-	public void delete(Long id) throws BizException {
-		this.userMsgStatusService.delete(id);
+	public void delete(String ids) throws BizException {
+		String[] strArr = ids.split(",");
+		long[] longArr = new long[strArr.length];
+		for (int i = 0; i < strArr.length; i++) {
+			longArr[i] = Long.valueOf(strArr[i]);
+		}
+		for (int i = 0; i < longArr.length; i++) {
+			this.userMsgStatusService.delete(longArr[i]);
+		}
 	}
 
 }

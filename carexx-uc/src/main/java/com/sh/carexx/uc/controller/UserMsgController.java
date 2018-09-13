@@ -55,10 +55,10 @@ public class UserMsgController {
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
 
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public BasicRetVal delete(@PathVariable("id") Long id) {
+	@RequestMapping(value = "/delete/{ids}", method = RequestMethod.GET)
+	public BasicRetVal delete(@PathVariable("ids") String ids) {
 		try {
-			this.userMsgManager.delete(id);
+			this.userMsgManager.delete(ids);
 		} catch (BizException e) {
 			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
 		}

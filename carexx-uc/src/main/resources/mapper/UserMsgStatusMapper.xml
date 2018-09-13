@@ -33,10 +33,10 @@
 		update
 			carexx_user_msg_status
 		set
-			msg_status = 2,
+			msg_status = 0,
 			modify_time = now()
 		where
-			msg_id = #{id,jdbcType=INTEGER} and msg_status != 2
+			msg_id = #{id,jdbcType=INTEGER} and msg_status != 0
 	</update>
 
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.UserMsgStatus">
