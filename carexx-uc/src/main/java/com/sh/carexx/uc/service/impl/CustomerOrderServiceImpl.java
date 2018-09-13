@@ -154,9 +154,10 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 		List<Map<String, Object>> incomeCount = this.customerOrderMapper.selectIncomeCount(customerOrderQueryFormBean);
 		for(Map<String, Object> map : incomeCount){
 			BigDecimal orderAmt = new BigDecimal(String.valueOf(map.get("orderAmt")));
+			BigDecimal orderAdjustAmt = new BigDecimal(String.valueOf(map.get("orderAdjustAmt")));
 			Integer payType = Integer.parseInt(String.valueOf(map.get("payType")));
 			if(payType < 4){
-				BigDecimal pounDage = (orderAmt.multiply(new BigDecimal(0.006))).setScale(2,BigDecimal.ROUND_HALF_UP);
+				BigDecimal pounDage = ((orderAmt.add(orderAdjustAmt)).multiply(new BigDecimal(0.006))).setScale(2,BigDecimal.ROUND_HALF_UP);
 				map.put("pounDage", pounDage);
 			}else{
 				map.put("pounDage", 0.0);
