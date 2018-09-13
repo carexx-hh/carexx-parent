@@ -34,8 +34,8 @@ public class UserMsgController extends BaseController {
 		return this.ucServiceClient.readUserMsg(msgId, userId);
 	}
 	
-	@RequestMapping(value = "/delete/{id}")
-	public BasicRetVal delete(@PathVariable("id") Long id) {
-		return this.ucServiceClient.deleteUserMsg(id);
+	@RequestMapping(value = "/delete/{ids}")
+	public BasicRetVal delete(@PathVariable("ids") String ids) {
+		return this.ucServiceClient.deleteUserMsg(ids);
 	}
 }

@@ -859,8 +859,8 @@ public interface UCServiceClient {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	@RequestMapping(value = "/msg/delete/{id}", method = RequestMethod.GET)
-	BasicRetVal deleteUserMsg(@PathVariable("id") Long id);
+	@RequestMapping(value = "/msg/delete/{ids}", method = RequestMethod.GET)
+	BasicRetVal deleteUserMsg(@PathVariable("ids") String ids);
 
 	/**
 	 * 

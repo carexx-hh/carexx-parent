@@ -469,7 +469,7 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 	
 	@Override
-	public BasicRetVal deleteUserMsg(Long id) {
+	public BasicRetVal deleteUserMsg(String ids) {
 		return null;
 	}
 
