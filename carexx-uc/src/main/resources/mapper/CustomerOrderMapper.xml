@@ -497,9 +497,19 @@
 		LEFT JOIN carexx_order_payment op ON co.order_no = op.order_no
 		LEFT JOIN carexx_customer_order_schedule cos ON cos.order_no = co.order_no
 		LEFT JOIN carexx_order_settle os ON cos.id = os.schedule_id
-		WHERE
+		<where>
 			co.order_status = 6
 		AND ci.inst_status = 1
+		<if test="instName != null and instName != '' ">
+			and ci.inst_name like CONCAT('%', '${instName}', '%')
+		</if>
+		<if test="serviceStartTime != null and serviceStartTime != '' ">
+			and DATE_FORMAT(co.service_start_time ,<![CDATA['%Y-%m-%d']]>) <![CDATA[>=]]> DATE_FORMAT(#{serviceStartTime},<![CDATA['%Y-%m-%d']]>)
+		</if>
+		<if test="serviceEndTime != null and serviceEndTime != '' ">
+			and DATE_FORMAT(co.service_start_time ,<![CDATA['%Y-%m-%d']]>) <![CDATA[<=]]> DATE_FORMAT(#{serviceEndTime},<![CDATA['%Y-%m-%d']]>)
+		</if>
+		</where>
 		GROUP BY co.order_no
 	</select>
 
