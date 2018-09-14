@@ -198,7 +198,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 						
 						BigDecimal outputPounDage = new BigDecimal(String.valueOf(outputInstIncomeCountMap.get("pounDage")));
 						if(payType == PayMethod.ONLINE_PAY.getValue() || payType == PayMethod.SCAN_PAY.getValue()) {
-							BigDecimal inputPounDage = inputOrderAmt.multiply(new BigDecimal(0.006));
+							BigDecimal inputPounDage = inputOrderAmt.multiply(new BigDecimal(0.006)).setScale(2,BigDecimal.ROUND_HALF_UP);
 							outputPounDage = outputPounDage.add(inputPounDage);
 						}
 						
@@ -229,7 +229,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 			Byte payType = Byte.valueOf(String.valueOf(inputInstIncomeCountMap.get("payType")));
 			BigDecimal outputPounDage = new BigDecimal(0.0);
 			if(payType == PayMethod.ONLINE_PAY.getValue() || payType == PayMethod.SCAN_PAY.getValue()) {
-				BigDecimal inputPounDage = outputOrderAmt.multiply(new BigDecimal(0.006));
+				BigDecimal inputPounDage = outputOrderAmt.multiply(new BigDecimal(0.006)).setScale(2,BigDecimal.ROUND_HALF_UP);
 				outputPounDage = outputPounDage.add(inputPounDage);
 			}
 			
