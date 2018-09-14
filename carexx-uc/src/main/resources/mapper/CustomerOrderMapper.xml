@@ -482,6 +482,26 @@
 			co.create_time,cos.id DESC
 		</if>
 	</select>
+	<select id="selectInstIncomeCount" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">
+		SELECT
+			ci.id instId,
+			ci.inst_name instName,
+			op.pay_type payType,
+			co.order_amt orderAmt,
+			co.adjust_amt adjustAmt,
+			SUM(os.staff_settle_amt) staffSettleAmt,
+			SUM(os.inst_settle_amt) instSettleAmt
+		FROM
+			carexx_customer_order co
+		LEFT JOIN carexx_care_inst ci ON co.inst_id = ci.id
+		LEFT JOIN carexx_order_payment op ON co.order_no = op.order_no
+		LEFT JOIN carexx_customer_order_schedule cos ON cos.order_no = co.order_no
+		LEFT JOIN carexx_order_settle os ON cos.id = os.schedule_id
+		WHERE
+			co.order_status = 6
+		AND ci.inst_status = 1
+		GROUP BY co.order_no
+	</select>
 
 	<update id="updateStatus">
 		UPDATE

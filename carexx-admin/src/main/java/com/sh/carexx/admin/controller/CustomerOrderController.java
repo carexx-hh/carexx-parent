@@ -82,6 +82,11 @@ public class CustomerOrderController extends BaseController {
 		customerOrderQueryFormBean.setInstId(this.getCurrentUser().getInstId());
 		return this.ucServiceClient.queryIncomeCountForList(customerOrderQueryFormBean);
 	}
+	
+	@RequestMapping(value = "/inst_income_count")
+	public String queryInstIncomeCountForList(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		return this.ucServiceClient.queryInstIncomeCountForList(customerOrderQueryFormBean);
+	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/export_income_count")
