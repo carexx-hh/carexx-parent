@@ -1,24 +1,22 @@
 package com.sh.carexx.uc.service.impl;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.enums.pay.PayMethod;
-import com.sh.carexx.common.enums.pay.PayStatus;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.util.ValidUtils;
 import com.sh.carexx.model.uc.CustomerOrder;
 import com.sh.carexx.uc.dao.CustomerOrderMapper;
 import com.sh.carexx.uc.service.CustomerOrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class CustomerOrderServiceImpl implements CustomerOrderService {
@@ -161,7 +159,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 			BigDecimal orderAmt = new BigDecimal(String.valueOf(map.get("orderAmt")));
 			BigDecimal orderAdjustAmt = new BigDecimal(String.valueOf(map.get("orderAdjustAmt")));
 			Integer payType = Integer.parseInt(String.valueOf(map.get("payType")));
-			if(payType < 4){
+			if(payType < 3){
 				BigDecimal pounDage = ((orderAmt.add(orderAdjustAmt)).multiply(new BigDecimal(0.006))).setScale(2,BigDecimal.ROUND_HALF_UP);
 				map.put("pounDage", pounDage);
 			}else{
