@@ -7,11 +7,12 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="msg_title" jdbcType="VARCHAR" property="msgTitle" />
     <result column="msg_content" jdbcType="VARCHAR" property="msgContent" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, msg_type, user_id, msg_title, msg_content, create_time, modify_time
+    id, msg_type, user_id, msg_title, msg_content, order_no, create_time, modify_time
   </sql>
   <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -27,6 +28,7 @@
 			us.user_id userId,
 			us.msg_title msgTitle,
 			us.msg_content msgContent,
+			us.order_no orderNo,
 			us.create_time createTime,
 			us.modify_time modifyTime,
 			ums.msg_status msgStatus
@@ -48,6 +50,7 @@
 			user_id,
 			msg_title,
 			msg_content,
+			order_no,
 			create_time
 		)
 		VALUES
@@ -56,6 +59,7 @@
 				#{userId,jdbcType=INTEGER},
 				#{msgTitle,jdbcType=VARCHAR},
 				#{msgContent,jdbcType=VARCHAR},
+				#{orderNo,jdbcType=VARCHAR},
 				now()
 			)
 	</insert>

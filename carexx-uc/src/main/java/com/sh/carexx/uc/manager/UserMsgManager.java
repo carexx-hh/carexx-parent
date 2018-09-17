@@ -49,6 +49,7 @@ public class UserMsgManager {
 		userMsg.setUserId(userMsgFormBean.getUserId());
 		userMsg.setMsgTitle(userMsgFormBean.getMsgTitle());
 		userMsg.setMsgContent(userMsgFormBean.getMsgContent());
+		userMsg.setOrderNo(userMsgFormBean.getOrderNo());
 		this.userMsgService.save(userMsg);
 
 		UserMsgStatus userMsgStatus = new UserMsgStatus();

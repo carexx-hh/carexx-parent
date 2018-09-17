@@ -13,6 +13,8 @@ public class UserMsg {
 
     private String msgContent;
 
+    private String orderNo;
+    
     private Date createTime;
 
     private Date modifyTime;
@@ -57,7 +59,15 @@ public class UserMsg {
         this.msgContent = msgContent == null ? null : msgContent.trim();
     }
 
-    public Date getCreateTime() {
+    public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	public Date getCreateTime() {
         return createTime;
     }
 

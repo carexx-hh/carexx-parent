@@ -23,6 +23,8 @@ public class UserMsgFormBean extends BasicFormBean {
 	@NotBlank
 	@Size(max = 255)
 	private String msgContent;
+	
+	private String orderNo;
 
 	public Integer getId() {
 		if (StringUtils.isNotBlank(id)) {
@@ -59,4 +61,12 @@ public class UserMsgFormBean extends BasicFormBean {
 		this.msgContent = msgContent;
 	}
 
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+	
 }
