@@ -754,4 +754,14 @@ public class UCServiceFallback implements UCServiceClient {
 		return null;
 	}
 
+	@Override
+	public BasicRetVal acceptSchedule(String orderNo) {
+		return null;
+	}
+
+	@Override
+	public BasicRetVal refusedSchedule(String orderNo) {
+		return null;
+	}
+	
 }

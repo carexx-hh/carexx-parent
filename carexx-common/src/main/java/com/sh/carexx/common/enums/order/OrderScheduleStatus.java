@@ -13,7 +13,8 @@ package com.sh.carexx.common.enums.order;
 public enum OrderScheduleStatus {
 	DELETED((byte) 0, "已删除"), 
 	IN_SERVICE((byte) 1, "服务中"),
-	COMPLETED((byte) 2, "已完成");
+	COMPLETED((byte) 2, "已完成"),
+	WAIT_ACCEPT((byte) 3, "待接收");
 
 	private Byte value;
 	private String desc;

@@ -437,11 +437,22 @@ public class CustomerOrderScheduleManager {
 		customerOrderSchedule.setServiceEndTime(serviceEndTime);
 		customerOrderSchedule.setServiceDuration(DateUtils.getHourDiff(serviceStartTime, serviceEndTime));
 		customerOrderSchedule.setWorkTypeSettleId(mappCustomerOrderScheduleFormBean.getWorkTypeSettleId());
-		customerOrderSchedule.setServiceStatus(OrderScheduleStatus.IN_SERVICE.getValue());
+		customerOrderSchedule.setServiceStatus(OrderScheduleStatus.WAIT_ACCEPT.getValue());
 		customerOrderSchedule.setScheduleRemark(mappCustomerOrderScheduleFormBean.getScheduleRemark());
 		// 添加排班一条记录
 		this.customerOrderScheduleService.save(customerOrderSchedule);
 		// 添加结算记录
 		this.orderSettleManager.add(customerOrderSchedule);
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
+	public void acceptSchedule(String orderNo) throws BizException {
+		this.customerOrderService.updateStatus(orderNo, OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.IN_SERVICE.getValue());
+		CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(orderNo);
+		this.customerOrderScheduleService.updateStatus(customerOrderSchedule.getId(), OrderScheduleStatus.WAIT_ACCEPT.getValue(), OrderScheduleStatus.IN_SERVICE.getValue());
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
+	public void refusedSchedule(String orderNo) throws BizException {
 	}
 }

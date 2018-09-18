@@ -27,4 +27,14 @@ public class CustomerOrderScheduleController extends BaseController {
 		}
 		return this.ucServiceClient.mappAddCustomerOrderSchedule(mappCustomerOrderScheduleFormBean);
 	}
+	
+	@RequestMapping(value = "/accept_schedule/{orderNo}")
+	public BasicRetVal acceptSchedule(@PathVariable("orderNo")String orderNo) {
+		return this.ucServiceClient.acceptSchedule(orderNo);
+	}
+	
+	@RequestMapping(value = "/refused_schedule/{orderNo}")
+	public BasicRetVal refusedSchedule(@PathVariable("orderNo")String orderNo) {
+		return this.ucServiceClient.refusedSchedule(orderNo);
+	}
 }

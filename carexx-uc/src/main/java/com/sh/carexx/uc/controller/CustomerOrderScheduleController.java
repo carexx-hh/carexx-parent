@@ -114,5 +114,25 @@ public class CustomerOrderScheduleController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
+	
+	@RequestMapping(value = "/accept_schedule/{orderNo}", method = RequestMethod.GET)
+	public BasicRetVal acceptSchedule(@PathVariable("orderNo") String orderNo) {
+		try {
+			this.customerOrderScheduleManager.acceptSchedule(orderNo);
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+		}
+		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+	}
+	
+	@RequestMapping(value = "/refused_schedule/{orderNo}", method = RequestMethod.GET)
+	public BasicRetVal refusedSchedule(@PathVariable("orderNo") String orderNo) {
+		try {
+			this.customerOrderScheduleManager.refusedSchedule(orderNo);
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+		}
+		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+	}
 
 }
