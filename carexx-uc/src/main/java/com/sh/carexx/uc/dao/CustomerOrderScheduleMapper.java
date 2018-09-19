@@ -149,4 +149,6 @@ public interface CustomerOrderScheduleMapper {
 	 * @since JDK 1.8
 	 */
 	List<Map<?,?>> selectWorkQuantityReport(WorkQuantityReportFormBean workQuantityReportFormBean);
+	
+	int deleteMappOrderSchedule(Long id);
 }

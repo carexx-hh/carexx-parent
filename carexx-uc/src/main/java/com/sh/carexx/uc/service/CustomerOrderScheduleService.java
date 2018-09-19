@@ -148,4 +148,5 @@ public interface CustomerOrderScheduleService {
 	 */
 	List<Map<String, Object>> queryWorkQuantityReport(WorkQuantityReportFormBean workQuantityReportFormBean);
 	
+	void deleteMappOrderSchedule(Long id) throws BizException;
 }

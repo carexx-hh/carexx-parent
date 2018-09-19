@@ -151,4 +151,11 @@
 			modify_time = now()
 		where schedule_id = #{scheduleId,jdbcType=BIGINT}
 	</update>
+	
+	<delete id="deleteMappOrderSettle" parameterType="java.lang.Long">
+		DELETE FROM
+			carexx_order_settle
+		WHERE
+			schedule_id = #{scheduleId, jdbcType=BIGINT}
+	</delete>
 </mapper>

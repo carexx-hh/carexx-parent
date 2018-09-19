@@ -1129,10 +1129,10 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/customerorderschedule/mapp_add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal mappAddCustomerOrderSchedule(@RequestBody MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean);
 	
-	@RequestMapping(value = "/customerorderschedule/accept_schedule/{orderNo}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/customerorderschedule/accept_schedule/{orderNo}", method = RequestMethod.GET)
 	BasicRetVal acceptSchedule(@PathVariable("orderNo") String orderNo);
 	
-	@RequestMapping(value = "/customerorderschedule/refused_schedule/{orderNo}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/customerorderschedule/refused_schedule/{orderNo}", method = RequestMethod.GET)
 	BasicRetVal refusedSchedule(@PathVariable("orderNo") String orderNo);
 	/**
 	 * 

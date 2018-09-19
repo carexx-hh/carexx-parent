@@ -108,4 +108,15 @@ public interface OrderSettleMapper {
 	 * @since JDK 1.8
 	 */
 	int updateSettleAmt(OrderSettle orderSettle);
+	
+	/**
+	 * 
+	 * deleteMappOrderSettle:(删除订单结算). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param id
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	int deleteMappOrderSettle(Long scheduleId);
 }

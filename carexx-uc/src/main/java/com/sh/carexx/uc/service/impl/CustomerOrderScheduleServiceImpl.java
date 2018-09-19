@@ -142,4 +142,18 @@ public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleSe
 		}
 		return result;
 	}
+
+	@Override
+	public void deleteMappOrderSchedule(Long id) throws BizException {
+		int rows = 0;
+		try {
+			rows = this.customerOrderScheduleMapper.deleteMappOrderSchedule(id);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+		
+	}
 }

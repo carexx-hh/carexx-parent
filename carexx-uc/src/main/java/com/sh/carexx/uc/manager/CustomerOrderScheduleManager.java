@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sh.carexx.bean.order.CustomerOrderScheduleFormBean;
 import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
 import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
+import com.sh.carexx.bean.usermsg.UserMsgFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.enums.order.OrderScheduleStatus;
 import com.sh.carexx.common.enums.order.OrderSettleStatus;
@@ -22,9 +23,13 @@ import com.sh.carexx.common.util.DateUtils;
 import com.sh.carexx.common.util.ValidUtils;
 import com.sh.carexx.model.uc.CustomerOrder;
 import com.sh.carexx.model.uc.CustomerOrderSchedule;
+import com.sh.carexx.model.uc.InstCustomer;
+import com.sh.carexx.model.uc.InstStaff;
 import com.sh.carexx.model.uc.OrderSettle;
 import com.sh.carexx.uc.service.CustomerOrderScheduleService;
 import com.sh.carexx.uc.service.CustomerOrderService;
+import com.sh.carexx.uc.service.InstCustomerService;
+import com.sh.carexx.uc.service.InstStaffService;
 import com.sh.carexx.uc.service.OrderSettleService;
 
 /**
@@ -45,6 +50,12 @@ public class CustomerOrderScheduleManager {
 	private CustomerOrderService customerOrderService;
 	@Autowired
 	public OrderSettleService orderSettleService;
+	@Autowired
+	public InstStaffService instStaffService;
+	@Autowired
+	private InstCustomerService instCustomerService;
+	@Autowired
+	private UserMsgManager userMsgManager;
 
 	/**
 	 * add:(添加排班，拆分日期). <br/>
@@ -447,12 +458,29 @@ public class CustomerOrderScheduleManager {
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void acceptSchedule(String orderNo) throws BizException {
-		this.customerOrderService.updateStatus(orderNo, OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.IN_SERVICE.getValue());
+		CustomerOrder customerOrder = this.customerOrderService.getByOrderNo(orderNo);
+		if(customerOrder.getOrderStatus() == OrderStatus.WAIT_SCHEDULE.getValue()) {
+			this.customerOrderService.updateStatus(orderNo, OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.IN_SERVICE.getValue());
+		}
 		CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(orderNo);
 		this.customerOrderScheduleService.updateStatus(customerOrderSchedule.getId(), OrderScheduleStatus.WAIT_ACCEPT.getValue(), OrderScheduleStatus.IN_SERVICE.getValue());
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void refusedSchedule(String orderNo) throws BizException {
+		CustomerOrder customerOrder = this.customerOrderService.getByOrderNo(orderNo);
+		InstCustomer instCustomer = this.instCustomerService.getById(customerOrder.getCustomerId());
+		CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(orderNo);
+		InstStaff instStaff = this.instStaffService.getById(customerOrderSchedule.getServiceStaffId());
+		
+		UserMsgFormBean userMsgFormBean = new UserMsgFormBean();
+		userMsgFormBean.setUserId(customerOrder.getOperatorId());
+		userMsgFormBean.setMsgTitle("护理员"+instStaff.getRealName()+"拒绝了患者"+instCustomer.getRealName()+"的订单，请重新派单");
+		userMsgFormBean.setMsgContent("护理员"+instStaff.getRealName()+"拒绝了患者"+instCustomer.getRealName()+"的订单，请重新派单");
+		userMsgFormBean.setOrderNo(orderNo);
+		this.userMsgManager.add(userMsgFormBean);
+		
+		this.customerOrderScheduleService.deleteMappOrderSchedule(customerOrderSchedule.getId());
+		this.orderSettleService.deleteMappOrderSettle(customerOrderSchedule.getId());
 	}
 }

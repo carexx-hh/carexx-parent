@@ -95,4 +95,18 @@ public class OrderSettleServiceImpl implements OrderSettleService {
 		return this.orderSettleMapper.selectOrderSettleCount(workQuantityReportFormBean);
 	}
 
+	@Override
+	public void deleteMappOrderSettle(Long scheduleId) throws BizException {
+		int rows = 0;
+		try {
+			rows = this.orderSettleMapper.deleteMappOrderSettle(scheduleId);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+		
+	}
+
 }

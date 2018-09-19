@@ -87,4 +87,6 @@ public interface OrderSettleService {
 	 * @since JDK 1.8
 	 */
 	List<Map<?,?>> queryOrderSettleCount(WorkQuantityReportFormBean workQuantityReportFormBean);
+	
+	void deleteMappOrderSettle(Long id) throws BizException;
 }

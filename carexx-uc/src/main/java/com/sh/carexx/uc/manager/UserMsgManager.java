@@ -59,28 +59,6 @@ public class UserMsgManager {
 		this.userMsgStatusService.save(userMsgStatus);
 	}
 
-	/**
-	 * 
-	 * addMsgStatus:(读消息). <br/>
-	 * 
-	 * @author zhoulei
-	 * @param userId
-	 * @param msgId
-	 * @throws BizException
-	 * @since JDK 1.8
-	 */
-	public void addMsgStatus(Integer userId, Long msgId) throws BizException {
-		UserMsgStatus userMsgStatus = this.userMsgStatusService.getByMsgId(msgId);
-		if (userMsgStatus != null) {
-			return;
-		}
-		userMsgStatus = new UserMsgStatus();
-		userMsgStatus.setUserId(userId);
-		userMsgStatus.setMsgId(msgId);
-		userMsgStatus.setMsgStatus(MsgStatus.READ.getValue());
-		this.userMsgStatusService.save(userMsgStatus);
-	}
-
 	public void read(Long msgId, Integer userId) throws BizException {
 		this.userMsgStatusService.updateStatus(msgId, userId, MsgStatus.UNREAD.getValue(), MsgStatus.READ.getValue());
 	}
