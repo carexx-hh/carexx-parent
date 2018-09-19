@@ -17,6 +17,17 @@ import java.util.Map;
 public interface InstCustomerMapper {
 
 	/**
+	 *
+	 * selectById:(通过id查询客户信息). <br/>
+	 *
+	 * @author hetao
+	 * @param id
+	 * @return
+	 * @since JDK 1.8
+	 */
+	InstCustomer selectById(Integer id);
+
+	/**
 	 * 
 	 * selectInstCustomerCount:(分页条件总数统计). <br/>
 	 * 

@@ -16,6 +16,18 @@ import java.util.Map;
  * @since JDK 1.8
  */
 public interface InstCustomerService {
+
+	/**
+	 *
+	 * getById:(通过id查询客户信息). <br/>
+	 *
+	 * @author hetao
+	 * @param id
+	 * @return
+	 * @since JDK 1.8
+	 */
+	InstCustomer getById(Integer id);
+
 	/**
 	 * 
 	 * getInstCustomerCount:(分页条件总数统计). <br/>

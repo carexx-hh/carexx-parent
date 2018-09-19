@@ -18,6 +18,11 @@ public class InstCustomerServiceImpl implements InstCustomerService {
 	private InstCustomerMapper instCustomerMapper;
 
 	@Override
+	public InstCustomer getById(Integer id) {
+		return this.instCustomerMapper.selectById(id);
+	}
+
+	@Override
 	public Integer getInstCustomerCount(InstCustomerFormBean instCustomerFormBean) {
 		return this.instCustomerMapper.selectInstCustomerCount(instCustomerFormBean);
 	}
