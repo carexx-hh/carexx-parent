@@ -88,5 +88,5 @@ public interface OrderSettleService {
 	 */
 	List<Map<?,?>> queryOrderSettleCount(WorkQuantityReportFormBean workQuantityReportFormBean);
 	
-	void deleteMappOrderSettle(Long id) throws BizException;
+	void deleteMappOrderSettle(Long scheduleId) throws BizException;
 }
