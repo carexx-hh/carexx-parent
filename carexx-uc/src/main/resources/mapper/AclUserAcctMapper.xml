@@ -79,8 +79,9 @@
 		LEFT JOIN carexx_acl_user_role aur ON aua.id = aur.user_id
 		LEFT JOIN carexx_acl_role ar ON aur.role_id = ar.id
 		<where>
+			ar.id != 1
 			<if test="account != null and account != ''">
-		        aua.account = #{account,jdbcType=VARCHAR}
+		       and aua.account = #{account,jdbcType=VARCHAR}
 		    </if>
 			<if test="name != null and name != ''">
 		        and aua.name = #{name,jdbcType=VARCHAR}
