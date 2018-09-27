@@ -674,7 +674,7 @@ public interface UCServiceClient {
 	String queryCustomerOrderListByUserId(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean);
 
 	@RequestMapping(value = "/customerorder/arrange_order/{orderStatus}/{instId}", method = RequestMethod.GET)
-	String queryMappArrangeOrder(@PathVariable("orderStatus")String orderStatus, @PathVariable("instId")Integer instId);
+	String queryMappByOrderStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("instId")Integer instId);
 	/**
 	 *
 	 * queryDoneOrderByUserId:(移动端通过客户id查询完成和已支付订单). <br/>

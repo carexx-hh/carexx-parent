@@ -123,14 +123,14 @@ public interface CustomerOrderMapper {
 	
 	/**
 	 * 
-	 * selectMappArrangeOrder:(移动端查询可安排订单). <br/> 
+	 * selectMappByOrderStatus:(移动端通过订单状态查询订单). <br/> 
 	 * 
 	 * @author zhoulei 
 	 * @param instId
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?,?>> selectMappArrangeOrder(@Param("orderStatus") String orderStatus, @Param("instId") Integer instId);
+	List<Map<?,?>> selectMappByOrderStatus(@Param("orderStatus") String orderStatus, @Param("instId") Integer instId);
 	
 	/**
 	 * 

@@ -107,8 +107,8 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	}
 
 	@Override
-	public List<Map<?, ?>> queryMappArrangeOrder(String orderStatus, Integer instId) {
-		return this.customerOrderMapper.selectMappArrangeOrder(orderStatus, instId);
+	public List<Map<?, ?>> queryMappByOrderStatus(String orderStatus, Integer instId) {
+		return this.customerOrderMapper.selectMappByOrderStatus(orderStatus, instId);
 	}
 	
 	@Override

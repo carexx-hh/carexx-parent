@@ -389,7 +389,7 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
-	public String queryMappArrangeOrder(String orderStatus, Integer instId) {
+	public String queryMappByOrderStatus(String orderStatus, Integer instId) {
 		return null;
 	}
 
