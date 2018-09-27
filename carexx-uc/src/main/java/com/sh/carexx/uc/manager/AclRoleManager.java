@@ -36,6 +36,7 @@ public class AclRoleManager {
 
 	public void modify(AclRoleFormBean aclRoleFormBean) throws BizException {
 		AclRole aclRole = new AclRole();
+		aclRole.setId(aclRoleFormBean.getId());
 		aclRole.setName(aclRoleFormBean.getName());
 		aclRole.setRemark(aclRoleFormBean.getRemark());
 		this.aclRoleService.update(aclRole);
