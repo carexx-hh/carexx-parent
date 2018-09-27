@@ -55,7 +55,7 @@
 		    <if test="status != null">
 		    	and status = #{status,jdbcType=TINYINT}
 		    </if>
-		    <if test="instId != null and instId > 1">
+		    <if test="instId != null and instId > 0">
 		    	and inst_id = #{instId,jdbcType=INTEGER}
 		    </if>
 		</where>
@@ -75,7 +75,7 @@
 		    <if test="status != null">
 		    	and status = #{status,jdbcType=TINYINT}
 		    </if>
-		    <if test="instId != null and instId > 1">
+		    <if test="instId != null and instId > 0">
 		    	and inst_id = #{instId,jdbcType=INTEGER}
 		    </if>
 		</where>

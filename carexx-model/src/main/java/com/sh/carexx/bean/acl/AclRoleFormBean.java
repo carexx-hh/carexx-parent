@@ -55,7 +55,6 @@ public class AclRoleFormBean extends BasicFormBean {
 		this.remark = remark;
 	}
 
-	
 	public Integer getInstId() {
 		if (StringUtils.isNotBlank(instId)) {
 			return Integer.parseInt(instId);
