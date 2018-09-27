@@ -6,6 +6,7 @@
 		<result column="name" jdbcType="VARCHAR" property="name" />
 		<result column="status" jdbcType="TINYINT" property="status" />
 		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="inst_id" jdbcType="INTEGER" property="instId" />
 		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
 		<result column="creator" jdbcType="INTEGER" property="creator" />
 		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
@@ -54,6 +55,9 @@
 		    <if test="status != null">
 		    	and status = #{status,jdbcType=TINYINT}
 		    </if>
+		    <if test="instId != null and instId > 1">
+		    	and inst_id = #{instId,jdbcType=INTEGER}
+		    </if>
 		</where>
 	</select>
 	<select id="selectAclRoleList" parameterType="com.sh.carexx.bean.acl.AclRoleFormBean" resultMap="BaseResultMap">
@@ -71,6 +75,9 @@
 		    <if test="status != null">
 		    	and status = #{status,jdbcType=TINYINT}
 		    </if>
+		    <if test="instId != null and instId > 1">
+		    	and inst_id = #{instId,jdbcType=INTEGER}
+		    </if>
 		</where>
 		order by
 			create_time desc
@@ -78,11 +85,11 @@
 	</select>
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.AclRole">
 		insert into carexx_acl_role (
-			name, status, remark, create_time, creator
+			name, status, remark, inst_id, create_time, creator
 		)
 		values (
 			#{name,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
-			#{remark,jdbcType=VARCHAR}, now(), #{creator,jdbcType=INTEGER}
+			#{remark,jdbcType=VARCHAR}, #{instId,jdbcType=INTEGER}, now(), #{creator,jdbcType=INTEGER}
 		)
 	</insert>
 	<update id="updateStatus">

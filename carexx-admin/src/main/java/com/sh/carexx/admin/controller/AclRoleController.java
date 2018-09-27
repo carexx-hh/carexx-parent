@@ -20,6 +20,7 @@ public class AclRoleController extends BaseController {
 	@RequestMapping(value = "/add")
 	public BasicRetVal add(@Valid AclRoleFormBean aclRoleFormBean, BindingResult bindingResult) {
 		aclRoleFormBean.setCreator(this.getCurrentUser().getId());
+		aclRoleFormBean.setInstId(this.getCurrentUser().getInstId().toString());
 		if (bindingResult.hasErrors()) {
 			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
 		}
@@ -29,6 +30,7 @@ public class AclRoleController extends BaseController {
 	@RequestMapping(value = "/list")
 	public String queryForList(AclRoleFormBean aclRoleFormBean, BindingResult bindingResult) {
 		aclRoleFormBean.setCreator(this.getCurrentUser().getId());
+		aclRoleFormBean.setInstId(this.getCurrentUser().getInstId().toString());
 		return this.ucServiceClient.queryAclRoleForList(aclRoleFormBean);
 	}
 

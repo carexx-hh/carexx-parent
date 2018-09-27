@@ -11,6 +11,8 @@ public class AclRole {
 
 	private String remark;
 
+	private Integer instId;
+	
 	private Date createTime;
 
 	private Integer creator;
@@ -47,6 +49,14 @@ public class AclRole {
 
 	public void setRemark(String remark) {
 		this.remark = remark == null ? null : remark.trim();
+	}
+
+	public Integer getInstId() {
+		return instId;
+	}
+
+	public void setInstId(Integer instId) {
+		this.instId = instId;
 	}
 
 	public Date getCreateTime() {

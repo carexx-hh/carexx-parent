@@ -22,6 +22,8 @@ public class AclRoleFormBean extends BasicFormBean {
 	@Size(max = 255)
 	private String remark;
 
+	private String instId;
+	
 	private String status;
 
 	private Integer creator;
@@ -51,6 +53,18 @@ public class AclRoleFormBean extends BasicFormBean {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	
+	public Integer getInstId() {
+		if (StringUtils.isNotBlank(instId)) {
+			return Integer.parseInt(instId);
+		}
+		return null;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
 	}
 
 	public Byte getStatus() {

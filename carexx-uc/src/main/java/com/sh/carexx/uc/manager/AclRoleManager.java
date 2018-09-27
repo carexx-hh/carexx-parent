@@ -29,6 +29,7 @@ public class AclRoleManager {
 		AclRole aclRole = new AclRole();
 		aclRole.setName(aclRoleFormBean.getName());
 		aclRole.setRemark(aclRoleFormBean.getRemark());
+		aclRole.setInstId(aclRoleFormBean.getInstId());
 		aclRole.setStatus(UseStatus.ENABLED.getValue());
 		aclRole.setCreator(aclRoleFormBean.getCreator());
 		this.aclRoleService.save(aclRole);
