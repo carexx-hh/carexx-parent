@@ -8,6 +8,8 @@ public class CustomerOrder {
 
 	private Byte orderType;
 
+	private Byte serviceAddress;
+	
 	private Integer userId;
 
 	private Integer customerId;
@@ -24,7 +26,7 @@ public class CustomerOrder {
 
 	private Integer inpatientAreaId;
 
-	private String inpatientWard;
+	private String accurateAddress;
 
 	private Date serviceStartTime;
 
@@ -66,6 +68,14 @@ public class CustomerOrder {
 
 	public void setOrderType(Byte orderType) {
 		this.orderType = orderType;
+	}
+
+	public Byte getServiceAddress() {
+		return serviceAddress;
+	}
+
+	public void setServiceAddress(Byte serviceAddress) {
+		this.serviceAddress = serviceAddress;
 	}
 
 	public Integer getUserId() {
@@ -132,12 +142,12 @@ public class CustomerOrder {
 		this.inpatientAreaId = inpatientAreaId;
 	}
 
-	public String getInpatientWard() {
-		return inpatientWard;
+	public String getAccurateAddress() {
+		return accurateAddress;
 	}
 
-	public void setInpatientWard(String inpatientWard) {
-		this.inpatientWard = inpatientWard == null ? null : inpatientWard.trim();
+	public void setAccurateAddress(String accurateAddress) {
+		this.accurateAddress = accurateAddress == null ? null : accurateAddress.trim();
 	}
 
 	public Date getServiceStartTime() {

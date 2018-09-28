@@ -174,13 +174,14 @@ public class CustomerOrderManager {
 
         CustomerOrder customerOrder = new CustomerOrder();
         customerOrder.setOrderType(OrderType.UNDERLINE_ORDER.getValue());
+        customerOrder.setServiceAddress(ServiceAddress.INST.getValue());
         customerOrder.setInstId(customerOrderFormBean.getInstId());
         customerOrder.setCustomerId(customerOrderFormBean.getCustomerId());
         customerOrder.setServiceId(customerOrderFormBean.getServiceId());
         String orderNo = this.keyGenerator.generateOrderNo();
         customerOrder.setOrderNo(orderNo);
         customerOrder.setInpatientAreaId(customerOrderFormBean.getInpatientAreaId());
-        customerOrder.setInpatientWard(customerOrderFormBean.getInpatientWard());
+        customerOrder.setAccurateAddress(customerOrderFormBean.getAccurateAddress());
         customerOrder.setServiceStartTime(serviceStartTime);
         customerOrder.setServiceEndTime(serviceEndTime);
         customerOrder.setOrderAmt(this.calcServiceFee(customerOrder.getInstId(), customerOrder.getServiceId(),
@@ -253,7 +254,7 @@ public class CustomerOrderManager {
         String orderNo = this.keyGenerator.generateOrderNo();
         customerOrder.setOrderNo(orderNo);
         customerOrder.setInpatientAreaId(customerAppointOrderFormBean.getInpatientAreaId());
-        customerOrder.setInpatientWard(customerAppointOrderFormBean.getInpatientWard());
+        customerOrder.setAccurateAddress(customerAppointOrderFormBean.getAccurateAddress());
         customerOrder.setServiceStartTime(serviceStartTime);
         customerOrder.setOrderAmt(this.calcServiceFee(customerOrder.getInstId(), customerOrder.getServiceId(),
                 customerOrder.getServiceStartTime(), serviceEndTime));

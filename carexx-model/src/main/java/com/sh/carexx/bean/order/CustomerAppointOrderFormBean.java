@@ -32,7 +32,7 @@ public class CustomerAppointOrderFormBean extends BasicFormBean {
 
 	@NotBlank
 	@Size(max = 20)
-	private String inpatientWard;
+	private String accurateAddress;
 
 	@NotBlank
 	@Pattern(regexp = CarexxConstant.Regex.DATETIME)
@@ -102,12 +102,12 @@ public class CustomerAppointOrderFormBean extends BasicFormBean {
 		this.inpatientAreaId = inpatientAreaId;
 	}
 
-	public String getInpatientWard() {
-		return inpatientWard;
+	public String getAccurateAddress() {
+		return accurateAddress;
 	}
 
-	public void setInpatientWard(String inpatientWard) {
-		this.inpatientWard = inpatientWard;
+	public void setAccurateAddress(String accurateAddress) {
+		this.accurateAddress = accurateAddress;
 	}
 
 	public String getServiceStartTime() {

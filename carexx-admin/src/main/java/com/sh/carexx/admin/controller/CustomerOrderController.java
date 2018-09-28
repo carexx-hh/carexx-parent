@@ -34,7 +34,7 @@ public class CustomerOrderController extends BaseController {
 	public BasicRetVal add(@Valid CustomerOrderFormBean customerOrderFormBean, BindingResult bindingResult) {
 		customerOrderFormBean.setInstId(this.getCurrentUser().getInstId());
 		customerOrderFormBean.setOperatorId(this.getCurrentUser().getId());
-		if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors() || customerOrderFormBean.getInpatientAreaId() == null) {
 			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
 		}
 		return this.ucServiceClient.addCustomerOrder(customerOrderFormBean);
@@ -110,7 +110,7 @@ public class CustomerOrderController extends BaseController {
 						? ProofType.RECEIPT.getDesc() : ProofType.INVOICE.getDesc());
 
 				String areaWard = String.valueOf(map.get("inpatientArea")) + "/"
-						+ String.valueOf(map.get("inpatientWard"));
+						+ String.valueOf(map.get("accurateAddress"));
 				map.put("areaWard", areaWard);
 
 				String receiptInvoice = (String.valueOf(map.get("receiptNo")) + String.valueOf(map.get("invoiceNo")))
