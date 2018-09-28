@@ -30,13 +30,17 @@
 		WHERE
 			ar.id = aur.role_id AND aur.user_id = #{userId,jdbcType=INTEGER}
 	</select>
-	<select id="selectAllAvailable" resultMap="BaseResultMap">
+	<select id="selectAllAvailable" parameterType="java.lang.Integer" resultMap="BaseResultMap">
 		select
 			<include refid="Base_Column_List" />
 		from 
 			carexx_acl_role
-		where
-		status = 1 and inst_id = #{instId,jdbcType=INTEGER}
+		<where>
+			status = 1
+			<if test="instId != null and instId != 0">
+				and inst_id = #{instId,jdbcType=INTEGER}
+			</if>
+		</where>
 		order by
 			create_time desc
 	</select>
