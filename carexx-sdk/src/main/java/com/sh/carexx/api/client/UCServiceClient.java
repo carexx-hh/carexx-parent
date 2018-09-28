@@ -82,8 +82,8 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/aclrole/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryAclRoleForList(@RequestBody AclRoleFormBean aclRoleFormBean);
 
-	@RequestMapping(value = "/aclrole/list_all/{userId}", method = RequestMethod.GET)
-	String queryAllAvailableAclRoleList(@PathVariable("userId") Integer userId);
+	@RequestMapping(value = "/aclrole/list_all/{instId}", method = RequestMethod.GET)
+	String queryAllAvailableAclRoleList(@PathVariable("instId") Integer instId);
 
 	@RequestMapping(value = "/aclrole/list_all_auth", method = RequestMethod.GET)
 	String queryAllAclRoleAuthList();

@@ -1,17 +1,16 @@
 package com.sh.carexx.admin.controller;
 
-import javax.validation.Valid;
-
+import com.sh.carexx.bean.acl.AclRoleFormBean;
+import com.sh.carexx.common.CarexxConstant;
+import com.sh.carexx.common.util.ValidUtils;
+import com.sh.carexx.common.web.BasicRetVal;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sh.carexx.bean.acl.AclRoleFormBean;
-import com.sh.carexx.common.CarexxConstant;
-import com.sh.carexx.common.util.ValidUtils;
-import com.sh.carexx.common.web.BasicRetVal;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/aclrole")
@@ -36,7 +35,7 @@ public class AclRoleController extends BaseController {
 
 	@RequestMapping(value = "/list_all")
 	public String queryAllAvailable() {
-		return this.ucServiceClient.queryAllAvailableAclRoleList(this.getCurrentUser().getId());
+		return this.ucServiceClient.queryAllAvailableAclRoleList(this.getCurrentUser().getInstId());
 	}
 
 	@RequestMapping(value = "/list_all_auth")

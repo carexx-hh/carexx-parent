@@ -114,7 +114,7 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
-	public String queryAllAvailableAclRoleList(Integer userId) {
+	public String queryAllAvailableAclRoleList(Integer instId) {
 		return null;
 	}
 

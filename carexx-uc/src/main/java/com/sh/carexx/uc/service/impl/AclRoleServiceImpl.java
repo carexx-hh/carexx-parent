@@ -1,12 +1,5 @@
 package com.sh.carexx.uc.service.impl;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sh.carexx.bean.acl.AclRoleFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.exception.BizException;
@@ -17,6 +10,12 @@ import com.sh.carexx.uc.dao.AclMenuOperMapper;
 import com.sh.carexx.uc.dao.AclRoleMapper;
 import com.sh.carexx.uc.dao.AclRoleMenuOperMapper;
 import com.sh.carexx.uc.service.AclRoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class AclRoleServiceImpl implements AclRoleService {
@@ -126,7 +125,7 @@ public class AclRoleServiceImpl implements AclRoleService {
 	}
 
 	@Override
-	public List<AclRole> queryAllAvailable(Integer userId) {
-		return this.aclRoleMapper.selectAllAvailable(userId);
+	public List<AclRole> queryAllAvailable(Integer instId) {
+		return this.aclRoleMapper.selectAllAvailable(instId);
 	}
 }

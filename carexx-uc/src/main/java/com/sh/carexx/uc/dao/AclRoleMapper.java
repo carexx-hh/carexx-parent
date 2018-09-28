@@ -1,11 +1,10 @@
 package com.sh.carexx.uc.dao;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.sh.carexx.bean.acl.AclRoleFormBean;
 import com.sh.carexx.model.uc.AclRole;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface AclRoleMapper {
 	int insert(AclRole aclRole);
@@ -16,7 +15,7 @@ public interface AclRoleMapper {
 
 	Integer selectAclRoleCount(AclRoleFormBean aclRoleFormBean);
 	
-	List<AclRole> selectAllAvailable(Integer userId);
+	List<AclRole> selectAllAvailable(Integer instId);
 
 	List<AclRole> selectAclRoleList(AclRoleFormBean aclRoleFormBean);
 

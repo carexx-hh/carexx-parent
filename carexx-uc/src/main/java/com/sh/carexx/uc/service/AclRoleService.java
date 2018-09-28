@@ -1,12 +1,12 @@
 package com.sh.carexx.uc.service;
 
-import java.util.List;
-import java.util.Map;
-
 import com.sh.carexx.bean.acl.AclRoleFormBean;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.AclMenu;
 import com.sh.carexx.model.uc.AclRole;
+
+import java.util.List;
+import java.util.Map;
 
 public interface AclRoleService {
 	void save(AclRole aclRole) throws BizException;
@@ -17,7 +17,7 @@ public interface AclRoleService {
 
 	Integer getAclRoleCount(AclRoleFormBean aclRoleFormBean);
 	
-	List<AclRole> queryAllAvailable(Integer creator);
+	List<AclRole> queryAllAvailable(Integer instId);
 
 	List<AclRole> queryAclRoleList(AclRoleFormBean aclRoleFormBean);
 

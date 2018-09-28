@@ -1,16 +1,5 @@
 package com.sh.carexx.uc.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.sh.carexx.bean.acl.AclRoleFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.exception.BizException;
@@ -23,6 +12,11 @@ import com.sh.carexx.model.uc.AclRoleMenuOper;
 import com.sh.carexx.uc.manager.AclRoleManager;
 import com.sh.carexx.uc.service.AclRoleMenuOperService;
 import com.sh.carexx.uc.service.AclRoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/aclrole")
@@ -54,9 +48,9 @@ public class AclRoleController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, new PagerBean(totalNum, resultList)).toJSON();
 	}
 
-	@RequestMapping(value = "/list_all/{userId}", method = RequestMethod.GET)
-	public String queryAllAvailable(@PathVariable("userId") Integer userId) {
-		List<AclRole> resultList = this.aclRoleService.queryAllAvailable(userId);
+	@RequestMapping(value = "/list_all/{instId}", method = RequestMethod.GET)
+	public String queryAllAvailable(@PathVariable("instId") Integer instId) {
+		List<AclRole> resultList = this.aclRoleService.queryAllAvailable(instId);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
 

@@ -35,8 +35,8 @@
 			<include refid="Base_Column_List" />
 		from 
 			carexx_acl_role
-		where 
-			status = 1 and creator = #{userId,jdbcType=INTEGER}
+		where
+		status = 1 and inst_id = #{instId,jdbcType=INTEGER}
 		order by
 			create_time desc
 	</select>
