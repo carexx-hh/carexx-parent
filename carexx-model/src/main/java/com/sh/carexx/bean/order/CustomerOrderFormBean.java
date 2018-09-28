@@ -30,7 +30,6 @@ public class CustomerOrderFormBean extends BasicFormBean {
     @Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
     private String inpatientAreaId;
 
-    @NotBlank
     @Size(max = 20)
     private String accurateAddress;
 

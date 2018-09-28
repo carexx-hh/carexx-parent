@@ -247,6 +247,7 @@ public class CustomerOrderManager {
 
         CustomerOrder customerOrder = new CustomerOrder();
         customerOrder.setOrderType(OrderType.ONLINE_ORDER.getValue());
+        customerOrder.setServiceAddress(ServiceAddress.INST.getValue());
         customerOrder.setInstId(customerAppointOrderFormBean.getInstId());
         customerOrder.setUserId(customerAppointOrderFormBean.getuserId());
         customerOrder.setCustomerId(customerId);
