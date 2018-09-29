@@ -199,6 +199,74 @@ public class CustomerOrderManager {
     }
 
     /**
+     * 
+     * addCommunity:(添加社区订单). <br/> 
+     * 
+     * @author zhoulei 
+     * @param customerOrderFormBean
+     * @throws BizException 
+     * @since JDK 1.8
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
+    public void addCommunity(CustomerOrderFormBean customerOrderFormBean) throws BizException {
+        Date serviceStartTime = null;
+        Date serviceEndTime = null;
+        if (ValidUtils.isDateTime(customerOrderFormBean.getServiceStartTime())) {
+            serviceStartTime = DateUtils.toDate(customerOrderFormBean.getServiceStartTime(),
+                    DateUtils.YYYY_MM_DD_HH_MM_SS);
+        }
+        if (ValidUtils.isDateTime(customerOrderFormBean.getServiceEndTime())) {
+            serviceEndTime = DateUtils.toDate(customerOrderFormBean.getServiceEndTime(), DateUtils.YYYY_MM_DD_HH_MM_SS);
+        }
+        //检查结束时间必须大于开始时间
+        if (!serviceStartTime.before(serviceEndTime)) {
+            throw new BizException(ErrorCode.TIME_END_BEFORE_START_ERROR);
+        }
+        //检查下单时间是否已关账
+        Date da = this.instSettleService.queryMaxSettleDateBySettleStatus(customerOrderFormBean.getInstId());
+        if (da != null) {
+            if (!da.before(serviceStartTime)) {
+                throw new BizException(ErrorCode.ORDER_SETTLE_EXISTS_ERROR);
+            }
+        }
+        //检查客户下单是否重复
+        CustomerOrderQueryFormBean customerOrderQueryFormBean = new CustomerOrderQueryFormBean();
+        customerOrderQueryFormBean.setInstId(customerOrderFormBean.getInstId());
+        customerOrderQueryFormBean.setRealName(customerOrderFormBean.getPatientName());
+        customerOrderQueryFormBean.setServiceId(customerOrderFormBean.getServiceId().toString());
+        customerOrderQueryFormBean.setServiceStartTime(customerOrderFormBean.getServiceStartTime());
+        customerOrderQueryFormBean.setServiceEndTime(customerOrderFormBean.getServiceEndTime());
+        List<Map<?, ?>> orderlist = this.customerOrderService.queryOrderExistence(customerOrderQueryFormBean);
+        if (orderlist.size() > 0) {
+            throw new BizException(ErrorCode.CUSTOMER_ORDER_EXISTS_ERROR);
+        }
+
+        CustomerOrder customerOrder = new CustomerOrder();
+        customerOrder.setOrderType(OrderType.UNDERLINE_ORDER.getValue());
+        customerOrder.setServiceAddress(ServiceAddress.COMMUNITY.getValue());
+        customerOrder.setInstId(customerOrderFormBean.getInstId());
+        customerOrder.setCustomerId(customerOrderFormBean.getCustomerId());
+        customerOrder.setServiceId(customerOrderFormBean.getServiceId());
+        String orderNo = this.keyGenerator.generateOrderNo();
+        customerOrder.setOrderNo(orderNo);
+        customerOrder.setInpatientAreaId(customerOrderFormBean.getInpatientAreaId());
+        customerOrder.setAccurateAddress(customerOrderFormBean.getAccurateAddress());
+        customerOrder.setServiceStartTime(serviceStartTime);
+        customerOrder.setServiceEndTime(serviceEndTime);
+        customerOrder.setOrderAmt(this.calcServiceFee(customerOrder.getInstId(), customerOrder.getServiceId(),
+                customerOrder.getServiceStartTime(), customerOrder.getServiceEndTime()));
+        customerOrder.setHoliday(this.holidayCount(customerOrder.getInstId(), customerOrder.getServiceStartTime(),
+                customerOrder.getServiceEndTime()));
+        customerOrder.setAdjustAmt(new BigDecimal(0));
+        customerOrder.setOperatorId(customerOrderFormBean.getOperatorId());
+        customerOrder.setOrderRemark(customerOrderFormBean.getOrderRemark());
+        customerOrder.setOrderStatus(OrderStatus.WAIT_SCHEDULE.getValue());
+        //添加订单
+        this.customerOrderService.save(customerOrder);
+        //添加一条订单支付信息
+        this.orderPaymentManager.add(customerOrder);
+    }
+    /**
      * addAppointOrder:(移动端下单). <br/>
      *
      * @param customerAppointOrderFormBean

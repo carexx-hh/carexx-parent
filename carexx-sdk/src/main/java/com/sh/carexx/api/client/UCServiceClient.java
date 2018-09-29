@@ -638,6 +638,8 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/customerorder/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal addCustomerOrder(@RequestBody CustomerOrderFormBean customerOrderFormBean);
 
+	@RequestMapping(value = "/customerorder/add_community", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	BasicRetVal addCommunityCustomerOrder(@RequestBody CustomerOrderFormBean customerOrderFormBean);
 	/**
 	 * 
 	 * addCustomerOrder:(移动端添加客户服务预约订单). <br/>

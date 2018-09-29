@@ -39,6 +39,16 @@ public class CustomerOrderController extends BaseController {
 		}
 		return this.ucServiceClient.addCustomerOrder(customerOrderFormBean);
 	}
+	
+	@RequestMapping(value = "/add_community")
+	public BasicRetVal addCommunity(@Valid CustomerOrderFormBean customerOrderFormBean, BindingResult bindingResult) {
+		customerOrderFormBean.setInstId(this.getCurrentUser().getInstId());
+		customerOrderFormBean.setOperatorId(this.getCurrentUser().getId());
+		if (bindingResult.hasErrors() || customerOrderFormBean.getInpatientAreaId() == null) {
+			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
+		}
+		return this.ucServiceClient.addCommunityCustomerOrder(customerOrderFormBean);
+	}
 
 	@RequestMapping(value = "/list")
 	public String queryForList(CustomerOrderQueryFormBean customerOrderQueryFormBean) {

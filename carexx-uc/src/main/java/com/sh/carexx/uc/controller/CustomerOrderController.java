@@ -47,6 +47,16 @@ public class CustomerOrderController {
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
 
+	@RequestMapping(value = "/add_community", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public BasicRetVal addCommunityCustomerOrder(@RequestBody CustomerOrderFormBean customerOrderFormBean) {
+		try {
+			this.customerOrderManager.addCommunity(customerOrderFormBean);
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+		}
+		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+	}
+	
 	@RequestMapping(value = "/add_appointOrder", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public BasicRetVal addAppointOrder(@RequestBody CustomerAppointOrderFormBean customerAppointOrderFormBean) {
 		try {
