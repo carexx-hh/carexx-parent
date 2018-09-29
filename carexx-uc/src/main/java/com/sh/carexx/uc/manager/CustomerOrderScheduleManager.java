@@ -227,6 +227,9 @@ public class CustomerOrderScheduleManager {
 			serviceEndTime = DateUtils.toDate(customerOrderScheduleFormBean.getServiceEndTime(),
 					DateUtils.YYYY_MM_DD_HH_MM_SS);
 		}
+		if (!serviceStartTime.before(serviceEndTime)) {
+			throw new BizException(ErrorCode.TIME_END_BEFORE_START_ERROR);
+		}
 		CustomerOrderSchedule customerOrderSchedule = new CustomerOrderSchedule();
 		customerOrderSchedule.setOrderNo(customerOrderScheduleFormBean.getOrderNo());
 		customerOrderSchedule.setServiceStaffId(customerOrderScheduleFormBean.getServiceStaffId());
