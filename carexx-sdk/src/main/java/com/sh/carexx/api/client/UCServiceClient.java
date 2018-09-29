@@ -1128,6 +1128,18 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/customerorderschedule/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal addCustomerOrderSchedule(@RequestBody CustomerOrderScheduleFormBean customerOrderScheduleFormBean);
 
+	/**
+	 *
+	 * addOutSendOrderSchedule:(添加外派排班). <br/>
+	 *
+	 * @author hetao
+	 * @param customerOrderScheduleFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
+	@RequestMapping(value = "/customerorderschedule/add_outSend", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	BasicRetVal addOutSendOrderSchedule(@RequestBody CustomerOrderScheduleFormBean customerOrderScheduleFormBean);
+
 	@RequestMapping(value = "/customerorderschedule/mapp_add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal mappAddCustomerOrderSchedule(@RequestBody MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean);
 	

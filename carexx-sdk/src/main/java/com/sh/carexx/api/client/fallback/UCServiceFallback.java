@@ -624,6 +624,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public BasicRetVal addOutSendOrderSchedule(CustomerOrderScheduleFormBean customerOrderScheduleFormBean) {
+		return null;
+	}
+
+	@Override
 	public String queryOrderScheduleByOrderNo(String orderNo) {
 		return null;
 	}

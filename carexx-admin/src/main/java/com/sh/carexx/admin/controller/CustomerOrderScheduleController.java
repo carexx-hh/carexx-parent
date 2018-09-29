@@ -1,18 +1,17 @@
 package com.sh.carexx.admin.controller;
 
-import javax.validation.Valid;
-
+import com.sh.carexx.bean.order.CustomerOrderScheduleFormBean;
+import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
+import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
+import com.sh.carexx.common.CarexxConstant;
+import com.sh.carexx.common.web.BasicRetVal;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sh.carexx.bean.order.CustomerOrderScheduleFormBean;
-import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
-import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
-import com.sh.carexx.common.CarexxConstant;
-import com.sh.carexx.common.web.BasicRetVal;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/customerorderschedule")
@@ -30,6 +29,15 @@ public class CustomerOrderScheduleController extends BaseController {
 			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
 		}
 		return this.ucServiceClient.addCustomerOrderSchedule(customerOrderScheduleFormBean);
+	}
+
+	@RequestMapping("/add_outSend")
+	public BasicRetVal addOutSend(@Valid CustomerOrderScheduleFormBean customerOrderScheduleFormBean,
+						   BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
+		}
+		return this.ucServiceClient.addOutSendOrderSchedule(customerOrderScheduleFormBean);
 	}
 
 	@RequestMapping("/all_schedule/{orderNo}")

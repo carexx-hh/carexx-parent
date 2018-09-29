@@ -42,6 +42,16 @@ public class CustomerOrderScheduleController {
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
 
+	@RequestMapping(value = "/add_outSend", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public BasicRetVal addOutSend(@RequestBody CustomerOrderScheduleFormBean customerOrderScheduleFormBean) {
+		try {
+			this.customerOrderScheduleManager.outSendShedule(customerOrderScheduleFormBean);
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+		}
+		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+	}
+
 	@RequestMapping(value = "/all_schedule/{orderNo}", method = RequestMethod.GET)
 	public String queryScheduleByOrderNo(@PathVariable("orderNo") String orderNo) {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,
