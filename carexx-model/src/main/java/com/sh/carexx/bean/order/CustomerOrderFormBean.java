@@ -18,6 +18,9 @@ public class CustomerOrderFormBean extends BasicFormBean {
     private String userId;
 
     private String customerId;
+    
+    @Size(max = 20)
+    private String phone;
 
     private String patientName;
 
@@ -92,7 +95,15 @@ public class CustomerOrderFormBean extends BasicFormBean {
         this.customerId = customerId;
     }
 
-    public String getPatientName() {
+    public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getPatientName() {
         return patientName;
     }
 

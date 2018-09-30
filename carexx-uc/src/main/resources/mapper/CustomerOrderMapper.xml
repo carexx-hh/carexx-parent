@@ -7,6 +7,7 @@
 		<result column="service_address" jdbcType="TINYINT" property="serviceAddress" />
 		<result column="user_id" jdbcType="INTEGER" property="userId" />
 		<result column="customer_id" jdbcType="INTEGER" property="customerId" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
 		<result column="inst_id" jdbcType="INTEGER" property="instId" />
 		<result column="service_id" jdbcType="INTEGER" property="serviceId" />
 		<result column="order_no" jdbcType="VARCHAR" property="orderNo" />
@@ -29,7 +30,7 @@
 		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, order_type, service_address, user_id, customer_id, inst_id, service_id, order_no, order_amt, adjust_amt, inpatient_area_id, accurate_address, service_start_time,
+		id, order_type, service_address, user_id, customer_id, phone, inst_id, service_id, order_no, order_amt, adjust_amt, inpatient_area_id, accurate_address, service_start_time,
 		service_end_time, holiday, order_status, operator_id, order_remark, inst_sys_id, proof_type, receipt_no, invoice_no, signing_person, create_time, modify_time
 	</sql>
 
@@ -255,6 +256,7 @@
 			op.pay_type payType,
 			co.user_id userId,
 			co.customer_id customerId,
+			co.phone phone,
 			ic.real_name realName,
 			ic.phone phone,
 			ic.address address,
@@ -345,14 +347,14 @@
 
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.CustomerOrder">
 		INSERT INTO carexx_customer_order (
-			order_type, service_address, user_id, customer_id, inst_id,
+			order_type, service_address, user_id, customer_id, phone, inst_id,
 			service_id, order_no, order_amt, adjust_amt, inpatient_area_id, accurate_address,
 			service_start_time, service_end_time, holiday, order_status, operator_id, order_remark,
 			inst_sys_id, proof_type, receipt_no, invoice_no, signing_person, create_time
 			)
 		VALUES (
 			#{orderType,jdbcType=TINYINT}, #{serviceAddress,jdbcType=TINYINT}, #{userId,jdbcType=INTEGER},
-			#{customerId,jdbcType=INTEGER},
+			#{customerId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR},
 			#{instId,jdbcType=INTEGER},
 			#{serviceId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{orderAmt,jdbcType=DECIMAL}, #{adjustAmt,jdbcType=DECIMAL},
 			#{inpatientAreaId,jdbcType=INTEGER}, #{accurateAddress,jdbcType=VARCHAR},

@@ -6,6 +6,8 @@ import com.sh.carexx.bean.order.CustomerOrderFormBean;
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.enums.order.ProofType;
+import com.sh.carexx.common.enums.order.ServiceAddress;
+import com.sh.carexx.common.enums.pay.PayMethod;
 import com.sh.carexx.common.util.DateUtils;
 import com.sh.carexx.common.util.ExcelExporter;
 import com.sh.carexx.common.util.JSONUtils;
@@ -44,7 +46,7 @@ public class CustomerOrderController extends BaseController {
 	public BasicRetVal addCommunity(@Valid CustomerOrderFormBean customerOrderFormBean, BindingResult bindingResult) {
 		customerOrderFormBean.setInstId(this.getCurrentUser().getInstId());
 		customerOrderFormBean.setOperatorId(this.getCurrentUser().getId());
-		if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors() || customerOrderFormBean.getPhone() == null) {
 			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
 		}
 		return this.ucServiceClient.addCommunityCustomerOrder(customerOrderFormBean);
@@ -115,6 +117,21 @@ public class CustomerOrderController extends BaseController {
 		List<Map<String, Object>> resultList = (List) dataRetVal.getData();
 		if (resultList.size() > 0) {
 			for (Map<String, Object> map : resultList) {
+				String payType = String.valueOf(map.get("payType"));
+				if(PayMethod.ONLINE_PAY.getValue() == Byte.parseByte(payType)) {
+					map.put("payType", PayMethod.ONLINE_PAY.getDesc());
+				} else if(PayMethod.SCAN_PAY.getValue() == Byte.parseByte(payType)) {
+					map.put("payType", PayMethod.SCAN_PAY.getDesc());
+				}  else if(PayMethod.COMPANY_TURN_ACCOUNT.getValue() == Byte.parseByte(payType)) {
+					map.put("payType", PayMethod.COMPANY_TURN_ACCOUNT.getDesc());
+				}  else if(PayMethod.CASH_PAY.getValue() == Byte.parseByte(payType)) {
+					map.put("payType", PayMethod.CASH_PAY.getDesc());
+				} 
+				
+				String serviceAddress = String.valueOf(map.get("serviceAddress"));
+				map.put("serviceAddress", ServiceAddress.INST.getValue() == Byte.parseByte(serviceAddress)
+						? ServiceAddress.INST.getDesc() : ServiceAddress.INST.getDesc());
+				
 				String proofType = String.valueOf(map.get("proofType"));
 				map.put("proofType", ProofType.RECEIPT.getValue() == Byte.parseByte(proofType)
 						? ProofType.RECEIPT.getDesc() : ProofType.INVOICE.getDesc());
@@ -150,9 +167,9 @@ public class CustomerOrderController extends BaseController {
 				map.put("instSettleAmt", instSettleAmt.add(orderAdjustAmt));
 			}
 		}
-		String[] heads = { "订单号", "客户姓名", "签单人", "病区/病床", "工种", "护工姓名", "所属公司", "凭证类型", "凭证号", "开始时间", "结束时间", "总天数",
+		String[] heads = { "订单号", "支付类型", "服务地址", "客户姓名", "签单人", "病区/病床", "工种", "护工姓名", "所属公司", "凭证类型", "凭证号", "开始时间", "结束时间", "总天数",
 				"节假日天数", "订单金额", "订单调整", "结算款", "结算调整", "管理费", "微信手续费", "备注" };
-		String[] cols = { "orderNo", "realName", "signingPerson", "areaWard", "workTypeName", "staffName",
+		String[] cols = { "orderNo", "payType", "serviceAddress", "realName", "signingPerson", "areaWard", "workTypeName", "staffName",
 				"instSysName", "proofType", "receiptInvoice", "startTime", "endTime", "days", "holiday", "orderAmt",
 				"orderAdjustAmt", "staffSettleAmt", "settleAdjustAmt", "instSettleAmt", "pounDage", "orderRemark" };
 		int[] numColIndexs = {};

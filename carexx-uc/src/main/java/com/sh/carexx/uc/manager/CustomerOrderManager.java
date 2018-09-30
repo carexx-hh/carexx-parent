@@ -177,6 +177,7 @@ public class CustomerOrderManager {
         customerOrder.setServiceAddress(ServiceAddress.INST.getValue());
         customerOrder.setInstId(customerOrderFormBean.getInstId());
         customerOrder.setCustomerId(customerOrderFormBean.getCustomerId());
+        customerOrder.setPhone(customerOrderFormBean.getPhone());
         customerOrder.setServiceId(customerOrderFormBean.getServiceId());
         String orderNo = this.keyGenerator.generateOrderNo();
         customerOrder.setOrderNo(orderNo);
@@ -246,6 +247,7 @@ public class CustomerOrderManager {
         customerOrder.setServiceAddress(ServiceAddress.COMMUNITY.getValue());
         customerOrder.setInstId(customerOrderFormBean.getInstId());
         customerOrder.setCustomerId(customerOrderFormBean.getCustomerId());
+        customerOrder.setPhone(customerOrderFormBean.getPhone());
         customerOrder.setServiceId(customerOrderFormBean.getServiceId());
         String orderNo = this.keyGenerator.generateOrderNo();
         customerOrder.setOrderNo(orderNo);
