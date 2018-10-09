@@ -807,6 +807,8 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/customerorder/inst_income_count", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryInstIncomeCountForList(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean);
 	
+	@RequestMapping(value = "/customerorder/staff_income_count", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String queryStaffIncomeCountForList(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean);
 	/**
 	 * 
 	 * customerOrderAdjustAmt:(调整订单金额). <br/> 

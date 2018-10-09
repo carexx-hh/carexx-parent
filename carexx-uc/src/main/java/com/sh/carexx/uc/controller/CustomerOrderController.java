@@ -167,14 +167,20 @@ public class CustomerOrderController {
 	}
 
 	@RequestMapping(value = "/income_count", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String queryIncomeCountForList(@RequestBody CustomerOrderQueryFormBean CustomerOrderQueryFormBean) {
-		List<Map<String, Object>> result = this.customerOrderService.queryIncomeCount(CustomerOrderQueryFormBean);
+	public String queryIncomeCountForList(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		List<Map<String, Object>> result = this.customerOrderService.queryIncomeCount(customerOrderQueryFormBean);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, result).toJSON();
 	}
 	
 	@RequestMapping(value = "/inst_income_count", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String queryInstIncomeCountForList(@RequestBody CustomerOrderQueryFormBean CustomerOrderQueryFormBean) {
-		List<Map<String, Object>> result = this.customerOrderService.queryInstIncomeCount(CustomerOrderQueryFormBean);
+	public String queryInstIncomeCountForList(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		List<Map<String, Object>> result = this.customerOrderService.queryInstIncomeCount(customerOrderQueryFormBean);
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, result).toJSON();
+	}
+	
+	@RequestMapping(value = "/staff_income_count", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String queryStaffIncomeCountForList(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		List<Map<String, Object>> result = this.customerOrderService.queryStaffIncomeCount(customerOrderQueryFormBean);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, result).toJSON();
 	}
 

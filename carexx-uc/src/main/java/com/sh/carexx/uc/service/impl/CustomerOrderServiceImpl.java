@@ -244,6 +244,10 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	}
 
 	@Override
+	public List<Map<String, Object>> queryStaffIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		return this.customerOrderMapper.selectStaffIncomeCount(customerOrderQueryFormBean);
+	}
+	@Override
 	public void update(CustomerOrder customerOrder) throws BizException{
 		int rows = 0;
 		try {

@@ -566,6 +566,45 @@
 		GROUP BY co.order_no
 	</select>
 
+	<select id="selectStaffIncomeCount" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">
+		SELECT
+			co.order_no orderNo,
+			co.order_type orderType,
+			co.service_address serviceAddress,
+			co.order_amt orderAmt,
+			co.adjust_amt adjustAmt,
+			co.customer_id customerId,
+			ic.real_name realName,
+			co.inst_id instId,
+			co.service_id serviceId,
+			cs.service_name serviceName,
+			co.inpatient_area_id inpatientAreaId,
+			co.accurate_address accurateAddress,
+			co.order_status orderStatus,
+			cos.service_staff_id service_staffId,
+			sum(cos.service_duration) serviceTime,
+			sum(os.staff_settle_amt) staffSettleAmt
+		FROM
+			carexx_customer_order co
+		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+		LEFT JOIN carexx_order_settle os ON cos.id = os.schedule_id
+		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		WHERE
+			co.order_type = 1
+		AND co.service_address = 1 AND co.order_status in (5,6)
+		<if test="instId != null and instId != '' ">
+			AND co.inst_id = #{instId,jdbcType=INTEGER}
+		</if>
+		<if test="serviceStaffId != null and serviceStaffId != '' ">
+			AND cos.service_staff_id = #{serviceStaffId,jdbcType=INTEGER}
+		</if>
+		<if test="serviceEndTime != null and serviceEndTime != '' ">
+			AND DATE_FORMAT(co.service_end_time,<![CDATA['%Y-%m']]>) = DATE_FORMAT(#{serviceEndTime},<![CDATA['%Y-%m']]>)
+		</if>
+		GROUP BY
+			cos.order_no
+	</select>
 	<update id="updateStatus">
 		UPDATE
 			carexx_customer_order

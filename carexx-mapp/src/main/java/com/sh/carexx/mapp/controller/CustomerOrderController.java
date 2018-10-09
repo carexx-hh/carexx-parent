@@ -87,4 +87,9 @@ public class CustomerOrderController extends BaseController {
 	public String queryMappByOrderStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("instId")Integer instId) {
 		return this.ucServiceClient.queryMappByOrderStatus(orderStatus, instId);
 	}
+	
+	@RequestMapping(value="/staff_income_count")
+	public String queryStaffIncomeCountForList(@Valid CustomerOrderQueryFormBean customerOrderQueryFormBean){
+		return this.ucServiceClient.queryStaffIncomeCountForList(customerOrderQueryFormBean);
+	}
 }

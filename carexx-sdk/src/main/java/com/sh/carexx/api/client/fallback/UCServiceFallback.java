@@ -444,6 +444,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 	
 	@Override
+	public String queryStaffIncomeCountForList(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		return null;
+	}
+	
+	@Override
 	public BasicRetVal customerOrderAdjust(CustomerOrderAdjustFormBean customerOrderAdjustFormBean) {
 		return null;
 	}
@@ -773,5 +778,4 @@ public class UCServiceFallback implements UCServiceClient {
 	public BasicRetVal refusedSchedule(String orderNo) {
 		return null;
 	}
-	
 }

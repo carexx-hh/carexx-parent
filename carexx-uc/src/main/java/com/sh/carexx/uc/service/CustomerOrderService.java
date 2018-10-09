@@ -191,6 +191,17 @@ public interface CustomerOrderService {
 	
 	/**
 	 * 
+	 * queryStaffIncomeCount:(人员收入统计). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param customerOrderQueryFormBean
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<Map<String, Object>> queryStaffIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	
+	/**
+	 * 
 	 * updateAdjustAmt:(调整订单金额). <br/> 
 	 * 
 	 * @author hetao 
