@@ -130,7 +130,7 @@ public class CustomerOrderController extends BaseController {
 				
 				String serviceAddress = String.valueOf(map.get("serviceAddress"));
 				map.put("serviceAddress", ServiceAddress.INST.getValue() == Byte.parseByte(serviceAddress)
-						? ServiceAddress.INST.getDesc() : ServiceAddress.INST.getDesc());
+						? ServiceAddress.INST.getDesc() : ServiceAddress.COMMUNITY.getDesc());
 				
 				String proofType = String.valueOf(map.get("proofType"));
 				map.put("proofType", ProofType.RECEIPT.getValue() == Byte.parseByte(proofType)
@@ -138,7 +138,12 @@ public class CustomerOrderController extends BaseController {
 
 				String areaWard = String.valueOf(map.get("inpatientArea")) + "/"
 						+ String.valueOf(map.get("accurateAddress"));
-				map.put("areaWard", areaWard);
+				String accurateAddress = String.valueOf(map.get("accurateAddress"));
+				if(ServiceAddress.INST.getValue() == Byte.parseByte(serviceAddress)){
+					map.put("areaWard", areaWard);
+				}else if(ServiceAddress.COMMUNITY.getValue() == Byte.parseByte(serviceAddress)){
+					map.put("areaWard", accurateAddress);
+				}
 
 				String receiptInvoice = (String.valueOf(map.get("receiptNo")) + String.valueOf(map.get("invoiceNo")))
 						.replaceAll("null", "");
