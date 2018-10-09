@@ -571,17 +571,16 @@
 			co.order_no orderNo,
 			co.order_type orderType,
 			co.service_address serviceAddress,
-			co.order_amt orderAmt,
-			co.adjust_amt adjustAmt,
 			co.customer_id customerId,
 			ic.real_name realName,
 			co.inst_id instId,
 			co.service_id serviceId,
 			cs.service_name serviceName,
 			co.inpatient_area_id inpatientAreaId,
+			iia.inpatient_area inpatientArea,
 			co.accurate_address accurateAddress,
 			co.order_status orderStatus,
-			cos.service_staff_id service_staffId,
+			cos.service_staff_id serviceStaffId,
 			sum(cos.service_duration) serviceTime,
 			sum(os.staff_settle_amt) staffSettleAmt
 		FROM
@@ -590,6 +589,7 @@
 		LEFT JOIN carexx_order_settle os ON cos.id = os.schedule_id
 		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_inst_inpatient_area iia ON co.inpatient_area_id = iia.id
 		WHERE
 			co.order_type = 1
 		AND co.service_address = 1 AND co.order_status in (5,6)
