@@ -167,8 +167,8 @@ public class CustomerOrderController extends BaseController {
 				map.put("instSettleAmt", instSettleAmt.add(orderAdjustAmt));
 			}
 		}
-		String[] heads = { "订单号", "支付类型", "服务地址", "客户姓名", "签单人", "病区/病床", "工种", "护工姓名", "所属公司", "凭证类型", "凭证号", "开始时间", "结束时间", "总天数",
-				"节假日天数", "订单金额", "订单调整", "结算款", "结算调整", "管理费", "微信手续费", "备注" };
+		String[] heads = { "订单号", "支付类型", "服务地址", "客户姓名", "签单人", "病区/病床(地址)", "工种", "护理员", "所属公司", "凭证类型", "凭证号", "开始时间", "结束时间", "总天数",
+				"节假日天数", "订单金额", "调整金额", "结算款", "结算款调整", "管理费", "微信手续费", "备注" };
 		String[] cols = { "orderNo", "payType", "serviceAddress", "realName", "signingPerson", "areaWard", "workTypeName", "staffName",
 				"instSysName", "proofType", "receiptInvoice", "startTime", "endTime", "days", "holiday", "orderAmt",
 				"orderAdjustAmt", "staffSettleAmt", "settleAdjustAmt", "instSettleAmt", "pounDage", "orderRemark" };
