@@ -574,12 +574,16 @@
 			co.customer_id customerId,
 			ic.real_name realName,
 			co.inst_id instId,
+			ci.inst_name instName,
 			co.service_id serviceId,
 			cs.service_name serviceName,
+			cs.service_explain serviceExplain,
+			ics.service_price servicePrice,
 			co.inpatient_area_id inpatientAreaId,
 			iia.inpatient_area inpatientArea,
 			co.accurate_address accurateAddress,
 			co.order_status orderStatus,
+			co.order_remark orderRemark,
 			cos.service_staff_id serviceStaffId,
 			sum(cos.service_duration) serviceTime,
 			sum(os.staff_settle_amt) staffSettleAmt
@@ -590,6 +594,9 @@
 		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
 		LEFT JOIN carexx_inst_inpatient_area iia ON co.inpatient_area_id = iia.id
+		LEFT JOIN carexx_care_inst ci ON co.inst_id = ci.id
+		LEFT JOIN carexx_inst_care_service ics ON co.service_id = ics.service_id
+		AND co.inst_id = ics.inst_id
 		WHERE
 			co.order_type = 1
 		AND co.service_address = 1 AND co.order_status in (5,6)
