@@ -1,16 +1,15 @@
 package com.sh.carexx.admin.controller;
 
-import javax.validation.Valid;
-
+import com.sh.carexx.bean.care.CareInstFormBean;
+import com.sh.carexx.common.CarexxConstant;
+import com.sh.carexx.common.enums.UseStatus;
+import com.sh.carexx.common.web.BasicRetVal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sh.carexx.bean.care.CareInstFormBean;
-import com.sh.carexx.common.CarexxConstant;
-import com.sh.carexx.common.enums.UseStatus;
-import com.sh.carexx.common.web.BasicRetVal;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/careinst")
@@ -27,6 +26,11 @@ public class CareInstController extends BaseController {
 	@RequestMapping(value = "/list")
 	public String queryForList(CareInstFormBean careInstFormBean) {
 		return this.ucServiceClient.queryCareInstForList(careInstFormBean);
+	}
+
+	@RequestMapping(value = "/all")
+	public String queryForAll(CareInstFormBean careInstFormBean) {
+		return this.ucServiceClient.queryAllCareInst(careInstFormBean);
 	}
 
 	@RequestMapping(value = "/list_service")
