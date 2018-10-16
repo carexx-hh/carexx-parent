@@ -87,6 +87,17 @@ public interface CustomerOrderScheduleMapper {
 
 	/**
 	 * 
+	 * selectScheduleByStaffId:(通过订单号和人员Id查询排班). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param orderNo
+	 * @param StaffId
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> selectScheduleByStaffId(String orderNo, String StaffId);
+	/**
+	 * 
 	 * selectByExist:(添加排班时查询是否已排班). <br/>
 	 * 
 	 * @author hetao

@@ -59,6 +59,11 @@ public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleSe
 	}
 
 	@Override
+	public List<Map<?, ?>> queryScheduleByStaffId(String orderNo, String staffId) {
+		return this.customerOrderScheduleMapper.selectScheduleByStaffId(orderNo, staffId);
+	}
+	
+	@Override
 	public List<CustomerOrderSchedule> queryByExistence(String orderNo, Date serviceStartTime, Date serviceEndTime) {
 		return this.customerOrderScheduleMapper.selectByExistence(orderNo, serviceStartTime, serviceEndTime);
 	}
@@ -156,4 +161,5 @@ public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleSe
 		}
 		
 	}
+
 }

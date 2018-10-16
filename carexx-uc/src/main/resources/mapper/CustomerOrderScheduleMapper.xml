@@ -126,6 +126,46 @@
 			cos.service_start_time ASC
 	</select>
 	
+	<select id="selectScheduleByStaffId" resultType="java.util.Map">
+		SELECT
+			cos.id id,
+			cos.order_no orderNo,
+			cos.service_staff_id serviceStaffId,
+			cis.inst_id instId,
+			cci.inst_name instName,
+			cos.service_duration serviceDuration,
+			cis.service_inst_id serviceInstId,
+			ccc.inst_name serviceInstName,
+			cis.person_type personType,
+			cis.real_name realName,
+			cis.sex sex,
+			cis.birthday birthday,
+			cis.phone phone,
+			cis.address address,
+			cos.service_start_time serviceStartTime,
+			cos.service_end_time serviceEndTime,
+			cos.work_type_settle_id workTypeSettleId,
+			os.settle_ratio settleRatio,
+			os.staff_settle_amt staffSettleAmt,
+			os.adjust_amt settleAdjustAmt,
+			os.inst_settle_amt instSettleAmt,
+			cos.service_status serviceStatus,
+			cos.create_time createTime,
+			cos.modify_time modifyTime
+		FROM
+			carexx_customer_order_schedule cos
+		LEFT JOIN carexx_inst_staff cis ON cos.service_staff_id = cis.id
+		LEFT JOIN carexx_care_inst cci ON cis.inst_id = cci.id
+		LEFT JOIN carexx_care_inst ccc ON cis.service_inst_id = ccc.id
+		LEFT JOIN carexx_order_settle os ON cos.id = os.schedule_id
+		WHERE
+			cos.service_status > 2 and
+			cos.order_no = #{orderNo,jdbcType=VARCHAR}
+			and cos.service_staff_id = #{staffId, jdbcType=INTEGER}
+		ORDER BY
+			cos.service_start_time ASC
+	</select>
+	
 	<select id="selectByTime" resultMap="BaseResultMap">
 		SELECT
 			cos.id, cos.order_no, cos.service_staff_id, cos.service_start_time, cos.service_end_time, cos.service_duration, 

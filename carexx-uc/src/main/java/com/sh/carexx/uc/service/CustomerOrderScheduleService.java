@@ -85,6 +85,17 @@ public interface CustomerOrderScheduleService {
 
 	/**
 	 * 
+	 * queryScheduleByStaffId:(通过订单号和人员查询排班). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param orderNo
+	 * @param staffId
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> queryScheduleByStaffId(String orderNo, String staffId);
+	/**
+	 * 
 	 * queryByExist:(添加排班时查询是否已排班). <br/>
 	 * 
 	 * @author hetao

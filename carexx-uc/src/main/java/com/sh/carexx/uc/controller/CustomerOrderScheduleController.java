@@ -58,6 +58,12 @@ public class CustomerOrderScheduleController {
 				this.customerOrderScheduleService.queryScheduleByOrderNo(orderNo)).toJSON();
 	}
 
+	@RequestMapping(value = "/staff_schedule/{orderNo}/{staffId}", method = RequestMethod.GET)
+	public String queryScheduleByStaffId(@PathVariable("orderNo") String orderNo, @PathVariable("staffId") String staffId) {
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,
+				this.customerOrderScheduleService.queryScheduleByStaffId(orderNo, staffId)).toJSON();
+	}
+	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public BasicRetVal delete(@PathVariable("id") Long id) {
 		try {
