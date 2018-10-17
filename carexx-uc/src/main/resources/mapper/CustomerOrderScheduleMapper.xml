@@ -131,17 +131,10 @@
 			cos.id id,
 			cos.order_no orderNo,
 			cos.service_staff_id serviceStaffId,
-			cis.inst_id instId,
-			cci.inst_name instName,
-			cos.service_duration serviceDuration,
 			cis.service_inst_id serviceInstId,
 			ccc.inst_name serviceInstName,
 			cis.person_type personType,
 			cis.real_name realName,
-			cis.sex sex,
-			cis.birthday birthday,
-			cis.phone phone,
-			cis.address address,
 			cos.service_start_time serviceStartTime,
 			cos.service_end_time serviceEndTime,
 			cos.work_type_settle_id workTypeSettleId,
@@ -150,8 +143,6 @@
 			os.adjust_amt settleAdjustAmt,
 			os.inst_settle_amt instSettleAmt,
 			cos.service_status serviceStatus,
-			cos.create_time createTime,
-			cos.modify_time modifyTime
 		FROM
 			carexx_customer_order_schedule cos
 		LEFT JOIN carexx_inst_staff cis ON cos.service_staff_id = cis.id
