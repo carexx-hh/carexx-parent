@@ -137,6 +137,19 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 		}
 
 	}
+	
+	@Override
+	public void updateOrderDelete(String orderNo, Byte targetStatus) throws BizException {
+		int rows = 0;
+		try {
+			rows = this.customerOrderMapper.updateOrderDelete(orderNo, targetStatus);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+	}
 
 	@Override
 	public void mappOrderCancel(String orderNo, Byte targetStatus) throws BizException {

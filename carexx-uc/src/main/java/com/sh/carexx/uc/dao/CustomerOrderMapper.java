@@ -155,6 +155,7 @@ public interface CustomerOrderMapper {
 	 */
 	int updateOrderCancel(@Param("orderNo") String orderNo, @Param("targetStatus") Byte targetStatus);
 
+	int updateOrderDelete(@Param("orderNo") String orderNo, @Param("targetStatus") Byte targetStatus);
 	/**
 	 *
 	 * mappOrderCancel:(移动端取消订单). <br/>

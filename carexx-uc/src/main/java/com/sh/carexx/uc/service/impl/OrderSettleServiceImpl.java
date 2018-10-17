@@ -50,6 +50,20 @@ public class OrderSettleServiceImpl implements OrderSettleService {
 			throw new BizException(ErrorCode.DB_ERROR);
 		}
 	}
+	
+
+	@Override
+	public void updateSettleDelete(Long scheduleId, Byte targetStatus) throws BizException {
+		int rows = 0;
+		try {
+			rows = this.orderSettleMapper.updateSettleDelete(scheduleId, targetStatus);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+	}
 
 	@Override
 	public void batchCloseUpdate(List<CustomerOrderSchedule> scheduleList) throws BizException {

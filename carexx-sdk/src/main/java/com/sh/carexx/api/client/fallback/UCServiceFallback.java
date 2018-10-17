@@ -414,6 +414,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public BasicRetVal deleteCustomerOrder(String orderNo) {
+		return null;
+	}
+	
+	@Override
 	public BasicRetVal modifyOrderServiceEndTime(String orderNo) {
 		return null;
 	}
@@ -778,4 +783,5 @@ public class UCServiceFallback implements UCServiceClient {
 	public BasicRetVal refusedSchedule(String orderNo) {
 		return null;
 	}
+
 }

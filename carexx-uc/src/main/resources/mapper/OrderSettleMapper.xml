@@ -141,6 +141,15 @@
 		WHERE
 			schedule_id = #{scheduleId, jdbcType=BIGINT} and settle_status = #{srcStatus, jdbcType=TINYINT}
 	</update>
+	<update id="updateSettleDelete">
+		UPDATE
+			carexx_order_settle
+		SET
+			settle_status = #{targetStatus, jdbcType=TINYINT},
+			modify_time = now()
+		WHERE
+			schedule_id = #{scheduleId, jdbcType=BIGINT} and settle_status in (1,2)
+	</update>
 	<update id="updateSettleAmt" parameterType="com.sh.carexx.model.uc.OrderSettle">
 		update
 			carexx_order_settle

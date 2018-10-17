@@ -119,6 +119,16 @@ public class CustomerOrderController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
+	
+	@RequestMapping(value = "/delete/{orderNo}", method = RequestMethod.GET)
+	public BasicRetVal delete(@PathVariable("orderNo") String orderNo) {
+		try {
+			this.customerOrderManager.delete(orderNo);
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+		}
+		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+	}
 
 	@RequestMapping(value = "/mapp_cancel/{orderNo}", method = RequestMethod.GET)
 	public BasicRetVal mappCancel(@PathVariable("orderNo") String orderNo) {

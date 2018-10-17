@@ -89,6 +89,17 @@ public interface OrderSettleMapper {
 	
 	/**
 	 * 
+	 * updateSettleDelete:(删除订单结算). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param scheduleId
+	 * @param targetStatus
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	int updateSettleDelete(@Param("scheduleId") Long scheduleId, @Param("targetStatus") Byte targetStatus);
+	/**
+	 * 
 	 * selectOrderSettleCount:(结算统计报表). <br/> 
 	 * 
 	 * @author hetao 

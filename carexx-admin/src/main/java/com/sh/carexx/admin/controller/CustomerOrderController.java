@@ -63,6 +63,11 @@ public class CustomerOrderController extends BaseController {
 		return this.ucServiceClient.cancelCustomerOrder(orderNo);
 	}
 
+	@RequestMapping(value = "/delete/{orderNo}")
+	public BasicRetVal delete(@PathVariable("orderNo") String orderNo) {
+		return this.ucServiceClient.deleteCustomerOrder(orderNo);
+	}
+	
 	@RequestMapping(value = "/throughPay/{orderNo}/{payType}")
 	public BasicRetVal throughPay(@PathVariable("orderNo") String orderNo, @PathVariable("payType") Byte payType) {
 		if(orderNo == null || payType == null){
