@@ -24,6 +24,7 @@ import com.sh.carexx.common.enums.order.OrderStatus;
 import com.sh.carexx.common.enums.order.OrderType;
 import com.sh.carexx.common.enums.order.ProofType;
 import com.sh.carexx.common.enums.order.ServiceAddress;
+import com.sh.carexx.common.enums.pay.PayStatus;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.keygen.KeyGenerator;
 import com.sh.carexx.common.util.DateUtils;
@@ -41,6 +42,7 @@ import com.sh.carexx.uc.service.InstCareServiceService;
 import com.sh.carexx.uc.service.InstCustomerService;
 import com.sh.carexx.uc.service.InstHolidayService;
 import com.sh.carexx.uc.service.InstSettleService;
+import com.sh.carexx.uc.service.OrderPaymentService;
 import com.sh.carexx.uc.service.OrderSettleService;
 import com.sh.carexx.uc.service.UserService;
 
@@ -74,7 +76,9 @@ public class CustomerOrderManager {
     private OrderSettleService orderSettleService;
     @Autowired
     private InstSettleService instSettleService;
-
+    @Autowired
+    private OrderPaymentService orderPaymentService;
+    
     /**
      * calcServiceFee:(计算订单金额). <br/>
      *
@@ -440,6 +444,7 @@ public class CustomerOrderManager {
             this.orderSettleService.updateSettleDelete(list.getId(),
             		OrderSettleStatus.CANCELED.getValue());
         }
+        this.orderPaymentService.updatePaymentDelete(orderNo, PayStatus.DELETE_PAY.getValue());
     }
     /**
      * mappCancel:(移动端取消订单). <br/>

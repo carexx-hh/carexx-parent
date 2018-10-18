@@ -51,8 +51,20 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
 	}
 
 	@Override
+	public void updatePaymentDelete(String orderNo,Byte targetStatus) throws BizException {
+		int rows = 0;
+		try {
+			rows = this.orderPaymentMapper.updatePaymentDelete(orderNo, targetStatus);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+	}
+	
+	@Override
 	public OrderPayment getById(Long id) {
-		
 		return this.orderPaymentMapper.selectById(id);
 	}
 

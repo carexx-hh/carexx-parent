@@ -75,4 +75,13 @@
 		where
 			order_no = #{orderNo,jdbcType=VARCHAR}
 	</update>
+	
+	<update id="updatePaymentDelete">
+		UPDATE
+			carexx_order_payment
+		SET
+			pay_status = #{targetStatus,jdbcType=TINYINT}
+		WHERE
+			order_no = #{orderNo,jdbcType=VARCHAR}
+	</update>
 </mapper>

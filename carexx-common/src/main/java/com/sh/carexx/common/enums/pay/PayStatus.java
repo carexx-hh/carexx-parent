@@ -11,6 +11,7 @@ package com.sh.carexx.common.enums.pay;
  * @since JDK 1.8
  */
 public enum PayStatus {
+	DELETE_PAY((byte) 0, "已删除"),
 	PENDING_PAY((byte) 1, "待支付"),
 	PAY_SUCCESS((byte) 2, "支付成功"),
 	PAY_FAILURE((byte) 3, "支付失败"),
