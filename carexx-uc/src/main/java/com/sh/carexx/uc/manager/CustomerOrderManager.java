@@ -429,6 +429,15 @@ public class CustomerOrderManager {
         }
     }
 
+    /**
+     * 
+     * delete:(删除订单). <br/> 
+     * 
+     * @author zhoulei 
+     * @param orderNo
+     * @throws BizException 
+     * @since JDK 1.8
+     */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
     public void delete(String orderNo) throws BizException {
         this.customerOrderService.updateOrderDelete(orderNo, OrderStatus.CANCELED.getValue());

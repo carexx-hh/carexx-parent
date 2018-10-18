@@ -155,6 +155,16 @@ public interface CustomerOrderMapper {
 	 */
 	int updateOrderCancel(@Param("orderNo") String orderNo, @Param("targetStatus") Byte targetStatus);
 
+	/**
+	 * 
+	 * updateOrderDelete:(删除订单). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param orderNo
+	 * @param targetStatus
+	 * @return 
+	 * @since JDK 1.8
+	 */
 	int updateOrderDelete(@Param("orderNo") String orderNo, @Param("targetStatus") Byte targetStatus);
 	/**
 	 *
