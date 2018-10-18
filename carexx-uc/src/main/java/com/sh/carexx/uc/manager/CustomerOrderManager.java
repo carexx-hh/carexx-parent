@@ -420,8 +420,8 @@ public class CustomerOrderManager {
         for (CustomerOrderSchedule list : orderschedulelist) {
             this.customerOrderScheduleService.deleteOrderSchedule(list.getId(), OrderScheduleStatus.DELETED.getValue());
             // 取消订单下的排班同时取消所有的订单结算
-            this.orderSettleService.updateStatus(list.getId(), UseStatus.ENABLED.getValue(),
-                    UseStatus.DISABLED.getValue());
+            this.orderSettleService.updateStatus(list.getId(), OrderSettleStatus.SETTLING.getValue(),
+            		OrderSettleStatus.CANCELED.getValue());
         }
     }
 
