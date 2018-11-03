@@ -186,9 +186,11 @@
 		JOIN carexx_inst_staff_work_type ciswt ON ciswt.staff_id = cis.id
 		JOIN carexx_care_service ccs ON ccs.work_type_id = ciswt.work_type_id
 		WHERE
-			ccs.id = #{serviceId,jdbcType=INTEGER} 
+			cis.service_inst_id = #{serviceInstId,jdbcType=INTEGER}
 			and cis.staff_status = 1  and cis.job_status = 1 
-			and cis.service_inst_id = #{serviceInstId,jdbcType=INTEGER}
+			<if test="serviceId != null and serviceId > 0">
+				and ccs.id = #{serviceId,jdbcType=INTEGER}
+			</if>
 			<if test="realName != null and realName != '' ">
 				and cis.real_name like CONCAT('%', '${realName}', '%')
 			</if>
@@ -224,8 +226,14 @@
 		LEFT JOIN carexx_care_inst ccis ON cis.service_inst_id = ccis.id
 		LEFT JOIN carexx_work_type cwt ON ccs.work_type_id = cwt.id
 		WHERE
-			ccs.id = #{serviceId,jdbcType=INTEGER} and cis.service_inst_id = #{serviceInstId,jdbcType=INTEGER}
+			cis.service_inst_id = #{serviceInstId,jdbcType=INTEGER}
 			and cis.staff_status = 1  and cis.job_status = 1 
+			<if test="serviceId != null and serviceId > 0">
+				and ccs.id = #{serviceId,jdbcType=INTEGER}
+			</if>
+			<if test="realName != null and realName != '' ">
+				and cis.real_name like CONCAT('%', '${realName}', '%')
+			</if>
 		ORDER BY cis.create_time DESC
 		limit ${rowIndex}, ${pageSize}
 	</select>
