@@ -184,7 +184,9 @@
 		FROM
 			carexx_inst_staff cis
 		JOIN carexx_inst_staff_work_type ciswt ON ciswt.staff_id = cis.id
+		<if test="serviceId != null and serviceId > 0">
 		JOIN carexx_care_service ccs ON ccs.work_type_id = ciswt.work_type_id
+		</if>
 		WHERE
 			cis.service_inst_id = #{serviceInstId,jdbcType=INTEGER}
 			and cis.staff_status = 1  and cis.job_status = 1 
@@ -215,16 +217,18 @@
 			cis.entry_date entryDate,
 			cis.leave_date leaveDate,
 			cis.create_time createTime,
-			cis.modify_time modifyTime, 
-			ccs.work_type_id workTypeId, 
-			cwt.work_type_name workTypeName
+			cis.modify_time modifyTime
 		FROM
 			carexx_inst_staff cis
 		JOIN carexx_inst_staff_work_type ciswt ON ciswt.staff_id = cis.id
+		<if test="serviceId != null and serviceId > 0">
 		JOIN carexx_care_service ccs ON ccs.work_type_id = ciswt.work_type_id
+		</if>
 		LEFT JOIN carexx_care_inst cci ON cis.inst_id = cci.id
 		LEFT JOIN carexx_care_inst ccis ON cis.service_inst_id = ccis.id
+		<if test="serviceId != null and serviceId > 0">
 		LEFT JOIN carexx_work_type cwt ON ccs.work_type_id = cwt.id
+		</if>
 		WHERE
 			cis.service_inst_id = #{serviceInstId,jdbcType=INTEGER}
 			and cis.staff_status = 1  and cis.job_status = 1 
