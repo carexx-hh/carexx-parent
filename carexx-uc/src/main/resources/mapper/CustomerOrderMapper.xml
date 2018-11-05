@@ -556,6 +556,9 @@
 		<if test="serviceAddress != null and serviceAddress != '' ">
 			and co.service_address = #{serviceAddress,jdbcType=TINYINT}
 		</if>
+		<if test="serviceId != null and serviceId != '' ">
+			and co.service_id = #{serviceId,jdbcType=TINYINT}
+		</if>
 		<if test="serviceStartTime != null and serviceStartTime != '' ">
 			and DATE_FORMAT(co.service_end_time ,<![CDATA['%Y-%m-%d']]>) <![CDATA[>=]]> DATE_FORMAT(#{serviceStartTime},<![CDATA['%Y-%m-%d']]>)
 		</if>
