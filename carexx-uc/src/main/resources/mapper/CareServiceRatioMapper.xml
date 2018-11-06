@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.carexx.uc.dao.CareServiceRatioMapper">
+  <resultMap id="BaseResultMap" type="com.sh.carexx.model.uc.entity.CareServiceRatio">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="service_address" jdbcType="TINYINT" property="serviceAddress" />
+    <result column="service_ratio" jdbcType="DECIMAL" property="serviceRatio" />
+    <result column="service_ratio_status" jdbcType="TINYINT" property="serviceRatioStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, service_address, service_ratio, service_ratio_status, create_time, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from carexx_care_service_ratio
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from carexx_care_service_ratio
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sh.carexx.model.uc.entity.CareServiceRatio">
+    insert into carexx_care_service_ratio (id, service_address, service_ratio, 
+      service_ratio_status, create_time, modify_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{serviceAddress,jdbcType=TINYINT}, #{serviceRatio,jdbcType=DECIMAL}, 
+      #{serviceRatioStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sh.carexx.model.uc.entity.CareServiceRatio">
+    insert into carexx_care_service_ratio
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="serviceAddress != null">
+        service_address,
+      </if>
+      <if test="serviceRatio != null">
+        service_ratio,
+      </if>
+      <if test="serviceRatioStatus != null">
+        service_ratio_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="serviceAddress != null">
+        #{serviceAddress,jdbcType=TINYINT},
+      </if>
+      <if test="serviceRatio != null">
+        #{serviceRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceRatioStatus != null">
+        #{serviceRatioStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sh.carexx.model.uc.entity.CareServiceRatio">
+    update carexx_care_service_ratio
+    <set>
+      <if test="serviceAddress != null">
+        service_address = #{serviceAddress,jdbcType=TINYINT},
+      </if>
+      <if test="serviceRatio != null">
+        service_ratio = #{serviceRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceRatioStatus != null">
+        service_ratio_status = #{serviceRatioStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sh.carexx.model.uc.entity.CareServiceRatio">
+    update carexx_care_service_ratio
+    set service_address = #{serviceAddress,jdbcType=TINYINT},
+      service_ratio = #{serviceRatio,jdbcType=DECIMAL},
+      service_ratio_status = #{serviceRatioStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.sh.carexx.model.uc.entity.CareServiceRatio">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="service_address" jdbcType="TINYINT" property="serviceAddress" />
+    <result column="service_ratio" jdbcType="DECIMAL" property="serviceRatio" />
+    <result column="service_ratio_status" jdbcType="TINYINT" property="serviceRatioStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, service_address, service_ratio, service_ratio_status, create_time, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from carexx_care_service_ratio
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from carexx_care_service_ratio
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sh.carexx.model.uc.entity.CareServiceRatio">
+    insert into carexx_care_service_ratio (id, service_address, service_ratio, 
+      service_ratio_status, create_time, modify_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{serviceAddress,jdbcType=TINYINT}, #{serviceRatio,jdbcType=DECIMAL}, 
+      #{serviceRatioStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sh.carexx.model.uc.entity.CareServiceRatio">
+    insert into carexx_care_service_ratio
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="serviceAddress != null">
+        service_address,
+      </if>
+      <if test="serviceRatio != null">
+        service_ratio,
+      </if>
+      <if test="serviceRatioStatus != null">
+        service_ratio_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="serviceAddress != null">
+        #{serviceAddress,jdbcType=TINYINT},
+      </if>
+      <if test="serviceRatio != null">
+        #{serviceRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceRatioStatus != null">
+        #{serviceRatioStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sh.carexx.model.uc.entity.CareServiceRatio">
+    update carexx_care_service_ratio
+    <set>
+      <if test="serviceAddress != null">
+        service_address = #{serviceAddress,jdbcType=TINYINT},
+      </if>
+      <if test="serviceRatio != null">
+        service_ratio = #{serviceRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceRatioStatus != null">
+        service_ratio_status = #{serviceRatioStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sh.carexx.model.uc.entity.CareServiceRatio">
+    update carexx_care_service_ratio
+    set service_address = #{serviceAddress,jdbcType=TINYINT},
+      service_ratio = #{serviceRatio,jdbcType=DECIMAL},
+      service_ratio_status = #{serviceRatioStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
