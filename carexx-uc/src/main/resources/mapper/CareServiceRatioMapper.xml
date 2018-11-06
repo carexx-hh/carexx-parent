@@ -22,7 +22,38 @@
 		where 
 			id = #{id,jdbcType=INTEGER}
 	</select>
-	
+	<select id="selectByServiceAddress" parameterType="java.lang.Byte"
+		resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			carexx_care_service_ratio
+		where 
+			service_address = #{serviceAddress,jdbcType=TINYINT}
+	</select>
+	<select id="selectServiceRatioCount" parameterType="com.sh.carexx.bean.care.CareServiceRatioFormBean"
+		resultType="java.lang.Integer">
+		SELECT
+			count(1) totalCount
+		FROM
+			carexx_care_service_ratio csr
+	</select>
+
+	<select id="selectServiceRatioList" parameterType="com.sh.carexx.bean.care.CareServiceRatioFormBean"
+		resultType="java.util.Map">
+		SELECT
+			csr.id id,
+			csr.service_address serviceAddress,
+			csr.service_ratio serviceRatio,
+			csr.service_ratio_status serviceRatioStatus,
+			csr.create_time createTime,
+			csr.modify_time modifyTime
+		FROM
+			carexx_care_service_ratio csr
+		ORDER BY
+			csr.create_time DESC
+		LIMIT ${rowIndex}, ${pageSize}
+	</select>
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.CareServiceRatio">
 		insert into
 			carexx_care_service_ratio 
@@ -39,4 +70,22 @@
 			now()
 		)
 	</insert>
+	<update id="update" parameterType="com.sh.carexx.model.uc.CareServiceRatio">
+		UPDATE
+			carexx_care_service_ratio
+		SET
+			service_ratio = #{serviceRatio,jdbcType=DECIMAL},
+			modify_time = now()
+		WHERE
+			id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateServiceRatioStatus" parameterType="com.sh.carexx.model.uc.CareServiceRatio">
+		UPDATE
+			carexx_care_service_ratio
+		SET
+			service_ratio_status=#{targetStatus,jdbcType=TINYINT},
+			modify_time = now()
+		WHERE
+			id = #{id,jdbcType=INTEGER} and service_ratio_status = #{srcStatus,jdbcType=TINYINT}
+	</update>
 </mapper>

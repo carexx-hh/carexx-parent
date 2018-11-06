@@ -1460,4 +1460,19 @@ public interface UCServiceClient {
 	
 	@RequestMapping(value = "/sms/send_verify_code/{mobile}", method = RequestMethod.GET)
 	BasicRetVal sendVerifyCode(@PathVariable("mobile") String mobile);
+	
+	@RequestMapping(value = "/serviceratio/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	BasicRetVal addServiceRatio(@RequestBody CareServiceRatioFormBean careServiceRatioFormBean);
+	
+	@RequestMapping(value = "/serviceratio/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String queryServiceRatioForList(@RequestBody CareServiceRatioFormBean careServiceRatioFormBean);
+	
+	@RequestMapping(value = "/serviceratio/modify", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	BasicRetVal modifyServiceRatio(@RequestBody CareServiceRatioFormBean careServiceRatioFormBean);
+
+	@RequestMapping(value = "/serviceratio/enable/{id}", method = RequestMethod.GET)
+	BasicRetVal enableServiceRatio(@PathVariable("id") Integer id);
+
+	@RequestMapping(value = "/serviceratio/disable/{id}", method = RequestMethod.GET)
+	BasicRetVal disableServiceRatio(@PathVariable("id") Integer id);
 }

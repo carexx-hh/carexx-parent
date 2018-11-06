@@ -64,6 +64,8 @@ public enum ErrorCode {
 	SETTLE_AMT_BEYOND_ERROR("E091303", "调整金额已超出"),
 	
 	INST_INPATIENT_AREA_EXISTS_ERROR("E091401", "当前病区已存在"),
+	
+	CARE_SERVICE_RATIO_EXISTS_ERROR("E091501", "服务比例已存在"),
 	;
 
 	private String value;

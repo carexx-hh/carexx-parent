@@ -784,4 +784,29 @@ public class UCServiceFallback implements UCServiceClient {
 		return null;
 	}
 
+	@Override
+	public BasicRetVal addServiceRatio(CareServiceRatioFormBean careServiceRatioFormBean) {
+		return null;
+	}
+
+	@Override
+	public String queryServiceRatioForList(CareServiceRatioFormBean careServiceRatioFormBean) {
+		return null;
+	}
+
+	@Override
+	public BasicRetVal modifyServiceRatio(CareServiceRatioFormBean careServiceRatioFormBean) {
+		return null;
+	}
+
+	@Override
+	public BasicRetVal enableServiceRatio(Integer id) {
+		return null;
+	}
+
+	@Override
+	public BasicRetVal disableServiceRatio(Integer id) {
+		return null;
+	}
+
 }
