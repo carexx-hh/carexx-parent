@@ -14,6 +14,8 @@ public class InstServiceQueryFormBean extends BasicFormBean {
 
 	private Integer mapp;
 
+	private Byte serviceAddress;
+
 	public Integer getInstId() {
 		return instId;
 	}
@@ -54,4 +56,11 @@ public class InstServiceQueryFormBean extends BasicFormBean {
 		this.mapp = mapp;
 	}
 
+	public Byte getServiceAddress() {
+		return serviceAddress;
+	}
+
+	public void setServiceAddress(Byte serviceAddress) {
+		this.serviceAddress = serviceAddress;
+	}
 }

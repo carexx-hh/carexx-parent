@@ -120,6 +120,7 @@ public class CareServiceManager {
 		instCareService.setInstId(instCareServiceFormBean.getInstId());
 		instCareService.setServiceId(instCareServiceFormBean.getServiceId());
 		instCareService.setServiceUnit(instCareServiceFormBean.getServiceUnit());
+		instCareService.setServiceAddress(instCareServiceFormBean.getServiceAddress());
 		instCareService.setServicePrice(new BigDecimal(instCareServiceFormBean.getServicePrice()));
 		instCareService.setServiceStatus(UseStatus.ENABLED.getValue());
 		this.instCareServiceService.save(instCareService);
@@ -141,6 +142,7 @@ public class CareServiceManager {
 		}
 		instCareService.setId(instCareServiceFormBean.getId());
 		instCareService.setServiceUnit(instCareServiceFormBean.getServiceUnit());
+		instCareService.setServiceAddress(instCareServiceFormBean.getServiceAddress());
 		instCareService.setServicePrice(new BigDecimal(instCareServiceFormBean.getServicePrice()));
 		this.instCareServiceService.update(instCareService);
 	}

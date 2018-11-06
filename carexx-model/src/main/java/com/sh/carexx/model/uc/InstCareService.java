@@ -12,6 +12,8 @@ public class InstCareService {
 
     private Byte serviceUnit;
 
+    private Byte serviceAddress;
+
     private BigDecimal servicePrice;
 
     private Byte serviceStatus;
@@ -46,6 +48,14 @@ public class InstCareService {
 
     public Byte getServiceUnit() {
         return serviceUnit;
+    }
+
+    public Byte getServiceAddress() {
+        return serviceAddress;
+    }
+
+    public void setServiceAddress(Byte serviceAddress) {
+        this.serviceAddress = serviceAddress;
     }
 
     public void setServiceUnit(Byte serviceUnit) {

@@ -24,6 +24,10 @@ public class InstCareServiceFormBean extends BasicFormBean {
 	private String serviceUnit;
 
 	@NotBlank
+	@Pattern(regexp = "[1,2]")
+	private String serviceAddress;
+
+	@NotBlank
 	private String servicePrice;
 
 	private String serviceStatus;
@@ -70,6 +74,17 @@ public class InstCareServiceFormBean extends BasicFormBean {
 
 	public void setServiceUnit(String serviceUnit) {
 		this.serviceUnit = serviceUnit;
+	}
+
+	public Byte getServiceAddress() {
+		if (ValidUtils.isInteger(serviceAddress)) {
+			return Byte.parseByte(serviceAddress);
+		}
+		return null;
+	}
+
+	public void setServiceAddress(String serviceAddress) {
+		this.serviceAddress = serviceAddress;
 	}
 
 	public String getServicePrice() {

@@ -6,13 +6,14 @@
 		<result column="inst_id" jdbcType="INTEGER" property="instId" />
 		<result column="service_id" jdbcType="INTEGER" property="serviceId" />
 		<result column="service_unit" jdbcType="TINYINT" property="serviceUnit" />
+		<result column="service_address" jdbcType="TINYINT" property="serviceAddress" />
 		<result column="service_price" jdbcType="DECIMAL" property="servicePrice" />
 		<result column="service_status" jdbcType="TINYINT" property="serviceStatus" />
 		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
 		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, inst_id, service_id, service_unit, service_price,service_status,create_time,modify_time
+		id, inst_id, service_id, service_unit, service_address, service_price,service_status,create_time,modify_time
 	</sql>
 	
 	<select id="selectExistence" parameterType="com.sh.carexx.bean.care.InstCareServiceFormBean" resultMap="BaseResultMap">
@@ -22,10 +23,13 @@
 			carexx_inst_care_service
 		WHERE
 			service_status > 0
-			and inst_id = #{instId,jdbcType=INTEGER}
-			and service_id = #{serviceId,jdbcType=INTEGER}
+				and inst_id = #{instId,jdbcType=INTEGER}
+				and service_id = #{serviceId,jdbcType=INTEGER}
 			<if test="serviceUnit != null and serviceUnit > 0 ">
-			and service_unit = #{serviceUnit,jdbcType=TINYINT}
+				and service_unit = #{serviceUnit,jdbcType=TINYINT}
+			</if>
+			<if test="serviceAddress != null and serviceAddress != '' ">
+				and ics.service_address = #{serviceAddress,jdbcType=TINYINT}
 			</if>
 	</select>
 	
@@ -33,10 +37,12 @@
 	    SELECT
 	  		ics.id id,
 	  		cs.service_name serviceName,
+			cs.service_explain serviceExplain,
 	  		ics.service_id serviceId,
 	  		wt.id workTypeId,
 	  		wt.work_type_name workTypeName,
 	  		ics.service_unit serviceUnit,
+			ics.service_address serviceAddress,
 	  		ics.service_price servicePrice,
 	  		ics.service_status serviceStatus,
 	  		ics.create_time createTime,
@@ -57,7 +63,7 @@
 	    		and ics.inst_id = #{instId,jdbcType=INTEGER}
 	    	</if>
 	    	<if test="mapp == 1">
-	    		and ics.service_price > 0
+	    		and ics.service_price > 0 and ics.service_address = 1
 	    	</if>
 	    </where>
 	    ORDER BY
@@ -99,6 +105,9 @@
 	   		<if test="instId != null and instId > 0 ">
 	    		and ics.inst_id = #{instId,jdbcType=INTEGER}
 	    	</if>
+			<if test="serviceAddress != null and serviceAddress != '' ">
+				and ics.service_address = #{serviceAddress,jdbcType=TINYINT}
+			</if>
 	    	<if test="serviceName != null and serviceName != '' ">
 	    		and cs.service_name like CONCAT('%', '${serviceName}', '%')
 	    	</if>
@@ -113,10 +122,12 @@
 	  		ics.id id,
 	  		ics.inst_id instId,
 	  		cs.service_name serviceName,
+			cs.service_explain serviceExplain,
 	  		ics.service_id serviceId,
 	  		wt.id workTypeId,
 	  		wt.work_type_name workTypeName,
 	  		ics.service_unit serviceUnit,
+			ics.service_address serviceAddress,
 	  		ics.service_price servicePrice,
 	  		ics.service_status serviceStatus,
 	  		ics.create_time createTime,
@@ -136,6 +147,9 @@
 	    	<if test="instId != null and instId > 0 ">
 	    		and ics.inst_id = #{instId,jdbcType=INTEGER}
 	    	</if>
+			<if test="serviceAddress != null and serviceAddress != '' ">
+				and ics.service_address = #{serviceAddress,jdbcType=TINYINT}
+			</if>
 	    	<if test="serviceName != null and serviceName != '' ">
 	    		and cs.service_name like CONCAT('%', '${serviceName}', '%')
 	    	</if>
@@ -150,13 +164,13 @@
 	
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.InstCareService">
 		INSERT INTO carexx_inst_care_service (
-			inst_id, service_id,service_unit,
+			inst_id, service_id,service_unit,service_address,
 			service_price, service_status,create_time
 		)
 		VALUES(
 			#{instId,jdbcType=INTEGER},
 			#{serviceId,jdbcType=INTEGER},
-			#{serviceUnit,jdbcType=TINYINT},
+			#{serviceUnit,jdbcType=TINYINT}, #{serviceAddress,jdbcType=TINYINT},
 			#{servicePrice,jdbcType=DECIMAL}, #{serviceStatus,jdbcType=TINYINT},now()
 		)
 	</insert>
@@ -166,6 +180,7 @@
 			carexx_inst_care_service
 		SET
 			service_unit = #{serviceUnit,jdbcType=TINYINT},
+			service_address = #{serviceAddress,jdbcType=TINYINT},
 			service_price = #{servicePrice,jdbcType=DECIMAL},
 			modify_time = now()
 		WHERE 
