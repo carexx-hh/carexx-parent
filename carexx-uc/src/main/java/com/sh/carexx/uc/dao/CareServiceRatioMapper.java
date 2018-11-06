@@ -1,17 +1,11 @@
 package com.sh.carexx.uc.dao;
 
-import com.sh.carexx.model.uc.entity.CareServiceRatio;
+import com.sh.carexx.model.uc.CareServiceRatio;
 
 public interface CareServiceRatioMapper {
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(CareServiceRatio record);
+    CareServiceRatio selectById(Integer id);
+    
+    int insert(CareServiceRatio careServiceRatio);
 
-    int insertSelective(CareServiceRatio record);
-
-    CareServiceRatio selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(CareServiceRatio record);
-
-    int updateByPrimaryKey(CareServiceRatio record);
 }

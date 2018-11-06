@@ -1,4 +1,4 @@
-package com.sh.carexx.model.uc.entity;
+package com.sh.carexx.model.uc;
 
 import java.math.BigDecimal;
 import java.util.Date;
