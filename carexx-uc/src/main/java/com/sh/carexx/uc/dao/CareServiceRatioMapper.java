@@ -53,6 +53,16 @@ public interface CareServiceRatioMapper {
 	 * @since JDK 1.8
 	 */
 	List<Map<?, ?>> selectServiceRatioList(CareServiceRatioFormBean careServiceRatioFormBean);
+	
+	/**
+	 * 
+	 * selectServiceRatioAll:(查询全部可用的服务比例). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<CareServiceRatio> selectAllServiceRatio();
 
 	/**
 	 * 

@@ -205,8 +205,8 @@ public class CustomerOrderController extends BaseController {
 		}
 		List<Map<String, Object>> resultList = (List) dataRetVal.getData();
 		
-		String[] heads = { "机构名称", "订单金额", "线上支付", "扫码支付", "现金支付", "公司转账", "调整金额", "结算款", "管理费", "微信手续费" };
-		String[] cols = { "instName", "orderAmt", "onlinePayAmt", "scanPayAmt", "cashPayAmt", "companyTurnAccountAmt", "adjustAmt", "staffSettleAmt", "instSettleAmt", "pounDage" };
+		String[] heads = { "机构名称", "订单金额", "线上支付", "扫码支付", "现金支付", "公司转账", "调整金额", "结算款", "管理费", "微信手续费", "信息服务费" };
+		String[] cols = { "instName", "orderAmt", "onlinePayAmt", "scanPayAmt", "cashPayAmt", "companyTurnAccountAmt", "adjustAmt", "staffSettleAmt", "instSettleAmt", "pounDage", "serviceCharge" };
 		int[] numColIndexs = {};
 		ExcelExporter<Map<String, Object>> exporter = new ExcelExporter(fileName, heads, cols, resultList,
 				numColIndexs);

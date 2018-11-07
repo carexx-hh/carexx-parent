@@ -54,6 +54,11 @@ public class CareServiceRatioServiceImpl implements CareServiceRatioService {
 	}
 
 	@Override
+	public List<CareServiceRatio> queryAllServiceRatio() {
+		return this.careServiceRatioMapper.selectAllServiceRatio();
+	}
+	
+	@Override
 	public void update(CareServiceRatio careServiceRatio) throws BizException {
 		int rows = 0;
 		try {

@@ -54,6 +54,16 @@
 			csr.create_time DESC
 		LIMIT ${rowIndex}, ${pageSize}
 	</select>
+	<select id="selectAllServiceRatio" resultMap="BaseResultMap">
+		SELECT
+			*
+		FROM
+			carexx_care_service_ratio
+		where
+			service_ratio_status = 1
+		ORDER BY
+			create_time DESC
+	</select>
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.CareServiceRatio">
 		insert into
 			carexx_care_service_ratio 

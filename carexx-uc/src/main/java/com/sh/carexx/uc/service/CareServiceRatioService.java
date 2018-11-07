@@ -61,6 +61,16 @@ public interface CareServiceRatioService {
 	 * @since JDK 1.8
 	 */
 	List<Map<?, ?>> queryServiceRatioList(CareServiceRatioFormBean careServiceRatioFormBean);
+	
+	/**
+	 * 
+	 * queryServiceRatioAll:(查询全部可用的服务比例). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<CareServiceRatio> queryAllServiceRatio();
 
 	/**
 	 * 
