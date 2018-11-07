@@ -122,6 +122,8 @@ public class CustomerOrderManager {
                 normalServiceFeeAmt = instCareService.getServicePrice().multiply(
                         new BigDecimal(hour - holidayHour).divide(new BigDecimal(24), 2, BigDecimal.ROUND_HALF_UP));
             }
+        }else if(TimeUnit.MONTH.getValue() == instCareService.getServiceUnit()){
+            return instCareService.getServicePrice();
         }
         // 返回时节假日服务金额加上正常服务金额
         return normalServiceFeeAmt.add(holidayServiceFeeAmt).setScale(2, BigDecimal.ROUND_HALF_UP);

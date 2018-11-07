@@ -28,9 +28,6 @@
 			<if test="serviceUnit != null and serviceUnit > 0 ">
 				and service_unit = #{serviceUnit,jdbcType=TINYINT}
 			</if>
-			<if test="serviceAddress != null and serviceAddress != '' ">
-				and ics.service_address = #{serviceAddress,jdbcType=TINYINT}
-			</if>
 	</select>
 	
 	<select id="selectAllAvailable" parameterType="com.sh.carexx.bean.care.InstServiceQueryFormBean" resultType="java.util.Map">
@@ -62,6 +59,9 @@
 	    	<if test="instId != null and instId > 0 ">
 	    		and ics.inst_id = #{instId,jdbcType=INTEGER}
 	    	</if>
+			<if test="serviceAddress != null and serviceAddress != '' ">
+				and ics.service_address = #{serviceAddress,jdbcType=TINYINT}
+			</if>
 	    	<if test="mapp == 1">
 	    		and ics.service_price > 0 and ics.service_address = 1
 	    	</if>

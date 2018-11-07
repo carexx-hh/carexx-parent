@@ -140,6 +140,7 @@ public class CareServiceManager {
 		if (instCareService != null && instCareService.getId() != instCareServiceFormBean.getId()) {
 			throw new BizException(ErrorCode.INST_CARE_SERVICE_EXISTS_ERROR);
 		}
+		instCareService = new InstCareService();
 		instCareService.setId(instCareServiceFormBean.getId());
 		instCareService.setServiceUnit(instCareServiceFormBean.getServiceUnit());
 		instCareService.setServiceAddress(instCareServiceFormBean.getServiceAddress());
