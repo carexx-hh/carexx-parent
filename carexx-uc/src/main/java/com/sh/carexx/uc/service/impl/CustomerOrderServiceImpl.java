@@ -262,7 +262,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 
 						if(customerOrderQueryFormBean.getServiceAddress() == null) {
 							for(CareServiceRatio careServiceRatio: careServiceRatioList) {
-								if(careServiceRatio.getServiceAddress() == Byte.valueOf(String.valueOf(outputInstIncomeCountMap.get("serviceAddress")))) {
+								if(careServiceRatio.getServiceAddress() == Byte.valueOf(String.valueOf(inputInstIncomeCountMap.get("serviceAddress")))) {
 									serviceRatio = careServiceRatio.getServiceRatio();
 								}
 							}
