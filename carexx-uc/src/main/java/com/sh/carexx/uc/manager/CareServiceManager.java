@@ -117,6 +117,7 @@ public class CareServiceManager {
 			throw new BizException(ErrorCode.INST_CARE_SERVICE_EXISTS_ERROR);
 		}
 		instCareService = new InstCareService();
+		instCareService.setSerialNumber(instCareServiceFormBean.getSerialNumber());
 		instCareService.setInstId(instCareServiceFormBean.getInstId());
 		instCareService.setServiceId(instCareServiceFormBean.getServiceId());
 		instCareService.setServiceUnit(instCareServiceFormBean.getServiceUnit());
@@ -142,6 +143,7 @@ public class CareServiceManager {
 		}
 		instCareService = new InstCareService();
 		instCareService.setId(instCareServiceFormBean.getId());
+		instCareService.setSerialNumber(instCareServiceFormBean.getSerialNumber());
 		instCareService.setServiceUnit(instCareServiceFormBean.getServiceUnit());
 		instCareService.setServiceAddress(instCareServiceFormBean.getServiceAddress());
 		instCareService.setServicePrice(new BigDecimal(instCareServiceFormBean.getServicePrice()));

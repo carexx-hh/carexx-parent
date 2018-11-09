@@ -6,6 +6,8 @@ import java.util.Date;
 public class InstCareService {
     private Integer id;
 
+    private Integer serialNumber;
+
     private Integer instId;
 
     private Integer serviceId;
@@ -28,6 +30,14 @@ public class InstCareService {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(Integer serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     public Integer getInstId() {

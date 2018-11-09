@@ -14,6 +14,10 @@ public class InstCareServiceFormBean extends BasicFormBean {
 	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
 	private String id;
 
+	@NotBlank
+	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
+	private String serialNumber;
+
 	private String instId;
 
 	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
@@ -41,6 +45,17 @@ public class InstCareServiceFormBean extends BasicFormBean {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public Integer getSerialNumber() {
+		if (StringUtils.isNotBlank(serialNumber)) {
+			return Integer.parseInt(serialNumber);
+		}
+		return null;
+	}
+
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
 	}
 
 	public Integer getInstId() {
