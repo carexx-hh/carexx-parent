@@ -154,6 +154,10 @@ public class WechatManager {
 		}
 		return resultMap;
 	}
+	
+	public Map<String, Object> getWxAppletOAuthInfo(String code) throws BizException {
+		return this.getWxAppletOAuthInfo(code, this.appId, this.appSecret);
+	}
 
 	private String getOpenId(String code, String appId, String secret) throws BizException {
 		Map<String, Object> resultMap = this.getOAuthInfo(code, appId, secret);
