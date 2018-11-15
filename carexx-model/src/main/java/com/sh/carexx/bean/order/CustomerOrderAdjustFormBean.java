@@ -15,6 +15,9 @@ public class CustomerOrderAdjustFormBean extends BasicFormBean {
 	private String orderNo;
 
 	@NotBlank
+	private String orderType;
+	
+	@NotBlank
 	@Pattern(regexp = CarexxConstant.Regex.DOUBLE)
 	private String adjustAmt;
 	
@@ -25,6 +28,13 @@ public class CustomerOrderAdjustFormBean extends BasicFormBean {
 	@NotBlank
 	@Size(max = 20)
 	private String proofNo;
+	
+	@NotBlank
+	@Pattern(regexp = "[1,2,3,4]")
+	private String payType;
+	
+	@Size(max = 255)
+	private String orderRemark;
 
 	public String getOrderNo() {
 		return orderNo;
@@ -32,6 +42,17 @@ public class CustomerOrderAdjustFormBean extends BasicFormBean {
 
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
+	}
+
+	public Byte getOrderType() {
+		if (ValidUtils.isInteger(orderType)) {
+			return Byte.parseByte(orderType);
+		}
+		return null;
+	}
+
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
 	}
 
 	public String getAdjustAmt() {
@@ -60,4 +81,24 @@ public class CustomerOrderAdjustFormBean extends BasicFormBean {
 	public void setProofNo(String proofNo) {
 		this.proofNo = proofNo;
 	}
+
+	public Byte getPayType() {
+		if (ValidUtils.isInteger(payType)) {
+			return Byte.parseByte(payType);
+		}
+		return null;
+	}
+
+	public void setPayType(String payType) {
+		this.payType = payType;
+	}
+
+	public String getOrderRemark() {
+		return orderRemark;
+	}
+
+	public void setOrderRemark(String orderRemark) {
+		this.orderRemark = orderRemark;
+	}
+	
 }

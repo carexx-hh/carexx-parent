@@ -14,7 +14,7 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
 
 	@Autowired
 	public OrderPaymentMapper orderPaymentMapper;
-	
+
 	@Override
 	public void save(OrderPayment orderPayment) throws BizException {
 		int rows = 0;
@@ -51,7 +51,7 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
 	}
 
 	@Override
-	public void updatePaymentDelete(String orderNo,Byte targetStatus) throws BizException {
+	public void updatePaymentDelete(String orderNo, Byte targetStatus) throws BizException {
 		int rows = 0;
 		try {
 			rows = this.orderPaymentMapper.updatePaymentDelete(orderNo, targetStatus);
@@ -62,7 +62,7 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
 			throw new BizException(ErrorCode.DB_ERROR);
 		}
 	}
-	
+
 	@Override
 	public OrderPayment getById(Long id) {
 		return this.orderPaymentMapper.selectById(id);
@@ -71,6 +71,15 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
 	@Override
 	public OrderPayment getByOrderNo(String orderNo) {
 		return this.orderPaymentMapper.selectByOrderNo(orderNo);
+	}
+
+	@Override
+	public void updatePayType(String orderNo, Byte payType) throws BizException {
+		try {
+			this.orderPaymentMapper.updatePayType(orderNo, payType);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
 	}
 
 }

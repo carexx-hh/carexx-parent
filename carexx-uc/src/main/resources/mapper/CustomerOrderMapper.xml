@@ -662,6 +662,7 @@
 			proof_type = #{proofType,jdbcType=TINYINT},
 			receipt_no = #{receiptNo,jdbcType=VARCHAR},
 			invoice_no = #{invoiceNo,jdbcType=VARCHAR},
+			order_remark = #{orderRemark,jdbcType=VARCHAR},
 			modify_time = now()
 		where
 			order_no = #{orderNo,jdbcType=VARCHAR}

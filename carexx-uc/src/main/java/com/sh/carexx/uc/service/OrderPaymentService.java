@@ -81,4 +81,16 @@ public interface OrderPaymentService {
 	 * @since JDK 1.8
 	 */
 	void updatePaymentDelete(String orderNo,Byte targetStatus) throws BizException;
+	
+	/**
+	 * 
+	 * updatePayType:(修改支付类型). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param orderNo
+	 * @param payType
+	 * @throws BizException 
+	 * @since JDK 1.8
+	 */
+	void updatePayType(String orderNo, Byte payType) throws BizException;
 }

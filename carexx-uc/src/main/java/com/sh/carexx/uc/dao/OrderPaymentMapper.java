@@ -82,4 +82,16 @@ public interface OrderPaymentMapper {
 	 * @since JDK 1.8
 	 */
 	int updatePaymentDelete(@Param("orderNo") String orderNo, @Param("targetStatus") Byte targetStatus);
+	
+	/**
+	 * 
+	 * updatePayType:(修改支付方式). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param orderNo
+	 * @param payType
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	int updatePayType(@Param("orderNo") String orderNo, @Param("payType") Byte payType);
 }

@@ -84,4 +84,13 @@
 		WHERE
 			order_no = #{orderNo,jdbcType=VARCHAR}
 	</update>
+	
+	<update id="updatePayType">
+		UPDATE
+			carexx_order_payment
+		SET
+			pay_type = #{payType,jdbcType=TINYINT}
+		WHERE
+			order_no = #{orderNo,jdbcType=VARCHAR}
+	</update>
 </mapper>
