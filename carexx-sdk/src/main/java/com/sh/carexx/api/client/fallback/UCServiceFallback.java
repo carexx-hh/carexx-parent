@@ -809,4 +809,19 @@ public class UCServiceFallback implements UCServiceClient {
 		return null;
 	}
 
+	@Override
+	public String getCustomerordertimeByInstId(Integer instId) {
+		return null;
+	}
+
+	@Override
+	public BasicRetVal addCustomerordertime(CustomerOrderTimeFormBean customerOrderTimeFormBean) {
+		return null;
+	}
+
+	@Override
+	public BasicRetVal modifyCustomerordertime(CustomerOrderTimeFormBean customerOrderTimeFormBean) {
+		return null;
+	}
+
 }

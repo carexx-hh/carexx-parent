@@ -1475,4 +1475,13 @@ public interface UCServiceClient {
 
 	@RequestMapping(value = "/serviceratio/disable/{id}", method = RequestMethod.GET)
 	BasicRetVal disableServiceRatio(@PathVariable("id") Integer id);
+
+	@RequestMapping(value = "/customerordertime/get_by_instId/{instId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String getCustomerordertimeByInstId(@PathVariable("instId") Integer instId);
+
+	@RequestMapping(value = "/customerordertime/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	BasicRetVal addCustomerordertime(@RequestBody CustomerOrderTimeFormBean customerOrderTimeFormBean);
+
+	@RequestMapping(value = "/customerordertime/modify", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	BasicRetVal modifyCustomerordertime(@RequestBody CustomerOrderTimeFormBean customerOrderTimeFormBean);
 }
