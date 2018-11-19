@@ -824,4 +824,8 @@ public class UCServiceFallback implements UCServiceClient {
 		return null;
 	}
 
+	@Override
+	public String queryCustomerOrderTimeForList(CustomerOrderTimeQueryFormBean customerOrderTimeQueryFormBean) {
+		return null;
+	}
 }

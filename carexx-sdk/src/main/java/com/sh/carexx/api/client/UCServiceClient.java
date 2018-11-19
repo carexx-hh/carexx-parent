@@ -1484,4 +1484,7 @@ public interface UCServiceClient {
 
 	@RequestMapping(value = "/customerordertime/modify", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal modifyCustomerordertime(@RequestBody CustomerOrderTimeFormBean customerOrderTimeFormBean);
+
+	@RequestMapping(value = "/customerordertime/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String queryCustomerOrderTimeForList(@RequestBody CustomerOrderTimeQueryFormBean customerOrderTimeQueryFormBean);
 }

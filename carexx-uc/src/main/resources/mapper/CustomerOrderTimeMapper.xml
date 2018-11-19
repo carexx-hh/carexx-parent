@@ -1,62 +1,103 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sh.carexx.uc.dao.CustomerOrderTimeMapper" >
-  <resultMap id="BaseResultMap" type="com.sh.carexx.model.uc.CustomerOrderTime" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="inst_id" property="instId" jdbcType="INTEGER" />
-    <result column="job_type" property="jobType" jdbcType="TINYINT" />
-    <result column="start_time" property="startTime" jdbcType="TIME" />
-    <result column="end_time" property="endTime" jdbcType="TIME" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.sh.carexx.model.uc.CustomerOrderTime" >
+      <id column="id" property="id" jdbcType="BIGINT" />
+      <result column="inst_id" property="instId" jdbcType="INTEGER" />
+      <result column="job_type" property="jobType" jdbcType="TINYINT" />
+      <result column="start_time" property="startTime" jdbcType="TIME" />
+      <result column="end_time" property="endTime" jdbcType="TIME" />
+      <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+      <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    </resultMap>
 
-  <sql id="Base_Column_List" >
-    id, inst_id, job_type, start_time, end_time, create_time, modify_time
-  </sql>
+    <sql id="Base_Column_List" >
+      id, inst_id, job_type, start_time, end_time, create_time, modify_time
+    </sql>
 
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select
-      <include refid="Base_Column_List" />
-    from
-      carexx_customer_order_time
-    where
-      id = #{id,jdbcType=BIGINT}
-  </select>
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+      select
+        <include refid="Base_Column_List" />
+      from
+        carexx_customer_order_time
+      where
+        id = #{id,jdbcType=BIGINT}
+    </select>
 
-  <select id="selectByInstId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
-      <include refid="Base_Column_List" />
-    from
-      carexx_customer_order_time
-    where
-      inst_id = #{instId,jdbcType=INTEGER}
-  </select>
+    <select id="selectByInstId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+      select
+        <include refid="Base_Column_List" />
+      from
+        carexx_customer_order_time
+      where
+        inst_id = #{instId,jdbcType=INTEGER}
+    </select>
 
-  <insert id="insert" parameterType="com.sh.carexx.model.uc.CustomerOrderTime" >
-    insert into
-      carexx_customer_order_time (
-        id, inst_id, job_type,
-        start_time, end_time, create_time,
-        modify_time
-      )
-    values (
-      #{id,jdbcType=BIGINT}, #{instId,jdbcType=INTEGER}, #{jobType,jdbcType=TINYINT},
-      #{startTime,jdbcType=TIME}, #{endTime,jdbcType=TIME}, now()
-      )
-  </insert>
+    <select id="selectJobTypeExistence" resultMap="BaseResultMap">
+      SELECT
+        <include refid="Base_Column_List" />
+      FROM
+        carexx_customer_order_time
+      WHERE
+        inst_id = #{instId,jdbcType=INTEGER}
+      and job_type = #{jobType,jdbcType=TINYINT}
+    </select>
 
-  <update id="update" parameterType="com.sh.carexx.model.uc.CustomerOrderTime" >
-    update
-      carexx_customer_order_time
-    set
-      inst_id = #{instId,jdbcType=INTEGER},
-      job_type = #{jobType,jdbcType=TINYINT},
-      start_time = #{startTime,jdbcType=TIME},
-      end_time = #{endTime,jdbcType=TIME},
-      modify_time = now()
-    where
-      id = #{id,jdbcType=BIGINT}
-  </update>
+    <select id="selectCustomerOrderTimeCount" parameterType="com.sh.carexx.bean.order.CustomerOrderTimeQueryFormBean" resultType="java.lang.Integer">
+      SELECT
+        count(1) totalCount
+      FROM
+        carexx_customer_order_time cot
+      LEFT JOIN carexx_care_inst ci ON cot.inst_id = ci.id
+      <where>
+        <if test="instName != null and instName != '' ">
+          ci.inst_name like CONCAT('%', '${instName}', '%')
+        </if>
+      </where>
+    </select>
+
+    <select id="selectCustomerOrderTimeList" parameterType="com.sh.carexx.bean.order.CustomerOrderTimeQueryFormBean" resultType="java.util.Map">
+      SELECT
+          cot.id id,
+          ci.inst_name instName,
+          cot.job_type jobType,
+          cot.start_time startTime,
+          cot.end_time endTime,
+          cot.create_time createTime,
+          cot.modify_time modifyTime
+      FROM
+          carexx_customer_order_time cot
+      LEFT JOIN carexx_care_inst ci ON cot.inst_id = ci.id
+      <where>
+        <if test="instName != null and instName != '' ">
+          ci.inst_name like CONCAT('%', '${instName}', '%')
+        </if>
+      </where>
+    </select>
+
+    <insert id="insert" parameterType="com.sh.carexx.model.uc.CustomerOrderTime" >
+      insert into
+        carexx_customer_order_time (
+          inst_id, job_type,
+          start_time, end_time, create_time
+        )
+      values (
+        #{instId,jdbcType=INTEGER}, #{jobType,jdbcType=TINYINT},
+        #{startTime,jdbcType=TIME}, #{endTime,jdbcType=TIME}, now()
+        )
+    </insert>
+
+    <update id="update" parameterType="com.sh.carexx.model.uc.CustomerOrderTime" >
+      update
+        carexx_customer_order_time
+      set
+        inst_id = #{instId,jdbcType=INTEGER},
+        job_type = #{jobType,jdbcType=TINYINT},
+        start_time = #{startTime,jdbcType=TIME},
+        end_time = #{endTime,jdbcType=TIME},
+        modify_time = now()
+      where
+        id = #{id,jdbcType=BIGINT}
+    </update>
 
 </mapper>
