@@ -3,11 +3,11 @@ package com.sh.carexx.common.enums.staff;
 /**
  *
  * ClassName: JobStatus <br/>
- * Function: 定义工作状态 <br/>
+ * Function: 定义服务班次 <br/>
  * Reason: 枚举定义 <br/>
  * Date: 2018年4月24日 下午5:43:53 <br/>
  *
- * @author WL
+ * @author ht
  * @since JDK 1.8
  */
 public enum JobType {
