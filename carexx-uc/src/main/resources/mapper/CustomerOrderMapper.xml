@@ -344,7 +344,78 @@
 			co.create_time DESC
 		LIMIT ${rowIndex}, ${pageSize}
 	</select>
-
+	
+		<select id="selectByWorkTypeIdCount" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.lang.Integer">
+		SELECT
+			count(1) totalCount
+		FROM
+			carexx_customer_order co
+		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_inst_inpatient_area iia ON co.inpatient_area_id = iia.id
+		WHERE
+			cs.work_type_id = #{workTypeId,jdbcType=INTEGER}
+			AND co.order_status = 1
+			<if test="instId != null and instId > 0">
+				AND co.inst_id = #{instId,jdbcType=INTEGER}
+			</if>
+			<if test="realName != null and realName != '' ">
+				AND ic.real_name LIKE CONCAT('%', '', '%')
+			</if>
+			<if test="orderNo != null and orderNo != '' ">
+				AND co.order_no LIKE CONCAT('%', '')
+			</if>
+			<if test="serviceAddress != null and serviceAddress != '' ">
+				AND co.service_address = #{serviceAddress,jdbcType=TINYINT}
+			</if>
+			<if test="serviceStartTime != null and serviceStartTime != '' ">
+				AND co.service_start_time >= #{serviceStartTime}
+			</if>
+			<if test="serviceEndTime != null and serviceEndTime != '' ">
+				AND co.service_start_time <![CDATA[<=]]> #{serviceEndTime}
+			</if>
+	</select>
+	<select id="selectByWorkTypeIdList" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">
+		SELECT
+			co.order_no orderNo,
+			co.service_address serviceAddress,
+			co.order_amt orderAmt,
+			co.adjust_amt adjustAmt,
+			ic.real_name realName,
+			ic.sex sex,
+			ic.phone phone,
+			cs.service_name serviceName,
+			iia.inpatient_area inpatientArea,
+			co.accurate_address accurateAddress,
+			co.service_start_time serviceStartTime,
+			co.service_end_time serviceEndTime
+		FROM
+			carexx_customer_order co
+		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_inst_inpatient_area iia ON co.inpatient_area_id = iia.id
+		WHERE
+			cs.work_type_id = #{workTypeId,jdbcType=INTEGER}
+			AND co.order_status = 1
+			<if test="instId != null and instId > 0">
+				AND co.inst_id = #{instId,jdbcType=INTEGER}
+			</if>
+			<if test="realName != null and realName != '' ">
+				AND ic.real_name LIKE CONCAT('%', '', '%')
+			</if>
+			<if test="orderNo != null and orderNo != '' ">
+				AND co.order_no LIKE CONCAT('%', '')
+			</if>
+			<if test="serviceAddress != null and serviceAddress != '' ">
+				AND co.service_address = #{serviceAddress,jdbcType=TINYINT}
+			</if>
+			<if test="serviceStartTime != null and serviceStartTime != '' ">
+				AND co.service_start_time >= #{serviceStartTime}
+			</if>
+			<if test="serviceEndTime != null and serviceEndTime != '' ">
+				AND co.service_start_time <![CDATA[<=]]> #{serviceEndTime}
+			</if>
+	</select>
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.CustomerOrder">
 		INSERT INTO carexx_customer_order (
 			order_type, service_address, user_id, customer_id, phone, inst_id,

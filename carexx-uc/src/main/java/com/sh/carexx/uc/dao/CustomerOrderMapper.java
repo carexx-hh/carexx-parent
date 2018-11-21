@@ -101,6 +101,28 @@ public interface CustomerOrderMapper {
 
 	/**
 	 * 
+	 * selectByWorkTypeIdCount:(通过工种ID统计). <br/>
+	 * 
+	 * @author zhoulei
+	 * @param customerOrderQueryFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
+	Integer selectByWorkTypeIdCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+
+	/**
+	 * 
+	 * selectByWorkTypeIdList:(通过工种ID查询). <br/>
+	 * 
+	 * @author zhoulei
+	 * @param customerOrderQueryFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> selectByWorkTypeIdList(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	
+	/**
+	 * 
 	 * selectByOrderNo:(通过订单编号查询). <br/>
 	 * 
 	 * @author zhoulei

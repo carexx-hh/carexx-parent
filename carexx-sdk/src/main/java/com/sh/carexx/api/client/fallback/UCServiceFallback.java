@@ -389,6 +389,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public String queryCustomerOrderForListByWorkTypeId(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		return null;
+	}
+	
+	@Override
 	public String queryCustomerOrderListByUserId(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		return null;
 	}
@@ -828,4 +833,5 @@ public class UCServiceFallback implements UCServiceClient {
 	public String queryCustomerOrderTimeForList(CustomerOrderTimeQueryFormBean customerOrderTimeQueryFormBean) {
 		return null;
 	}
+	
 }

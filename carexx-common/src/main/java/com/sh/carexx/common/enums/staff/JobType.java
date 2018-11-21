@@ -13,7 +13,7 @@ package com.sh.carexx.common.enums.staff;
 public enum JobType {
     DAY_JOB((byte) 1, "白班"),
     NIGHT_JOB((byte) 2, "夜班");
-
+	
     private Byte value;
     private String desc;
 
