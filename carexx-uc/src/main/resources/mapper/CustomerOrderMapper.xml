@@ -384,6 +384,7 @@
 			ic.real_name realName,
 			ic.sex sex,
 			ic.phone phone,
+			cs.id serviceId,
 			cs.service_name serviceName,
 			iia.inpatient_area inpatientArea,
 			co.accurate_address accurateAddress,
