@@ -1,13 +1,12 @@
 package com.sh.carexx.uc.dao;
 
+import com.sh.carexx.bean.holiday.InstHolidayFormBean;
+import com.sh.carexx.model.uc.InstHoliday;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
-
-import com.sh.carexx.bean.holiday.InstHolidayFormBean;
-import com.sh.carexx.model.uc.InstHoliday;
 
 /**
  * 
@@ -71,7 +70,7 @@ public interface InstHolidayMapper {
 	 * selectInstHolidayList:(节假日分页查询). <br/>
 	 * 
 	 * @author zhoulei
-	 * @param InstHolidayFormBean
+	 * @param instHolidayFormBean
 	 * @return
 	 * @since JDK 1.8
 	 */

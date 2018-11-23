@@ -1,12 +1,11 @@
 package com.sh.carexx.uc.dao;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.sh.carexx.bean.dict.DictFormBean;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.Dict;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 
@@ -24,7 +23,7 @@ public interface DictMapper {
 	 * insert:(添加字典数据). <br/>
 	 * 
 	 * @author hetao
-	 * @param dictFormBean
+	 * @param dict
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -46,7 +45,7 @@ public interface DictMapper {
 	 * update:(修改字典数据). <br/>
 	 * 
 	 * @author hetao
-	 * @param dictFormBean
+	 * @param dict
 	 * @return
 	 * @since JDK 1.8
 	 */

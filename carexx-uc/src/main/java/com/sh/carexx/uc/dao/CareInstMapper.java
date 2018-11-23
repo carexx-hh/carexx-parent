@@ -1,12 +1,11 @@
 package com.sh.carexx.uc.dao;
 
-import java.util.List;
-import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.sh.carexx.bean.care.CareInstFormBean;
 import com.sh.carexx.model.uc.CareInst;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -58,7 +57,7 @@ public interface CareInstMapper {
 	 * selectCareInstCount:(医疗机构分页统计). <br/>
 	 * 
 	 * @author zhoulei
-	 * @param careInstFromBean
+	 * @param careInstFormBean
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -69,7 +68,7 @@ public interface CareInstMapper {
 	 * selectCareInstList:(医疗机构分页查询). <br/>
 	 * 
 	 * @author zhoulei
-	 * @param careInstFromBean
+	 * @param careInstFormBean
 	 * @return
 	 * @since JDK 1.8
 	 */

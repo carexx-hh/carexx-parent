@@ -1,11 +1,10 @@
 package com.sh.carexx.uc.dao;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.sh.carexx.bean.dict.DictDataFormBean;
 import com.sh.carexx.model.uc.DictData;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 
@@ -34,7 +33,7 @@ public interface DictDataMapper {
 	 * getByDictId:(通过字典id查询所有启用状态的字典数据). <br/>
 	 * 
 	 * @author hetao
-	 * @param dictid
+	 * @param dictId
 	 * @return
 	 * @since JDK 1.8
 	 */

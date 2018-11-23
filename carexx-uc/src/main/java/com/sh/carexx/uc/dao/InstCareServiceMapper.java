@@ -1,13 +1,12 @@
 package com.sh.carexx.uc.dao;
 
-import java.util.List;
-import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.sh.carexx.bean.care.InstCareServiceFormBean;
 import com.sh.carexx.bean.care.InstServiceQueryFormBean;
 import com.sh.carexx.model.uc.InstCareService;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -46,7 +45,7 @@ public interface InstCareServiceMapper {
 	 * selectInstCareServiceCount:(查询分页机构服务信息总数). <br/>
 	 * 
 	 * @author hetao
-	 * @param selectInstCareServiceFromBean
+	 * @param instServiceQueryFormBean
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -57,7 +56,7 @@ public interface InstCareServiceMapper {
 	 * selectInstCareServiceList:(分页查询机构服务信息). <br/>
 	 * 
 	 * @author hetao
-	 * @param selectInstCareServiceFromBean
+	 * @param instServiceQueryFormBean
 	 * @return
 	 * @since JDK 1.8
 	 */

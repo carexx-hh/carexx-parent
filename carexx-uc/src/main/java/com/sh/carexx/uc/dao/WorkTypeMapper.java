@@ -1,11 +1,10 @@
 package com.sh.carexx.uc.dao;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.sh.carexx.bean.worktype.WorkTypeFormBean;
 import com.sh.carexx.model.uc.WorkType;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 
@@ -58,7 +57,6 @@ public interface WorkTypeMapper {
 	 * selectAll:(查询所有工种信息). <br/>
 	 * 
 	 * @author hetao
-	 * @param workTypeFormBean
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -90,7 +88,7 @@ public interface WorkTypeMapper {
 	 * selectByWorkTypeName:(添加时查询工种是否已存在). <br/> 
 	 * 
 	 * @author hetao 
-	 * @param WorkTypeName
+	 * @param workTypeName
 	 * @return 
 	 * @since JDK 1.8
 	 */

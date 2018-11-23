@@ -1,12 +1,11 @@
 package com.sh.carexx.uc.dao;
 
-import java.util.List;
-import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.sh.carexx.bean.care.InstServiceQueryFormBean;
 import com.sh.carexx.model.uc.CareService;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -24,7 +23,7 @@ public interface CareServiceMapper {
 	 * insert:(添加平台服务信息). <br/>
 	 * 
 	 * @author hetao
-	 * @param record
+	 * @param careService
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -56,7 +55,7 @@ public interface CareServiceMapper {
 	 * selectCareServiceCount:(分页总数查询). <br/>
 	 * 
 	 * @author hetao
-	 * @param id
+	 * @param instServiceQueryFormBean
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -67,7 +66,7 @@ public interface CareServiceMapper {
 	 * selectCareServiceList:(左连接分页查询). <br/>
 	 * 
 	 * @author hetao
-	 * @param careServiceFromBean
+	 * @param instServiceQueryFormBean
 	 * @return
 	 * @since JDK 1.8
 	 */

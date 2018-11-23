@@ -1,13 +1,12 @@
 package com.sh.carexx.uc.dao;
 
+import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
+import com.sh.carexx.model.uc.InstStaff;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
-
-import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
-import com.sh.carexx.model.uc.InstStaff;
 
 /**
  * 
@@ -92,7 +91,7 @@ public interface InstStaffMapper {
 	 * selectInstStaffIdle:(移动端查询会该项技能的员工并统计服务人数（空闲）). <br/> 
 	 * 
 	 * @author zhoulei 
-	 * @param instStaffQueryFormBean
+	 * @param serviceInstId
 	 * @return 
 	 * @since JDK 1.8
 	 */
@@ -103,7 +102,7 @@ public interface InstStaffMapper {
 	 * selectInstStaffBusy:(移动端查询会该项技能的员工并统计服务人数（忙碌）). <br/> 
 	 * 
 	 * @author zhoulei 
-	 * @param instStaffQueryFormBean
+	 * @param serviceInstId
 	 * @return 
 	 * @since JDK 1.8
 	 */
@@ -114,7 +113,7 @@ public interface InstStaffMapper {
 	 * selectInstStaffCount:(员工信息分页统计). <br/>
 	 * 
 	 * @author zhoulei
-	 * @param instStaffFormBean
+	 * @param instStaffQueryFormBean
 	 * @return
 	 * @since JDK 1.8
 	 */
@@ -125,7 +124,7 @@ public interface InstStaffMapper {
 	 * selectInstStaffList:(员工信息分页查询). <br/>
 	 * 
 	 * @author zhoulei
-	 * @param instStaffFormBean
+	 * @param instStaffQueryFormBean
 	 * @return
 	 * @since JDK 1.8
 	 */
