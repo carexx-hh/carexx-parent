@@ -79,6 +79,10 @@ public class CustomerOrderController {
 	
 	@RequestMapping(value = "/list_by_worktypeid", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryForListByWorkTypeId(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		if (customerOrderQueryFormBean.getServiceStartTime() == null || customerOrderQueryFormBean.getJobType() == null
+				|| customerOrderQueryFormBean.getWorkTypeId() == null) {
+			return new DataRetVal(CarexxConstant.RetCode.INVALID_INPUT, null).toJSON();
+		}
 		Integer totalNum = this.customerOrderService.getByWorkTypeIdCount(customerOrderQueryFormBean);
 		List<Map<?, ?>> result = null;
 		if (totalNum > 0) {
