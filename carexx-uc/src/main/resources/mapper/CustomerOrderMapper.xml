@@ -355,8 +355,8 @@
 		WHERE
 			cs.work_type_id = #{workTypeId,jdbcType=INTEGER}
 			AND co.order_status = 1 AND co.service_address = 1
-			AND co.service_start_time >= #{serviceStartTime}
-			AND co.service_start_time <![CDATA[<=]]> #{serviceEndTime}
+			AND co.service_start_time <![CDATA[<=]]> #{serviceStartTime}
+			AND co.service_end_time >= #{serviceEndTime}
 			<if test="instId != null and instId > 0">
 				AND co.inst_id = #{instId,jdbcType=INTEGER}
 			</if>
@@ -384,8 +384,8 @@
 		WHERE
 			cs.work_type_id = #{workTypeId,jdbcType=INTEGER}
 			AND co.order_status = 1 AND co.service_address = 1
-			AND co.service_start_time >= #{serviceStartTime}
-			AND co.service_start_time <![CDATA[<=]]> #{serviceEndTime}
+			AND co.service_start_time <![CDATA[<=]]> #{serviceStartTime}
+			AND co.service_end_time >= #{serviceEndTime}
 			<if test="instId != null and instId > 0">
 				AND co.inst_id = #{instId,jdbcType=INTEGER}
 			</if>
