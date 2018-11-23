@@ -83,7 +83,7 @@ public class CustomerOrderScheduleManager {
 		Date amountStartDate = serviceStartTime;
 		Date amountEndDate = serviceStartTime;
 		// 如果排班开始时间小时数等于8
-		if (DateUtils.getHourOfDay(serviceStartTime) == 8) {
+		if (DateUtils.getHourOfDay(serviceStartTime) < 12) {
 			// 总小时小于24,则直接添加该条记录
 			if (hourNum < 24) {
 				this.doShedule(customerOrderScheduleFormBean, serviceStartTime, serviceEndTime);
@@ -263,7 +263,7 @@ public class CustomerOrderScheduleManager {
 			  CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(order.getOrderNo());
 	    	  SimpleDateFormat sdfHour = new SimpleDateFormat("HH"); 
 	    	  int hour = Integer.parseInt(sdfHour.format(customerOrderSchedule.getServiceEndTime()));
-	    	  if(hour == 8) {
+	    	  if(hour < 12) {
 				CustomerOrderSchedule newCustomerOrderSchedule = new CustomerOrderSchedule();
 				newCustomerOrderSchedule.setOrderNo(customerOrderSchedule.getOrderNo());
 				newCustomerOrderSchedule.setServiceStaffId(customerOrderSchedule.getServiceStaffId());
@@ -276,7 +276,7 @@ public class CustomerOrderScheduleManager {
 				this.customerOrderScheduleService.save(newCustomerOrderSchedule);
 				// 添加结算记录
 				this.orderSettleManager.add(newCustomerOrderSchedule);
-			} else if(hour == 20) {
+			} else if(hour >= 12) {
 				CustomerOrderSchedule orderSchedule = new CustomerOrderSchedule();
 				orderSchedule.setId(customerOrderSchedule.getId());
 				Date time = DateUtils.addHour(customerOrderSchedule.getServiceEndTime(), 12);
