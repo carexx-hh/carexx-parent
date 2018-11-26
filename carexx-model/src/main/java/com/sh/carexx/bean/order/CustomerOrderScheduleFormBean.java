@@ -14,6 +14,8 @@ public class CustomerOrderScheduleFormBean extends BasicFormBean {
 	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
 	private String id;
 
+	private Integer instId;
+	
 	@NotBlank
 	@Size(max = 20)
 	private String orderNo;
@@ -38,7 +40,10 @@ public class CustomerOrderScheduleFormBean extends BasicFormBean {
 	private String workTypeSettleId;
 
 	private String serviceStatus;
-
+	
+	@Pattern(regexp = "[1,2,3]")
+	private String jobType;
+	
 	public Long getId() {
 		if (StringUtils.isNotBlank(id)) {
 			return Long.parseLong(id);
@@ -50,6 +55,14 @@ public class CustomerOrderScheduleFormBean extends BasicFormBean {
 		this.id = id;
 	}
 
+	public Integer getInstId() {
+		return instId;
+	}
+
+	public void setInstId(Integer instId) {
+		this.instId = instId;
+	}
+	
 	public String getOrderNo() {
 		return orderNo;
 	}
@@ -126,4 +139,15 @@ public class CustomerOrderScheduleFormBean extends BasicFormBean {
 		this.serviceStatus = serviceStatus;
 	}
 
+	public Byte getJobType() {
+        if (ValidUtils.isInteger(jobType)) {
+            return Byte.parseByte(jobType);
+        }
+        return null;
+    }
+
+    public void setJobType(String jobType) {
+        this.jobType = jobType;
+    }
+    
 }

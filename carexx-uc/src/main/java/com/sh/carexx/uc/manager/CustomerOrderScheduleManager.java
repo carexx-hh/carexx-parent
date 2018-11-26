@@ -8,6 +8,7 @@ import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.enums.order.OrderScheduleStatus;
 import com.sh.carexx.common.enums.order.OrderSettleStatus;
 import com.sh.carexx.common.enums.order.OrderStatus;
+import com.sh.carexx.common.enums.staff.JobType;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.util.DateUtils;
 import com.sh.carexx.common.util.ValidUtils;
@@ -19,7 +20,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +51,8 @@ public class CustomerOrderScheduleManager {
 	private InstCustomerService instCustomerService;
 	@Autowired
 	private UserMsgManager userMsgManager;
-
+	@Autowired
+	private CustomerOrderTimeService customerOrderTimeService;
 	/**
 	 * add:(添加排班，拆分日期). <br/>
 	 *
@@ -58,6 +63,84 @@ public class CustomerOrderScheduleManager {
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void add(CustomerOrderScheduleFormBean customerOrderScheduleFormBean) throws BizException {
+		if(customerOrderScheduleFormBean.getServiceEndTime() == null) {
+			String serviceStartTime = customerOrderScheduleFormBean.getServiceStartTime();
+			
+			if (customerOrderScheduleFormBean.getJobType() == JobType.DAY_JOB.getValue()) {
+				CustomerOrderTime customerOrderTime = this.customerOrderTimeService.queryJobTypeExistence(
+						customerOrderScheduleFormBean.getInstId(), customerOrderScheduleFormBean.getJobType());
+				 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+				 String startTime = formatter.format(customerOrderTime.getStartTime());
+				 String endTime = formatter.format(customerOrderTime.getEndTime());
+	
+				if (ValidUtils.isDate(serviceStartTime)) {
+					customerOrderScheduleFormBean.setServiceStartTime(
+							serviceStartTime + " " + startTime);
+				}
+				if (ValidUtils.isDate(customerOrderScheduleFormBean.getServiceEndTime())
+						|| customerOrderScheduleFormBean.getServiceEndTime() == null) {
+					customerOrderScheduleFormBean.setServiceEndTime(
+							serviceStartTime + " " + endTime);
+				}
+			} else if(customerOrderScheduleFormBean.getJobType() == JobType.NIGHT_JOB.getValue()) {
+				CustomerOrderTime customerOrderTime = this.customerOrderTimeService.queryJobTypeExistence(
+						customerOrderScheduleFormBean.getInstId(), customerOrderScheduleFormBean.getJobType());
+				 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+				 String startTime = formatter.format(customerOrderTime.getStartTime());
+				 String endTime = formatter.format(customerOrderTime.getEndTime());
+	
+				if (ValidUtils.isDate(serviceStartTime)) {
+					customerOrderScheduleFormBean.setServiceStartTime(
+							serviceStartTime + " " + startTime);
+				}
+				DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				Date serviceEndTime = null;
+				try {
+					serviceEndTime = format.parse(serviceStartTime);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				Calendar calendar = Calendar.getInstance(); // 得到日历
+				calendar.setTime(serviceEndTime);// 把当前时间赋给日历
+				calendar.add(Calendar.DAY_OF_MONTH, +1); // 设置为后一天
+				
+				if (ValidUtils.isDate(customerOrderScheduleFormBean.getServiceEndTime())
+						|| customerOrderScheduleFormBean.getServiceEndTime() == null) {
+				customerOrderScheduleFormBean.setServiceEndTime(format.format(calendar.getTime() + " " + endTime));
+				}
+			}else {
+				DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				Date serviceEndTime = null;
+				try {
+					serviceEndTime = format.parse(serviceStartTime);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				Calendar calendar = Calendar.getInstance(); // 得到日历
+				calendar.setTime(serviceEndTime);// 把当前时间赋给日历
+				calendar.add(Calendar.DAY_OF_MONTH, +1); // 设置为后一天
+				customerOrderScheduleFormBean.setServiceEndTime(format.format(calendar.getTime()));
+	
+				List<CustomerOrderTime> customerOrderTimeList = this.customerOrderTimeService
+						.getByInstId(customerOrderScheduleFormBean.getInstId());
+				for (CustomerOrderTime customerOrderTime : customerOrderTimeList) {
+					 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+					 String startTime = formatter.format(customerOrderTime.getStartTime());
+					 String endTime = formatter.format(customerOrderTime.getEndTime());
+					if (customerOrderTime.getJobType() == JobType.DAY_JOB.getValue()
+							&& ValidUtils.isDate(serviceStartTime)) {
+						customerOrderScheduleFormBean.setServiceStartTime(
+								serviceStartTime + " " + startTime);
+					}
+					if (customerOrderTime.getJobType() == JobType.NIGHT_JOB.getValue()
+							&& ValidUtils.isDate(customerOrderScheduleFormBean.getServiceEndTime())) {
+						customerOrderScheduleFormBean.setServiceEndTime(
+								customerOrderScheduleFormBean.getServiceEndTime() + " " + endTime);
+					}
+				}
+			}
+		}
+		
 		Date serviceStartTime = null;
 		Date serviceEndTime = null;
 		if (ValidUtils.isDateTime(customerOrderScheduleFormBean.getServiceStartTime())) {
