@@ -106,7 +106,8 @@ public class CustomerOrderScheduleManager {
 				
 				if (ValidUtils.isDate(customerOrderScheduleFormBean.getServiceEndTime())
 						|| customerOrderScheduleFormBean.getServiceEndTime() == null) {
-				customerOrderScheduleFormBean.setServiceEndTime(format.format(calendar.getTime() + " " + endTime));
+					customerOrderScheduleFormBean.setServiceEndTime(format.format(calendar.getTime()));
+					customerOrderScheduleFormBean.setServiceEndTime(customerOrderScheduleFormBean.getServiceEndTime() + " " + endTime);
 				}
 			}else {
 				DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
