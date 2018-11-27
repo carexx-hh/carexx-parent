@@ -21,9 +21,11 @@ public class CustomerOrderTimeFormBean extends BasicFormBean {
     private String jobType;
 
     @NotBlank
+    @Pattern(regexp = CarexxConstant.Regex.TIME)
     private String startTime;
 
     @NotBlank
+    @Pattern(regexp = CarexxConstant.Regex.TIME)
     private String endTime;
 
     public Long getId() {
