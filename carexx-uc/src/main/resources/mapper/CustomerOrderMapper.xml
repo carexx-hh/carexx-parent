@@ -366,6 +366,22 @@
 			<if test="orderNo != null and orderNo != '' ">
 				AND co.order_no LIKE CONCAT('%', '')
 			</if>
+			AND co.order_no NOT IN (
+				SELECT
+					co.order_no orderNo
+				FROM
+					carexx_customer_order co
+				LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+				LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+				WHERE
+					cs.work_type_id = #{workTypeId,jdbcType=INTEGER}
+					AND co.order_status = 1 AND co.service_address = 1
+					AND cos.service_start_time <![CDATA[<=]]> #{serviceStartTime}
+					AND cos.service_end_time >= #{serviceEndTime}
+					<if test="instId != null and instId > 0">
+						AND co.inst_id = #{instId,jdbcType=INTEGER}
+					</if>
+			)
 	</select>
 	<select id="selectByWorkTypeIdList" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">
 		SELECT
@@ -395,6 +411,22 @@
 			<if test="orderNo != null and orderNo != '' ">
 				AND co.order_no LIKE CONCAT('%', '')
 			</if>
+			AND co.order_no NOT IN (
+				SELECT
+					co.order_no orderNo
+				FROM
+					carexx_customer_order co
+				LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+				LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+				WHERE
+					cs.work_type_id = #{workTypeId,jdbcType=INTEGER}
+					AND co.order_status = 1 AND co.service_address = 1
+					AND cos.service_start_time <![CDATA[<=]]> #{serviceStartTime}
+					AND cos.service_end_time >= #{serviceEndTime}
+					<if test="instId != null and instId > 0">
+						AND co.inst_id = #{instId,jdbcType=INTEGER}
+					</if>
+			)
 	</select>
 	
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.CustomerOrder">
