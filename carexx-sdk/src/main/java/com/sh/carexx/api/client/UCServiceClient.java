@@ -675,6 +675,19 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/customerorder/list_by_worktypeid", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryCustomerOrderForListByWorkTypeId(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean);
 	
+
+	/**
+	 * 
+	 * queryCustomerOrderForListStaffSchedule:(通过工种查询订单). <br/>
+	 * 
+	 * @author zhoulei
+	 * @param CustomerOrderQueryFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
+	@RequestMapping(value = "/customerorder/staffschedule_list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String queryCustomerOrderForListStaffSchedule(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	
 	/**
 	 * 
 	 * queryCustomerOrderListByUserId:(移动端通过客户id查询客户预约服务订单). <br/>

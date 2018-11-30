@@ -91,6 +91,16 @@ public class CustomerOrderController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, new PagerBean(totalNum, result)).toJSON();
 	}
 	
+	@RequestMapping(value = "/staffschedule_list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String queryStaffScheduleForList(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		Integer totalNum = this.customerOrderService.getStaffScheduleCount(customerOrderQueryFormBean);
+		List<Map<?, ?>> result = null;
+		if (totalNum > 0) {
+			result = this.customerOrderService.queryStaffScheduleList(customerOrderQueryFormBean);
+		}
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, new PagerBean(totalNum, result)).toJSON();
+	}
+	
 	@RequestMapping(value = "/list_order", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryForListByUserId(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		List<Map<?, ?>> result = this.customerOrderService.getByUserId(customerOrderQueryFormBean);

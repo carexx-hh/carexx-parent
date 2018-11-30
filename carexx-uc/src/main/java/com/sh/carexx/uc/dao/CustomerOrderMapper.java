@@ -123,6 +123,27 @@ public interface CustomerOrderMapper {
 	
 	/**
 	 * 
+	 * selectStaffScheduleCount:(人员排班查看统计). <br/>
+	 * 
+	 * @author zhoulei
+	 * @param customerOrderQueryFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
+	Integer selectStaffScheduleCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+
+	/**
+	 * 
+	 * selectStaffScheduleList:(人员排班查看). <br/>
+	 * 
+	 * @author zhoulei
+	 * @param customerOrderQueryFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> selectStaffScheduleList(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	/**
+	 * 
 	 * selectByOrderNo:(通过订单编号查询). <br/>
 	 * 
 	 * @author zhoulei

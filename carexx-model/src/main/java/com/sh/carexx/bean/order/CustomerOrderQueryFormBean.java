@@ -23,6 +23,8 @@ public class CustomerOrderQueryFormBean extends BasicFormBean {
 
 	private String serviceStaffId;
 	
+	private String staffId;
+	
 	private String staffName;
 
 	private String serviceId;
@@ -131,6 +133,17 @@ public class CustomerOrderQueryFormBean extends BasicFormBean {
 		this.serviceStaffId = serviceStaffId;
 	}
 
+	public Integer getStaffId() {
+		if (StringUtils.isNotBlank(staffId)) {
+			return Integer.parseInt(staffId);
+		}
+		return null;
+	}
+
+	public void setStaffId(String staffId) {
+		this.staffId = staffId;
+	}
+	
 	public String getStaffName() {
 		return staffName;
 	}

@@ -121,6 +121,28 @@ public interface CustomerOrderService {
 	 * @since JDK 1.8
 	 */
 	List<Map<?, ?>> queryByWorkTypeIdList(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	
+	/**
+	 * 
+	 * getStaffScheduleCount:(人员排班查看统计). <br/>
+	 * 
+	 * @author zhoulei
+	 * @param customerOrderQueryFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
+	Integer getStaffScheduleCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+
+	/**
+	 * 
+	 * queryStaffScheduleList:(人员排班查看). <br/>
+	 * 
+	 * @author zhoulei
+	 * @param customerOrderQueryFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> queryStaffScheduleList(CustomerOrderQueryFormBean customerOrderQueryFormBean);
 	/**
 	 * 
 	 * getByOrderNo:(通过订单号查询). <br/>
