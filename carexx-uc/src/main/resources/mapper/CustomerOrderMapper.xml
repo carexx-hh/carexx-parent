@@ -495,6 +495,18 @@
 		LIMIT ${rowIndex}, ${pageSize}
 	</select>
 	
+	<select id="selectOrderCountByStaffId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT
+			count(DISTINCT cos.order_no) totalCount
+		FROM
+			carexx_customer_order co
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
+		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+		WHERE
+			cos.service_staff_id = #{staffId,jdbcType=INTEGER}
+			AND co.order_status in (1,3) AND co.service_address = 1
+	</select>
 	
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.CustomerOrder">
 		INSERT INTO carexx_customer_order (

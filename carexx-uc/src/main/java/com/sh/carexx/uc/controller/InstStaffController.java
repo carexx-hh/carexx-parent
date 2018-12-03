@@ -45,7 +45,7 @@ public class InstStaffController {
 	@RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryForList(@RequestBody InstStaffQueryFormBean instStaffQueryFormBean) {
 		Integer totalNum = this.instStaffService.getInstStaffCount(instStaffQueryFormBean);
-		List<Map<?, ?>> resultList = null;
+		List<Map<String, Object>> resultList = null;
 		if (totalNum > 0) {
 			resultList = this.instStaffService.queryInstStaffList(instStaffQueryFormBean);
 		}

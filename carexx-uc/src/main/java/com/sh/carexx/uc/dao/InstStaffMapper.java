@@ -128,7 +128,7 @@ public interface InstStaffMapper {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> selectInstStaffList(InstStaffQueryFormBean instStaffQueryFormBean);
+	List<Map<String, Object>> selectInstStaffList(InstStaffQueryFormBean instStaffQueryFormBean);
 	
 	/**
 	 * 

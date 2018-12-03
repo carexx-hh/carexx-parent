@@ -177,6 +177,17 @@ public interface CustomerOrderMapper {
 	
 	/**
 	 * 
+	 * selectOrderCountByStaffId:(通过人员id统计订单). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param staffId
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	Integer selectOrderCountByStaffId(Integer staffId);
+	
+	/**
+	 * 
 	 * updateStatus:(修改订单状态). <br/> 
 	 * 
 	 * @author hetao

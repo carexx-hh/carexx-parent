@@ -11,6 +11,7 @@ import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.InstStaff;
+import com.sh.carexx.uc.dao.CustomerOrderMapper;
 import com.sh.carexx.uc.dao.InstStaffMapper;
 import com.sh.carexx.uc.service.InstStaffService;
 
@@ -20,6 +21,9 @@ public class InstStaffServiceImpl implements InstStaffService {
 	@Autowired
 	private InstStaffMapper instStaffMapper;
 
+	@Autowired
+	private CustomerOrderMapper customerOrderMapper;
+	
 	@Override
 	public void save(InstStaff instStaff) throws BizException {
 		int rows = 0;
@@ -71,8 +75,13 @@ public class InstStaffServiceImpl implements InstStaffService {
 	}
 
 	@Override
-	public List<Map<?, ?>> queryInstStaffList(InstStaffQueryFormBean instStaffQueryFormBean) {
-		return instStaffMapper.selectInstStaffList(instStaffQueryFormBean);
+	public List<Map<String, Object>> queryInstStaffList(InstStaffQueryFormBean instStaffQueryFormBean) {
+		List<Map<String, Object>> instStaffList = instStaffMapper.selectInstStaffList(instStaffQueryFormBean);
+		for(Map<String, Object> instStaffMap: instStaffList) {
+			Integer orderCount = customerOrderMapper.selectOrderCountByStaffId(Integer.parseInt(String.valueOf(instStaffMap.get("id"))));
+			instStaffMap.put("orderCount", orderCount);
+		}
+		return instStaffList;
 	}
 
 	@Override

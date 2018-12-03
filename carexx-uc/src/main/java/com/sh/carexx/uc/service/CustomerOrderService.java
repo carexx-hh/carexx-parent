@@ -175,6 +175,7 @@ public interface CustomerOrderService {
 	 * @since JDK 1.8
 	 */
 	List<Map<?,?>> queryMappByOrderStatus(String orderStatus, Integer instId);
+	
 	/**
 	 * 
 	 * updateStatus:(修改订单状态). <br/>
