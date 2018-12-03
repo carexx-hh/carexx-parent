@@ -73,11 +73,13 @@
 			aua.email,
 			aua.create_time createTime,
 			aur.role_id roleId,
-			ar.`name` roleName
+			ar.`name` roleName,
+			ci.inst_name instName
 		FROM
 			carexx_acl_user_acct aua
 		LEFT JOIN carexx_acl_user_role aur ON aua.id = aur.user_id
 		LEFT JOIN carexx_acl_role ar ON aur.role_id = ar.id
+		LEFT JOIN carexx_care_inst ci ON aua.inst_id = ci.id
 		<where>
 			ar.id > 1
 			<if test="account != null and account != ''">
