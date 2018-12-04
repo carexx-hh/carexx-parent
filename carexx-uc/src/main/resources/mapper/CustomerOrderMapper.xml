@@ -225,7 +225,7 @@
 				and co.service_start_time >= #{serviceStartTime}
 			</if>
 			<if test="serviceEndTime != null and serviceEndTime != '' ">
-				and co.service_start_time <![CDATA[<=]]> #{serviceEndTime}
+				and co.service_end_time <![CDATA[<=]]> #{serviceEndTime}
 			</if>
 			<if test="orderStatus != null and orderStatus != '' ">
 				and co.order_status = #{orderStatus,jdbcType=TINYINT}
@@ -317,7 +317,7 @@
 				and co.service_start_time >= #{serviceStartTime}
 			</if>
 			<if test="serviceEndTime != null and serviceEndTime != '' ">
-				and co.service_start_time <![CDATA[<=]]> #{serviceEndTime}
+				and co.service_end_time <![CDATA[<=]]> #{serviceEndTime}
 			</if>
 			<if test="orderStatus != null and orderStatus != '' ">
 				and co.order_status = #{orderStatus,jdbcType=TINYINT}

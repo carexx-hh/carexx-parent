@@ -1,14 +1,13 @@
 package com.sh.carexx.bean.staff;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.validator.constraints.NotBlank;
-
 import com.sh.carexx.bean.BasicFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.util.ValidUtils;
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class InstStaffFormBean extends BasicFormBean {
 
@@ -41,6 +40,12 @@ public class InstStaffFormBean extends BasicFormBean {
 	@NotBlank
 	@Pattern(regexp = CarexxConstant.Regex.ID_CARD_NO)
 	private String idNo;
+
+	@Pattern(regexp = CarexxConstant.Regex.NUMBER_MORE)
+	@Size(max = 16)
+	private String workLicense;
+
+	private String healthyLicense;
 
 	@NotBlank
 	@Pattern(regexp = "[0,1,2]")
@@ -158,6 +163,22 @@ public class InstStaffFormBean extends BasicFormBean {
 
 	public void setIdNo(String idNo) {
 		this.idNo = idNo;
+	}
+
+	public String getWorkLicense() {
+		return workLicense;
+	}
+
+	public void setWorkLicense(String workLicense) {
+		this.workLicense = workLicense;
+	}
+
+	public String getHealthyLicense() {
+		return healthyLicense;
+	}
+
+	public void setHealthyLicense(String healthyLicense) {
+		this.healthyLicense = healthyLicense;
 	}
 
 	public Byte getSex() {

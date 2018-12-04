@@ -21,6 +21,10 @@ public class InstStaff {
 
     private String idNo;
 
+    private String workLicense;
+
+    private String healthyLicense;
+
     private Byte sex;
 
     private String photo;
@@ -109,6 +113,22 @@ public class InstStaff {
 
     public void setIdNo(String idNo) {
         this.idNo = idNo == null ? null : idNo.trim();
+    }
+
+    public String getWorkLicense() {
+        return workLicense;
+    }
+
+    public void setWorkLicense(String workLicense) {
+        this.workLicense = workLicense;
+    }
+
+    public String getHealthyLicense() {
+        return healthyLicense;
+    }
+
+    public void setHealthyLicense(String healthyLicense) {
+        this.healthyLicense = healthyLicense;
     }
 
     public Byte getSex() {

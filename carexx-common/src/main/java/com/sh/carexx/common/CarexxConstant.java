@@ -38,6 +38,7 @@ public interface CarexxConstant {
 		String MOBILE = "(^(13\\d|14[57]|15[^4,\\D]|17[135678]|18\\d)\\d{8}|170[^346,\\D]\\d{7})$";
 		String SMS_VERIFY_CODE = "^\\d{6}$";
 		String NUMBER = "^[0-9]+$";
+		String NUMBER_MORE = "^[0-9]*$";
 		String INTEGER = "^-?(([1-9]\\d*$)|0)";
 		String INTEGER_POSITIVE = "^[1-9]\\d*|0$";
 		String INTEGER_NEGATIVE = "^-[1-9]\\d*|0$";

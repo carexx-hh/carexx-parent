@@ -1,14 +1,5 @@
 package com.sh.carexx.uc.manager;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
@@ -27,6 +18,14 @@ import com.sh.carexx.uc.service.CustomerOrderScheduleService;
 import com.sh.carexx.uc.service.CustomerOrderService;
 import com.sh.carexx.uc.service.InstStaffService;
 import com.sh.carexx.uc.service.InstStaffWorkTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -76,6 +75,8 @@ public class InstStaffManager {
 		instStaff.setStaffStatus(StaffStatus.NORMAL.getValue());
 		instStaff.setRealName(instStaffFormBean.getRealName());
 		instStaff.setIdNo(instStaffFormBean.getIdNo());
+		instStaff.setWorkLicense(instStaffFormBean.getWorkLicense());
+		instStaff.setHealthyLicense(instStaffFormBean.getHealthyLicense());
 		instStaff.setSex(instStaffFormBean.getSex());
 		instStaff.setPhoto(instStaffFormBean.getPhoto());
 		if (ValidUtils.isDate(instStaffFormBean.getBirthday())) {
@@ -122,6 +123,8 @@ public class InstStaffManager {
 		instStaff.setJobStatus(instStaffFormBean.getJobStatus());
 		instStaff.setRealName(instStaffFormBean.getRealName());
 		instStaff.setIdNo(instStaffFormBean.getIdNo());
+		instStaff.setWorkLicense(instStaffFormBean.getWorkLicense());
+		instStaff.setHealthyLicense(instStaffFormBean.getHealthyLicense());
 		instStaff.setSex(instStaffFormBean.getSex());
 		instStaff.setPhoto(instStaffFormBean.getPhoto());
 		if (ValidUtils.isDate(instStaffFormBean.getBirthday())) {

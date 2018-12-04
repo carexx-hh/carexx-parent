@@ -11,6 +11,8 @@
 		<result column="staff_status" jdbcType="TINYINT" property="staffStatus" />
 		<result column="real_name" jdbcType="VARCHAR" property="realName" />
 		<result column="id_no" jdbcType="CHAR" property="idNo" />
+		<result column="work_license" jdbcType="CHAR" property="workLicense" />
+		<result column="healthy_license" jdbcType="VARCHAR" property="healthyLicense" />
 		<result column="sex" jdbcType="TINYINT" property="sex" />
 		<result column="photo" jdbcType="VARCHAR" property="photo" />
 		<result column="birthday" jdbcType="DATE" property="birthday" />
@@ -23,7 +25,7 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, inst_id, service_inst_id, person_type, job_status, staff_status,
-		real_name, id_no, sex, photo, birthday, phone, address,
+		real_name, id_no, work_license, healthy_license, sex, photo, birthday, phone, address,
 		entry_date, leave_date, create_time, modify_time
 	</sql>
 	<select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -87,6 +89,8 @@
 			wct.id workTypeId,
 			wct.work_type_name workTypeName,
 			cis.id_no idNo,
+            cis.work_license workLicense,
+            cis.healthy_license healthyLicense,
 			cis.sex sex,
 			cis.photo photo,
 			cis.birthday birthday,
@@ -378,6 +382,8 @@
 			staff_status,
 			real_name,
 			id_no,
+			work_license,
+			healthy_license,
 			sex,
 			photo,
 			birthday,
@@ -396,7 +402,9 @@
 			#{certificationStatus,jdbcType=TINYINT},
 			#{staffStatus,jdbcType=TINYINT},
 			#{realName,jdbcType=VARCHAR},
-			#{idNo,jdbcType=VARCHAR},
+			#{idNo,jdbcType=CHAR},
+			#{workLicense,jdbcType=CHAR},
+			#{healthyLicense,jdbcType=VARCHAR},
 			#{sex,jdbcType=TINYINT},
 			#{photo,jdbcType=VARCHAR},
 			#{birthday,jdbcType=DATE},
@@ -416,6 +424,8 @@
 			job_status = #{jobStatus,jdbcType=TINYINT},
 			real_name = #{realName,jdbcType=VARCHAR},
 			id_no = #{idNo,jdbcType=VARCHAR},
+			work_license = #{workLicense,jdbcType=CHAR},
+			healthy_license = #{healthyLicense,jdbcType=VARCHAR},
 			sex = #{sex,jdbcType=TINYINT},
 			photo = #{photo,jdbcType=VARCHAR},
 			birthday = #{birthday,jdbcType=DATE},
