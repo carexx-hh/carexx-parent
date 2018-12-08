@@ -7,6 +7,8 @@ public class OAuthLoginFormBean extends BasicFormBean {
 
 	private String identifier;
 
+	private Byte identity;
+	
 	private String credential;
 
 	private String nickname;
@@ -31,6 +33,14 @@ public class OAuthLoginFormBean extends BasicFormBean {
 
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
+	}
+
+	public Byte getIdentity() {
+		return identity;
+	}
+
+	public void setIdentity(Byte identity) {
+		this.identity = identity;
 	}
 
 	public String getCredential() {

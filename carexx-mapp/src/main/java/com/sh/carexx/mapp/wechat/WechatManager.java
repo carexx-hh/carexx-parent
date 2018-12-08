@@ -14,6 +14,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.sh.carexx.common.CarexxConstant;
+import com.sh.carexx.common.enums.Identity;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.util.HttpClientUtils;
 import com.sh.carexx.common.util.JAXBUtils;
@@ -46,6 +47,10 @@ public class WechatManager {
 	private String appId;
 	@Value("${wechat.appSecret}")
 	private String appSecret;
+	@Value("${wechat.patient.appId}")
+	private String patientAppId;
+	@Value("${wechat.patient.appSecret}")
+	private String patientAppSecret;
 	@Value("${wechat.token}")
 	private String token;
 	@Value("${wechat.encodingAesKey}")
@@ -130,7 +135,8 @@ public class WechatManager {
 	public Map<String, Object> getOAuthInfo(String code) throws BizException {
 		return this.getOAuthInfo(code, this.appId, this.appSecret);
 	}
-
+	
+	
 	private Map<String, Object> getWxAppletOAuthInfo(String code, String appId, String secret) throws BizException {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("grant_type", "authorization_code");
@@ -155,8 +161,15 @@ public class WechatManager {
 		return resultMap;
 	}
 	
-	public Map<String, Object> getWxAppletOAuthInfo(String code) throws BizException {
-		return this.getWxAppletOAuthInfo(code, this.appId, this.appSecret);
+	public Map<String, Object> getWxAppletOAuthInfo(String code, Byte identity) throws BizException {
+		if(identity == Identity.NURSING_SUPERVISOR.getValue()) {
+			return this.getWxAppletOAuthInfo(code, this.appId, this.appSecret);
+		} else if(identity == Identity.CAREGIVERS.getValue()) {
+			return this.getWxAppletOAuthInfo(code, this.appId, this.appSecret);
+		}else {
+			return this.getWxAppletOAuthInfo(code, this.patientAppId, this.patientAppSecret);
+		}
+		
 	}
 
 	private String getOpenId(String code, String appId, String secret) throws BizException {
@@ -195,7 +208,16 @@ public class WechatManager {
 		return resultMap;
 	}
 
-	private String getAccessToken() throws BizException {
+	public String getAccessToken(Byte identity) throws BizException {
+		if(identity == Identity.NURSING_SUPERVISOR.getValue()) {
+			return this.getAccessToken(this.appId, this.appSecret);
+		} else if(identity == Identity.CAREGIVERS.getValue()) {
+			return this.getAccessToken(this.appId, this.appSecret);
+		}else {
+			return this.getAccessToken(this.patientAppId, this.patientAppSecret);
+		}
+	}
+	private String getAccessToken(String appId, String Secret) throws BizException {
 		String accessToken = this.redisTemplate.opsForValue()
 				.get(CarexxConstant.CachePrefix.CAREXX_WECHAT_ACCESS_TOKEN + this.appId);
 		if (StringUtils.isNotBlank(accessToken)) {
@@ -229,11 +251,11 @@ public class WechatManager {
 		return accessToken;
 	}
 
-	public void deleteWechatMenu() throws BizException {
+	public void deleteWechatMenu(Byte identity) throws BizException {
 		Map<String, Object> resultMap = null;
 		try {
 			String result = HttpClientUtils
-					.get("https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=" + this.getAccessToken());
+					.get("https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=" + this.getAccessToken(identity));
 			this.logger.info("删除微信菜单响应：[{}]", result);
 			resultMap = JSONUtils.parseToMap(result);
 		} catch (Exception e) {
@@ -250,12 +272,12 @@ public class WechatManager {
 		}
 	}
 
-	public void createWechatMenu(Map<String, Object> params) throws BizException {
+	public void createWechatMenu(Map<String, Object> params, Byte identity) throws BizException {
 		Map<String, Object> resultMap = null;
 		String postData = JSONUtils.toString(params);
 		try {
 			String result = HttpClientUtils.post(
-					"https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + this.getAccessToken(), postData);
+					"https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + this.getAccessToken(identity), postData);
 			this.logger.info("创建微信菜单响应：[{}]", result);
 			resultMap = JSONUtils.parseToMap(result);
 		} catch (Exception e) {
@@ -281,7 +303,7 @@ public class WechatManager {
 		return oAuthLink;
 	}
 
-	public void sendTplMsg(String toUserName, String tplId, String url, Map<String, Object> data) throws BizException {
+	public void sendTplMsg(String toUserName, String tplId, String url, Map<String, Object> data, Byte identity) throws BizException {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("touser", toUserName);
 		params.put("template_id", tplId);
@@ -300,7 +322,7 @@ public class WechatManager {
 		Map<String, Object> resultMap = null;
 		try {
 			String result = HttpClientUtils.post(
-					"https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + this.getAccessToken(),
+					"https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + this.getAccessToken(identity),
 					postData);
 			this.logger.info("发送模板消息响应：[{}]", result);
 			resultMap = JSONUtils.parseToMap(result);

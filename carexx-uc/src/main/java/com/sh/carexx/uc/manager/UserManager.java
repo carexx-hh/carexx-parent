@@ -41,6 +41,7 @@ public class UserManager {
 		UserOAuth userOAuth = new UserOAuth();
 		userOAuth.setIdentityType(oAuthLoginFormBean.getIdentityType());
 		userOAuth.setIdentifier(oAuthLoginFormBean.getIdentifier());
+		userOAuth.setIdentity(oAuthLoginFormBean.getIdentity());
 		userOAuth.setCredential(oAuthLoginFormBean.getCredential());
 		userOAuth.setIdentityStatus(UseStatus.ENABLED.getValue());
 		if (oriUserOAuth == null) {

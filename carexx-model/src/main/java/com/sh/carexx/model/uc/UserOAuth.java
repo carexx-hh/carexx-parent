@@ -11,6 +11,8 @@ public class UserOAuth {
 
 	private String identifier;
 
+	private Byte identity;
+	
 	private String credential;
 
 	private Byte identityStatus;
@@ -49,6 +51,14 @@ public class UserOAuth {
 
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier == null ? null : identifier.trim();
+	}
+
+	public Byte getIdentity() {
+		return identity;
+	}
+
+	public void setIdentity(Byte identity) {
+		this.identity = identity;
 	}
 
 	public String getCredential() {
