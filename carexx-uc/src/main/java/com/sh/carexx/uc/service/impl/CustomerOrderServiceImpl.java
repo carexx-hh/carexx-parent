@@ -375,6 +375,14 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 
 	@Override
 	public List<Map<String, Object>> queryInstIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		if (ValidUtils.isDate(customerOrderQueryFormBean.getServiceStartTime())) {
+			customerOrderQueryFormBean.setServiceStartTime(
+					customerOrderQueryFormBean.getServiceStartTime() + CarexxConstant.Datetime.DAY_BEGIN_SUFFIX);
+		}
+		if (ValidUtils.isDate(customerOrderQueryFormBean.getServiceEndTime())) {
+			customerOrderQueryFormBean.setServiceEndTime(
+					customerOrderQueryFormBean.getServiceEndTime() + CarexxConstant.Datetime.DAY_END_SUFFIX);
+		}
 		List<Map<String, Object>> inputInstIncomeCountList = this.customerOrderMapper
 				.selectInstIncomeCount(customerOrderQueryFormBean);
 		List<Map<String, Object>> outputInstIncomeCountList = new ArrayList<Map<String, Object>>();
@@ -382,13 +390,14 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 		BigDecimal serviceRatio = new BigDecimal(0);
 
 		List<CareServiceRatio> careServiceRatioList = this.careServiceRatioMapper.selectAllServiceRatio();
-		if(customerOrderQueryFormBean.getServiceAddress() != null) {
-			for(CareServiceRatio careServiceRatio: careServiceRatioList) {
-				if(careServiceRatio.getServiceAddress() == customerOrderQueryFormBean.getServiceAddress()) {
+		if (customerOrderQueryFormBean.getServiceAddress() != null) {
+			for (CareServiceRatio careServiceRatio : careServiceRatioList) {
+				if (careServiceRatio.getServiceAddress() == customerOrderQueryFormBean.getServiceAddress()) {
 					serviceRatio = careServiceRatio.getServiceRatio();
 				}
 			}
 		}
+
 		for (Map<String, Object> inputInstIncomeCountMap : inputInstIncomeCountList) {
 			int index = 0;
 			if (outputInstIncomeCountList.size() != 0 || outputInstIncomeCountList != null) {
@@ -427,6 +436,7 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 									BigDecimal.ROUND_HALF_UP);
 							outputPounDage = outputPounDage.add(inputPounDage);
 						}
+
 						BigDecimal onlinePayAmt = new BigDecimal(
 								String.valueOf(outputInstIncomeCountMap.get("onlinePayAmt")));
 						BigDecimal scanPayAmt = new BigDecimal(
@@ -445,18 +455,19 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 							companyTurnAccountAmt = companyTurnAccountAmt.add(inputOrderAmt);
 						}
 
-						if(customerOrderQueryFormBean.getServiceAddress() == null) {
-							for(CareServiceRatio careServiceRatio: careServiceRatioList) {
-								if(careServiceRatio.getServiceAddress() == Byte.valueOf(String.valueOf(inputInstIncomeCountMap.get("serviceAddress")))) {
+						if (customerOrderQueryFormBean.getServiceAddress() == null) {
+							for (CareServiceRatio careServiceRatio : careServiceRatioList) {
+								if (careServiceRatio.getServiceAddress() == Byte
+										.valueOf(String.valueOf(inputInstIncomeCountMap.get("serviceAddress")))) {
 									serviceRatio = careServiceRatio.getServiceRatio();
 								}
 							}
 						}
 						BigDecimal inputServiceCharge = new BigDecimal(
-								String.valueOf(inputInstIncomeCountMap.get("serviceCharge")));
-						BigDecimal outputServiceCharge = new BigDecimal(
-								String.valueOf(inputOrderAmt)).multiply(serviceRatio).add(inputServiceCharge);
-						
+								String.valueOf(outputInstIncomeCountMap.get("serviceCharge")));
+						BigDecimal outputServiceCharge = new BigDecimal(String.valueOf(inputOrderAmt))
+								.multiply(serviceRatio).add(inputServiceCharge);
+
 						outputInstIncomeCountMap.put("orderAmt", outputOrderAmt);
 						outputInstIncomeCountMap.put("adjustAmt", outputAdjustAmt);
 						outputInstIncomeCountMap.put("onlinePayAmt", onlinePayAmt);
@@ -511,18 +522,17 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 			} else if (payType == PayMethod.COMPANY_TURN_ACCOUNT.getValue()) {
 				companyTurnAccountAmt = companyTurnAccountAmt.add(outputOrderAmt);
 			}
-			
-			if(customerOrderQueryFormBean.getServiceAddress() == null) {
-				for(CareServiceRatio careServiceRatio: careServiceRatioList) {
-					if(careServiceRatio.getServiceAddress() == Byte.valueOf(String.valueOf(inputInstIncomeCountMap.get("serviceAddress")))) {
+
+			if (customerOrderQueryFormBean.getServiceAddress() == null) {
+				for (CareServiceRatio careServiceRatio : careServiceRatioList) {
+					if (careServiceRatio.getServiceAddress() == Byte
+							.valueOf(String.valueOf(inputInstIncomeCountMap.get("serviceAddress")))) {
 						serviceRatio = careServiceRatio.getServiceRatio();
 					}
 				}
 			}
-			BigDecimal outputServiceCharge = new BigDecimal(
-					String.valueOf(outputOrderAmt)).multiply(serviceRatio);
-			
-			
+			BigDecimal outputServiceCharge = new BigDecimal(String.valueOf(outputOrderAmt)).multiply(serviceRatio);
+
 			outputInstIncomeCountMap.put("instId", inputInstIncomeCountMap.get("instId"));
 			outputInstIncomeCountMap.put("instName", inputInstIncomeCountMap.get("instName"));
 			outputInstIncomeCountMap.put("orderAmt", outputOrderAmt);
