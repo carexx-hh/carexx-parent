@@ -56,6 +56,6 @@ public class AuthController extends BaseController {
 		ReturnValue.put("token", token);
 		ReturnValue.put("openId", openId);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, ReturnValue).toJSON();*/
-		return openId;
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, openId).toJSON();
 	}
 }
