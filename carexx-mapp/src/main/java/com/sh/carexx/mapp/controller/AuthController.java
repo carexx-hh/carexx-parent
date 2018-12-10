@@ -21,15 +21,21 @@ import com.sh.carexx.mapp.wechat.WechatManager;
 import com.sh.carexx.model.uc.UserInfo;
 
 @RestController
-@RequestMapping("/aaa")
+@RequestMapping("/auth")
 public class AuthController extends BaseController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@RequestMapping(value = "/aaa")
-	public String aaa(String code) {
-		String openId = "111";
+	@Value("${spring.application.domain}")
+	private String domain;
+
+	@Autowired
+	private WechatManager wechatManager;
+
+	@RequestMapping("/login")
+	public String login(String code) {
+		/*String openId = "111";
 		String token = null;
-	/*		Map<String, Object> oAuthInfo = this.wechatManager.getWxAppletOAuthInfo(code, Identity.PATIENT.getValue());
+			Map<String, Object> oAuthInfo = this.wechatManager.getWxAppletOAuthInfo(code, Identity.PATIENT.getValue());
 			openId = String.valueOf(oAuthInfo.get("openid")); // 用户唯一标识
 			OAuthLoginFormBean oAuthLoginFormBean = new OAuthLoginFormBean();
 			oAuthLoginFormBean.setIdentityType(IdentityType.WECHAT.getValue());
@@ -50,6 +56,9 @@ public class AuthController extends BaseController {
 		ReturnValue.put("token", token);
 		ReturnValue.put("openId", openId);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, ReturnValue).toJSON();*/
-		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, openId).toJSON();
+		String openId = "111";
+		String token = "111";
+		
+		return "redirect:" + this.domain + "/index.html#/tab/wechat/home?token=" + token + "&openId=" + openId;
 	}
 }
