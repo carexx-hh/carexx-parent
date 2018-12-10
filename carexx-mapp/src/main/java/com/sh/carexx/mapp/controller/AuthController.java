@@ -32,12 +32,12 @@ public class AuthController extends BaseController {
 	private WechatManager wechatManager;
 
 	@RequestMapping("/login")
-	public String login(String code, UserInfo userInfo) {
+	public String login(String code) {
 		String openId = "111";
 		String token = null;
-			/*Map<String, Object> oAuthInfo = this.wechatManager.getWxAppletOAuthInfo(code, Identity.PATIENT.getValue());
+	/*		Map<String, Object> oAuthInfo = this.wechatManager.getWxAppletOAuthInfo(code, Identity.PATIENT.getValue());
 			openId = String.valueOf(oAuthInfo.get("openid")); // 用户唯一标识
-*/			OAuthLoginFormBean oAuthLoginFormBean = new OAuthLoginFormBean();
+			OAuthLoginFormBean oAuthLoginFormBean = new OAuthLoginFormBean();
 			oAuthLoginFormBean.setIdentityType(IdentityType.WECHAT.getValue());
 			oAuthLoginFormBean.setIdentifier(openId);
 			oAuthLoginFormBean.setIdentity(Identity.PATIENT.getValue());
@@ -55,6 +55,7 @@ public class AuthController extends BaseController {
 		Map<String, Object> ReturnValue = new HashMap<>();
 		ReturnValue.put("token", token);
 		ReturnValue.put("openId", openId);
-		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, ReturnValue).toJSON();
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, ReturnValue).toJSON();*/
+		return openId;
 	}
 }
