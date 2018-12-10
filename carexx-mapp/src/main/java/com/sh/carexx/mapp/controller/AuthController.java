@@ -21,18 +21,12 @@ import com.sh.carexx.mapp.wechat.WechatManager;
 import com.sh.carexx.model.uc.UserInfo;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/aaa")
 public class AuthController extends BaseController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@Value("${spring.application.domain}")
-	private String domain;
-
-	@Autowired
-	private WechatManager wechatManager;
-
-	@RequestMapping("/login")
-	public String login(String code) {
+	@RequestMapping(value = "/aaa")
+	public String aaa(String code) {
 		String openId = "111";
 		String token = null;
 	/*		Map<String, Object> oAuthInfo = this.wechatManager.getWxAppletOAuthInfo(code, Identity.PATIENT.getValue());
