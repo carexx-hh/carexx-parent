@@ -33,11 +33,12 @@ public class AuthController extends BaseController {
 
 	@RequestMapping("/login")
 	public String login(String code, UserInfo userInfo) {
-		String openId = "111";
+		String openId = null;
 		String token = null;
-			/*Map<String, Object> oAuthInfo = this.wechatManager.getWxAppletOAuthInfo(code, Identity.PATIENT.getValue());
+		try {
+			Map<String, Object> oAuthInfo = this.wechatManager.getWxAppletOAuthInfo(code, Identity.PATIENT.getValue());
 			openId = String.valueOf(oAuthInfo.get("openid")); // 用户唯一标识
-*/			OAuthLoginFormBean oAuthLoginFormBean = new OAuthLoginFormBean();
+			OAuthLoginFormBean oAuthLoginFormBean = new OAuthLoginFormBean();
 			oAuthLoginFormBean.setIdentityType(IdentityType.WECHAT.getValue());
 			oAuthLoginFormBean.setIdentifier(openId);
 			oAuthLoginFormBean.setIdentity(Identity.PATIENT.getValue());
@@ -51,7 +52,9 @@ public class AuthController extends BaseController {
 			if (dataRetVal != null && CarexxConstant.RetCode.SUCCESS == dataRetVal.getCode()) {
 				token = String.valueOf(dataRetVal.getData());
 			}
-
+		} catch (BizException e) {
+	        this.logger.error("微信登录失败", e);
+	    }
 		Map<String, Object> ReturnValue = new HashMap<>();
 		ReturnValue.put("token", token);
 		ReturnValue.put("openId", openId);
