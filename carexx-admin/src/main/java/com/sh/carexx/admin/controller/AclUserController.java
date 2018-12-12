@@ -1,18 +1,17 @@
 package com.sh.carexx.admin.controller;
 
-import javax.validation.Valid;
-
+import com.sh.carexx.bean.acl.AclModifyPwdFormBean;
+import com.sh.carexx.bean.acl.AclRegFormBean;
+import com.sh.carexx.common.CarexxConstant;
+import com.sh.carexx.common.web.BasicRetVal;
+import com.sh.carexx.common.web.SessionHolder;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sh.carexx.bean.acl.AclModifyPwdFormBean;
-import com.sh.carexx.bean.acl.AclRegFormBean;
-import com.sh.carexx.common.CarexxConstant;
-import com.sh.carexx.common.web.BasicRetVal;
-import com.sh.carexx.common.web.SessionHolder;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/acluser")
@@ -20,7 +19,7 @@ public class AclUserController extends BaseController {
 
 	@RequestMapping(value = "/add")
 	public BasicRetVal add(@Valid AclRegFormBean aclRegFormBean, BindingResult bindingResult) {
-		if (this.getCurrentUser().getInstId() == 0) {
+		if (this.getCurrentUser().getInstId() <= 0) {
 			if (aclRegFormBean.getInstId() == null)
 			{
 				aclRegFormBean.setInstId(this.getCurrentUser().getInstId().toString());
