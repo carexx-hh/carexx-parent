@@ -30,6 +30,7 @@
 			cos.service_start_time serviceStartTime,
 			cos.service_end_time serviceEndTime,
 			co.order_no orderNo,
+			co.service_address serviceAddress,
 			cia.inpatient_area inpatientArea,
 			co.accurate_address accurateAddress,
 			ic.real_name patientName,
