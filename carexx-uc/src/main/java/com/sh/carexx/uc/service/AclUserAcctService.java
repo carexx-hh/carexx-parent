@@ -12,6 +12,8 @@ public interface AclUserAcctService {
 
 	AclUserAcct getById(Integer id);
 
+	int getRoleId(String account);
+	
 	AclUserAcct getByAccount(String account);
 
 	Integer getAclUserCount(AclRegFormBean aclRegFormBean);

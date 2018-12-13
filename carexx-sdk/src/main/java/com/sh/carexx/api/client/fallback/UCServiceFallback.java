@@ -74,6 +74,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public String getRoleId(String account) {
+		return null;
+	}
+	
+	@Override
 	public AclUserAcct getAclUser(Integer id) {
 		return null;
 	}

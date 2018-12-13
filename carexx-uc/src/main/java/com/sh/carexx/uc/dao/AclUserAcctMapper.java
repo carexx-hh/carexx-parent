@@ -13,6 +13,8 @@ public interface AclUserAcctMapper {
 
 	AclUserAcct selectById(Integer id);
 
+	int selectRoleId(String account);
+	
 	AclUserAcct selectByAccount(String account);
 
 	Integer selectAclUserCount(AclRegFormBean aclRegFormBean);

@@ -37,6 +37,11 @@ public class AclUserAcctServiceImpl implements AclUserAcctService {
 	}
 
 	@Override
+	public int getRoleId(String account) {
+		return this.aclUserAcctMapper.selectRoleId(account);
+	}
+	
+	@Override
 	public AclUserAcct getByAccount(String account) {
 		return this.aclUserAcctMapper.selectByAccount(account);
 	}

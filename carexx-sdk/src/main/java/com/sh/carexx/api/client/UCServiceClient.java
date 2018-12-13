@@ -58,6 +58,9 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/acluser/detail/{id}", method = RequestMethod.GET)
 	String getAclUserDetail(@PathVariable("id") Integer id);
 
+	@RequestMapping(value = "/acluser/get_roleId/{account}", method = RequestMethod.GET)
+	String getRoleId(@PathVariable("account") String account);
+	
 	@RequestMapping(value = "/acluser/get/{id}", method = RequestMethod.GET)
 	AclUserAcct getAclUser(@PathVariable("id") Integer id);
 

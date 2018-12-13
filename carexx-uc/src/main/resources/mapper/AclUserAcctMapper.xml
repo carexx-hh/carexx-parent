@@ -23,6 +23,15 @@
 		where 
 			id = #{id,jdbcType=INTEGER}
 	</select>
+	<select id="selectRoleId" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select
+			aur.role_id
+		from 
+			carexx_acl_user_acct aua
+		left join carexx_acl_user_role aur on aua.id = aur.user_id
+		where 
+			aua.account = #{account,jdbcType=VARCHAR}
+	</select>
 	<select id="selectByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
 		select
 			<include refid="Base_Column_List" />
