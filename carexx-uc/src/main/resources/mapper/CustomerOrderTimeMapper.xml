@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sh.carexx.uc.dao.CustomerOrderTimeMapper" >
     <resultMap id="BaseResultMap" type="com.sh.carexx.model.uc.CustomerOrderTime" >
-      <id column="id" property="id" jdbcType="BIGINT" />
-      <result column="inst_id" property="instId" jdbcType="INTEGER" />
-      <result column="job_type" property="jobType" jdbcType="TINYINT" />
-      <result column="start_time" property="startTime" jdbcType="TIME" />
-      <result column="end_time" property="endTime" jdbcType="TIME" />
-      <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-      <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="inst_id" property="instId" jdbcType="INTEGER" />
+        <result column="job_type" property="jobType" jdbcType="TINYINT" />
+        <result column="start_time" property="startTime" jdbcType="TIME" />
+        <result column="end_time" property="endTime" jdbcType="TIME" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <sql id="Base_Column_List" >
@@ -16,63 +16,64 @@
     </sql>
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-      select
+        select
         <include refid="Base_Column_List" />
-      from
+        from
         carexx_customer_order_time
-      where
+        where
         id = #{id,jdbcType=BIGINT}
     </select>
 
     <select id="selectByInstId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-      select
+        select
         <include refid="Base_Column_List" />
-      from
+        from
         carexx_customer_order_time
-      where
+        where
         inst_id = #{instId,jdbcType=INTEGER}
     </select>
 
     <select id="selectJobTypeExistence" resultMap="BaseResultMap">
-      SELECT
+        SELECT
         <include refid="Base_Column_List" />
-      FROM
+        FROM
         carexx_customer_order_time
-      WHERE
+        WHERE
         inst_id = #{instId,jdbcType=INTEGER}
-      and job_type = #{jobType,jdbcType=TINYINT}
+        and job_type = #{jobType,jdbcType=TINYINT}
     </select>
 
     <select id="selectCustomerOrderTimeCount" parameterType="com.sh.carexx.bean.order.CustomerOrderTimeQueryFormBean" resultType="java.lang.Integer">
-      SELECT
+        SELECT
         count(1) totalCount
-      FROM
+        FROM
         carexx_customer_order_time cot
-      LEFT JOIN carexx_care_inst ci ON cot.inst_id = ci.id
-      <where>
-        <if test="instName != null and instName != '' ">
-          ci.inst_name like CONCAT('%', '${instName}', '%')
-        </if>
-      </where>
+        LEFT JOIN carexx_care_inst ci ON cot.inst_id = ci.id
+        <where>
+            <if test="instName != null and instName != '' ">
+                ci.inst_name like CONCAT('%', '${instName}', '%')
+            </if>
+        </where>
     </select>
 
     <select id="selectCustomerOrderTimeList" parameterType="com.sh.carexx.bean.order.CustomerOrderTimeQueryFormBean" resultType="java.util.Map">
-      SELECT
-          cot.id id,
-          ci.inst_name instName,
-          cot.job_type jobType,
-          cot.start_time startTime,
-          cot.end_time endTime,
-          cot.create_time createTime,
-          cot.modify_time modifyTime
-      FROM
-          carexx_customer_order_time cot
-      LEFT JOIN carexx_care_inst ci ON cot.inst_id = ci.id
-      <where>
-        <if test="instName != null and instName != '' ">
-          ci.inst_name like CONCAT('%', '${instName}', '%')
-        </if>
-      </where>
+        SELECT
+        cot.id id,
+        cot.inst_id instId,
+        ci.inst_name instName,
+        cot.job_type jobType,
+        cot.start_time startTime,
+        cot.end_time endTime,
+        cot.create_time createTime,
+        cot.modify_time modifyTime
+        FROM
+        carexx_customer_order_time cot
+        LEFT JOIN carexx_care_inst ci ON cot.inst_id = ci.id
+        <where>
+            <if test="instName != null and instName != '' ">
+                ci.inst_name like CONCAT('%', '${instName}', '%')
+            </if>
+        </where>
     </select>
 
     <insert id="insert" parameterType="com.sh.carexx.model.uc.CustomerOrderTime" >
