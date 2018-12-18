@@ -49,6 +49,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public String CaregiversLogin(Byte identityType, String openId) {
+		return null;
+	}
+	
+	@Override
 	public UserInfo getUserInfo(Integer id) {
 		return null;
 	}

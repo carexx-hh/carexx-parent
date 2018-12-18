@@ -8,12 +8,13 @@
 		<result column="identifier" jdbcType="VARCHAR" property="identifier" />
 		<result column="identity" jdbcType="TINYINT" property="identity" />
 		<result column="credential" jdbcType="VARCHAR" property="credential" />
+		<result column="staff_id" jdbcType="INTEGER" property="staffId" />
 		<result column="identity_status" jdbcType="TINYINT" property="identityStatus" />
 		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
 		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, user_id, identity_type, identifier, identity, credential, identity_status, create_time, modify_time
+		id, user_id, identity_type, identifier, identity, credential, staff_id, identity_status, create_time, modify_time
 	</sql>
 	<select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		select

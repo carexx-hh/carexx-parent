@@ -24,7 +24,7 @@
 		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, inst_id, service_inst_id, person_type, job_status, staff_status,
+		id, inst_id, service_inst_id, person_type, job_status, certification_status, staff_status,
 		real_name, id_no, work_license, healthy_license, sex, photo, birthday, phone, address,
 		entry_date, leave_date, create_time, modify_time
 	</sql>
@@ -33,7 +33,7 @@
 			<include refid="Base_Column_List" />
 		FROM
 			carexx_inst_staff
-		WHERE 
+		WHERE 	
 			id = #{id,jdbcType=INTEGER} and staff_status = 1 
 	</select>
 	<select id="selectByIdNo" resultMap="BaseResultMap">

@@ -15,6 +15,8 @@ public class UserOAuth {
 	
 	private String credential;
 
+	private Integer staffId;
+	
 	private Byte identityStatus;
 
 	private Date createTime;
@@ -67,6 +69,14 @@ public class UserOAuth {
 
 	public void setCredential(String credential) {
 		this.credential = credential == null ? null : credential.trim();
+	}
+	
+	public Integer getStaffId() {
+		return staffId;
+	}
+
+	public void setStaffId(Integer staffId) {
+		this.staffId = staffId;
 	}
 
 	public Byte getIdentityStatus() {

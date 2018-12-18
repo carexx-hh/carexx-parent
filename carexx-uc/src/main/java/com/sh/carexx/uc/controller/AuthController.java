@@ -1,5 +1,7 @@
 package com.sh.carexx.uc.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +48,18 @@ public class AuthController {
 		try {
 			String token = this.userManager.doOAuthLogin(oAuthLoginFormBean);
 			return new DataRetVal(CarexxConstant.RetCode.SUCCESS, token).toJSON();
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc()).toJSON();
+		}
+	}
+
+	@RequestMapping(value = "/caregivers_login", method = RequestMethod.GET)
+	public String CaregiversLogin(@RequestParam("identityType") Byte identityType,
+			@RequestParam("openId") String openId) {
+		try {
+			Map<String, Object> resultMap = null;
+			resultMap = this.userManager.CaregiversLogin(identityType, openId);
+			return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultMap).toJSON();
 		} catch (BizException e) {
 			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc()).toJSON();
 		}

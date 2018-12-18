@@ -43,6 +43,9 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/auth/get_oauth_user_id", method = RequestMethod.GET)
 	String getOAuthUserId(@RequestParam("token") String token);
 
+	@RequestMapping(value = "/auth/caregivers_login", method = RequestMethod.GET)
+	String CaregiversLogin(@RequestParam("identityType") Byte identityType, @RequestParam("openId") String openId);
+	
 	@RequestMapping(value = "/user/get_user_info/{id}", method = RequestMethod.GET)
 	UserInfo getUserInfo(@PathVariable("id") Integer id);
 	
