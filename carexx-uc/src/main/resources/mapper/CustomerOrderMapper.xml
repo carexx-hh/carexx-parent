@@ -120,7 +120,8 @@
 			co.proof_type proofType,
 			co.receipt_no receiptNo,
 			co.invoice_no invoiceNo,
-			co.order_amt orderAmt
+			co.order_amt orderAmt,
+			co.holiday holiday
 		FROM
 			carexx_customer_order co
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id

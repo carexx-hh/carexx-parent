@@ -1,27 +1,22 @@
 package com.sh.carexx.mapp.wechat;
 
-import java.math.BigDecimal;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
+import com.sh.carexx.bean.order.OrderPaymentFormBean;
+import com.sh.carexx.common.ErrorCode;
+import com.sh.carexx.common.enums.pay.PayStatus;
+import com.sh.carexx.common.exception.BizException;
+import com.sh.carexx.common.util.*;
+import com.sh.carexx.mapp.wechat.bean.WepayUnifiedOrderReq;
+import com.sh.carexx.mapp.wechat.bean.WepayUnifiedOrderRsp;
+import com.sh.carexx.model.uc.OrderPayment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.sh.carexx.bean.order.OrderPaymentFormBean;
-import com.sh.carexx.common.ErrorCode;
-import com.sh.carexx.common.enums.pay.PayStatus;
-import com.sh.carexx.common.exception.BizException;
-import com.sh.carexx.common.util.BeanUtils;
-import com.sh.carexx.common.util.HttpClientUtils;
-import com.sh.carexx.common.util.JAXBUtils;
-import com.sh.carexx.common.util.MD5Utils;
-import com.sh.carexx.common.util.UUIDUtils;
-import com.sh.carexx.mapp.wechat.bean.WepayUnifiedOrderReq;
-import com.sh.carexx.mapp.wechat.bean.WepayUnifiedOrderRsp;
-import com.sh.carexx.model.uc.OrderPayment;
+import java.math.BigDecimal;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 @Service
 public class WechatPayManager {
@@ -32,7 +27,7 @@ public class WechatPayManager {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@Value("${wechat.appId}")
+	@Value("${wechat.patient.appId}")
 	private String wechatAppId;
 	@Value("${wechat.pay.mchId}")
 	private String wechatPayMchtId;
