@@ -112,7 +112,7 @@ public class AuthController extends BaseController {
 	@RequestMapping("/caregivers_login")
 	public String caregiversLogin(String code) {
 		String openId = null;
-		/*try {
+		try {
 			Map<String, Object> oAuthInfo = this.wechatManager.getWxAppletOAuthInfo(code, Identity.CAREGIVERS.getValue());
 			openId = String.valueOf(oAuthInfo.get("openid")); // 用户唯一标识
 			Byte identityType = IdentityType.WECHAT.getValue();
@@ -120,10 +120,10 @@ public class AuthController extends BaseController {
 		} catch (BizException e) {
 	        this.logger.error("微信登录失败", e);
 	    }
-		return null;*/
+		return null;
 		
-		openId = "1"; // 用户唯一标识
+		/*openId = "1"; // 用户唯一标识
 		Byte identityType = IdentityType.WECHAT.getValue();
-		return this.ucServiceClient.CaregiversLogin(identityType, openId);
+		return this.ucServiceClient.CaregiversLogin(identityType, openId);*/
 	}
 }
