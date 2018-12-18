@@ -713,7 +713,7 @@ public interface UCServiceClient {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	@RequestMapping(value = "/customerorder/done_order/{userId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/customerorder/done_order/{userId}", method = RequestMethod.GET)
 	String queryDoneOrderByUserId(@PathVariable("userId") Integer userId);
 	/**
 	 *

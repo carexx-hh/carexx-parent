@@ -107,7 +107,7 @@ public class CustomerOrderController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,result).toJSON();
 	}
 
-	@RequestMapping(value = "/done_order/{userId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/done_order/{userId}", method = RequestMethod.GET)
 	public String queryDoneOrderByUserId(@PathVariable("userId") Integer userId) {
 		List<Map<?, ?>> result = this.customerOrderService.getDoneOrderByUserId(userId);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,result).toJSON();
