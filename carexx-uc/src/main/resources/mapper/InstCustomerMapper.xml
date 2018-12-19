@@ -79,6 +79,7 @@
 			ic.user_id userId,
 			ci.inst_name instName,
 			ic.real_name realName,
+			ui.nickname nickName,
 			ic.id_no idNo,
 			ic.sex sex,
 			ic.birthday birthday,
@@ -92,10 +93,8 @@
 			ic.modify_time modifyTime
 		FROM
 			carexx_inst_customer ic
-		LEFT JOIN
-			carexx_care_inst ci
-		ON
-			ci.id = ic.inst_id
+		LEFT JOIN carexx_care_inst ci ON ci.id = ic.inst_id
+		LEFT JOIN carexx_user_info ui ON ui.id = ic.user_id
 		<where>
 				customer_status = 1
 			<if test="instId != null and instId > 0">
