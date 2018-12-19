@@ -82,7 +82,7 @@ public class WechatPayManager {
 		params.put("notify_url", this.wechatPayNotifyUrl);
 		params.put("out_trade_no", orderPayment.getOrderNo());
 		params.put("spbill_create_ip", orderPaymentFormBean.getIp());
-		params.put("total_fee", String.valueOf(orderPayment.getPayAmt().multiply(new BigDecimal(100)).intValue()));
+		params.put("total_fee", String.valueOf((orderPayment.getPayAmt().add(new BigDecimal(4))).multiply(new BigDecimal(100)).intValue()));
 		params.put("trade_type", "JSAPI");
 		params.put("openid", orderPaymentFormBean.getOpenId());
 		String reqSign = this.sign(params, this.wechatPaySignKey);

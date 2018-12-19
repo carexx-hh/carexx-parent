@@ -1,17 +1,16 @@
 package com.sh.carexx.uc.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sh.carexx.bean.acl.AclRegFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.AclUserAcct;
 import com.sh.carexx.uc.dao.AclUserAcctMapper;
 import com.sh.carexx.uc.service.AclUserAcctService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class AclUserAcctServiceImpl implements AclUserAcctService {
@@ -61,6 +60,19 @@ public class AclUserAcctServiceImpl implements AclUserAcctService {
 		int rows = 0;
 		try {
 			rows = this.aclUserAcctMapper.updateStatus(id, srcStatus, targetStatus);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+	}
+
+	@Override
+	public void delete(Integer id) throws BizException{
+		int rows = 0;
+		try {
+			rows = this.aclUserAcctMapper.delete(id);
 		} catch (Exception e) {
 			throw new BizException(ErrorCode.DB_ERROR, e);
 		}

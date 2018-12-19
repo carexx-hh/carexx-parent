@@ -138,6 +138,13 @@
 		where 
 			id = #{id,jdbcType=INTEGER} and status = #{srcStatus,jdbcType=TINYINT}
 	</update>
+	<delete id="delete">
+		DELETE
+		FROM
+			carexx_acl_user_acct
+		where
+			id = #{id,jdbcType=INTEGER}
+	</delete>
 	<update id="update" parameterType="com.sh.carexx.model.uc.AclUserAcct">
 		update
 			carexx_acl_user_acct
