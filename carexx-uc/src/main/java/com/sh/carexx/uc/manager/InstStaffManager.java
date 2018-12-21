@@ -29,12 +29,12 @@ import java.util.Map;
 
 /**
  * 
- * ClassName: InstStaffManager <br/> 
- * Function: 人员管理 <br/> 
- * Reason: TODO ADD REASON(可选). <br/> 
- * Date: 2018年7月12日 下午1:46:51 <br/> 
+ * ClassName: InstStaffManager <br/>
+ * Function: 人员管理 <br/>
+ * Reason: TODO ADD REASON(可选). <br/>
+ * Date: 2018年7月12日 下午1:46:51 <br/>
  * 
- * @author zhoulei 
+ * @author zhoulei
  * @since JDK 1.8
  */
 @Service
@@ -48,24 +48,25 @@ public class InstStaffManager {
 
 	@Autowired
 	public CustomerOrderScheduleService customerOrderScheduleService;
-	
+
 	@Autowired
 	public CustomerOrderService customerOrderService;
+
 	/**
 	 * 
-	 * add:(人员添加). <br/> 
+	 * add:(人员添加). <br/>
 	 * 
-	 * @author zhoulei 
+	 * @author zhoulei
 	 * @param instStaffFormBean
-	 * @throws BizException 
+	 * @throws BizException
 	 * @since JDK 1.8
 	 */
 	public void add(InstStaffFormBean instStaffFormBean) throws BizException {
-		//员工信息身份证校验
+		// 员工信息身份证校验
 		if (instStaffService.getByIdNo(instStaffFormBean.getIdNo(), instStaffFormBean.getInstId()) != null) {
 			throw new BizException(ErrorCode.INST_STAFF_EXISTS_ERROR);
 		}
-		
+
 		InstStaff instStaff = new InstStaff();
 		instStaff.setInstId(instStaffFormBean.getInstId());
 		instStaff.setServiceInstId(instStaffFormBean.getServiceInstId());
@@ -102,20 +103,20 @@ public class InstStaffManager {
 
 	/**
 	 * 
-	 * modify:(员工信息修改). <br/> 
+	 * modify:(员工信息修改). <br/>
 	 * 
-	 * @author zhoulei 
+	 * @author zhoulei
 	 * @param instStaffFormBean
-	 * @throws BizException 
+	 * @throws BizException
 	 * @since JDK 1.8
 	 */
 	public void modify(InstStaffFormBean instStaffFormBean) throws BizException {
-		//员工信息身份证校验
+		// 员工信息身份证校验
 		InstStaff oldinstStaff = instStaffService.getByIdNo(instStaffFormBean.getIdNo(), instStaffFormBean.getInstId());
 		if (oldinstStaff != null && oldinstStaff.getId() != instStaffFormBean.getId()) {
 			throw new BizException(ErrorCode.INST_STAFF_EXISTS_ERROR);
 		}
-		
+
 		InstStaff instStaff = new InstStaff();
 		instStaff.setId(instStaffFormBean.getId());
 		instStaff.setServiceInstId(instStaffFormBean.getServiceInstId());
@@ -140,7 +141,7 @@ public class InstStaffManager {
 		}
 		this.instStaffService.update(instStaff);
 	}
-	
+
 	public List<Map<?, ?>> queryMappAllInstStaff(InstStaffQueryFormBean instStaffQueryFormBean) throws BizException {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date currentTime = null;
@@ -150,17 +151,19 @@ public class InstStaffManager {
 			e.printStackTrace();
 		}
 		List<Map<?, ?>> instStaffList = null;
-		List<Map<?, ?>> idleList = instStaffService.queryInstStaffIdle(null,instStaffQueryFormBean.getInstId(),currentTime,instStaffQueryFormBean.getRealName());
+		List<Map<?, ?>> idleList = instStaffService.queryInstStaffIdle(null, instStaffQueryFormBean.getInstId(),
+				currentTime, instStaffQueryFormBean.getRealName());
 		instStaffList = idleList;
-		List<Map<?, ?>> busyList = instStaffService.queryInstStaffBusy(null,instStaffQueryFormBean.getInstId(),currentTime,instStaffQueryFormBean.getRealName());
+		List<Map<?, ?>> busyList = instStaffService.queryInstStaffBusy(null, instStaffQueryFormBean.getInstId(),
+				currentTime, instStaffQueryFormBean.getRealName());
 		for (Map<?, ?> map : busyList) {
-			if(map.get("id") != null) {
+			if (map.get("id") != null) {
 				instStaffList.add(map);
 			}
 		}
 		return instStaffList;
 	}
-	
+
 	public List<Map<?, ?>> staffSchedule(CustomerOrderQueryFormBean customerOrderQueryFormBean) throws BizException {
 		String orderNo = customerOrderQueryFormBean.getOrderNo();
 		String realName = customerOrderQueryFormBean.getStaffName();
@@ -171,44 +174,54 @@ public class InstStaffManager {
 		Integer serviceId = customerOrder.getServiceId();
 		Integer serviceInstId = customerOrder.getInstId();
 		Date currentTime = null;
-		if(customerOrderSchedule != null) {
+		if (customerOrderSchedule != null) {
 			currentTime = customerOrderSchedule.getServiceEndTime();
 		} else {
 			currentTime = customerOrder.getServiceStartTime();
 		}
-		List<Map<?, ?>> idleList = instStaffService.queryInstStaffIdle(serviceId,serviceInstId,currentTime,realName);
+		List<Map<?, ?>> idleList = instStaffService.queryInstStaffIdle(serviceId, serviceInstId, currentTime, realName);
 		instStaffList = idleList;
-		List<Map<?, ?>> busyList = instStaffService.queryInstStaffBusy(serviceId,serviceInstId,currentTime,realName);
+		List<Map<?, ?>> busyList = instStaffService.queryInstStaffBusy(serviceId, serviceInstId, currentTime, realName);
 		for (Map<?, ?> map : busyList) {
-			if(map.get("id") != null) {
+			if (map.get("id") != null) {
 				instStaffList.add(map);
 			}
 		}
 		return instStaffList;
 	}
-	
+
 	public void agreeCertification(Integer id) throws BizException {
 		Byte srcStatus = CertificationStatus.IN_CERTIFICATION.getValue();
-		this.instStaffService.updateCertificationStatus(id, srcStatus.toString(), CertificationStatus.HAS_CERTIFICATION.getValue());
+		this.instStaffService.updateCertificationStatus(id, srcStatus.toString(),
+				CertificationStatus.HAS_CERTIFICATION.getValue());
 	}
-	
+
 	public void refusedCertification(Integer id) throws BizException {
 		Byte srcStatus = CertificationStatus.IN_CERTIFICATION.getValue();
-		this.instStaffService.updateCertificationStatus(id, srcStatus.toString(), CertificationStatus.REFUSED_CERTIFICATION.getValue());
+		this.instStaffService.updateCertificationStatus(id, srcStatus.toString(),
+				CertificationStatus.REFUSED_CERTIFICATION.getValue());
 	}
-	
-	public void applyCertification(Integer id) throws BizException {
-		Byte noCertification = CertificationStatus.NO_CERTIFICATION.getValue();
-		Byte refusedCertification = CertificationStatus.REFUSED_CERTIFICATION.getValue();
-		StringBuffer srcStatus = new StringBuffer();
-		srcStatus.append(noCertification.toString());
-		srcStatus.append(",");
-		srcStatus.append(refusedCertification.toString());
-		this.instStaffService.updateCertificationStatus(id, srcStatus.toString(), CertificationStatus.IN_CERTIFICATION.getValue());
+
+	public void applyCertification(String phone, String verifyCode, String idNo) throws BizException {
+		InstStaff InstStaff = this.instStaffService.getByIdNoAndPhone(idNo, phone);
+		if (InstStaff != null) {
+			if (InstStaff.getCertificationStatus() == CertificationStatus.NO_CERTIFICATION.getValue()
+					|| InstStaff.getCertificationStatus() == CertificationStatus.REFUSED_CERTIFICATION.getValue()) {
+				this.instStaffService.updateCertificationStatus(InstStaff.getId(), String.valueOf(InstStaff.getCertificationStatus()),
+						CertificationStatus.IN_CERTIFICATION.getValue());
+			} else if (InstStaff.getCertificationStatus() == CertificationStatus.IN_CERTIFICATION.getValue()) {
+				throw new BizException(ErrorCode.IN_CERTIFICATION);
+			}else {
+				throw new BizException(ErrorCode.HAS_CERTIFICATION);
+			}
+		} else {
+			throw new BizException(ErrorCode.IDNO_OR_MOBILE_INPUT_ERROR);
+		}
 	}
-	
+
 	public void cancelCertification(Integer id) throws BizException {
 		Byte srcStatus = CertificationStatus.HAS_CERTIFICATION.getValue();
-		this.instStaffService.updateCertificationStatus(id, srcStatus.toString(), CertificationStatus.NO_CERTIFICATION.getValue());
+		this.instStaffService.updateCertificationStatus(id, srcStatus.toString(),
+				CertificationStatus.NO_CERTIFICATION.getValue());
 	}
 }

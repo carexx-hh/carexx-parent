@@ -39,11 +39,6 @@ public class InstStaffController extends BaseController {
 		return this.ucServiceClient.refusedCertification(id);
 	}
 	
-	@RequestMapping(value = "/apply_certification/{id}")
-	public BasicRetVal applyCertification(@PathVariable("id") Integer id) {
-		return this.ucServiceClient.applyCertification(id);
-	}
-	
 	@RequestMapping(value = "/cancel_certification/{id}")
 	public BasicRetVal cancelCertification(@PathVariable("id") Integer id) {
 		return this.ucServiceClient.cancelCertification(id);

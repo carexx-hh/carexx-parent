@@ -962,8 +962,8 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/inststaff/refused_certification/{id}", method = RequestMethod.GET)
 	BasicRetVal refusedCertification(@PathVariable("id") Integer id);
 	
-	@RequestMapping(value = "/inststaff/apply_certification/{id}", method = RequestMethod.GET)
-	BasicRetVal applyCertification(@PathVariable("id") Integer id);
+	@RequestMapping(value = "/inststaff/apply_certification/{phone}/{verifyCode}/{idNo}", method = RequestMethod.GET)
+	BasicRetVal applyCertification(@PathVariable("phone") String phone, @PathVariable("verifyCode") String verifyCode, @PathVariable("idNo") String idNo);
 	
 	@RequestMapping(value = "/inststaff/cancel_certification/{id}", method = RequestMethod.GET)
 	BasicRetVal cancelCertification(@PathVariable("id") Integer id);

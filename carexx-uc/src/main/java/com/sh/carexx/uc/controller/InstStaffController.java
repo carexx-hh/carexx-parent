@@ -140,10 +140,10 @@ public class InstStaffController {
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
 	
-	@RequestMapping(value = "/apply_certification/{id}", method = RequestMethod.GET)
-	public BasicRetVal applyCertification(@PathVariable("id") Integer id) {
+	@RequestMapping(value = "/apply_certification/{phone}/{verifyCode}/{idNo}", method = RequestMethod.GET)
+	public BasicRetVal applyCertification(@PathVariable("phone") String phone, @PathVariable("verifyCode") String verifyCode, @PathVariable("idNo") String idNo) {
 		try {
-			this.instStaffManager.applyCertification(id);
+			this.instStaffManager.applyCertification(phone, verifyCode, idNo);
 		} catch (BizException e) {
 			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
 		}

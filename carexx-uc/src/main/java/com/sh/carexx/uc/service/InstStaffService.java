@@ -54,6 +54,17 @@ public interface InstStaffService {
 
 	/**
 	 * 
+	 * selectByIdNoAndPhone:(通过身份证号和手机号码查询). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param idNo
+	 * @param mobile
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	InstStaff getByIdNoAndPhone(String idNo, String phone);
+	/**
+	 * 
 	 * getByServiceIdCount:(通过服务id统计会该项技能的员工). <br/>
 	 * 
 	 * @author zhoulei

@@ -55,6 +55,18 @@ public interface InstStaffMapper {
 
 	/**
 	 * 
+	 * selectByIdNoAndPhone:(通过身份证号和手机号码查询). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param idNo
+	 * @param phone
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	InstStaff selectByIdNoAndPhone(@Param("idNo") String idNo, @Param("phone") String phone);
+	
+	/**
+	 * 
 	 * selectInstStaffCountByServiceId:(通过服务id统计会该项技能的员工). <br/>
 	 * 
 	 * @author zhoulei

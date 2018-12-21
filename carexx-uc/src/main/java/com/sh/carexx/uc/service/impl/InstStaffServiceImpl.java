@@ -50,6 +50,11 @@ public class InstStaffServiceImpl implements InstStaffService {
 	}
 
 	@Override
+	public InstStaff getByIdNoAndPhone(String idNo, String phone) {
+		return this.instStaffMapper.selectByIdNoAndPhone(idNo, phone);
+	}
+	
+	@Override
 	public Integer getInstStaffCountByServiceId(InstStaffQueryFormBean instStaffQueryFormBean) {
 		return this.instStaffMapper.selectInstStaffCountByServiceId(instStaffQueryFormBean);
 	}

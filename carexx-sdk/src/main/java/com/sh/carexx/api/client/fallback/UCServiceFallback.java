@@ -559,7 +559,7 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 	
 	@Override
-	public BasicRetVal applyCertification(Integer id) {
+	public BasicRetVal applyCertification(String phone, String verifyCode, String idNo) {
 		return null;
 	}
 

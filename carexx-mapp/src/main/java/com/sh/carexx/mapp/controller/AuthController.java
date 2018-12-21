@@ -126,4 +126,23 @@ public class AuthController extends BaseController {
 		Byte identityType = IdentityType.WECHAT.getValue();
 		return this.ucServiceClient.CaregiversLogin(identityType, openId);*/
 	}
+	
+	@RequestMapping("/apply_certification")
+	public BasicRetVal applyCertification(String openId, UserInfo userInfo, String phone, String verifyCode, String idNo) {
+		OAuthLoginFormBean oAuthLoginFormBean = new OAuthLoginFormBean();
+		oAuthLoginFormBean.setIdentityType(IdentityType.WECHAT.getValue());
+		oAuthLoginFormBean.setIdentifier(openId);
+		oAuthLoginFormBean.setIdentity(Identity.PATIENT.getValue());
+		oAuthLoginFormBean.setNickname(userInfo.getNickname());
+		oAuthLoginFormBean.setAvatar(userInfo.getAvatar());
+		oAuthLoginFormBean.setSex(userInfo.getSex());
+		oAuthLoginFormBean.setRegion(userInfo.getRegion());
+
+		String retVal = this.ucServiceClient.doOAuthLogin(oAuthLoginFormBean);
+		DataRetVal dataRetVal = JSONUtils.toBean(retVal, DataRetVal.class);
+		if (dataRetVal != null && CarexxConstant.RetCode.SUCCESS == dataRetVal.getCode()) {
+			return this.ucServiceClient.applyCertification(phone, verifyCode, idNo);
+		}
+		return null;
+	}
 }

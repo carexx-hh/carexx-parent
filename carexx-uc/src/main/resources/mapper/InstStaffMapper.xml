@@ -44,6 +44,14 @@
 		WHERE
 			id_no = #{idNo,jdbcType=VARCHAR} and staff_status = 1 and inst_id = #{instId,jdbcType=INTEGER}
 	</select>
+	<select id="selectByIdNoAndPhone" resultMap="BaseResultMap">
+		SELECT
+			<include refid="Base_Column_List" />
+		FROM
+			carexx_inst_staff
+		WHERE
+			id_no = #{idNo,jdbcType=VARCHAR} and staff_status = 1 and phone = #{phone,jdbcType=VARCHAR}
+	</select>
 	<select id="selectInstStaffCount" parameterType="com.sh.carexx.bean.staff.InstStaffQueryFormBean" resultType="java.lang.Integer">
 		SELECT
 			count(1) totalCount
