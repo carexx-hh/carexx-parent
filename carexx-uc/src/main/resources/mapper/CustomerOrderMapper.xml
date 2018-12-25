@@ -715,6 +715,8 @@
 		LEFT JOIN carexx_order_payment op ON co.order_no = op.order_no
 		LEFT JOIN carexx_customer_order_schedule cos ON cos.order_no = co.order_no
 		LEFT JOIN carexx_order_settle os ON cos.id = os.schedule_id
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_work_type wt ON cs.work_type_id = wt.id
 		<where>
 			co.order_status = 6
 		AND ci.inst_status = 1
@@ -726,6 +728,9 @@
 		</if>
 		<if test="serviceId != null and serviceId != '' ">
 			and co.service_id = #{serviceId,jdbcType=TINYINT}
+		</if>
+		<if test="workTypeId != null and workTypeId != '' ">
+			and wt.id = #{workTypeId,jdbcType=INTEGER}
 		</if>
 		<if test="serviceStartTime != null and serviceStartTime != '' ">
 			and DATE_FORMAT(co.service_end_time ,<![CDATA['%Y-%m-%d']]>) <![CDATA[>=]]> DATE_FORMAT(#{serviceStartTime},<![CDATA['%Y-%m-%d']]>)
