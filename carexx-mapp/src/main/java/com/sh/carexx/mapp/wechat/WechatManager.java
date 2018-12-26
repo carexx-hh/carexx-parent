@@ -51,6 +51,14 @@ public class WechatManager {
 	private String patientAppId;
 	@Value("${wechat.patient.appSecret}")
 	private String patientAppSecret;
+	@Value("${wechat.nursingSupervisor.appId}")
+	private String nursingSupervisorAppId;
+	@Value("${wechat.nursingSupervisor.appSecret}")
+	private String nursingSupervisorAppSecret;
+	@Value("${wechat.caregivers.appId}")
+	private String caregiversAppId;
+	@Value("${wechat.caregivers.appSecret}")
+	private String caregiversAppSecret;
 	@Value("${wechat.token}")
 	private String token;
 	@Value("${wechat.encodingAesKey}")
@@ -163,9 +171,9 @@ public class WechatManager {
 	
 	public Map<String, Object> getWxAppletOAuthInfo(String code, Byte identity) throws BizException {
 		if(identity == Identity.NURSING_SUPERVISOR.getValue()) {
-			return this.getWxAppletOAuthInfo(code, this.appId, this.appSecret);
+			return this.getWxAppletOAuthInfo(code, this.nursingSupervisorAppId, this.nursingSupervisorAppSecret);
 		} else if(identity == Identity.CAREGIVERS.getValue()) {
-			return this.getWxAppletOAuthInfo(code, this.appId, this.appSecret);
+			return this.getWxAppletOAuthInfo(code, this.caregiversAppId, this.caregiversAppSecret);
 		}else {
 			return this.getWxAppletOAuthInfo(code, this.patientAppId, this.patientAppSecret);
 		}
