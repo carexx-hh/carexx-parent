@@ -38,7 +38,7 @@ public interface CustomerOrderTimeMapper {
      * @return
      * @since JDK 1.8
      */
-    List<CustomerOrderTime> selectByInstId(Integer instId);
+    List<CustomerOrderTime> selectByInstId(@Param("instId") Integer instId);
 
     /**
      *

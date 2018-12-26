@@ -1516,7 +1516,7 @@ public interface UCServiceClient {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	@RequestMapping(value = "/customerordertime/get_by_instId/{instId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/customerordertime/get_by_instId/{instId}", method = RequestMethod.GET)
 	String getCustomerordertimeByInstId(@PathVariable("instId") Integer instId);
 
 	/**

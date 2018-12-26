@@ -5,6 +5,7 @@ import com.sh.carexx.bean.order.CustomerOrderTimeQueryFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.web.BasicRetVal;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,9 +15,11 @@ import javax.validation.Valid;
 @RequestMapping("/customerordertime")
 public class CustomerOrderTimeController extends BaseController {
 
-    @RequestMapping(value = "/get_by_instId")
-    public String getByInstId() {
-        Integer instId = this.getCurrentUser().getInstId();
+    @RequestMapping(value = "/get_by_instId/{instId}")
+    public String getByInstId(@PathVariable("instId") Integer instId) {
+        if(instId == 0 || instId == null){
+            instId = this.getCurrentUser().getInstId();
+        }
         return this.ucServiceClient.getCustomerordertimeByInstId(instId);
     }
 

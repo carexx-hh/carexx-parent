@@ -17,37 +17,37 @@
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
         select
-        <include refid="Base_Column_List" />
+          <include refid="Base_Column_List" />
         from
-        carexx_customer_order_time
+          carexx_customer_order_time
         where
-        id = #{id,jdbcType=BIGINT}
+          id = #{id,jdbcType=BIGINT}
     </select>
 
     <select id="selectByInstId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select
-        <include refid="Base_Column_List" />
+          <include refid="Base_Column_List" />
         from
-        carexx_customer_order_time
+          carexx_customer_order_time
         where
-        inst_id = #{instId,jdbcType=INTEGER}
+          inst_id = #{instId,jdbcType=INTEGER}
     </select>
 
     <select id="selectJobTypeExistence" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List" />
+          <include refid="Base_Column_List" />
         FROM
-        carexx_customer_order_time
+          carexx_customer_order_time
         WHERE
-        inst_id = #{instId,jdbcType=INTEGER}
+          inst_id = #{instId,jdbcType=INTEGER}
         and job_type = #{jobType,jdbcType=TINYINT}
     </select>
 
     <select id="selectCustomerOrderTimeCount" parameterType="com.sh.carexx.bean.order.CustomerOrderTimeQueryFormBean" resultType="java.lang.Integer">
         SELECT
-        count(1) totalCount
+          count(1) totalCount
         FROM
-        carexx_customer_order_time cot
+          carexx_customer_order_time cot
         LEFT JOIN carexx_care_inst ci ON cot.inst_id = ci.id
         <where>
             <if test="instName != null and instName != '' ">
@@ -58,17 +58,18 @@
 
     <select id="selectCustomerOrderTimeList" parameterType="com.sh.carexx.bean.order.CustomerOrderTimeQueryFormBean" resultType="java.util.Map">
         SELECT
-        cot.id id,
-        cot.inst_id instId,
-        ci.inst_name instName,
-        cot.job_type jobType,
-        cot.start_time startTime,
-        cot.end_time endTime,
-        cot.create_time createTime,
-        cot.modify_time modifyTime
+          cot.id id,
+          cot.inst_id instId,
+          ci.inst_name instName,
+          cot.job_type jobType,
+          cot.start_time startTime,
+          cot.end_time endTime,
+          cot.create_time createTime,
+          cot.modify_time modifyTime
         FROM
-        carexx_customer_order_time cot
-        LEFT JOIN carexx_care_inst ci ON cot.inst_id = ci.id
+          carexx_customer_order_time cot
+        LEFT JOIN
+          carexx_care_inst ci ON cot.inst_id = ci.id
         <where>
             <if test="instName != null and instName != '' ">
                 ci.inst_name like CONCAT('%', '${instName}', '%')
