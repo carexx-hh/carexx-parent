@@ -1,5 +1,8 @@
 package com.sh.carexx.uc.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +34,9 @@ public class AuthController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String login(@RequestBody AclLoginFormBean aclLoginFormBean) {
 		try {
-			String token = this.aclUserManager.login(aclLoginFormBean);
-			return new DataRetVal(CarexxConstant.RetCode.SUCCESS, token).toJSON();
+			Map<String, Object> resultMap = new HashMap<>();
+			resultMap = this.aclUserManager.login(aclLoginFormBean);
+			return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultMap).toJSON();
 		} catch (BizException e) {
 			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc()).toJSON();
 		}

@@ -1,6 +1,7 @@
 package com.sh.carexx.mapp.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -57,10 +58,10 @@ public class AuthController extends BaseController {
 		} catch (BizException e) {
 	        this.logger.error("微信登录失败", e);
 	    }
-		Map<String, Object> ReturnValue = new HashMap<>();
-		ReturnValue.put("token", token);
-		ReturnValue.put("openId", openId);
-		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, ReturnValue).toJSON();
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("token", token);
+		resultMap.put("openId", openId);
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultMap).toJSON();
 	}
 	
 	@RequestMapping("/nursing_supervisor_login")
@@ -100,10 +101,11 @@ public class AuthController extends BaseController {
 			} catch (BizException e) {
 		        this.logger.error("微信登录失败", e);
 		    }
-			Map<String, Object> ReturnValue = new HashMap<>();
-			ReturnValue.put("token", token);
-			ReturnValue.put("openId", openId);
-			return new DataRetVal(CarexxConstant.RetCode.SUCCESS, ReturnValue).toJSON();
+			@SuppressWarnings("unchecked")
+			Map<String, Object> resultMap = (Map<String, Object>) dataRetValLogin.getData();
+			resultMap.put("openId", openId);
+			resultMap.put("token", token);
+				return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultMap).toJSON();
 		} else {
 			return retValLogin;
 		}

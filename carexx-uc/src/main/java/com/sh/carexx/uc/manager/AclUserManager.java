@@ -27,6 +27,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -153,7 +157,7 @@ public class AclUserManager {
 		this.aclUserPwdService.update(userPwd.getId(), md5NewPwd);
 	}
 
-	public String login(AclLoginFormBean aclLoginFormBean) throws BizException {
+	public Map<String, Object> login(AclLoginFormBean aclLoginFormBean) throws BizException {
 		AclUserAcct userAcct = this.aclUserAcctService.getByAccount(aclLoginFormBean.getAcctNo());
 		this.check(userAcct);
 		this.verifyLoginPwd(userAcct.getId(), aclLoginFormBean.getLoginPass());
@@ -165,7 +169,11 @@ public class AclUserManager {
 		} catch (Exception e) {
 			throw new BizException(ErrorCode.SYS_ERROR, e);
 		}
-		return token;
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("token", token);
+		resultMap.put("userId", userAcct.getId());
+		resultMap.put("instId", userAcct.getInstId());
+		return resultMap;
 	}
 
 	public String getSessionUserId(String token) {
