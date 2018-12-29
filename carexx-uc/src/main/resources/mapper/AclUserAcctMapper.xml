@@ -25,16 +25,16 @@
 	</select>
 	<select id="selectDetailById" parameterType="java.lang.Integer" resultType="java.util.Map">
 		select
-			aua.id, 
-			aua.account, 
-			aua.status, 
-			aua.name, 
-			aua.mobile, 
-			aua.email, 
-			aua.inst_id, 
-			ci.inst_name,
-			aua.create_time, 
-			aua.modify_time
+			aua.id id, 
+			aua.account account, 
+			aua.status status, 
+			aua.name name, 
+			aua.mobile mobile, 
+			aua.email email, 
+			aua.inst_id instId, 
+			ci.inst_name instName,
+			aua.create_time createTime, 
+			aua.modify_time modifyTime
 		from 
 			carexx_acl_user_acct aua
 		LEFT JOIN carexx_care_inst ci ON aua.inst_id = ci.id
