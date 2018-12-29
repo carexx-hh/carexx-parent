@@ -37,10 +37,10 @@ public class AuthController extends BaseController {
 	public String patientLogin(String code, UserInfo userInfo) {
 		String openId = null;
 		String token = null;
-		try {
+		/*try {
 			Map<String, Object> oAuthInfo = this.wechatManager.getWxAppletOAuthInfo(code, Identity.PATIENT.getValue());
 			openId = String.valueOf(oAuthInfo.get("openid")); // 用户唯一标识
-			/*openId = "1";*/
+*/			openId = "1";
 			OAuthLoginFormBean oAuthLoginFormBean = new OAuthLoginFormBean();
 			oAuthLoginFormBean.setIdentityType(IdentityType.WECHAT.getValue());
 			oAuthLoginFormBean.setIdentifier(openId);
@@ -55,9 +55,9 @@ public class AuthController extends BaseController {
 			if (dataRetVal != null && CarexxConstant.RetCode.SUCCESS == dataRetVal.getCode()) {
 				token = String.valueOf(dataRetVal.getData());
 			}
-		} catch (BizException e) {
+		/*} catch (BizException e) {
 	        this.logger.error("微信登录失败", e);
-	    }
+	    }*/
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("token", token);
 		resultMap.put("openId", openId);
@@ -80,10 +80,10 @@ public class AuthController extends BaseController {
 		String retValLogin = this.ucServiceClient.login(aclLoginFormBean);
 		DataRetVal dataRetValLogin = JSONUtils.toBean(retValLogin, DataRetVal.class);
 		if (dataRetValLogin != null && CarexxConstant.RetCode.SUCCESS == dataRetValLogin.getCode()) {
-			try {
+		/*	try {
 				Map<String, Object> oAuthInfo = this.wechatManager.getWxAppletOAuthInfo(code, Identity.NURSING_SUPERVISOR.getValue());
 				openId = String.valueOf(oAuthInfo.get("openid")); // 用户唯一标识
-				/*openId = "1";*/
+*/				openId = "1";
 				OAuthLoginFormBean oAuthLoginFormBean = new OAuthLoginFormBean();
 				oAuthLoginFormBean.setIdentityType(IdentityType.WECHAT.getValue());
 				oAuthLoginFormBean.setIdentifier(openId);
@@ -98,9 +98,9 @@ public class AuthController extends BaseController {
 				if (dataRetVal != null && CarexxConstant.RetCode.SUCCESS == dataRetVal.getCode()) {
 					token = String.valueOf(dataRetVal.getData());
 				}
-			} catch (BizException e) {
+			/*} catch (BizException e) {
 		        this.logger.error("微信登录失败", e);
-		    }
+		    }*/
 			@SuppressWarnings("unchecked")
 			Map<String, Object> resultMap = (Map<String, Object>) dataRetValLogin.getData();
 			resultMap.put("openId", openId);

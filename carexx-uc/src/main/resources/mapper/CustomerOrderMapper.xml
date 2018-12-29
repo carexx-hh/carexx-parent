@@ -121,10 +121,13 @@
 			co.receipt_no receiptNo,
 			co.invoice_no invoiceNo,
 			co.order_amt orderAmt,
-			co.holiday holiday
+			co.holiday holiday,
+			wt.id workTypeId,
+			wt.work_type_name workTypeName
 		FROM
 			carexx_customer_order co
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_work_type wt ON cs.work_type_id = wt.id
 		LEFT JOIN carexx_inst_care_service ics ON co.inst_id = ics.inst_id
 		AND co.service_id = ics.service_id
 		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no

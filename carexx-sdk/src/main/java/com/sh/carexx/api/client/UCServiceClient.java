@@ -58,6 +58,9 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/acluser/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryAclUserForList(@RequestBody AclRegFormBean aclRegFormBean);
 
+	@RequestMapping(value = "/acluser/get_userId/{userId}", method = RequestMethod.GET)
+	String getuserId(@PathVariable("userId") Integer userId);
+	
 	@RequestMapping(value = "/acluser/detail/{id}", method = RequestMethod.GET)
 	String getAclUserDetail(@PathVariable("id") Integer id);
 
@@ -936,6 +939,9 @@ public interface UCServiceClient {
 
 	@RequestMapping(value = "/inststaff/all", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryInstStaffForAll(@RequestBody InstStaffQueryFormBean instStaffQueryFormBean);
+	
+	@RequestMapping(value = "/inststaff/get_id/{id}", method = RequestMethod.GET)
+	String getInstStaffId(@PathVariable("id") Integer id);
 	/**
 	 * 
 	 * queryInstStaffByServiceId:(通过服务id和机构id查询). <br/>

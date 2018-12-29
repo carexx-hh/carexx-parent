@@ -12,6 +12,8 @@ public interface AclUserAcctMapper {
 
 	AclUserAcct selectById(Integer id);
 
+	Map<?, ?> selectDetailById(Integer id);
+	
 	int selectRoleId(String account);
 	
 	AclUserAcct selectByAccount(String account);

@@ -40,6 +40,17 @@ public interface InstStaffService {
 	 * @since JDK 1.8
 	 */
 	InstStaff getById(Integer id);
+	
+	/**
+	 * 
+	 * getDetailById:(通过id查询详细信息). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param id
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	Map<?, ?> getDetailById(Integer id);
 
 	/**
 	 * 

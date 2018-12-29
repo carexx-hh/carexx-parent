@@ -23,6 +23,24 @@
 		where 
 			id = #{id,jdbcType=INTEGER}
 	</select>
+	<select id="selectDetailById" parameterType="java.lang.Integer" resultType="java.util.Map">
+		select
+			aua.id, 
+			aua.account, 
+			aua.status, 
+			aua.name, 
+			aua.mobile, 
+			aua.email, 
+			aua.inst_id, 
+			ci.inst_name,
+			aua.create_time, 
+			aua.modify_time
+		from 
+			carexx_acl_user_acct aua
+		LEFT JOIN carexx_care_inst ci ON aua.inst_id = ci.id
+		where 
+			aua.id = #{id,jdbcType=INTEGER}
+	</select>
 	<select id="selectRoleId" parameterType="java.lang.String" resultType="java.lang.Integer">
 		select
 			aur.role_id

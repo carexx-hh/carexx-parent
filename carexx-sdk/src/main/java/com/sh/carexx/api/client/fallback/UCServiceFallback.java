@@ -74,6 +74,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public String getuserId(Integer userId) {
+		return null;
+	}
+	
+	@Override
 	public String getAclUserDetail(Integer id) {
 		return null;
 	}
@@ -528,6 +533,11 @@ public class UCServiceFallback implements UCServiceClient {
 		return null;
 	}
 
+	@Override
+	public String getInstStaffId(Integer id) {
+		return null;
+	}
+	
 	@Override
 	public String queryInstStaffByServiceId(InstStaffQueryFormBean instStaffQueryFormBean) {
 		return null;

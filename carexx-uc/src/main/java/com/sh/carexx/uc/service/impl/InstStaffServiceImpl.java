@@ -44,6 +44,12 @@ public class InstStaffServiceImpl implements InstStaffService {
 
 	}
 
+
+	@Override
+	public Map<?, ?> getDetailById(Integer id) {
+		return this.instStaffMapper.selectDetailById(id);
+	}
+	
 	@Override
 	public InstStaff getByIdNo(String idNo, Integer instId) {
 		return this.instStaffMapper.selectByIdNo(idNo, instId);

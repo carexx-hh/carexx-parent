@@ -60,6 +60,13 @@ public class AclUserController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, new PagerBean(totalNum, resultList)).toJSON();
 	}
 
+	@RequestMapping(value = "/get_userId/{userId}", method = RequestMethod.GET)
+	public String getuserId(@PathVariable("userId") Integer userId) {
+		Map<?, ?> resultList = null;
+		resultList = this.aclUserAcctService.getDetailById(userId);
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
+	}
+	
 	@RequestMapping(value = "/get_roleId/{account}", method = RequestMethod.GET)
 	public String getRoleId(@PathVariable("account") String account) {
 		int roleId = this.aclUserAcctService.getRoleId(account);

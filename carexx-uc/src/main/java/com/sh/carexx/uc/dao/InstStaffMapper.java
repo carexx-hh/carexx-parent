@@ -41,6 +41,17 @@ public interface InstStaffMapper {
 	 * @since JDK 1.8
 	 */
 	InstStaff selectById(Integer id);
+	
+	/**
+	 * 
+	 * selectDetailById:(通过id查询详细信息). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param id
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	Map<?, ?> selectDetailById(Integer id);
 
 	/**
 	 * 

@@ -59,6 +59,13 @@ public class InstStaffController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
 
+	@RequestMapping(value = "/get_id/{id}", method = RequestMethod.GET)
+	public String getId(@PathVariable("id") Integer id) {
+		Map<?, ?> resultList = null;
+		resultList = this.instStaffService.getDetailById(id);
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
+	}
+	
 	@RequestMapping(value = "/list_by_serviceid", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryForListByServiceId(@RequestBody InstStaffQueryFormBean instStaffQueryFormBean) {
 		Integer totalNum = this.instStaffService.getInstStaffCountByServiceId(instStaffQueryFormBean);
