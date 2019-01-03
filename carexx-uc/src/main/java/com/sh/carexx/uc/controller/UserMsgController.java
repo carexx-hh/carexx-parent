@@ -40,7 +40,7 @@ public class UserMsgController {
 
 	@RequestMapping(value = "/all/{userId}", method = RequestMethod.GET)
 	public String queryAllUserMsg(@PathVariable("userId") Integer userId) {
-		List<Map<?,?>> resultList = null;
+		List<Map<String, Object>> resultList = null;
 		resultList = this.userMsgService.queryAllUserMsg(userId);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}

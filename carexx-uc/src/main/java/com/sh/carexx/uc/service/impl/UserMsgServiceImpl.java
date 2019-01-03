@@ -37,8 +37,12 @@ public class UserMsgServiceImpl implements UserMsgService {
 	}
 
 	@Override
-	public List<Map<?, ?>> queryAllUserMsg(Integer userId) {
-		return this.userMsgMapper.selectAllUserMsg(userId);
+	public List<Map<String, Object>> queryAllUserMsg(Integer userId) {
+		List<Map<String, Object>> userMsgList = this.userMsgMapper.selectAllUserMsg(userId);
+		for(Map<String, Object> userMsgMap: userMsgList) {
+			userMsgMap.put("active", true);
+		}
+		return userMsgList;
 	}
 	
 }

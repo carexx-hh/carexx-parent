@@ -43,13 +43,17 @@
 			cci.inst_name instName,
 			cis.service_inst_id serviceInstId,
 			ccis.inst_name serviceInstName,
+			cis.person_type personType,
+			cis.job_status jobStatus,
 			cis.photo photo,
 			cis.real_name realName,
 			cis.sex sex,
 			cis.phone phone,
 			cis.id_no idNo,
 			cis.address address,
-			cis.birthday birthday
+			cis.birthday birthday,
+			cis.entry_date entryDate,
+			cis.leave_date leaveDate
 		FROM
 			carexx_inst_staff cis
 		LEFT JOIN carexx_care_inst cci ON cis.inst_id = cci.id
@@ -280,8 +284,8 @@
 			cis.inst_id instId,
 			cci.inst_name instName,
 			cis.service_inst_id serviceInstId,
+			ccis.inst_name serviceInstName,
 			cis.certification_status certificationStatus,
-			ccis.inst_name instName,
 			cis.real_name realName,
 			cis.id_no idNo,
 			cis.sex sex,

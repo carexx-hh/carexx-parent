@@ -36,7 +36,7 @@ public interface UserMsgMapper {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> selectAllUserMsg(Integer userId);
+	List<Map<String, Object>> selectAllUserMsg(Integer userId);
 
 	/**
 	 * 

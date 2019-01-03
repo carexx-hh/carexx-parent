@@ -48,6 +48,6 @@ public interface UserMsgService {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> queryAllUserMsg(Integer userId);
+	List<Map<String, Object>> queryAllUserMsg(Integer userId);
 
 }
