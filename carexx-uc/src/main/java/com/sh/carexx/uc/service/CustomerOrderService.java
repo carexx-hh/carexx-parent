@@ -178,6 +178,18 @@ public interface CustomerOrderService {
 	
 	/**
 	 * 
+	 * queryMappByOrderStatusAndServiceStatus:(通过订单状态和排班状态查询订单). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param orderStatus
+	 * @param ServiceStatus
+	 * @param instId
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> queryMappByOrderStatusAndServiceStatus(String orderStatus, Integer serviceStatus, Integer instId);
+	/**
+	 * 
 	 * updateStatus:(修改订单状态). <br/>
 	 * 
 	 * @author hetao

@@ -302,6 +302,12 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 	}
 
 	@Override
+	public List<Map<?, ?>> queryMappByOrderStatusAndServiceStatus(String orderStatus, Integer serviceStatus,
+			Integer instId) {
+		return this.customerOrderMapper.selectMappByOrderStatusAndServiceStatus(orderStatus, serviceStatus, instId);
+	}
+	
+	@Override
 	public void updateStatus(String orderNo, Byte srcStatus, Byte targetStatus) throws BizException {
 		int rows = 0;
 		try {

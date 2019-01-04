@@ -83,9 +83,14 @@ public class CustomerOrderController extends BaseController {
 				this.ucServiceClient.calcServiceFee(calcServiceFeeFormBean));
 	}
 	
-	@RequestMapping(value = "/by_order_status/{orderStatus}/{instId}")
+	@RequestMapping(value = "/by_orderStatus/{orderStatus}/{instId}")
 	public String queryMappByOrderStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("instId")Integer instId) {
 		return this.ucServiceClient.queryMappByOrderStatus(orderStatus, instId);
+	}
+	
+	@RequestMapping(value = "/by_orderStatus_and_serviceStatus/{orderStatus}/{instId}")
+	public String queryMappByOrderStatusAndServiceStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("serviceStatus")Integer serviceStatus, @PathVariable("instId")Integer instId) {
+		return this.ucServiceClient.queryMappByOrderStatusAndServiceStatus(orderStatus, serviceStatus, instId);
 	}
 	
 	@RequestMapping(value="/staff_income_count")

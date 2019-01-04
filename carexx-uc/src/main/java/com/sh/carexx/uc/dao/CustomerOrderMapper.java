@@ -177,6 +177,18 @@ public interface CustomerOrderMapper {
 	
 	/**
 	 * 
+	 * selectMappByOrderStatusAndServiceStatus:(移动端通过订单状态和排班状态查询订单). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param orderStatus
+	 * @param serviceStatus
+	 * @param instId
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> selectMappByOrderStatusAndServiceStatus(@Param("orderStatus") String orderStatus, @Param("serviceStatus") Integer serviceStatus, @Param("instId") Integer instId);
+	/**
+	 * 
 	 * selectOrderCountByStaffId:(通过人员id统计订单). <br/> 
 	 * 
 	 * @author zhoulei 
