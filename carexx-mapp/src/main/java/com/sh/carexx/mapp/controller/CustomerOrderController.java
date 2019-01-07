@@ -88,7 +88,7 @@ public class CustomerOrderController extends BaseController {
 		return this.ucServiceClient.queryMappByOrderStatus(orderStatus, instId);
 	}
 	
-	@RequestMapping(value = "/by_orderStatus_and_serviceStatus/{orderStatus}/{instId}")
+	@RequestMapping(value = "/by_orderStatus_and_serviceStatus/{orderStatus}/{serviceStatus}/{instId}")
 	public String queryMappByOrderStatusAndServiceStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("serviceStatus")Integer serviceStatus, @PathVariable("instId")Integer instId) {
 		return this.ucServiceClient.queryMappByOrderStatusAndServiceStatus(orderStatus, serviceStatus, instId);
 	}

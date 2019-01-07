@@ -712,7 +712,7 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/customerorder/by_orderStatus/{orderStatus}/{instId}", method = RequestMethod.GET)
 	String queryMappByOrderStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("instId")Integer instId);
 
-	@RequestMapping(value = "/customerorder/by_orderStatus_and_serviceStatus/{orderStatus}/{serviceStatus}{instId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/customerorder/by_orderStatus_and_serviceStatus/{orderStatus}/{serviceStatus}/{instId}", method = RequestMethod.GET)
 	String queryMappByOrderStatusAndServiceStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("serviceStatus")Integer serviceStatus, @PathVariable("instId")Integer instId);
 	/**
 	 *

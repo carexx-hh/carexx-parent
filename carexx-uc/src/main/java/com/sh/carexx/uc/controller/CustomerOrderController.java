@@ -235,7 +235,7 @@ public class CustomerOrderController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
 	
-	@RequestMapping(value = "/by_orderStatus_and_ServiceStatus/{orderStatus}/{serviceStatus}/{instId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/by_orderStatus_and_serviceStatus/{orderStatus}/{serviceStatus}/{instId}", method = RequestMethod.GET)
 	public String queryMappByOrderStatusAndServiceStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("serviceStatus")Integer serviceStatus, @PathVariable("instId")Integer instId) {
 		List<Map<?, ?>> resultList = null;
 		resultList = this.customerOrderService.queryMappByOrderStatusAndServiceStatus(orderStatus, serviceStatus, instId);
