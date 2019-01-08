@@ -44,5 +44,10 @@ public class UserMsgServiceImpl implements UserMsgService {
 		}
 		return userMsgList;
 	}
+
+	@Override
+	public Integer getForCountUnread(Integer userId) {
+		return this.userMsgMapper.selectForCountUnread(userId);
+	}
 	
 }

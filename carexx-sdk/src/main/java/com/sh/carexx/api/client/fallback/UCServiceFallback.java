@@ -529,6 +529,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public String getUserMsgCountUnread(Integer userId) {
+		return null;
+	}
+	
+	@Override
 	public String queryInstStaffForList(InstStaffQueryFormBean instStaffQueryFormBean) {
 		return null;
 	}

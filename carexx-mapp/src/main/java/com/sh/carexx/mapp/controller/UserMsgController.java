@@ -38,4 +38,9 @@ public class UserMsgController extends BaseController {
 	public BasicRetVal delete(@PathVariable("ids") String ids) {
 		return this.ucServiceClient.deleteUserMsg(ids);
 	}
+	
+	@RequestMapping(value = "/count_unread/{userId}")
+	public String getForCountUnread(@PathVariable("userId") Integer userId) {
+		return this.ucServiceClient.getUserMsgCountUnread(userId);
+	}
 }

@@ -64,5 +64,11 @@ public class UserMsgController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
+	
+	@RequestMapping(value = "/count_unread/{userId}", method = RequestMethod.GET)
+	public String getForCountUnread(@PathVariable("userId") Integer userId) {
+		Integer resultCount = this.userMsgService.getForCountUnread(userId);
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultCount).toJSON();
+	}
 
 }

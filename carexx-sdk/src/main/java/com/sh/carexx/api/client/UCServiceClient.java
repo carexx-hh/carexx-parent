@@ -929,6 +929,8 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/msg/read/{id}", method = RequestMethod.GET)
 	UserMsg readUserMsg(@PathVariable("id") Long id);
 
+	@RequestMapping(value = "/msg/count_unread/{userId}", method = RequestMethod.GET)
+	String getUserMsgCountUnread(@PathVariable("userId") Integer userId);
 	/**
 	 * 
 	 * queryInstStaffForList:(查询机构员工信息分页). <br/>

@@ -49,5 +49,16 @@ public interface UserMsgService {
 	 * @since JDK 1.8
 	 */
 	List<Map<String, Object>> queryAllUserMsg(Integer userId);
+	
+	/**
+	 * 
+	 * getForCountUnread:(统计未读消息). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param userId
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	Integer getForCountUnread(Integer userId);
 
 }

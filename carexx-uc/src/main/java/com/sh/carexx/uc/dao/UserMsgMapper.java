@@ -49,4 +49,14 @@ public interface UserMsgMapper {
 	 */
 	int insert(UserMsg userMsg);
 
+	/**
+	 * 
+	 * selectForCountUnread:(统计未读消息). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param userId
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	Integer selectForCountUnread(Integer userId);
 }
