@@ -1,5 +1,17 @@
 package com.sh.carexx.uc.manager;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.sh.carexx.bean.acl.AclLoginFormBean;
 import com.sh.carexx.bean.acl.AclModifyPwdFormBean;
 import com.sh.carexx.bean.acl.AclRegFormBean;
@@ -19,19 +31,6 @@ import com.sh.carexx.uc.service.AclRoleService;
 import com.sh.carexx.uc.service.AclUserAcctService;
 import com.sh.carexx.uc.service.AclUserPwdService;
 import com.sh.carexx.uc.service.AclUserRoleService;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class AclUserManager {
