@@ -526,7 +526,7 @@ public class CustomerOrderScheduleManager {
 
 	/**
 	 * 
-	 * mappAdd:(移动端添加订单). <br/> 
+	 * mappAdd:(移动端添加排班). <br/> 
 	 * 
 	 * @author zhoulei 
 	 * @param mappCustomerOrderScheduleFormBean
@@ -593,6 +593,12 @@ public class CustomerOrderScheduleManager {
 		userMsgFormBean.setOrderNo(orderNo);
 		this.userMsgManager.add(userMsgFormBean);
 		
+		if(customerOrder.getOrderStatus() == OrderStatus.IN_SERVICE.getValue()) {
+
+			//将订单状态从待排班改为服务中
+			this.customerOrderService.updateStatus(orderNo,
+					OrderStatus.IN_SERVICE.getValue(), OrderStatus.WAIT_SCHEDULE.getValue());
+		}
 		this.customerOrderScheduleService.deleteMappOrderSchedule(customerOrderSchedule.getId());
 		this.orderSettleService.deleteMappOrderSettle(customerOrderSchedule.getId());
 	}
