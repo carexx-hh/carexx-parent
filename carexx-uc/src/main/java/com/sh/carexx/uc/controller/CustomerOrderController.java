@@ -242,10 +242,10 @@ public class CustomerOrderController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
 
-	@RequestMapping(value = "/modify_endTime/{order}", method = RequestMethod.GET)
-	public BasicRetVal modifyServiceEndTime(@PathVariable("order") String order) throws BizException{
+	@RequestMapping(value = "/modify_endTime/{orderNo}", method = RequestMethod.GET)
+	public BasicRetVal modifyServiceEndTime(@PathVariable("orderNo") String orderNo) throws BizException{
 		try {
-			this.customerOrderManager.modifyServiceEndTime(order);
+			this.customerOrderManager.modifyServiceEndTime(orderNo);
 		} catch (BizException e) {
 			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
 		}

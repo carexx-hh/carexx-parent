@@ -1,51 +1,27 @@
 package com.sh.carexx.uc.manager;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.sh.carexx.bean.order.ConfirmCompletedOrderFormBean;
-import com.sh.carexx.bean.order.CustomerAppointOrderFormBean;
-import com.sh.carexx.bean.order.CustomerOrderAdjustFormBean;
-import com.sh.carexx.bean.order.CustomerOrderFormBean;
-import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
+import com.sh.carexx.bean.order.*;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.enums.TimeUnit;
 import com.sh.carexx.common.enums.UseStatus;
-import com.sh.carexx.common.enums.order.OrderScheduleStatus;
-import com.sh.carexx.common.enums.order.OrderSettleStatus;
-import com.sh.carexx.common.enums.order.OrderStatus;
-import com.sh.carexx.common.enums.order.OrderType;
-import com.sh.carexx.common.enums.order.ProofType;
-import com.sh.carexx.common.enums.order.ServiceAddress;
+import com.sh.carexx.common.enums.order.*;
 import com.sh.carexx.common.enums.pay.PayMethod;
 import com.sh.carexx.common.enums.pay.PayStatus;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.keygen.KeyGenerator;
 import com.sh.carexx.common.util.DateUtils;
 import com.sh.carexx.common.util.ValidUtils;
-import com.sh.carexx.model.uc.CustomerOrder;
-import com.sh.carexx.model.uc.CustomerOrderSchedule;
-import com.sh.carexx.model.uc.InstCareService;
-import com.sh.carexx.model.uc.InstCustomer;
-import com.sh.carexx.model.uc.InstHoliday;
-import com.sh.carexx.model.uc.OrderSettle;
-import com.sh.carexx.model.uc.UserInfo;
-import com.sh.carexx.uc.service.CustomerOrderScheduleService;
-import com.sh.carexx.uc.service.CustomerOrderService;
-import com.sh.carexx.uc.service.InstCareServiceService;
-import com.sh.carexx.uc.service.InstCustomerService;
-import com.sh.carexx.uc.service.InstHolidayService;
-import com.sh.carexx.uc.service.InstSettleService;
-import com.sh.carexx.uc.service.OrderPaymentService;
-import com.sh.carexx.uc.service.OrderSettleService;
-import com.sh.carexx.uc.service.UserService;
+import com.sh.carexx.model.uc.*;
+import com.sh.carexx.uc.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * ClassName: CustomerOrderManager <br/>
@@ -405,10 +381,10 @@ public class CustomerOrderManager {
 	 * @since JDK 1.8
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
-	public void modifyServiceEndTime(String order) throws BizException {
-		CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(order);
+	public void modifyServiceEndTime(String orderNo) throws BizException {
+		CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(orderNo);
 		CustomerOrder customerOrder = new CustomerOrder();
-		customerOrder.setOrderNo(order);
+		customerOrder.setOrderNo(orderNo);
 		customerOrder.setServiceEndTime(customerOrderSchedule.getServiceEndTime());
 		this.customerOrderService.updateServiceEndTime(customerOrder);
 	}

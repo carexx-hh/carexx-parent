@@ -789,8 +789,8 @@ public interface UCServiceClient {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	@RequestMapping(value = "/customerorder/modify_endTime/{order}", method = RequestMethod.GET)
-	BasicRetVal modifyOrderServiceEndTime(@PathVariable("order") String order);
+	@RequestMapping(value = "/customerorder/modify_endTime/{orderNo}", method = RequestMethod.GET)
+	BasicRetVal modifyOrderServiceEndTime(@PathVariable("orderNo") String orderNo);
 
 	/**
 	 * 

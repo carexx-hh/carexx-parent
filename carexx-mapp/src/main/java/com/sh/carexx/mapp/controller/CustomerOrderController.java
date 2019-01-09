@@ -64,7 +64,6 @@ public class CustomerOrderController extends BaseController {
 		}
 		try {
 			OrderPayment orderPayment = this.ucServiceClient.getOrderPayment(orderPaymentFormBean.getOrderNo());
-			this.ucServiceClient.modifyOrderServiceEndTime(orderPaymentFormBean.getOrderNo());
 			return new DataRetVal(CarexxConstant.RetCode.SUCCESS,
 					this.wechatPayManager.getWechatPayInfo(orderPayment, orderPaymentFormBean));
 		} catch (BizException e) {

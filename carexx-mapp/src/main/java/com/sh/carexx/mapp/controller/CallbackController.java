@@ -1,14 +1,5 @@
 package com.sh.carexx.mapp.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.enums.pay.PayChnl;
 import com.sh.carexx.common.enums.pay.PayMethod;
@@ -20,6 +11,14 @@ import com.sh.carexx.mapp.wechat.WechatPayManager;
 import com.sh.carexx.mapp.wechat.bean.WepayNotifyReq;
 import com.sh.carexx.mapp.wechat.bean.WepayNotifyRsp;
 import com.sh.carexx.model.uc.OrderPayment;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/callback")
@@ -67,6 +66,7 @@ public class CallbackController extends BaseController {
 		}
 		try {
 			if (WechatPayManager.TRADE_SUCCESS.equals(req.getReturn_code())) {
+				this.ucServiceClient.modifyOrderServiceEndTime(req.getOut_trade_no());
 				OrderPayment orderPayment = new OrderPayment();
 				orderPayment.setPayType(PayMethod.ONLINE_PAY.getValue());
 				orderPayment.setPayChnl(PayChnl.WECHATPAY.getValue());

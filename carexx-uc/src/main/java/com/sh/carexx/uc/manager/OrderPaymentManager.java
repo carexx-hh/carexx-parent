@@ -81,7 +81,7 @@ public class OrderPaymentManager {
         if (oldOrderPayment.getPayStatus() == PayStatus.PENDING_PAY.getValue()
                 && orderPayment.getPayStatus() == PayStatus.PAY_SUCCESS.getValue()) {
             //订单表待支付变成已支付
-            this.customerOrderService.updateStatus(orderPayment.getOrderNo(), OrderStatus.WAIT_PAY.getValue(),
+            this.customerOrderService.updateStatus(orderPayment.getOrderNo(), OrderStatus.IN_SERVICE.getValue(),
                     OrderStatus.ALREADY_PAY.getValue());
             //结算表待支付变成已支付
             List<CustomerOrderSchedule> orderScheduleList = this.customerOrderScheduleService
