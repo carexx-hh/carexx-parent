@@ -3,10 +3,14 @@ package com.sh.carexx.uc.manager;
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
+import com.sh.carexx.bean.user.ApplyCertificationFormBean;
+import com.sh.carexx.bean.user.OAuthLoginFormBean;
 import com.sh.carexx.common.ErrorCode;
+import com.sh.carexx.common.enums.Identity;
 import com.sh.carexx.common.enums.UseStatus;
 import com.sh.carexx.common.enums.staff.CertificationStatus;
 import com.sh.carexx.common.enums.staff.StaffStatus;
+import com.sh.carexx.common.enums.user.IdentityType;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.util.DateUtils;
 import com.sh.carexx.common.util.ValidUtils;
@@ -14,10 +18,13 @@ import com.sh.carexx.model.uc.CustomerOrder;
 import com.sh.carexx.model.uc.CustomerOrderSchedule;
 import com.sh.carexx.model.uc.InstStaff;
 import com.sh.carexx.model.uc.InstStaffWorkType;
+import com.sh.carexx.model.uc.UserInfo;
 import com.sh.carexx.uc.service.CustomerOrderScheduleService;
 import com.sh.carexx.uc.service.CustomerOrderService;
 import com.sh.carexx.uc.service.InstStaffService;
 import com.sh.carexx.uc.service.InstStaffWorkTypeService;
+import com.sh.carexx.uc.service.UserOAuthService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +59,12 @@ public class InstStaffManager {
 	@Autowired
 	public CustomerOrderService customerOrderService;
 
+	@Autowired
+	public UserManager userManager;
+	
+	@Autowired
+	public UserOAuthService userOAuthService;
+	
 	/**
 	 * 
 	 * add:(人员添加). <br/>
@@ -202,13 +215,26 @@ public class InstStaffManager {
 				CertificationStatus.REFUSED_CERTIFICATION.getValue());
 	}
 
-	public void applyCertification(String phone, String verifyCode, String idNo) throws BizException {
-		InstStaff InstStaff = this.instStaffService.getByIdNoAndPhone(idNo, phone);
+	public void applyCertification(ApplyCertificationFormBean applyCertificationFormBean) throws BizException {
+		InstStaff InstStaff = this.instStaffService.getByIdNoAndPhone(applyCertificationFormBean.getIdNo(), applyCertificationFormBean.getPhone());
 		if (InstStaff != null) {
 			if (InstStaff.getCertificationStatus() == CertificationStatus.NO_CERTIFICATION.getValue()
 					|| InstStaff.getCertificationStatus() == CertificationStatus.REFUSED_CERTIFICATION.getValue()) {
+				/*缺省验证码验证审核代码*/
 				this.instStaffService.updateCertificationStatus(InstStaff.getId(), String.valueOf(InstStaff.getCertificationStatus()),
 						CertificationStatus.IN_CERTIFICATION.getValue());
+				
+				OAuthLoginFormBean oAuthLoginFormBean = new OAuthLoginFormBean();
+				oAuthLoginFormBean.setIdentityType(IdentityType.WECHAT.getValue());
+				oAuthLoginFormBean.setIdentifier(applyCertificationFormBean.getOpenId());
+				oAuthLoginFormBean.setIdentity(Identity.CAREGIVERS.getValue());
+				oAuthLoginFormBean.setNickname(applyCertificationFormBean.getNickname());
+				oAuthLoginFormBean.setAvatar(applyCertificationFormBean.getAvatar());
+				oAuthLoginFormBean.setSex(applyCertificationFormBean.getSex());
+				oAuthLoginFormBean.setRegion(applyCertificationFormBean.getRegion());
+				
+				UserInfo userInfo = this.userManager.add(oAuthLoginFormBean);
+				this.userOAuthService.updateStaffId(userInfo.getId(), InstStaff.getId());
 			} else if (InstStaff.getCertificationStatus() == CertificationStatus.IN_CERTIFICATION.getValue()) {
 				throw new BizException(ErrorCode.IN_CERTIFICATION);
 			}else {

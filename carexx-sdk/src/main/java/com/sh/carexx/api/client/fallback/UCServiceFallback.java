@@ -15,7 +15,10 @@ import com.sh.carexx.bean.order.*;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffWorkTypeFormBean;
+import com.sh.carexx.bean.user.ApplyCertificationFormBean;
+import com.sh.carexx.bean.user.NursingSupervisorLoginFormBean;
 import com.sh.carexx.bean.user.OAuthLoginFormBean;
+import com.sh.carexx.bean.user.PatientLoginFormBean;
 import com.sh.carexx.bean.usermsg.UserMsgFormBean;
 import com.sh.carexx.bean.worktype.InstWorkTypeSettleFormBean;
 import com.sh.carexx.bean.worktype.WorkTypeFormBean;
@@ -43,6 +46,16 @@ public class UCServiceFallback implements UCServiceClient {
 		return null;
 	}
 
+	@Override
+	public String patientLogin(PatientLoginFormBean patientLoginFormBean) {
+		return null;
+	}
+	
+	@Override
+	public String nursingSupervisorLogin(NursingSupervisorLoginFormBean nursingSupervisorLoginFormBean) {
+		return null;
+	}
+	
 	@Override
 	public String getOAuthUserId(String token) {
 		return null;
@@ -579,7 +592,7 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 	
 	@Override
-	public BasicRetVal applyCertification(String phone, String verifyCode, String idNo) {
+	public BasicRetVal applyCertification(ApplyCertificationFormBean applyCertificationFormBean) {
 		return null;
 	}
 

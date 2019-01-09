@@ -1,8 +1,6 @@
 package com.sh.carexx.uc.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sh.carexx.bean.acl.AclLoginFormBean;
+import com.sh.carexx.bean.user.NursingSupervisorLoginFormBean;
 import com.sh.carexx.bean.user.OAuthLoginFormBean;
+import com.sh.carexx.bean.user.PatientLoginFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.web.BasicRetVal;
@@ -57,6 +57,26 @@ public class AuthController {
 		}
 	}
 
+	@RequestMapping(value = "/patient_login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String patientLogin(@RequestBody PatientLoginFormBean patientLoginFormBean) {
+		try {
+			Map<String, Object> resultMap = this.userManager.patientLogin(patientLoginFormBean);
+			return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultMap).toJSON();
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc()).toJSON();
+		}
+	}
+	
+	@RequestMapping(value = "/nursing_supervisor_login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String nursingSupervisorLogin(@RequestBody NursingSupervisorLoginFormBean nursingSupervisorLoginFormBean) {
+		try {
+			Map<String, Object> resultMap = this.userManager.nursingSupervisorLogin(nursingSupervisorLoginFormBean);
+			return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultMap).toJSON();
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc()).toJSON();
+		}
+	}
+	
 	@RequestMapping(value = "/caregivers_login", method = RequestMethod.GET)
 	public String CaregiversLogin(@RequestParam("identityType") Byte identityType,
 			@RequestParam("openId") String openId) {

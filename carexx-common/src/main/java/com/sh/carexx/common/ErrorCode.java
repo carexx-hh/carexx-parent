@@ -20,6 +20,7 @@ public enum ErrorCode {
 	
 	SMS_VERIFY_CODE_INVALID("E010101", "验证码已失效"),
 	SMS_VERIFY_CODE_INPUT_ERROR("E010102", "验证码错误"),
+	OPENID_FAIL_TO_GET("E010103", "openId获取失败"),
 	
 	ACL_REG_ACCT_EXISTS_ERROR("E090101", "登录名已存在"),
 	NOT_NURSING_SUPERVISOR("E090102", "不是护工管理员"),

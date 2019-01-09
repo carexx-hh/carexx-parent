@@ -15,7 +15,10 @@ import com.sh.carexx.bean.order.*;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffWorkTypeFormBean;
+import com.sh.carexx.bean.user.ApplyCertificationFormBean;
+import com.sh.carexx.bean.user.NursingSupervisorLoginFormBean;
 import com.sh.carexx.bean.user.OAuthLoginFormBean;
+import com.sh.carexx.bean.user.PatientLoginFormBean;
 import com.sh.carexx.bean.usermsg.UserMsgFormBean;
 import com.sh.carexx.bean.worktype.InstWorkTypeSettleFormBean;
 import com.sh.carexx.bean.worktype.WorkTypeFormBean;
@@ -40,6 +43,12 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/auth/oauth_login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String doOAuthLogin(@RequestBody OAuthLoginFormBean oAuthLoginFormBean);
 
+	@RequestMapping(value = "/auth/patient_login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String patientLogin(@RequestBody PatientLoginFormBean patientLoginFormBean);
+	
+	@RequestMapping(value = "/auth/nursing_supervisor_login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String nursingSupervisorLogin(@RequestBody NursingSupervisorLoginFormBean nursingSupervisorLoginFormBean);
+	
 	@RequestMapping(value = "/auth/get_oauth_user_id", method = RequestMethod.GET)
 	String getOAuthUserId(@RequestParam("token") String token);
 
@@ -973,8 +982,8 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/inststaff/refused_certification/{id}", method = RequestMethod.GET)
 	BasicRetVal refusedCertification(@PathVariable("id") Integer id);
 	
-	@RequestMapping(value = "/inststaff/apply_certification/{phone}/{verifyCode}/{idNo}", method = RequestMethod.GET)
-	BasicRetVal applyCertification(@PathVariable("phone") String phone, @PathVariable("verifyCode") String verifyCode, @PathVariable("idNo") String idNo);
+	@RequestMapping(value = "/inststaff/apply_certification", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	BasicRetVal applyCertification(@RequestBody ApplyCertificationFormBean applyCertificationFormBean);
 	
 	@RequestMapping(value = "/inststaff/cancel_certification/{id}", method = RequestMethod.GET)
 	BasicRetVal cancelCertification(@PathVariable("id") Integer id);

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sh.carexx.bean.acl.AclModifyPwdFormBean;
 import com.sh.carexx.bean.acl.AclRegFormBean;
 import com.sh.carexx.common.CarexxConstant;
-import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.web.BasicRetVal;
 import com.sh.carexx.common.web.DataRetVal;
@@ -70,12 +69,7 @@ public class AclUserController {
 	@RequestMapping(value = "/get_roleId/{account}", method = RequestMethod.GET)
 	public String getRoleId(@PathVariable("account") String account) {
 		int roleId = this.aclUserAcctService.getRoleId(account);
-		if(roleId == 4)
-		{
-			return new DataRetVal(CarexxConstant.RetCode.SUCCESS, roleId).toJSON();
-		} else {
-			return new DataRetVal(CarexxConstant.RetCode.BAD_REQUEST, ErrorCode.NOT_NURSING_SUPERVISOR.getDesc()).toJSON();
-		}
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, roleId).toJSON();
 		
 	}
 	

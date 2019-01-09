@@ -49,4 +49,12 @@
 			modify_time = now()
 		where id = #{id,jdbcType=BIGINT}
 	</update>
+	<update id="updateStaffId">
+		update
+			carexx_user_oauth
+		set 
+			staff_id = #{staffId,jdbcType=INTEGER},
+			modify_time = now()
+		where user_id = #{userId,jdbcType=INTEGER}
+	</update>
 </mapper>

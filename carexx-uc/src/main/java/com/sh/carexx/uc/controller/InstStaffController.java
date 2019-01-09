@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
+import com.sh.carexx.bean.user.ApplyCertificationFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.web.BasicRetVal;
@@ -65,7 +66,7 @@ public class InstStaffController {
 		resultList = this.instStaffService.getDetailById(id);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
-	
+
 	@RequestMapping(value = "/list_by_serviceid", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryForListByServiceId(@RequestBody InstStaffQueryFormBean instStaffQueryFormBean) {
 		Integer totalNum = this.instStaffService.getInstStaffCountByServiceId(instStaffQueryFormBean);
@@ -77,12 +78,13 @@ public class InstStaffController {
 	}
 
 	@RequestMapping(value = "/all_by_certification_status/{instId}/{certificationStatus}", method = RequestMethod.GET)
-	public String queryInstStaffByCertificationStatus(@PathVariable("instId") Integer instId, @PathVariable("certificationStatus") Byte certificationStatus) {
+	public String queryInstStaffByCertificationStatus(@PathVariable("instId") Integer instId,
+			@PathVariable("certificationStatus") Byte certificationStatus) {
 		List<Map<?, ?>> resultList = null;
 		resultList = this.instStaffService.queryInstStaffByCertificationStatus(instId, certificationStatus);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
-	
+
 	@RequestMapping(value = "/staff_schedule", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryInstStaffSchedule(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		List<Map<?, ?>> instStaffList = null;
@@ -94,7 +96,7 @@ public class InstStaffController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, instStaffList).toJSON();
 
 	}
-	
+
 	@RequestMapping(value = "/mapp_all", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryMappAllInstStaff(@RequestBody InstStaffQueryFormBean instStaffQueryFormBean) {
 		List<Map<?, ?>> instStaffList = null;
@@ -126,7 +128,7 @@ public class InstStaffController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
-	
+
 	@RequestMapping(value = "/agree_certification/{id}", method = RequestMethod.GET)
 	public BasicRetVal AgreeCertification(@PathVariable("id") Integer id) {
 		try {
@@ -136,7 +138,7 @@ public class InstStaffController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
-	
+
 	@RequestMapping(value = "/refused_certification/{id}", method = RequestMethod.GET)
 	public BasicRetVal RefusedCertification(@PathVariable("id") Integer id) {
 		try {
@@ -146,17 +148,17 @@ public class InstStaffController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
-	
-	@RequestMapping(value = "/apply_certification/{phone}/{verifyCode}/{idNo}", method = RequestMethod.GET)
-	public BasicRetVal applyCertification(@PathVariable("phone") String phone, @PathVariable("verifyCode") String verifyCode, @PathVariable("idNo") String idNo) {
+
+	@RequestMapping(value = "/apply_certification", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public BasicRetVal applyCertification(@RequestBody ApplyCertificationFormBean applyCertificationFormBean) {
 		try {
-			this.instStaffManager.applyCertification(phone, verifyCode, idNo);
+			this.instStaffManager.applyCertification(applyCertificationFormBean);
 		} catch (BizException e) {
 			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
-	
+
 	@RequestMapping(value = "/cancel_certification/{id}", method = RequestMethod.GET)
 	public BasicRetVal cancelCertification(@PathVariable("id") Integer id) {
 		try {

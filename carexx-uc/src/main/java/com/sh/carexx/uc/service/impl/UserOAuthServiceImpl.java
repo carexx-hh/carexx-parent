@@ -44,4 +44,13 @@ public class UserOAuthServiceImpl implements UserOAuthService {
 			throw new BizException(ErrorCode.DB_ERROR);
 		}
 	}
+
+	@Override
+	public void updateStaffId(int userId, int staffId) throws BizException {
+		try {
+			this.userOAuthMapper.updateStaffId(userId, staffId);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+	}
 }
