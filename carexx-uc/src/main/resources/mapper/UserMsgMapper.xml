@@ -79,6 +79,6 @@
 		LEFT JOIN carexx_user_msg_status ums ON ums.msg_id = us.id
 		WHERE
 			us.user_id = #{userId,jdbcType=INTEGER}
-			and ums.msg_status = 2
+			and ums.msg_status = 1
 	</select>
 </mapper>
