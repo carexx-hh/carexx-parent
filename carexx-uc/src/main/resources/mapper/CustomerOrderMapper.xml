@@ -60,6 +60,7 @@
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
 		LEFT JOIN carexx_inst_care_service ics ON co.inst_id = ics.inst_id
 		AND co.service_id = ics.service_id
+		AND ics.service_status > 0
 		WHERE
 			co.user_id = #{userId,jdbcType=INTEGER}
         and
