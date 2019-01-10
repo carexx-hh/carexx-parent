@@ -588,6 +588,16 @@ public class CustomerOrderScheduleManager {
 		this.customerOrderScheduleService.updateStatus(customerOrderSchedule.getId(), OrderScheduleStatus.WAIT_ACCEPT.getValue(), OrderScheduleStatus.IN_SERVICE.getValue());
 	}
 	
+	
+	/**
+	 * 
+	 * refusedSchedule:(拒绝排班). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param orderNo
+	 * @throws BizException 
+	 * @since JDK 1.8
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void refusedSchedule(String orderNo) throws BizException {
 		CustomerOrder customerOrder = this.customerOrderService.getByOrderNo(orderNo);
