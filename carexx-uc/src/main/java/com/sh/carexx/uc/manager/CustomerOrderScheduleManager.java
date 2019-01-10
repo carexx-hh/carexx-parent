@@ -573,7 +573,7 @@ public class CustomerOrderScheduleManager {
 	public void acceptSchedule(String orderNo) throws BizException {
 		CustomerOrder customerOrder = this.customerOrderService.getByOrderNo(orderNo);
 		if(customerOrder.getOrderStatus() == OrderStatus.WAIT_SCHEDULE.getValue()) {
-			this.customerOrderService.updateStatus(orderNo, OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.WAIT_PAY.getValue());
+			this.customerOrderService.updateStatus(orderNo, OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.IN_SERVICE.getValue());
 		}
 		CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(orderNo);
 		this.customerOrderScheduleService.updateStatus(customerOrderSchedule.getId(), OrderScheduleStatus.WAIT_ACCEPT.getValue(), OrderScheduleStatus.IN_SERVICE.getValue());
