@@ -1,18 +1,14 @@
 package com.sh.carexx.uc.manager;
 
+import com.sh.carexx.bean.usermsg.UserMsgFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.enums.order.OrderSettleStatus;
 import com.sh.carexx.common.enums.order.OrderStatus;
 import com.sh.carexx.common.enums.pay.PayMethod;
 import com.sh.carexx.common.enums.pay.PayStatus;
 import com.sh.carexx.common.exception.BizException;
-import com.sh.carexx.model.uc.CustomerOrder;
-import com.sh.carexx.model.uc.CustomerOrderSchedule;
-import com.sh.carexx.model.uc.OrderPayment;
-import com.sh.carexx.uc.service.CustomerOrderScheduleService;
-import com.sh.carexx.uc.service.CustomerOrderService;
-import com.sh.carexx.uc.service.OrderPaymentService;
-import com.sh.carexx.uc.service.OrderSettleService;
+import com.sh.carexx.model.uc.*;
+import com.sh.carexx.uc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -37,6 +33,15 @@ public class OrderPaymentManager {
 
     @Autowired
     private CustomerOrderService customerOrderService;
+
+    @Autowired
+    private InstStaffService instStaffService;
+
+    @Autowired
+    private InstCustomerService instCustomerService;
+
+    @Autowired
+    private UserMsgManager userMsgManager;
 
     @Autowired
     private CustomerOrderScheduleService customerOrderScheduleService;
@@ -83,6 +88,17 @@ public class OrderPaymentManager {
             //订单表待支付变成已支付
             this.customerOrderService.updateStatus(orderPayment.getOrderNo(), OrderStatus.IN_SERVICE.getValue(),
                     OrderStatus.ALREADY_PAY.getValue());
+            //支付完成消息通知管理员
+            CustomerOrder customerOrder = this.customerOrderService.getByOrderNo(orderPayment.getOrderNo());
+            InstCustomer instCustomer = this.instCustomerService.getById(customerOrder.getCustomerId());
+
+            UserMsgFormBean userMsgFormBean = new UserMsgFormBean();
+            userMsgFormBean.setUserId(customerOrder.getOperatorId());
+            userMsgFormBean.setMsgTitle("客户"+instCustomer.getRealName()+"的订单("+orderPayment.getOrderNo()+")已完成");
+            userMsgFormBean.setMsgContent("客户"+instCustomer.getRealName()+"的订单("+orderPayment.getOrderNo()+")已完成");
+            userMsgFormBean.setOrderNo(orderPayment.getOrderNo());
+            this.userMsgManager.add(userMsgFormBean);
+
             //结算表待支付变成已支付
             List<CustomerOrderSchedule> orderScheduleList = this.customerOrderScheduleService
                     .getByOrderNo(orderPayment.getOrderNo());
