@@ -203,6 +203,8 @@
 		AND co.inst_id = #{instId,jdbcType=INTEGER}
 		GROUP BY
 			co.order_no
+		ORDER BY
+			co.create_time DESC
   	</select>
   	<select id="selectMappByOrderStatusAndServiceStatus" resultType="java.util.Map">
 	  	SELECT
@@ -235,6 +237,8 @@
 		AND co.inst_id = #{instId,jdbcType=INTEGER}
 		GROUP BY
 			co.order_no
+		ORDER BY
+			cos.create_time DESC
   	</select>
 
 	<select id="selectCustomerOrderCount" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.lang.Integer">

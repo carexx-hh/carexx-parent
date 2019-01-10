@@ -348,6 +348,7 @@
 				carexx_customer_order_schedule
 				where
 					service_start_time <![CDATA[<=]]> #{currentTime,jdbcType=TIMESTAMP} AND service_end_time <![CDATA[>=]]> #{currentTime,jdbcType=TIMESTAMP}
+					AND service_status = 1
 		)
 		<if test="realName != null and realName != '' ">
 			and cis.real_name like CONCAT('%', '${realName}', '%')
