@@ -543,10 +543,10 @@ public class CustomerOrderScheduleManager {
 			serviceStartTime = customerOrder.getServiceStartTime();
 			serviceEndTime = DateUtils.addHour(serviceStartTime, 12);
 
-			//将订单状态从待排班改为服务中
+			//将订单状态从待排班改为待支付
 			this.customerOrderService.updateStatus(mappCustomerOrderScheduleFormBean.getOrderNo(),
-					OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.IN_SERVICE.getValue());
-		} else if(customerOrder.getOrderStatus() == OrderStatus.IN_SERVICE.getValue()) {
+					OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.WAIT_PAY.getValue());
+		} else if(customerOrder.getOrderStatus() == OrderStatus.WAIT_PAY.getValue()) {
 			 CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
 			 serviceStartTime = customerOrderSchedule.getServiceEndTime();
 			 serviceEndTime = DateUtils.addHour(serviceStartTime, 12);
@@ -569,11 +569,20 @@ public class CustomerOrderScheduleManager {
 		this.orderSettleManager.add(customerOrderSchedule);
 	}
 	
+	/**
+	 * 
+	 * acceptSchedule:(接受排班). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param orderNo
+	 * @throws BizException 
+	 * @since JDK 1.8
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void acceptSchedule(String orderNo) throws BizException {
 		CustomerOrder customerOrder = this.customerOrderService.getByOrderNo(orderNo);
 		if(customerOrder.getOrderStatus() == OrderStatus.WAIT_SCHEDULE.getValue()) {
-			this.customerOrderService.updateStatus(orderNo, OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.IN_SERVICE.getValue());
+			this.customerOrderService.updateStatus(orderNo, OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.WAIT_PAY.getValue());
 		}
 		CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(orderNo);
 		this.customerOrderScheduleService.updateStatus(customerOrderSchedule.getId(), OrderScheduleStatus.WAIT_ACCEPT.getValue(), OrderScheduleStatus.IN_SERVICE.getValue());
@@ -593,11 +602,11 @@ public class CustomerOrderScheduleManager {
 		userMsgFormBean.setOrderNo(orderNo);
 		this.userMsgManager.add(userMsgFormBean);
 		
-		if(customerOrder.getOrderStatus() == OrderStatus.IN_SERVICE.getValue()) {
+		if(customerOrder.getOrderStatus() == OrderStatus.WAIT_PAY.getValue()) {
 
-			//将订单状态从待排班改为服务中
+			//将订单状态从待支付改为待排班
 			this.customerOrderService.updateStatus(orderNo,
-					OrderStatus.IN_SERVICE.getValue(), OrderStatus.WAIT_SCHEDULE.getValue());
+					OrderStatus.WAIT_PAY.getValue(), OrderStatus.WAIT_SCHEDULE.getValue());
 		}
 		this.customerOrderScheduleService.deleteMappOrderSchedule(customerOrderSchedule.getId());
 		this.orderSettleService.deleteMappOrderSettle(customerOrderSchedule.getId());
