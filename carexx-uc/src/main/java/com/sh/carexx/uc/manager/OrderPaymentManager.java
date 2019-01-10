@@ -88,10 +88,10 @@ public class OrderPaymentManager {
             //订单表待支付变成已支付
             this.customerOrderService.updateStatus(orderPayment.getOrderNo(), OrderStatus.IN_SERVICE.getValue(),
                     OrderStatus.ALREADY_PAY.getValue());
+            
             //支付完成消息通知管理员
             CustomerOrder customerOrder = this.customerOrderService.getByOrderNo(orderPayment.getOrderNo());
             InstCustomer instCustomer = this.instCustomerService.getById(customerOrder.getCustomerId());
-
             UserMsgFormBean userMsgFormBean = new UserMsgFormBean();
             userMsgFormBean.setUserId(customerOrder.getOperatorId());
             userMsgFormBean.setMsgTitle("客户"+instCustomer.getRealName()+"的订单("+orderPayment.getOrderNo()+")已完成");
