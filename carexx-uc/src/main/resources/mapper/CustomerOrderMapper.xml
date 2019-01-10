@@ -123,6 +123,7 @@
 			co.invoice_no invoiceNo,
 			co.order_amt orderAmt,
 			co.holiday holiday,
+			os.settle_ratio settleRatio,
 			wt.id workTypeId,
 			wt.work_type_name workTypeName
 		FROM
@@ -132,6 +133,7 @@
 		LEFT JOIN carexx_inst_care_service ics ON co.inst_id = ics.inst_id
 		AND co.service_id = ics.service_id
 		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+		LEFT JOIN carexx_order_settle os ON cos.id = os.schedule_id
 		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
 		LEFT JOIN carexx_inst_inpatient_area cia ON cia.id = co.inpatient_area_id
 		LEFT JOIN carexx_inst_staff cis ON cos.service_staff_id = cis.id
