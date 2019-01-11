@@ -299,4 +299,15 @@ public interface CustomerOrderService {
 	 * @since JDK 1.8
 	 */
 	void updateServiceEndTime(CustomerOrder customerOrder) throws BizException;
+	
+	/**
+	 * 
+	 * getOrderCountByStaffId:(查询该人员服务的订单数). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param staffId
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	Integer getOrderCountByStaffId(Integer staffId);
 }

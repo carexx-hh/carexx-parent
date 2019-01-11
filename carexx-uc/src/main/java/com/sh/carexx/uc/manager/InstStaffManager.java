@@ -246,6 +246,10 @@ public class InstStaffManager {
 	}
 
 	public void cancelCertification(Integer id) throws BizException {
+		Integer count = customerOrderService.getOrderCountByStaffId(id);
+		if(count > 0) {
+			throw new BizException(ErrorCode.THE_STAFF_IS_SERVING);
+		}
 		Byte srcStatus = CertificationStatus.HAS_CERTIFICATION.getValue();
 		this.instStaffService.updateCertificationStatus(id, srcStatus.toString(),
 				CertificationStatus.NO_CERTIFICATION.getValue());

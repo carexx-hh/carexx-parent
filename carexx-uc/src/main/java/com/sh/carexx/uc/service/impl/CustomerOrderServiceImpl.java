@@ -600,4 +600,8 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 		}
 	}
 
+	@Override
+	public Integer getOrderCountByStaffId(Integer staffId) {
+		return this.customerOrderMapper.selectOrderCountByStaffId(staffId);
+	}
 }
