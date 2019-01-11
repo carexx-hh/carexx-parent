@@ -537,16 +537,20 @@ public class CustomerOrderScheduleManager {
 	public void mappAdd(MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean) throws BizException {
 		//获取订单开始结束时间
 		CustomerOrder customerOrder = customerOrderService.getByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
+		CustomerOrderSchedule customerOrderScheduleNear = this.customerOrderScheduleService.getNearByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
+		if(customerOrder.getOrderStatus() == OrderStatus.WAIT_PAY.getValue() && customerOrderScheduleNear.getServiceStatus() == OrderScheduleStatus.WAIT_ACCEPT.getValue()) {
+			throw new BizException(ErrorCode.ORDER_HAS_BEEN_SCHEDULED);
+		}
 		Date serviceStartTime = null;
 		Date serviceEndTime = null;
-		if(customerOrder.getOrderStatus() == OrderStatus.WAIT_SCHEDULE.getValue()) {
+		if(customerOrder.getOrderStatus() == OrderStatus.WAIT_SCHEDULE.getValue() && customerOrderScheduleNear.getServiceStatus() == OrderScheduleStatus.WAIT_ACCEPT.getValue()) {
 			serviceStartTime = customerOrder.getServiceStartTime();
 			serviceEndTime = DateUtils.addHour(serviceStartTime, 12);
 
 			//将订单状态从待排班改为待支付
 			this.customerOrderService.updateStatus(mappCustomerOrderScheduleFormBean.getOrderNo(),
 					OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.WAIT_PAY.getValue());
-		} else if(customerOrder.getOrderStatus() == OrderStatus.WAIT_PAY.getValue()) {
+		} else if(customerOrder.getOrderStatus() == OrderStatus.WAIT_PAY.getValue() && customerOrderScheduleNear.getServiceStatus() == OrderScheduleStatus.WAIT_ACCEPT.getValue()) {
 			 CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
 			 serviceStartTime = customerOrderSchedule.getServiceEndTime();
 			 serviceEndTime = DateUtils.addHour(serviceStartTime, 12);

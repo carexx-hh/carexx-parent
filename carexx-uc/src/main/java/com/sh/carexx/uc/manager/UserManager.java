@@ -120,15 +120,17 @@ public class UserManager {
 		if(nursingSupervisorLoginFormBean.getOpenId() == null || nursingSupervisorLoginFormBean.getOpenId() == "") {
 			throw new BizException(ErrorCode.OPENID_FAIL_TO_GET);
 		}
-		int roleId = this.aclUserAcctService.getRoleId(nursingSupervisorLoginFormBean.getAcctNo());
-		if(roleId != 4)
-		{
-			throw new BizException(ErrorCode.NOT_NURSING_SUPERVISOR);
-		}
+		
 		AclLoginFormBean aclLoginFormBean = new AclLoginFormBean();
 		aclLoginFormBean.setAcctNo(nursingSupervisorLoginFormBean.getAcctNo());
 		aclLoginFormBean.setLoginPass(nursingSupervisorLoginFormBean.getLoginPass());
 		Map<String, Object> loginMap = this.aclUserManager.login(aclLoginFormBean);
+		int roleId = this.aclUserAcctService.getRoleId(nursingSupervisorLoginFormBean.getAcctNo());
+		
+		if(roleId != 4)
+		{
+			throw new BizException(ErrorCode.NOT_NURSING_SUPERVISOR);
+		}
 		
 		OAuthLoginFormBean oAuthLoginFormBean = new OAuthLoginFormBean();
 		oAuthLoginFormBean.setIdentityType(IdentityType.WECHAT.getValue());
