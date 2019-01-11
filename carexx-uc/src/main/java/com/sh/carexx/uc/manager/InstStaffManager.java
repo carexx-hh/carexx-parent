@@ -188,7 +188,7 @@ public class InstStaffManager {
 		Integer serviceInstId = customerOrder.getInstId();
 		Date currentTime = null;
 		if (customerOrderSchedule != null) {
-			currentTime = customerOrderSchedule.getServiceEndTime();
+			currentTime = customerOrderSchedule.getServiceStartTime();
 		} else {
 			currentTime = customerOrder.getServiceStartTime();
 		}
@@ -196,9 +196,7 @@ public class InstStaffManager {
 		instStaffList = idleList;
 		List<Map<?, ?>> busyList = instStaffService.queryInstStaffBusy(serviceId, serviceInstId, currentTime, realName);
 		for (Map<?, ?> map : busyList) {
-			if (map.get("id") != null) {
 				instStaffList.add(map);
-			}
 		}
 		return instStaffList;
 	}
