@@ -55,8 +55,6 @@ public class CustomerOrderManager {
 	private InstSettleService instSettleService;
 	@Autowired
 	private OrderPaymentService orderPaymentService;
-	@Autowired
-	private CustomerOrderTimeService customerOrderTimeService;
 
 	/**
 	 * calcServiceFee:(计算订单金额). <br/>
