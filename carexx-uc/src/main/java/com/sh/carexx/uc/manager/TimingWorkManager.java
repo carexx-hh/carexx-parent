@@ -17,7 +17,7 @@ public class TimingWorkManager {
 	@Autowired
 	private CustomerOrderScheduleManager customerOrderScheduleManager;
 	
-    @Scheduled(cron = "0 14 11 * * ?")
+    @Scheduled(cron = "0 0 08,20 * * ?")
 	public void extendedOrder() {
 		try {
 			System.out.println("定时任务开始");
