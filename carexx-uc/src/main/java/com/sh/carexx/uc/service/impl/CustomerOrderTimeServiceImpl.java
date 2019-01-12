@@ -29,6 +29,11 @@ public class CustomerOrderTimeServiceImpl implements CustomerOrderTimeService {
     }
 
     @Override
+    public CustomerOrderTime getDayJobByInstId(Integer instId) {
+        return this.customerOrderTimeMapper.selectDayJobByInstId(instId);
+    }
+
+    @Override
     public CustomerOrderTime queryJobTypeExistence(Integer instId, Byte jobType) {
         return this.customerOrderTimeMapper.selectJobTypeExistence(instId, jobType);
     }

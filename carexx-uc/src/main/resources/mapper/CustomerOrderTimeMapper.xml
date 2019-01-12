@@ -33,6 +33,17 @@
           inst_id = #{instId,jdbcType=INTEGER}
     </select>
 
+    <select id="selectDayJobByInstId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+          <include refid="Base_Column_List" />
+        from
+          carexx_customer_order_time
+        where
+          inst_id = #{instId,jdbcType=INTEGER}
+        and
+          job_type = 1
+    </select>
+
     <select id="selectJobTypeExistence" resultMap="BaseResultMap">
         SELECT
           <include refid="Base_Column_List" />

@@ -42,6 +42,17 @@ public interface CustomerOrderTimeMapper {
 
     /**
      *
+     * selectByInstId:(通过机构id查询白班). <br/>
+     *
+     * @author hetao
+     * @param instId
+     * @return
+     * @since JDK 1.8
+     */
+    CustomerOrderTime selectDayJobByInstId(@Param("instId") Integer instId);
+
+    /**
+     *
      * selectJobTypeExistence:(检查机构班次存在). <br/>
      *
      * @author hetao

@@ -61,6 +61,7 @@ public enum ErrorCode {
 	ONLINE_ORDER_NOT_MODIFY ("E090907", "线上订单不可修改"),
 	PAYMETHOD_NOT_ONLINE_PAY ("E090908", "支付方式不能为线上支付"),
 	ORDER_HAS_BEEN_SCHEDULED("E090909", "当前订单已排班，正在等待护工确认"),
+	ORDER_START_TIME_ERROR("E090910", "订单开始时间不合法"),
 	
 	ORDER_PAYMENT_EXISTS_ERROR("E091001", "该订单支付已存在"),
 	

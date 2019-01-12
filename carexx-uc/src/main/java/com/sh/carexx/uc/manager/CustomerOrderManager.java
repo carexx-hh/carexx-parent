@@ -55,6 +55,8 @@ public class CustomerOrderManager {
 	private InstSettleService instSettleService;
 	@Autowired
 	private OrderPaymentService orderPaymentService;
+	@Autowired
+	private CustomerOrderTimeService customerOrderTimeService;
 
 	/**
 	 * calcServiceFee:(计算订单金额). <br/>
@@ -289,6 +291,12 @@ public class CustomerOrderManager {
 			serviceStartTime = DateUtils.toDate(customerAppointOrderFormBean.getServiceStartTime(),
 					DateUtils.YYYY_MM_DD_HH_MM_SS);
 		}
+		Date date = new Date();
+		int subHour = DateUtils.getHourDiff(serviceStartTime, date);
+		if(subHour >= 12){
+			throw new BizException(ErrorCode.ORDER_START_TIME_ERROR);
+		}
+
 		Date serviceEndTime = DateUtils.addHour(serviceStartTime, 12);
 		// 检查下单时间是否已关账
 		Date da = this.instSettleService.queryMaxSettleDateBySettleStatus(customerAppointOrderFormBean.getInstId());
