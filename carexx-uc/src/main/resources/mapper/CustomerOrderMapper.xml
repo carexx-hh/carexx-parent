@@ -35,7 +35,7 @@
 	</sql>
 
 	<select id="selectAllOrder" resultMap="BaseResultMap">
-		select
+		SELECT
 			co.id id,
 			co.order_type order_type,
 			co.service_address service_address,
@@ -63,8 +63,24 @@
 			co.create_time create_time,
 			co.modify_time modify_time
 		FROM
-			carexx_customer_order co
-		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+			(
+				SELECT
+					cos.id,
+					cos.order_no,
+					cos.service_status
+				FROM
+					carexx_customer_order_schedule cos
+				WHERE
+					cos.create_time IN (
+						SELECT
+							MAX(create_time)
+						FROM
+							carexx_customer_order_schedule
+						GROUP BY
+							order_no
+					)
+			) cos
+		LEFT JOIN carexx_customer_order co ON co.order_no = cos.order_no
 		WHERE
 			co.order_type = 1 AND co.order_status = 4
 		AND cos.service_status = 1
