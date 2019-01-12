@@ -196,7 +196,9 @@ public class InstStaffManager {
 		instStaffList = idleList;
 		List<Map<?, ?>> busyList = instStaffService.queryInstStaffBusy(serviceId, serviceInstId, currentTime, realName);
 		for (Map<?, ?> map : busyList) {
+			if (map.get("id") != null) {
 				instStaffList.add(map);
+			}
 		}
 		return instStaffList;
 	}

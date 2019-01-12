@@ -45,7 +45,7 @@ public enum ErrorCode {
 	IDNO_OR_MOBILE_INPUT_ERROR("E090603", "身份证号或者手机号码输入错误"),
 	IN_CERTIFICATION("E090603", "身份认证中"),
 	HAS_CERTIFICATION("E090604", "身份已认证"),
-	THE_STAFF_IS_SERVING("E090605", "该员工正在服务"),
+	THE_STAFF_IS_SERVING("E090605", "该护工正在服务中"),
 	
 	CARE_SERVICE_EXISTS_ERROR("E090701", "平台服务信息已存在"),
 	INST_CARE_SERVICE_EXISTS_ERROR("E090702", "机构服务信息已存在"),

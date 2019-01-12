@@ -36,12 +36,39 @@
 
 	<select id="selectAllOrder" resultMap="BaseResultMap">
 		select
-			<include refid="Base_Column_List" />
+			co.id id,
+			co.order_type order_type,
+			co.service_address service_address,
+			co.user_id user_id,
+			co.customer_id customer_id,
+			co.phone phone,
+			co.inst_id inst_id,
+			co.service_id service_id,
+			co.order_no order_no,
+			co.order_amt order_amt,
+			co.adjust_amt adjust_amt,
+			co.inpatient_area_id inpatient_area_id,
+			co.accurate_address accurate_address,
+			co.service_start_time service_start_time,
+			co.service_end_time service_end_time,
+			co.holiday holiday,
+			co.order_status order_status,
+			co.operator_id operator_id,
+			co.order_remark order_remark,
+			co.inst_sys_id inst_sys_id,
+			co.proof_type proof_type,
+			co.receipt_no receipt_no,
+			co.invoice_no invoice_no,
+			co.signing_person signing_person,
+			co.create_time create_time,
+			co.modify_time modify_time
 		FROM
-			carexx_customer_order
-		where
-			order_type = 1 and order_status = 3
-		and	service_start_time <![CDATA[<=]]> now()
+			carexx_customer_order co
+		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+		WHERE
+			co.order_type = 1 AND co.order_status = 4
+		AND cos.service_status = 1
+		AND	co.service_start_time <![CDATA[<=]]> now()
 	</select>
 
 	<select id="selectByUserId" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">
