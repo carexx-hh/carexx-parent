@@ -1574,4 +1574,15 @@ public interface UCServiceClient {
 	 */
 	@RequestMapping(value = "/customerordertime/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryCustomerOrderTimeForList(@RequestBody CustomerOrderTimeQueryFormBean customerOrderTimeQueryFormBean);
+
+	/**
+	 *
+	 * queryUserAccountByUserId:(通过用户id查询账户). <br/>
+	 *
+	 * @author hetao
+	 * @return
+	 * @since JDK 1.8
+	 */
+	@RequestMapping(value = "/useraccount/by_userId/{userId}", method = RequestMethod.GET)
+	String queryUserAccountByUserId(@PathVariable("userId") Integer userId);
 }

@@ -1,14 +1,5 @@
 package com.sh.carexx.uc.manager;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.sh.carexx.bean.acl.AclLoginFormBean;
 import com.sh.carexx.bean.user.NursingSupervisorLoginFormBean;
 import com.sh.carexx.bean.user.OAuthLoginFormBean;
@@ -22,12 +13,19 @@ import com.sh.carexx.common.enums.user.IdentityType;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.util.Radix32Utils;
 import com.sh.carexx.model.uc.InstStaff;
+import com.sh.carexx.model.uc.UserAccount;
 import com.sh.carexx.model.uc.UserInfo;
 import com.sh.carexx.model.uc.UserOAuth;
-import com.sh.carexx.uc.service.AclUserAcctService;
-import com.sh.carexx.uc.service.InstStaffService;
-import com.sh.carexx.uc.service.UserOAuthService;
-import com.sh.carexx.uc.service.UserService;
+import com.sh.carexx.uc.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserManager {
@@ -45,6 +43,8 @@ public class UserManager {
 	private InstStaffService instStaffService;
 	@Autowired
 	private AclUserManager aclUserManager;
+	@Autowired
+	private UserAccountService userAccountService;
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public UserInfo add(OAuthLoginFormBean oAuthLoginFormBean) throws BizException {
@@ -66,6 +66,12 @@ public class UserManager {
 			this.userService.save(userInfo);
 			userOAuth.setUserId(userInfo.getId());
 			this.userOAuthService.save(userOAuth);
+			if(userOAuth.getIdentity() == Identity.PATIENT.getValue()){
+				UserAccount userAccount = new UserAccount();
+				userAccount.setUserId(userInfo.getId());
+				userAccount.setAccountBalance(new BigDecimal(0));
+				this.userAccountService.save(userAccount);
+			}
 		} else {
 			userInfo.setId(oriUserOAuth.getUserId());
 			this.userService.update(userInfo);
@@ -107,8 +113,8 @@ public class UserManager {
 		} catch (Exception e) {
 			throw new BizException(ErrorCode.SYS_ERROR, e);
 		}
+
 		String openId = patientLoginFormBean.getOpenId();
-		
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("token", token);
 		resultMap.put("openId", openId);

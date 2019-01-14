@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sh.carexx.uc.dao.UserAccountDetailsMapper">
+    <resultMap id="BaseResultMap" type="com.sh.carexx.model.uc.UserAccountDetails">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="account_id" property="accountId" jdbcType="INTEGER"/>
+        <result column="pay_no" property="payNo" jdbcType="VARCHAR"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="pay_type" property="payType" jdbcType="TINYINT"/>
+        <result column="pay_amt" property="payAmt" jdbcType="DECIMAL"/>
+        <result column="pay_amt_after" property="payAmtAfter" jdbcType="DECIMAL"/>
+        <result column="pay_chnl" property="payChnl" jdbcType="TINYINT"/>
+        <result column="pay_chnl_trans_no" property="payChnlTransNo" jdbcType="VARCHAR"/>
+        <result column="pay_status" property="payStatus" jdbcType="TINYINT"/>
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, account_id, pay_no, order_no, pay_type, pay_amt, pay_amt_after, pay_chnl, pay_chnl_trans_no,
+        pay_status, pay_time
+    </sql>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+          <include refid="Base_Column_List"/>
+        from
+          carexx_user_account_details
+        where
+          id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByAccountId" resultMap="BaseResultMap" parameterType="com.sh.carexx.bean.user.UserAccountDetailsQueryFormBean">
+        select
+          <include refid="Base_Column_List"/>
+        from
+          carexx_user_account_details
+        where
+          account_id = #{accountId,jdbcType=INTEGER}
+        <if test="payTime != null and payTime != '' ">
+            AND pay_time >= #{payTime}
+        </if>
+        <if test="payType != null and payType != '' ">
+            AND pay_type = #{payType,jdbcType=TINYINT}
+        </if>
+    </select>
+
+    <select id="selectByPayNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+          <include refid="Base_Column_List"/>
+        from
+          carexx_user_account_details
+        where
+          pay_no = #{payNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectSumAmtByPayType" parameterType="com.sh.carexx.bean.user.UserAccountDetailsQueryFormBean" resultType="java.math.BigDecimal">
+        select
+          SUM (pay_amt) payAmt
+        from
+          carexx_user_account_details
+        where
+          account_id = #{accountId,jdbcType=INTEGER}
+        and
+          pay_type = #{payType,jdbcType=TINYINT}
+    </select>
+
+    <insert id="insert" parameterType="com.sh.carexx.model.uc.UserAccountDetails">
+        insert into carexx_user_account_details (account_id, pay_no,
+          order_no, pay_type, pay_amt,
+          pay_amt_after, pay_chnl, pay_chnl_trans_no,
+          pay_status, pay_time)
+        values (#{accountId,jdbcType=INTEGER}, #{payNo,jdbcType=VARCHAR},
+          #{orderNo,jdbcType=VARCHAR}, #{payType,jdbcType=TINYINT}, #{payAmt,jdbcType=DECIMAL},
+          #{payAmtAfter,jdbcType=DECIMAL}, #{payChnl,jdbcType=TINYINT}, #{payChnlTransNo,jdbcType=VARCHAR},
+          #{payStatus,jdbcType=TINYINT}, #{payTime,jdbcType=TIMESTAMP})
+    </insert>
+
+</mapper>

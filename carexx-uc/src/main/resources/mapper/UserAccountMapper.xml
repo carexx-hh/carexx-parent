@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sh.carexx.uc.dao.UserAccountMapper">
+    <resultMap id="BaseResultMap" type="com.sh.carexx.model.uc.UserAccount">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="account_balance" property="accountBalance" jdbcType="DECIMAL"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_id, account_balance
+    </sql>
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+          <include refid="Base_Column_List"/>
+        from
+          carexx_user_account
+        where
+          id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+          <include refid="Base_Column_List"/>
+        from
+          carexx_user_account
+        where
+          user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert" parameterType="com.sh.carexx.model.uc.UserAccount">
+    insert into carexx_user_account (
+      user_id, account_balance)
+    values (#{userId,jdbcType=INTEGER},
+      #{accountBalance,jdbcType=DECIMAL})
+    </insert>
+
+    <update id="updateBalance" parameterType="com.sh.carexx.model.uc.UserAccount">
+    update
+      carexx_user_account
+    set
+      account_balance = #{accountBalance,jdbcType=DECIMAL}
+    where
+      id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>
