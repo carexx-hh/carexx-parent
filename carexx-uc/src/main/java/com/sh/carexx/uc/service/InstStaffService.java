@@ -109,25 +109,18 @@ public interface InstStaffService {
 	List<Map<?, ?>> queryInstStaffByCertificationStatus(Integer instId, Byte certificationStatus);
 	/**
 	 * 
-	 * queryInstStaffIdle:(移动端查询会该项技能的员工并统计服务人数（空闲）). <br/> 
+	 * selectInstStaffServiceNumber:(服务人数查询统计). <br/> 
 	 * 
 	 * @author zhoulei 
-	 * @param instStaffQueryFormBean
+	 * @param workTypeId
+	 * @param serviceInstId
+	 * @param currentTime
+	 * @param realName
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> queryInstStaffIdle(Integer serviceId,Integer serviceInstId,Date currentTime, String realName);
+	List<Map<?, ?>> queryInstStaffServiceNumber(Integer workTypeId,Integer serviceInstId,Date currentTime, String realName);
 
-	/**
-	 * 
-	 * queryInstStaffBusy:(移动端查询会该项技能的员工并统计服务人数（忙碌）). <br/> 
-	 * 
-	 * @author zhoulei 
-	 * @param instStaffQueryFormBean
-	 * @return 
-	 * @since JDK 1.8
-	 */
-	List<Map<?, ?>> queryInstStaffBusy(Integer serviceId,Integer serviceInstId,Date currentTime, String realName);
 	/**
 	 * 
 	 * getInstStaffCount:(员工信息分页统计). <br/>

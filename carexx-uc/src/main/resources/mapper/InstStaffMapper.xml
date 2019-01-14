@@ -302,7 +302,8 @@
 		AND cis.service_inst_id = #{instId,jdbcType = INTEGER}
 		AND cis.certification_status = #{certificationStatus, jdbcType = TINYINT}
 	</select>
-	<select id="selectInstStaffIdle" parameterType="com.sh.carexx.bean.staff.InstStaffQueryFormBean" resultType="java.util.Map">
+
+	<select id="selectInstStaffServiceNumber" resultType="java.util.Map">
 		SELECT
 			cis.id id,
 			cis.inst_id instId,
@@ -321,91 +322,59 @@
 			cis.address address,
 			cis.entry_date entryDate,
 			cis.leave_date leaveDate,
-			ciswt.work_type_id workTypeId, 
+			ciswt.work_type_id workTypeId,
 			cwt.work_type_name workTypeName,
-			0 patientNum
+			CASE
+		WHEN cos.patientNum IS NULL THEN
+			0
+		ELSE
+			cos.patientNum
+		END patientNum
 		FROM
-			carexx_inst_staff cis
-		JOIN carexx_inst_staff_work_type ciswt ON ciswt.staff_id = cis.id
-		<if test="serviceId != null and serviceId > 0">
-		JOIN carexx_care_service ccs ON ccs.work_type_id = ciswt.work_type_id
-		</if>
+			(
+				SELECT
+					cos.service_staff_id id,
+					count(*) patientNum
+				FROM
+					carexx_customer_order_schedule cos
+				JOIN carexx_inst_staff cis ON cos.service_staff_id = cis.id
+				LEFT JOIN carexx_inst_staff_work_type ciswt ON ciswt.staff_id = cis.id
+				WHERE
+					cos.service_status = 1
+				AND	cis.service_inst_id = #{serviceInstId,jdbcType=INTEGER}
+				<if test="workTypeId != null">
+				AND ciswt.work_type_id = #{workTypeId,jdbcType=INTEGER} 
+				</if>
+				AND cis.staff_status = 1
+				AND cis.job_status = 1
+				AND cis.certification_status = 2
+				AND (
+					cos.service_start_time <![CDATA[<=]]> #{currentTime,jdbcType=TIMESTAMP}
+					AND cos.service_end_time <![CDATA[>]]> #{currentTime,jdbcType=TIMESTAMP}
+				)
+				GROUP BY
+					cos.order_no
+				ORDER BY
+					ciswt.work_type_id, patientNum DESC
+			) cos
+		RIGHT JOIN carexx_inst_staff cis ON cis.id = cos.id
 		LEFT JOIN carexx_care_inst cci ON cis.inst_id = cci.id
 		LEFT JOIN carexx_care_inst ccis ON cis.service_inst_id = ccis.id
+		LEFT JOIN carexx_inst_staff_work_type ciswt ON ciswt.staff_id = cis.id
 		LEFT JOIN carexx_work_type cwt ON ciswt.work_type_id = cwt.id
 		WHERE
-			cis.service_inst_id =  #{serviceInstId,jdbcType=INTEGER}
-		<if test="serviceId != null and serviceId > 0">
-			AND ccs.id =  #{serviceId,jdbcType=INTEGER}
+			cis.service_inst_id = #{serviceInstId,jdbcType=INTEGER}
+		<if test="workTypeId != null">
+		AND ciswt.work_type_id = #{workTypeId,jdbcType=INTEGER} 
 		</if>
 		AND cis.staff_status = 1
 		AND cis.job_status = 1
 		AND cis.certification_status = 2
-		AND cis.id NOT IN (
-			SELECT DISTINCT
-				service_staff_id
-			FROM
-				carexx_customer_order_schedule
-				where
-					service_start_time <![CDATA[<=]]> #{currentTime,jdbcType=TIMESTAMP} AND service_end_time <![CDATA[>=]]> #{currentTime,jdbcType=TIMESTAMP}
-					AND service_status = 1
-		)
 		<if test="realName != null and realName != '' ">
 			and cis.real_name like CONCAT('%', '${realName}', '%')
 		</if>
-		ORDER BY patientNum DESC
-	</select>
-	
-	<select id="selectInstStaffBusy" parameterType="com.sh.carexx.bean.staff.InstStaffQueryFormBean" resultType="java.util.Map">
-	SELECT
-		cis.id id,
-		cis.inst_id instId,
-		cci.inst_name instName,
-		cis.service_inst_id serviceInstId,
-		ccis.inst_name serviceInstName,
-		cis.person_type personType,
-		cis.certification_status certificationStatus,
-		cis.job_status jobStatus,
-		cis.real_name realName,
-		cis.id_no idNo,
-		cis.sex sex,
-		cis.photo photo,
-		cis.birthday birthday,
-		cis.phone phone,
-		cis.address address,
-		cis.entry_date entryDate,
-		cis.leave_date leaveDate,
-		ciswt.work_type_id workTypeId, 
-		cwt.work_type_name workTypeName,
-		count(cos.order_no) patientNum
-	FROM
-		carexx_inst_staff cis
-	JOIN carexx_inst_staff_work_type ciswt ON ciswt.staff_id = cis.id
-	<if test="serviceId != null and serviceId > 0">
-	JOIN carexx_care_service ccs ON ccs.work_type_id = ciswt.work_type_id
-	</if>
-	LEFT JOIN carexx_customer_order_schedule cos ON cos.service_staff_id = cis.id
-	LEFT JOIN carexx_customer_order co ON cos.order_no = co.order_no
-	LEFT JOIN carexx_care_inst cci ON cis.inst_id = cci.id
-	LEFT JOIN carexx_care_inst ccis ON cis.service_inst_id = ccis.id
-	LEFT JOIN carexx_work_type cwt ON ciswt.work_type_id = cwt.id
-	<where>
-		cis.service_inst_id = #{serviceInstId,jdbcType=INTEGER}
-		<if test="serviceId != null and serviceId > 0">
-			AND ccs.id = #{serviceId,jdbcType=INTEGER} 	
-		</if>
-		AND cis.staff_status = 1
-		AND cis.job_status = 1
-		AND cis.certification_status = 2
-		AND (
-			cos.service_start_time <![CDATA[<=]]> #{currentTime,jdbcType=TIMESTAMP}
-			AND cos.service_end_time <![CDATA[>]]> #{currentTime,jdbcType=TIMESTAMP}
-			)
-		<if test="realName != null and realName != '' ">
-			AND cis.real_name like CONCAT('%', '${realName}', '%')
-		</if>
-	</where>
-	ORDER BY patientNum DESC
+		ORDER BY
+			ciswt.work_type_id, cos.patientNum DESC
 	</select>
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.InstStaff"  useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO carexx_inst_staff (

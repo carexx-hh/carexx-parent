@@ -109,27 +109,20 @@ public interface InstStaffMapper {
 	 * @since JDK 1.8
 	 */
 	List<Map<?, ?>> selectInstStaffByCertificationStatus(@Param("instId")Integer instId, @Param("certificationStatus") Byte certificationStatus);
+
 	/**
 	 * 
-	 * selectInstStaffIdle:(移动端查询会该项技能的员工并统计服务人数（空闲）). <br/> 
+	 * selectInstStaffServiceNumber:(服务人数查询统计). <br/> 
 	 * 
 	 * @author zhoulei 
+	 * @param workTypeId
 	 * @param serviceInstId
+	 * @param currentTime
+	 * @param realName
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> selectInstStaffIdle(@Param("serviceId")Integer serviceId,@Param("serviceInstId")Integer serviceInstId,@Param("currentTime")Date currentTime,@Param("realName")String realName);
-	
-	/**
-	 * 
-	 * selectInstStaffBusy:(移动端查询会该项技能的员工并统计服务人数（忙碌）). <br/> 
-	 * 
-	 * @author zhoulei 
-	 * @param serviceInstId
-	 * @return 
-	 * @since JDK 1.8
-	 */
-	List<Map<?, ?>> selectInstStaffBusy(@Param("serviceId")Integer serviceId,@Param("serviceInstId")Integer serviceInstId,@Param("currentTime")Date currentTime,@Param("realName")String realName);
+	List<Map<?, ?>> selectInstStaffServiceNumber(@Param("workTypeId")Integer workTypeId,@Param("serviceInstId")Integer serviceInstId,@Param("currentTime")Date currentTime,@Param("realName")String realName);
 
 	/**
 	 * 

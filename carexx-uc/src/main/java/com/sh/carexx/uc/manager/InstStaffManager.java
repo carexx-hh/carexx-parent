@@ -14,11 +14,13 @@ import com.sh.carexx.common.enums.user.IdentityType;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.util.DateUtils;
 import com.sh.carexx.common.util.ValidUtils;
+import com.sh.carexx.model.uc.CareService;
 import com.sh.carexx.model.uc.CustomerOrder;
 import com.sh.carexx.model.uc.CustomerOrderSchedule;
 import com.sh.carexx.model.uc.InstStaff;
 import com.sh.carexx.model.uc.InstStaffWorkType;
 import com.sh.carexx.model.uc.UserInfo;
+import com.sh.carexx.uc.service.CareServiceService;
 import com.sh.carexx.uc.service.CustomerOrderScheduleService;
 import com.sh.carexx.uc.service.CustomerOrderService;
 import com.sh.carexx.uc.service.InstStaffService;
@@ -64,6 +66,9 @@ public class InstStaffManager {
 	
 	@Autowired
 	public UserOAuthService userOAuthService;
+	
+	@Autowired
+	public CareServiceService careServiceService;
 	
 	/**
 	 * 
@@ -163,17 +168,8 @@ public class InstStaffManager {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		List<Map<?, ?>> instStaffList = null;
-		List<Map<?, ?>> idleList = instStaffService.queryInstStaffIdle(null, instStaffQueryFormBean.getInstId(),
+		List<Map<?, ?>> instStaffList = instStaffService.queryInstStaffServiceNumber(null, instStaffQueryFormBean.getInstId(),
 				currentTime, instStaffQueryFormBean.getRealName());
-		instStaffList = idleList;
-		List<Map<?, ?>> busyList = instStaffService.queryInstStaffBusy(null, instStaffQueryFormBean.getInstId(),
-				currentTime, instStaffQueryFormBean.getRealName());
-		for (Map<?, ?> map : busyList) {
-			if (map.get("id") != null) {
-				instStaffList.add(map);
-			}
-		}
 		return instStaffList;
 	}
 
@@ -182,9 +178,8 @@ public class InstStaffManager {
 		String realName = customerOrderQueryFormBean.getStaffName();
 		CustomerOrder customerOrder = new CustomerOrder();
 		customerOrder = customerOrderService.getByOrderNo(orderNo);
-		List<Map<?, ?>> instStaffList = null;
+		CareService careService = this.careServiceService.getById(customerOrder.getServiceId());
 		CustomerOrderSchedule customerOrderSchedule = customerOrderScheduleService.getNearByOrderNo(orderNo);
-		Integer serviceId = customerOrder.getServiceId();
 		Integer serviceInstId = customerOrder.getInstId();
 		Date currentTime = null;
 		if (customerOrderSchedule != null) {
@@ -192,14 +187,7 @@ public class InstStaffManager {
 		} else {
 			currentTime = customerOrder.getServiceStartTime();
 		}
-		List<Map<?, ?>> idleList = instStaffService.queryInstStaffIdle(serviceId, serviceInstId, currentTime, realName);
-		instStaffList = idleList;
-		List<Map<?, ?>> busyList = instStaffService.queryInstStaffBusy(serviceId, serviceInstId, currentTime, realName);
-		for (Map<?, ?> map : busyList) {
-			if (map.get("id") != null) {
-				instStaffList.add(map);
-			}
-		}
+		List<Map<?, ?>> instStaffList = instStaffService.queryInstStaffServiceNumber(careService.getWorkTypeId(), serviceInstId, currentTime, realName);
 		return instStaffList;
 	}
 
