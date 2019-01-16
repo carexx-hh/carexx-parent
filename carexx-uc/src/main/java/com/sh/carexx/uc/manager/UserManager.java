@@ -169,7 +169,7 @@ public class UserManager {
 		Map<String, Object> resultMap = new HashMap<>();
 		Byte certificationStatus = 0;
 		UserOAuth userOAuth = this.userOAuthService.getByIdentityInfo(identityType, openId);
-		if (userOAuth.getStaffId() != null) {
+		if (userOAuth != null) {
 			InstStaff instStaff = instStaffService.getById(userOAuth.getStaffId());
 			certificationStatus = instStaff.getCertificationStatus();
 			if (certificationStatus == CertificationStatus.HAS_CERTIFICATION.getValue()) {
