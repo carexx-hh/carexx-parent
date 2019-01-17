@@ -15,6 +15,12 @@ import javax.validation.Valid;
 @RequestMapping("/customerordertime")
 public class CustomerOrderTimeController extends BaseController {
 
+    @RequestMapping(value = "/by_instId")
+    public String queryByInstId() {
+        Integer instId = this.getCurrentUser().getInstId();
+        return this.ucServiceClient.queryCustomerordertimeByInstId(instId);
+    }
+
     @RequestMapping(value = "/get_by_instId/{instId}")
     public String getByInstId(@PathVariable("instId") Integer instId) {
         if(instId == 0 || instId == null){

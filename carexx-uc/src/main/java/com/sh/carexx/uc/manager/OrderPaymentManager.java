@@ -35,9 +35,6 @@ public class OrderPaymentManager {
     private CustomerOrderService customerOrderService;
 
     @Autowired
-    private InstStaffService instStaffService;
-
-    @Autowired
     private InstCustomerService instCustomerService;
 
     @Autowired

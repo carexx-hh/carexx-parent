@@ -31,6 +31,11 @@ public class CustomerOrderTimeController {
         return new DataRetVal(CarexxConstant.RetCode.SUCCESS,this.customerOrderTimeService.getByInstId(instId)).toJSON();
     }
 
+    @RequestMapping(value = "/by_instId/{instId}", method = RequestMethod.GET)
+    public String queryByInstId(@PathVariable("instId") Integer instId) {
+        return new DataRetVal(CarexxConstant.RetCode.SUCCESS,this.customerOrderTimeService.getByInstId(instId)).toJSON();
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public BasicRetVal add(@RequestBody CustomerOrderTimeFormBean customerOrderTimeFormBean) {
         try {

@@ -868,6 +868,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public String queryCustomerordertimeByInstId(Integer instId) {
+		return null;
+	}
+
+	@Override
 	public BasicRetVal addCustomerordertime(CustomerOrderTimeFormBean customerOrderTimeFormBean) {
 		return null;
 	}

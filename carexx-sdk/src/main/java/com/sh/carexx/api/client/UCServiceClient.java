@@ -1539,6 +1539,9 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/customerordertime/get_by_instId/{instId}", method = RequestMethod.GET)
 	String getCustomerordertimeByInstId(@PathVariable("instId") Integer instId);
 
+	@RequestMapping(value = "/customerordertime/by_instId/{instId}", method = RequestMethod.GET)
+	String queryCustomerordertimeByInstId(@PathVariable("instId") Integer instId);
+
 	/**
 	 *
 	 * addCustomerordertime:(新增机构班次). <br/>
