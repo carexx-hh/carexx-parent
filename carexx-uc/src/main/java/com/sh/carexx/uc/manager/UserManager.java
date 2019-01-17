@@ -187,10 +187,12 @@ public class UserManager {
 				return resultMap;
 			} else {
 				resultMap.put("certificationStatus", certificationStatus);
+				resultMap.put("openId", openId);
 				return resultMap;
 			}
 		} else {
 			resultMap.put("certificationStatus", CertificationStatus.NO_CERTIFICATION.getValue());
+			resultMap.put("openId", openId);
 			return resultMap;
 		}
 
