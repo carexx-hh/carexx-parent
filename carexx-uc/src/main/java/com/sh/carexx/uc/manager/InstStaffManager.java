@@ -29,6 +29,8 @@ import com.sh.carexx.uc.service.UserOAuthService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -79,6 +81,7 @@ public class InstStaffManager {
 	 * @throws BizException
 	 * @since JDK 1.8
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void add(InstStaffFormBean instStaffFormBean) throws BizException {
 		// 员工信息身份证校验
 		if (instStaffService.getByIdNo(instStaffFormBean.getIdNo(), instStaffFormBean.getInstId()) != null) {
@@ -203,6 +206,7 @@ public class InstStaffManager {
 				CertificationStatus.REFUSED_CERTIFICATION.getValue());
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void applyCertification(ApplyCertificationFormBean applyCertificationFormBean) throws BizException {
 		InstStaff InstStaff = this.instStaffService.getByIdNoAndPhone(applyCertificationFormBean.getIdNo(), applyCertificationFormBean.getPhone());
 		if (InstStaff != null) {

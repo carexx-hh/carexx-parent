@@ -259,6 +259,7 @@ public class CustomerOrderScheduleManager {
 	 * @author hetao
 	 * @since JDK 1.8
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	private void doShedule(CustomerOrderScheduleFormBean customerOrderScheduleFormBean, Date amountStartDate,
 			Date amountEndDate) throws BizException {
 		CustomerOrder customerOrder = this.customerOrderService
@@ -502,6 +503,7 @@ public class CustomerOrderScheduleManager {
 	 * @author zhoulei
 	 * @since JDK 1.8
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void modifySettleAmt(OrderSettleAdjustAmtFormBean orderSettleAdjustAmtFormBean) throws BizException {
 		OrderSettle orderSettle = this.orderSettleService.getByScheduleId(orderSettleAdjustAmtFormBean.getScheduleId());
 		if (orderSettle == null) {

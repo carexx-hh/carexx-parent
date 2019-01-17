@@ -183,6 +183,7 @@ public class UserManager {
 				resultMap.put("certificationStatus", certificationStatus);
 				resultMap.put("token", token);
 				resultMap.put("openId", openId);
+				resultMap.put("instId", instStaff.getInstId());
 				resultMap.put("staffId", userOAuth.getStaffId());
 				return resultMap;
 			} else {

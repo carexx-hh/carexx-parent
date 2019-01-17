@@ -67,6 +67,7 @@ public class CustomerOrderManager {
 	 * @author hetao
 	 * @since JDK 1.8
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public BigDecimal calcServiceFee(Integer instId, Integer serviceId, Date serviceStartTime, Date serviceEndTime) {
 		// 订单总时长
 		int hour = DateUtils.getHourDiff(serviceStartTime, serviceEndTime);
@@ -116,6 +117,7 @@ public class CustomerOrderManager {
 	 * @author hetao
 	 * @since JDK 1.8
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public BigDecimal holidayCount(Integer instId, Date serviceStartTime, Date serviceEndTime) {
 		// 订单总时长
 		int hour = DateUtils.getHourDiff(serviceStartTime, serviceEndTime);

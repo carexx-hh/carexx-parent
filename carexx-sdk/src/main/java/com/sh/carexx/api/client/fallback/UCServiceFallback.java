@@ -437,7 +437,7 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
-	public String queryMappByOrderStatusAndServiceStatus(String orderStatus, Integer serviceStatus, Integer instId) {
+	public String queryMappByOrderStatusAndServiceStatus(String orderStatus, Integer serviceStatus, Integer instId, Integer staffId) {
 		return null;
 	}
 	

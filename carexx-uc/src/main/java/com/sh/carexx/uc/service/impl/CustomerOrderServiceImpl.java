@@ -303,8 +303,8 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 
 	@Override
 	public List<Map<?, ?>> queryMappByOrderStatusAndServiceStatus(String orderStatus, Integer serviceStatus,
-			Integer instId) {
-		return this.customerOrderMapper.selectMappByOrderStatusAndServiceStatus(orderStatus, serviceStatus, instId);
+			Integer instId, Integer staffId) {
+		return this.customerOrderMapper.selectMappByOrderStatusAndServiceStatus(orderStatus, serviceStatus, instId, staffId);
 	}
 	
 	@Override
