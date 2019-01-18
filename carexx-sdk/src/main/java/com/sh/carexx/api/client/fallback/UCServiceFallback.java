@@ -891,4 +891,9 @@ public class UCServiceFallback implements UCServiceClient {
 	public String queryUserAccountByUserId(Integer userId) {
 		return null;
 	}
+
+	@Override
+	public String queryOrderScheduleStatisticsByStaffId(Integer staffId, String serviceEndTime) {
+		return null;
+	}
 }

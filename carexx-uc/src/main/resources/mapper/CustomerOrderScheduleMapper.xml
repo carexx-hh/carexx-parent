@@ -312,4 +312,19 @@
 		WHERE
 			id = #{id, jdbcType=BIGINT}
 	</delete>
+
+	<select id="selectOrderScheduleStatistics" resultType="java.util.Map">
+		SELECT
+			cos.service_staff_id staffId,
+			count(DISTINCT cos.order_no) totalOrder,
+			sum(os.staff_settle_amt) totalAmt
+		FROM
+			carexx_customer_order_schedule cos
+		LEFT JOIN carexx_order_settle os ON cos.id = os.schedule_id
+		RIGHT JOIN carexx_customer_order co ON cos.order_no = co.order_no
+		WHERE
+			cos.service_staff_id = #{staffId, jdbcType=INTEGER}
+		AND co.order_status IN (5, 6)
+		AND date_format(co.service_end_time,'%Y-%m') = #{serviceEndTime, jdbcType=VARCHAR}
+	</select>
 </mapper>

@@ -1588,4 +1588,15 @@ public interface UCServiceClient {
 	 */
 	@RequestMapping(value = "/useraccount/by_userId/{userId}", method = RequestMethod.GET)
 	String queryUserAccountByUserId(@PathVariable("userId") Integer userId);
+
+	/**
+	 *
+	 * queryOrderScheduleStatisticsByStaffId:我的收入 订单统计
+	 *
+	 * @author chenshichao
+	 * @return
+	 * @since JDK 1.8
+	 */
+	@RequestMapping(value = "/customerorderschedule/order_statistics/{staffId}/{serviceEndTime}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String queryOrderScheduleStatisticsByStaffId(@PathVariable("staffId") Integer staffId, @PathVariable("serviceEndTime") String serviceEndTime);
 }

@@ -37,4 +37,9 @@ public class CustomerOrderScheduleController extends BaseController {
 	public BasicRetVal refusedSchedule(@PathVariable("orderNo")String orderNo) {
 		return this.ucServiceClient.refusedSchedule(orderNo);
 	}
+
+	@RequestMapping(value = "/order_statistics/{staffId}/{serviceEndTime}")
+	public String queryOrderScheduleStatisticsByStaffId(@PathVariable("staffId") Integer staffId, @PathVariable("serviceEndTime") String serviceEndTime) {
+		return this.ucServiceClient.queryOrderScheduleStatisticsByStaffId(staffId, serviceEndTime);
+	}
 }

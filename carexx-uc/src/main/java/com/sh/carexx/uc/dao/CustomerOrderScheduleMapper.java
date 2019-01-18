@@ -1,13 +1,12 @@
 package com.sh.carexx.uc.dao;
 
+import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
+import com.sh.carexx.model.uc.CustomerOrderSchedule;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
-
-import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
-import com.sh.carexx.model.uc.CustomerOrderSchedule;
 
 /**
  * 
@@ -162,4 +161,14 @@ public interface CustomerOrderScheduleMapper {
 	List<Map<?,?>> selectWorkQuantityReport(WorkQuantityReportFormBean workQuantityReportFormBean);
 	
 	int deleteMappOrderSchedule(Long id);
+
+	/**
+	 *
+	 * selectCustomerOrderSchedule:我的收入 订单统计
+	 *
+	 * @author chenshichao
+	 * @return
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> selectOrderScheduleStatistics(@Param("staffId") Integer staffId,@Param("serviceEndTime") String serviceEndTime);
 }

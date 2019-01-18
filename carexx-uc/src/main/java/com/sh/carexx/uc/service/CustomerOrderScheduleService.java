@@ -1,12 +1,12 @@
 package com.sh.carexx.uc.service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.CustomerOrderSchedule;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -160,4 +160,14 @@ public interface CustomerOrderScheduleService {
 	List<Map<String, Object>> queryWorkQuantityReport(WorkQuantityReportFormBean workQuantityReportFormBean);
 	
 	void deleteMappOrderSchedule(Long id) throws BizException;
+
+	/**
+	 *
+	 * selectCustomerOrderSchedule:我的收入 订单统计
+	 *
+	 * @author chenshichao
+	 * @return
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> selectOrderScheduleStatistics(Integer staffId, String serviceEndTime);
 }

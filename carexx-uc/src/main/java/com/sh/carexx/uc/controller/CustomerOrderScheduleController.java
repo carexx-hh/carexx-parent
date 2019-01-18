@@ -63,7 +63,7 @@ public class CustomerOrderScheduleController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,
 				this.customerOrderScheduleService.queryScheduleByStaffId(orderNo, staffId)).toJSON();
 	}
-	
+
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public BasicRetVal delete(@PathVariable("id") Long id) {
 		try {
@@ -120,7 +120,7 @@ public class CustomerOrderScheduleController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
-	
+
 	@RequestMapping(value = "/mapp_add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public BasicRetVal mappAdd(@RequestBody MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean) {
 		try {
@@ -130,7 +130,7 @@ public class CustomerOrderScheduleController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
-	
+
 	@RequestMapping(value = "/accept_schedule/{orderNo}", method = RequestMethod.GET)
 	public BasicRetVal acceptSchedule(@PathVariable("orderNo") String orderNo) {
 		try {
@@ -140,7 +140,7 @@ public class CustomerOrderScheduleController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
-	
+
 	@RequestMapping(value = "/refused_schedule/{orderNo}", method = RequestMethod.GET)
 	public BasicRetVal refusedSchedule(@PathVariable("orderNo") String orderNo) {
 		try {
@@ -151,4 +151,9 @@ public class CustomerOrderScheduleController {
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
 
+    @RequestMapping(value = "/order_statistics/{staffId}/{serviceEndTime}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String queryOrderScheduleStatisticsByStaffId(@PathVariable("staffId") Integer staffId, @PathVariable("serviceEndTime") String serviceEndTime) {
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,
+				this.customerOrderScheduleService.selectOrderScheduleStatistics(staffId, serviceEndTime)).toJSON();
+	}
 }
