@@ -1,7 +1,6 @@
 package com.sh.carexx.uc.dao;
 
 import com.sh.carexx.bean.user.UserAccountDetailQueryFormBean;
-import com.sh.carexx.model.uc.UserAccount;
 import com.sh.carexx.model.uc.UserAccountDetails;
 
 import java.math.BigDecimal;
@@ -34,7 +33,7 @@ public interface UserAccountDetailMapper {
      * @return
      * @since JDK 1.8
      */
-    List<UserAccount> selectByAccountId(UserAccountDetailQueryFormBean userAccountDetailQueryFormBean);
+    List<UserAccountDetails> selectByAccountId(UserAccountDetailQueryFormBean userAccountDetailQueryFormBean);
 
     /**
      *
@@ -44,7 +43,7 @@ public interface UserAccountDetailMapper {
      * @return
      * @since JDK 1.8
      */
-    UserAccount selectByPayNo(String payNo);
+    UserAccountDetails selectByPayNo(String payNo);
 
     /**
      *

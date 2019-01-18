@@ -4,7 +4,9 @@ import com.sh.carexx.bean.order.CalcServiceFeeFormBean;
 import com.sh.carexx.bean.order.CustomerAppointOrderFormBean;
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.bean.order.OrderPaymentFormBean;
+import com.sh.carexx.bean.user.UserAccountDetailFormBean;
 import com.sh.carexx.common.CarexxConstant;
+import com.sh.carexx.common.enums.pay.PayType;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.web.BasicRetVal;
 import com.sh.carexx.common.web.DataRetVal;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/customerorder")
@@ -69,6 +72,16 @@ public class CustomerOrderController extends BaseController {
 		} catch (BizException e) {
 			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
 		}
+	}
+
+	@RequestMapping(value = "/account_pay")
+	public BasicRetVal accountPay(@Valid UserAccountDetailFormBean userAccountDetailFormBean){
+		this.ucServiceClient.modifyOrderServiceEndTime(userAccountDetailFormBean.getOrderNo());
+		OrderPayment orderPayment = this.ucServiceClient.getOrderPayment(userAccountDetailFormBean.getOrderNo());
+		userAccountDetailFormBean.setUserId(this.getCurrentUser().getId());
+		userAccountDetailFormBean.setPayType(PayType.ORDERPAY.getValue());
+		userAccountDetailFormBean.setPayAmt(orderPayment.getPayAmt().add(new BigDecimal(4)));
+		return this.ucServiceClient.addUserAccountDetail(userAccountDetailFormBean);
 	}
 
 	@RequestMapping(value = "/cancel/{orderNo}")

@@ -3,7 +3,6 @@ package com.sh.carexx.uc.service.impl;
 import com.sh.carexx.bean.user.UserAccountDetailQueryFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.exception.BizException;
-import com.sh.carexx.model.uc.UserAccount;
 import com.sh.carexx.model.uc.UserAccountDetails;
 import com.sh.carexx.uc.dao.UserAccountDetailMapper;
 import com.sh.carexx.uc.service.UserAccountDetailService;
@@ -24,12 +23,12 @@ public class UserAccountDetailServiceImpl implements UserAccountDetailService {
     }
 
     @Override
-    public List<UserAccount> getByAccountId(UserAccountDetailQueryFormBean userAccountDetailQueryFormBean) {
+    public List<UserAccountDetails> getByAccountId(UserAccountDetailQueryFormBean userAccountDetailQueryFormBean) {
         return this.userAccountDetailMapper.selectByAccountId(userAccountDetailQueryFormBean);
     }
 
     @Override
-    public UserAccount getByPayNo(String payNo) {
+    public UserAccountDetails getByPayNo(String payNo) {
         return this.userAccountDetailMapper.selectByPayNo(payNo);
     }
 

@@ -2,25 +2,21 @@ package com.sh.carexx.bean.user;
 
 import com.sh.carexx.bean.BasicFormBean;
 import com.sh.carexx.common.util.ValidUtils;
-import org.apache.commons.lang.StringUtils;
 
 public class UserAccountDetailQueryFormBean extends BasicFormBean {
 
-    private String accountId;
+    private Integer userId;
 
     private String payType;
 
     private String payTime;
 
-    public Integer getAccountId() {
-        if (StringUtils.isNotBlank(accountId)) {
-            return Integer.parseInt(accountId);
-        }
-        return null;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Byte getPayType() {

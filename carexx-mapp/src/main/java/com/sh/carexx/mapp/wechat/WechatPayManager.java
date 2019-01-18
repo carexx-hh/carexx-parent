@@ -1,6 +1,7 @@
 package com.sh.carexx.mapp.wechat;
 
 import com.sh.carexx.bean.order.OrderPaymentFormBean;
+import com.sh.carexx.bean.user.UserAccountDetailFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.enums.pay.PayStatus;
 import com.sh.carexx.common.exception.BizException;
@@ -35,6 +36,8 @@ public class WechatPayManager {
 	private String wechatPaySignKey;
 	@Value("${wechat.pay.notifyUrl}")
 	private String wechatPayNotifyUrl;
+	@Value("${recharge.notifyUrl}")
+	private String rechargeNotifyUrl;
 
 	private String sign(TreeMap<String, String> params, String signKey) {
 		Set<String> keySet = params.keySet();
@@ -85,6 +88,34 @@ public class WechatPayManager {
 		params.put("total_fee", String.valueOf((orderPayment.getPayAmt().add(new BigDecimal(4))).multiply(new BigDecimal(100)).intValue()));
 		params.put("trade_type", "JSAPI");
 		params.put("openid", orderPaymentFormBean.getOpenId());
+		String reqSign = this.sign(params, this.wechatPaySignKey);
+		params.put("sign", reqSign);
+		WepayUnifiedOrderRsp wepayUnifiedOrderRsp = this.unifiedOrder(params);
+		TreeMap<String, String> resultMap = new TreeMap<String, String>();
+		resultMap.put("appId", this.wechatAppId);
+		resultMap.put("nonceStr", UUIDUtils.getShortUUID());
+		resultMap.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
+		resultMap.put("package", "prepay_id=" + wepayUnifiedOrderRsp.getPrepay_id());
+		resultMap.put("signType", "MD5");
+		String rspSign = this.sign(resultMap, this.wechatPaySignKey);
+		resultMap.put("paySign", rspSign);
+		return resultMap;
+	}
+
+	public Map<String, String> getRechargeInfo(UserAccountDetailFormBean userAccountDetailFormBean)
+			throws BizException {
+		TreeMap<String, String> params = new TreeMap<String, String>();
+		params.put("appid", this.wechatAppId);
+		params.put("attach", "和护健康");
+		params.put("body", "账户充值");
+		params.put("mch_id", this.wechatPayMchtId);
+		params.put("nonce_str", UUIDUtils.getShortUUID());
+		params.put("notify_url", this.rechargeNotifyUrl);
+		params.put("out_trade_no", userAccountDetailFormBean.getPayNo());
+		params.put("spbill_create_ip", userAccountDetailFormBean.getIp());
+		params.put("total_fee", String.valueOf((userAccountDetailFormBean.getPayAmt()).multiply(new BigDecimal(100)).intValue()));
+		params.put("trade_type", "JSAPI");
+		params.put("openid", userAccountDetailFormBean.getOpenId());
 		String reqSign = this.sign(params, this.wechatPaySignKey);
 		params.put("sign", reqSign);
 		WepayUnifiedOrderRsp wepayUnifiedOrderRsp = this.unifiedOrder(params);

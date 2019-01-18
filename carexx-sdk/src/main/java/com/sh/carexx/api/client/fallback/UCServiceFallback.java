@@ -15,10 +15,7 @@ import com.sh.carexx.bean.order.*;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffWorkTypeFormBean;
-import com.sh.carexx.bean.user.ApplyCertificationFormBean;
-import com.sh.carexx.bean.user.NursingSupervisorLoginFormBean;
-import com.sh.carexx.bean.user.OAuthLoginFormBean;
-import com.sh.carexx.bean.user.PatientLoginFormBean;
+import com.sh.carexx.bean.user.*;
 import com.sh.carexx.bean.usermsg.UserMsgFormBean;
 import com.sh.carexx.bean.worktype.InstWorkTypeSettleFormBean;
 import com.sh.carexx.bean.worktype.WorkTypeFormBean;
@@ -889,6 +886,16 @@ public class UCServiceFallback implements UCServiceClient {
 
 	@Override
 	public String queryUserAccountByUserId(Integer userId) {
+		return null;
+	}
+
+	@Override
+	public BasicRetVal addUserAccountDetail(UserAccountDetailFormBean userAccountDetailFormBean) {
+		return null;
+	}
+
+	@Override
+	public String queryUserAccountDetail(UserAccountDetailQueryFormBean userAccountDetailQueryFormBean) {
 		return null;
 	}
 }

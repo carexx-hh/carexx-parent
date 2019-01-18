@@ -3,7 +3,7 @@
 <mapper namespace="com.sh.carexx.uc.dao.UserAccountDetailsMapper">
     <resultMap id="BaseResultMap" type="com.sh.carexx.model.uc.UserAccountDetails">
         <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="account_id" property="accountId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
         <result column="pay_no" property="payNo" jdbcType="VARCHAR"/>
         <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
         <result column="pay_type" property="payType" jdbcType="TINYINT"/>
@@ -16,7 +16,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, account_id, pay_no, order_no, pay_type, pay_amt, pay_amt_after, pay_chnl, pay_chnl_trans_no,
+        id, user_id, pay_no, order_no, pay_type, pay_amt, pay_amt_after, pay_chnl, pay_chnl_trans_no,
         pay_status, pay_time
     </sql>
 
@@ -29,19 +29,21 @@
           id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="selectByAccountId" resultMap="BaseResultMap" parameterType="com.sh.carexx.bean.user.UserAccountDetailQueryFormBean">
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="com.sh.carexx.bean.user.UserAccountDetailQueryFormBean">
         select
           <include refid="Base_Column_List"/>
         from
           carexx_user_account_details
         where
-          account_id = #{accountId,jdbcType=INTEGER}
+          user_id = #{userId,jdbcType=INTEGER}
         <if test="payTime != null and payTime != '' ">
             AND pay_time >= #{payTime}
         </if>
         <if test="payType != null and payType != '' ">
             AND pay_type = #{payType,jdbcType=TINYINT}
         </if>
+        ORDER BY
+          pay_time DESC
     </select>
 
     <select id="selectByPayNo" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -59,17 +61,17 @@
         from
           carexx_user_account_details
         where
-          account_id = #{accountId,jdbcType=INTEGER}
+          user_id = #{userId,jdbcType=INTEGER}
         and
           pay_type = #{payType,jdbcType=TINYINT}
     </select>
 
     <insert id="insert" parameterType="com.sh.carexx.model.uc.UserAccountDetails">
-        insert into carexx_user_account_details (account_id, pay_no,
+        insert into carexx_user_account_details (user_id, pay_no,
           order_no, pay_type, pay_amt,
           pay_amt_after, pay_chnl, pay_chnl_trans_no,
           pay_status, pay_time)
-        values (#{accountId,jdbcType=INTEGER}, #{payNo,jdbcType=VARCHAR},
+        values (#{userId,jdbcType=INTEGER}, #{payNo,jdbcType=VARCHAR},
           #{orderNo,jdbcType=VARCHAR}, #{payType,jdbcType=TINYINT}, #{payAmt,jdbcType=DECIMAL},
           #{payAmtAfter,jdbcType=DECIMAL}, #{payChnl,jdbcType=TINYINT}, #{payChnlTransNo,jdbcType=VARCHAR},
           #{payStatus,jdbcType=TINYINT}, #{payTime,jdbcType=TIMESTAMP})
