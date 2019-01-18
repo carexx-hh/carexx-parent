@@ -28,6 +28,7 @@ public interface CarexxConstant {
 		String CAREXX_AUTH_TOKEN = "carexx:auth:token:";
 		String CAREXX_ACL_TOKEN = "carexx:acl:token:";
 		String CAREXX_SEQ_ORDER = "carexx:seq:order";
+		String CAREXX_SEQ_PAY = "carexx:seq:pay";
 		String CAREXX_WECHAT_ACCESS_TOKEN = "carexx:wechat:accesstoken";
 		String CAREXX_SMS_VERIFY_CODE = "carexx:sms:verifycode:";
 	}

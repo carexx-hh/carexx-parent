@@ -1,6 +1,6 @@
 package com.sh.carexx.uc.dao;
 
-import com.sh.carexx.bean.user.UserAccountDetailsQueryFormBean;
+import com.sh.carexx.bean.user.UserAccountDetailQueryFormBean;
 import com.sh.carexx.model.uc.UserAccount;
 import com.sh.carexx.model.uc.UserAccountDetails;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @author hetao
  * @since JDK 1.8
  */
-public interface UserAccountDetailsMapper {
+public interface UserAccountDetailMapper {
 
     /**
      *
@@ -34,7 +34,7 @@ public interface UserAccountDetailsMapper {
      * @return
      * @since JDK 1.8
      */
-    List<UserAccount> selectByAccountId(UserAccountDetailsQueryFormBean userAccountDetailsQueryFormBean);
+    List<UserAccount> selectByAccountId(UserAccountDetailQueryFormBean userAccountDetailQueryFormBean);
 
     /**
      *
@@ -54,7 +54,7 @@ public interface UserAccountDetailsMapper {
      * @return
      * @since JDK 1.8
      */
-    BigDecimal selectSumAmtByPayType(UserAccountDetailsQueryFormBean userAccountDetailsQueryFormBean);
+    BigDecimal selectSumAmtByPayType(UserAccountDetailQueryFormBean userAccountDetailQueryFormBean);
 
     /**
      *

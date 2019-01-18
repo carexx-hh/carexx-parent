@@ -4,7 +4,7 @@ import com.sh.carexx.bean.BasicFormBean;
 import com.sh.carexx.common.util.ValidUtils;
 import org.apache.commons.lang.StringUtils;
 
-public class UserAccountDetailsQueryFormBean extends BasicFormBean {
+public class UserAccountDetailQueryFormBean extends BasicFormBean {
 
     private String accountId;
 

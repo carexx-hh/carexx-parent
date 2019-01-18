@@ -8,8 +8,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Pattern;
+import java.util.Date;
 
-public class UserAccountDetailsFormBean extends BasicFormBean {
+public class UserAccountDetailFormBean extends BasicFormBean {
 
     @NotBlank
     @Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
@@ -23,6 +24,14 @@ public class UserAccountDetailsFormBean extends BasicFormBean {
     @NotBlank
     @DecimalMin(value = CarexxConstant.DecimalMin.MIN_AMT)
     private String payAmt;
+
+    private String payChnl;
+
+    private String payChnlTransNo;
+
+    private String payStatus;
+
+    private Date payTime;
 
     public Integer getAccountId() {
         if (StringUtils.isNotBlank(accountId)) {
@@ -62,4 +71,41 @@ public class UserAccountDetailsFormBean extends BasicFormBean {
         this.payAmt = payAmt;
     }
 
+    public Byte getPayChnl() {
+        if (ValidUtils.isInteger(payChnl)) {
+            return Byte.parseByte(payChnl);
+        }
+        return null;
+    }
+
+    public void setPayChnl(String payChnl) {
+        this.payChnl = payChnl;
+    }
+
+    public String getPayChnlTransNo() {
+        return payChnlTransNo;
+    }
+
+    public void setPayChnlTransNo(String payChnlTransNo) {
+        this.payChnlTransNo = payChnlTransNo;
+    }
+
+    public Byte getPayStatus() {
+        if (ValidUtils.isInteger(payStatus)) {
+            return Byte.parseByte(payStatus);
+        }
+        return null;
+    }
+
+    public void setPayStatus(String payStatus) {
+        this.payStatus = payStatus;
+    }
+
+    public Date getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(Date payTime) {
+        this.payTime = payTime;
+    }
 }

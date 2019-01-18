@@ -24,4 +24,14 @@ public class KeyGenerator {
 			throw new BizException(ErrorCode.CACHE_ERROR);
 		}
 	}
+
+	public String generatePayNo() throws BizException {
+		try {
+			long count = this.redisTemplate.opsForValue().increment(CarexxConstant.CachePrefix.CAREXX_SEQ_PAY, 1);
+			String seqNo = StringUtils.leftPad(String.valueOf(count), 12, "0");
+			return DateUtils.toString(DateUtils.YYYYMMDD) + seqNo;
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.CACHE_ERROR);
+		}
+	}
 }

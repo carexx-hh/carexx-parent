@@ -29,7 +29,7 @@
           id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="selectByAccountId" resultMap="BaseResultMap" parameterType="com.sh.carexx.bean.user.UserAccountDetailsQueryFormBean">
+    <select id="selectByAccountId" resultMap="BaseResultMap" parameterType="com.sh.carexx.bean.user.UserAccountDetailQueryFormBean">
         select
           <include refid="Base_Column_List"/>
         from
@@ -53,7 +53,7 @@
           pay_no = #{payNo,jdbcType=VARCHAR}
     </select>
 
-    <select id="selectSumAmtByPayType" parameterType="com.sh.carexx.bean.user.UserAccountDetailsQueryFormBean" resultType="java.math.BigDecimal">
+    <select id="selectSumAmtByPayType" parameterType="com.sh.carexx.bean.user.UserAccountDetailQueryFormBean" resultType="java.math.BigDecimal">
         select
           SUM (pay_amt) payAmt
         from

@@ -1,6 +1,6 @@
 package com.sh.carexx.uc.service;
 
-import com.sh.carexx.bean.user.UserAccountDetailsQueryFormBean;
+import com.sh.carexx.bean.user.UserAccountDetailQueryFormBean;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.UserAccount;
 import com.sh.carexx.model.uc.UserAccountDetails;
@@ -15,7 +15,7 @@ import java.util.List;
  * @author hetao
  * @since JDK 1.8
  */
-public interface UserAccountDetailsService {
+public interface UserAccountDetailService {
 
     /**
      *
@@ -35,7 +35,7 @@ public interface UserAccountDetailsService {
      * @return
      * @since JDK 1.8
      */
-    List<UserAccount> getByAccountId(UserAccountDetailsQueryFormBean userAccountDetailsQueryFormBean);
+    List<UserAccount> getByAccountId(UserAccountDetailQueryFormBean userAccountDetailQueryFormBean);
 
     /**
      *
@@ -55,7 +55,7 @@ public interface UserAccountDetailsService {
      * @return
      * @since JDK 1.8
      */
-    BigDecimal getSumAmtByPayType(UserAccountDetailsQueryFormBean userAccountDetailsQueryFormBean);
+    BigDecimal getSumAmtByPayType(UserAccountDetailQueryFormBean userAccountDetailQueryFormBean);
 
     /**
      *
