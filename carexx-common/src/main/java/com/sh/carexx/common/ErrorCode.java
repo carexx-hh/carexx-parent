@@ -78,6 +78,8 @@ public enum ErrorCode {
 	CARE_SERVICE_RATIO_EXISTS_ERROR("E091501", "服务比例已存在"),
 
 	INST_JOB_TYPE_EXISTS_ERROR("E091601", "该班次已存在"),
+
+	USER_ACCOUNT_BALANCE_NOT_ENOUGH("E091701", "账户余额不足"),
 	;
 
 	private String value;

@@ -1,47 +1,54 @@
 package com.sh.carexx.bean.user;
 
 import com.sh.carexx.bean.BasicFormBean;
-import com.sh.carexx.common.CarexxConstant;
-import com.sh.carexx.common.util.ValidUtils;
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Pattern;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class UserAccountDetailFormBean extends BasicFormBean {
 
-    @NotBlank
-    @Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
-    private String accountId;
+    private String openId;
+
+    private Integer userId;
+
+    private String payNo;
 
     private String orderNo;
 
-    @NotBlank
-    private String payType;
+    private Byte payType;
 
-    @NotBlank
-    @DecimalMin(value = CarexxConstant.DecimalMin.MIN_AMT)
-    private String payAmt;
+    private BigDecimal payAmt;
 
-    private String payChnl;
+    private Byte payChnl;
 
     private String payChnlTransNo;
 
-    private String payStatus;
+    private Byte payStatus;
 
     private Date payTime;
 
-    public Integer getAccountId() {
-        if (StringUtils.isNotBlank(accountId)) {
-            return Integer.parseInt(accountId);
-        }
-        return null;
+    public String getOpenId() {
+        return openId;
     }
 
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getPayNo() {
+        return payNo;
+    }
+
+    public void setPayNo(String payNo) {
+        this.payNo = payNo;
     }
 
     public String getOrderNo() {
@@ -53,32 +60,26 @@ public class UserAccountDetailFormBean extends BasicFormBean {
     }
 
     public Byte getPayType() {
-        if (ValidUtils.isInteger(payType)) {
-            return Byte.parseByte(payType);
-        }
-        return null;
+        return payType;
     }
 
-    public void setPayType(String payType) {
+    public void setPayType(Byte payType) {
         this.payType = payType;
     }
 
-    public String getPayAmt() {
+    public BigDecimal getPayAmt() {
         return payAmt;
     }
 
-    public void setPayAmt(String payAmt) {
+    public void setPayAmt(BigDecimal payAmt) {
         this.payAmt = payAmt;
     }
 
     public Byte getPayChnl() {
-        if (ValidUtils.isInteger(payChnl)) {
-            return Byte.parseByte(payChnl);
-        }
-        return null;
+        return payChnl;
     }
 
-    public void setPayChnl(String payChnl) {
+    public void setPayChnl(Byte payChnl) {
         this.payChnl = payChnl;
     }
 
@@ -91,13 +92,10 @@ public class UserAccountDetailFormBean extends BasicFormBean {
     }
 
     public Byte getPayStatus() {
-        if (ValidUtils.isInteger(payStatus)) {
-            return Byte.parseByte(payStatus);
-        }
-        return null;
+        return payStatus;
     }
 
-    public void setPayStatus(String payStatus) {
+    public void setPayStatus(Byte payStatus) {
         this.payStatus = payStatus;
     }
 

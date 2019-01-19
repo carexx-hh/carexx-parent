@@ -15,10 +15,7 @@ import com.sh.carexx.bean.order.*;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffWorkTypeFormBean;
-import com.sh.carexx.bean.user.ApplyCertificationFormBean;
-import com.sh.carexx.bean.user.NursingSupervisorLoginFormBean;
-import com.sh.carexx.bean.user.OAuthLoginFormBean;
-import com.sh.carexx.bean.user.PatientLoginFormBean;
+import com.sh.carexx.bean.user.*;
 import com.sh.carexx.bean.usermsg.UserMsgFormBean;
 import com.sh.carexx.bean.worktype.InstWorkTypeSettleFormBean;
 import com.sh.carexx.bean.worktype.WorkTypeFormBean;
@@ -1599,4 +1596,10 @@ public interface UCServiceClient {
 	 */
 	@RequestMapping(value = "/customerorderschedule/order_statistics/{staffId}/{serviceEndTime}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryOrderScheduleStatisticsByStaffId(@PathVariable("staffId") Integer staffId, @PathVariable("serviceEndTime") String serviceEndTime);
+
+	@RequestMapping(value = "/accountdetail/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	BasicRetVal addUserAccountDetail(@RequestBody UserAccountDetailFormBean userAccountDetailFormBean);
+
+	@RequestMapping(value = "/accountdetail/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String queryUserAccountDetail(@RequestBody UserAccountDetailQueryFormBean userAccountDetailQueryFormBean);
 }

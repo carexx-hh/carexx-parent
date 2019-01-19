@@ -6,7 +6,7 @@ import java.util.Date;
 public class UserAccountDetails {
     private Long id;
 
-    private Integer accountId;
+    private Integer userId;
 
     private String payNo;
 
@@ -34,12 +34,12 @@ public class UserAccountDetails {
         this.id = id;
     }
 
-    public Integer getAccountId() {
-        return accountId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getPayNo() {
