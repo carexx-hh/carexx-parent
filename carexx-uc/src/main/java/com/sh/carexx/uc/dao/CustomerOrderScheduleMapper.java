@@ -170,5 +170,5 @@ public interface CustomerOrderScheduleMapper {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> selectOrderScheduleStatistics(@Param("staffId") Integer staffId,@Param("serviceEndTime") String serviceEndTime);
+	Map<?, ?> selectOrderScheduleStatistics(@Param("staffId") Integer staffId,@Param("serviceEndTime") String serviceEndTime);
 }

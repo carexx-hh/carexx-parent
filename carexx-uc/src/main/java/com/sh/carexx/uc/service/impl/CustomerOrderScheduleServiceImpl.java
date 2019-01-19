@@ -163,7 +163,7 @@ public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleSe
     }
 
     @Override
-    public List<Map<?, ?>> selectOrderScheduleStatistics(Integer staffId, String serviceEndTime) {
+    public Map<?, ?> selectOrderScheduleStatistics(Integer staffId, String serviceEndTime) {
         return this.customerOrderScheduleMapper.selectOrderScheduleStatistics(staffId, serviceEndTime);
     }
 

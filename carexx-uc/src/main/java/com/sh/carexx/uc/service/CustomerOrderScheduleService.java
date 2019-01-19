@@ -169,5 +169,5 @@ public interface CustomerOrderScheduleService {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> selectOrderScheduleStatistics(Integer staffId, String serviceEndTime);
+	Map<?, ?> selectOrderScheduleStatistics(Integer staffId, String serviceEndTime);
 }
