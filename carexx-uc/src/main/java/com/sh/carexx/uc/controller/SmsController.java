@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aliyuncs.exceptions.ClientException;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.web.BasicRetVal;
@@ -24,7 +25,9 @@ public class SmsController {
             return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
         } catch (BizException e) {
             return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
-        }
+        } catch (ClientException e) {
+        	return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR);
+		}
     }
 }
 

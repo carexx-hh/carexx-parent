@@ -1,7 +1,5 @@
 package com.sh.carexx.uc.manager;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
@@ -12,11 +10,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.IAcsClient;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.profile.DefaultProfile;
+import com.aliyuncs.profile.IClientProfile;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.exception.BizException;
-import com.sh.carexx.common.util.HttpClientUtils;
-import com.sh.carexx.common.util.JSONUtils;
 
 /**
  * 
@@ -30,82 +33,79 @@ import com.sh.carexx.common.util.JSONUtils;
  */
 @Service
 public class SmsManager {
-	/** 验证码短信 */
-	private static final String SMS_TYPE_VERIFY_CODE = "1";
-	/** 通知短信 */
-	private static final String SMS_TYPE_NOTITY = "2";
-	/** 内容类型 */
-	private static final String SMS_CONTENT_TYPE = "1";
 	/** 验证码有效期（分钟） */
 	private static final int SMS_VERIFY_CODE_EXPIRE = 5;
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	// 发送地址
-	@Value("${sms.gateway.serviceUrl}")
-	private String serviceUrl;
+	// 产品名称:云通信短信API产品
+	@Value("${sms.product}")
+	private String product;
+	// 产品域名
+	@Value("${sms.domain}")
+	private String domain;
+
 	// 用户ID
-	@Value("${sms.user.userId}")
-	private String userId;
+	@Value("${sms.accessKeyId}")
+	private String accessKeyId;
 	// 密钥
-	@Value("${sms.user.password}")
-	private String password;
-	// 默认短信签名
-	@Value("${sms.content.signature}")
-	private String signature;
+	@Value("${sms.accessKeySecret}")
+	private String accessKeySecret;
+
+	@Value("${sms.signName}")
+	private String signName;
+
+	@Value("${sms.templateCode}")
+	private String templateCode;
 
 	@Autowired
 	private RedisTemplate<String, String> redisTemplate;
 
-	/**
-	 * 
-	 * send:发送短信 <br/>
-	 * 
-	 * @author WL
-	 * @param busiType
-	 * @param mobiles（多个手机号用英文逗号隔开）
-	 * @param content
-	 * @param signature
-	 * @throws BizException
-	 * @since JDK 1.8
-	 */
-	public void send(String busiType, String mobiles, String content, String signature) throws BizException {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("userId", this.userId);
-		params.put("password", this.password);
-		params.put("busiType", busiType);
-		params.put("contentType", SMS_CONTENT_TYPE);
-		params.put("mobiles", mobiles);
-		params.put("signature", signature);
-		String result = null;
+	private void sendSms(String mobiles, String signName, String templateCode, String templateParam)
+			throws BizException, ClientException {
+
+		// 可自助调整超时时间
+		System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
+		System.setProperty("sun.net.client.defaultReadTimeout", "10000");
+
+		// 初始化acsClient,暂不支持region化
+		IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", this.accessKeyId, this.accessKeySecret);
+		DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", this.product, this.domain);
+		IAcsClient acsClient = new DefaultAcsClient(profile);
+
+		// 组装请求对象-具体描述见控制台-文档部分内容
+		SendSmsRequest request = new SendSmsRequest();
+		// 必填:待发送手机号
+		request.setPhoneNumbers(mobiles);
+		// 必填:短信签名-可在短信控制台中找到
+		request.setSignName(signName); // TODO 改这里
+		// 必填:短信模板-可在短信控制台中找到
+		request.setTemplateCode(templateCode); // TODO 改这里
+		// 可选:模板中的变量替换JSON串,如模板内容为"亲爱的用户,您的验证码为${code}"时,此处的值为
+		request.setTemplateParam(templateParam);
+
+		// 选填-上行短信扩展码(无特殊需求用户请忽略此字段)
+		// request.setSmsUpExtendCode("90997");
+
+		// 可选:outId为提供给业务方扩展字段,最终在短信回执消息中将此值带回给调用者
+		request.setOutId("yourOutId");
+
+		// hint 此处可能会抛出异常，注意catch
+		SendSmsResponse sendSmsResponse = null;
 		try {
-			result = HttpClientUtils.post(this.serviceUrl, params);
+			sendSmsResponse = acsClient.getAcsResponse(request);
+
 		} catch (Exception e) {
 			throw new BizException(ErrorCode.SYS_ERROR, e);
-		}
-		if (StringUtils.isBlank(result)) {
-			throw new BizException(ErrorCode.SYS_ERROR);
-		}
-		Map<String, Object> resultMap = JSONUtils.parseToMap(result);
-		int code = Integer.parseInt(String.valueOf(resultMap.get("code")));
-		if (code != 200) {
-			throw new BizException((String) resultMap.get("errorCode"), (String) resultMap.get("errorMsg"));
-		}
-	}
 
-	/**
-	 * 
-	 * sendNotify:发送通知短信 <br/>
-	 * 
-	 * @author WL
-	 * @param mobiles
-	 * @param content
-	 * @param signature
-	 * @throws BizException
-	 * @since JDK 1.8
-	 */
-	public void sendNotify(String mobiles, String content, String signature) throws BizException {
-		this.send(SMS_TYPE_NOTITY, mobiles, content, signature);
+		}
+		if (sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals("OK")) {
+			this.logger.info("短信发送成功！接收手机号为：[{}]", mobiles);
+		} else {
+			this.logger.info("短信发送失败！接收手机号为：[{}]，Code：[{}]，Message：[{}]", mobiles, sendSmsResponse.getBizId(),
+					sendSmsResponse.getMessage());
+			throw new BizException((String) sendSmsResponse.getCode(), (String) sendSmsResponse.getMessage());
+		}
 	}
 
 	/**
@@ -117,11 +117,10 @@ public class SmsManager {
 	 * @throws BizException
 	 * @since JDK 1.8
 	 */
-	public void sendVerifyCode(String mobile) throws BizException {
+	public void sendVerifyCode(String mobile) throws BizException, ClientException {
 		String verifyCode = String.valueOf((int) ((Math.random() * 9 + 1) * 100000));
-		this.logger.info("验证码[{}]已成功发送至手机[{}]", verifyCode, mobile);
-		String verifyCodeSms = String.format("验证码%s", verifyCode);
-		this.send(SMS_TYPE_VERIFY_CODE, mobile, verifyCodeSms, this.signature);
+		String templateParam = String.format("{\"code\":\"" + verifyCode + "\"}");
+		this.sendSms(mobile, this.signName, this.templateCode, templateParam);
 		this.redisTemplate.opsForValue().set(CarexxConstant.CachePrefix.CAREXX_SMS_VERIFY_CODE + mobile, verifyCode,
 				SMS_VERIFY_CODE_EXPIRE * 60, TimeUnit.SECONDS);
 	}
