@@ -323,8 +323,9 @@
 		LEFT JOIN carexx_order_settle os ON cos.id = os.schedule_id
 		RIGHT JOIN carexx_customer_order co ON cos.order_no = co.order_no
 		WHERE
-			cos.service_staff_id = #{staffId, jdbcType=INTEGER}
-		AND co.order_status IN (5, 6)
+		co.order_type = 1
+		AND co.service_address = 1 AND co.order_status in (5,6)
+		AND	cos.service_staff_id = #{staffId, jdbcType=INTEGER}
 		AND date_format(co.service_end_time,'%Y-%m') = #{serviceEndTime, jdbcType=VARCHAR}
 	</select>
 </mapper>
