@@ -548,10 +548,6 @@ public class CustomerOrderScheduleManager {
 		if(customerOrder.getOrderStatus() == OrderStatus.WAIT_SCHEDULE.getValue()) {
 			serviceStartTime = customerOrder.getServiceStartTime();
 			serviceEndTime = DateUtils.addHour(serviceStartTime, 12);
-
-			//将订单状态从待排班改为待支付
-			this.customerOrderService.updateStatus(mappCustomerOrderScheduleFormBean.getOrderNo(),
-					OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.WAIT_PAY.getValue());
 		} else if(customerOrder.getOrderStatus() == OrderStatus.WAIT_PAY.getValue()) {
 			 CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
 			 serviceStartTime = customerOrderSchedule.getServiceEndTime();
