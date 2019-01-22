@@ -102,8 +102,7 @@
 			carexx_customer_order co
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
 		LEFT JOIN carexx_inst_care_service ics ON co.inst_id = ics.inst_id
-		AND co.service_id = ics.service_id
-		AND ics.service_status > 0
+		AND co.service_id = ics.service_id AND ics.service_status > 0
 		WHERE
 			co.user_id = #{userId,jdbcType=INTEGER}
         and
@@ -130,7 +129,7 @@
 		carexx_customer_order co
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
 		LEFT JOIN carexx_inst_care_service ics ON co.inst_id = ics.inst_id
-		AND co.service_id = ics.service_id
+		AND co.service_id = ics.service_id AND ics.service_status > 0
 		WHERE
 		co.user_id = #{userId,jdbcType=INTEGER}
 		and co.order_status in (5,6)
@@ -174,7 +173,7 @@
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
 		LEFT JOIN carexx_work_type wt ON cs.work_type_id = wt.id
 		LEFT JOIN carexx_inst_care_service ics ON co.inst_id = ics.inst_id
-		AND co.service_id = ics.service_id
+		AND co.service_id = ics.service_id AND ics.service_status > 0
 		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
 		LEFT JOIN carexx_order_settle os ON cos.id = os.schedule_id
 		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
@@ -866,6 +865,7 @@
 		GROUP BY
 			cos.order_no
 	</select>
+
 	<update id="updateStatus">
 		UPDATE
 			carexx_customer_order

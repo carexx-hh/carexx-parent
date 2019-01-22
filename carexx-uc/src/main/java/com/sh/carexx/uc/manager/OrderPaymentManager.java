@@ -7,7 +7,10 @@ import com.sh.carexx.common.enums.order.OrderStatus;
 import com.sh.carexx.common.enums.pay.PayMethod;
 import com.sh.carexx.common.enums.pay.PayStatus;
 import com.sh.carexx.common.exception.BizException;
-import com.sh.carexx.model.uc.*;
+import com.sh.carexx.model.uc.CustomerOrder;
+import com.sh.carexx.model.uc.CustomerOrderSchedule;
+import com.sh.carexx.model.uc.InstCustomer;
+import com.sh.carexx.model.uc.OrderPayment;
 import com.sh.carexx.uc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,7 +86,7 @@ public class OrderPaymentManager {
         if (oldOrderPayment.getPayStatus() == PayStatus.PENDING_PAY.getValue()
                 && orderPayment.getPayStatus() == PayStatus.PAY_SUCCESS.getValue()) {
             //订单表待支付变成已支付
-            this.customerOrderService.updateStatus(orderPayment.getOrderNo(), OrderStatus.IN_SERVICE.getValue(),
+            this.customerOrderService.updateStatus(orderPayment.getOrderNo(), OrderStatus.WAIT_PAY.getValue(),
                     OrderStatus.ALREADY_PAY.getValue());
             
             //支付完成消息通知管理员

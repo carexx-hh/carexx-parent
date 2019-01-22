@@ -496,6 +496,24 @@ public class CustomerOrderScheduleManager {
 	}
 
 	/**
+	 * finishScheduling:(完成排班). <br/>
+	 *
+	 * @param orderNo：排班id
+	 * @throws BizException
+	 * @author hetao
+	 * @since JDK 1.8
+	 */
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
+	public void finishScheduling(String orderNo) throws BizException {
+		List<CustomerOrderSchedule> scheduleList = this.customerOrderScheduleService.getByOrderNo(orderNo);
+		// 批量确认排班记录为已完成
+		for (CustomerOrderSchedule list : scheduleList) {
+			this.customerOrderScheduleService.updateStatus(list.getId(), OrderScheduleStatus.IN_SERVICE.getValue(),
+					OrderScheduleStatus.COMPLETED.getValue());
+		}
+	}
+
+	/**
 	 * modifySettleAmt:(调整结算金额). <br/>
 	 *
 	 * @param orderSettleAdjustAmtFormBean
