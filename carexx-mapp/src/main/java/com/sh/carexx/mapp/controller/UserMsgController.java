@@ -24,13 +24,15 @@ public class UserMsgController extends BaseController {
 		return this.ucServiceClient.addUserMsg(userMsgFormBean);
 	}
 	
-	@RequestMapping(value = "/all/{userId}")
-	public String queryAllUserMsg(@PathVariable("userId") Integer userId) {
+	@RequestMapping(value = "/all")
+	public String queryAllUserMsg() {
+		Integer userId = this.getCurrentUserOAuth().getUserAcctId();
 		return this.ucServiceClient.queryAllUserMsg(userId);
 	}
 	
-	@RequestMapping(value = "/read/{msgId}/{userId}")
-	public BasicRetVal read(@PathVariable("msgId") Long msgId, @PathVariable("userId") Integer userId) {
+	@RequestMapping(value = "/read/{msgId}")
+	public BasicRetVal read(@PathVariable("msgId") Long msgId) {
+		Integer userId = this.getCurrentUserOAuth().getUserAcctId();
 		return this.ucServiceClient.readUserMsg(msgId, userId);
 	}
 	
@@ -39,8 +41,9 @@ public class UserMsgController extends BaseController {
 		return this.ucServiceClient.deleteUserMsg(ids);
 	}
 	
-	@RequestMapping(value = "/count_unread/{userId}")
-	public String getForCountUnread(@PathVariable("userId") Integer userId) {
+	@RequestMapping(value = "/count_unread")
+	public String getForCountUnread() {
+		Integer userId = this.getCurrentUserOAuth().getUserAcctId();
 		return this.ucServiceClient.getUserMsgCountUnread(userId);
 	}
 }

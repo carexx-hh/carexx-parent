@@ -9,6 +9,8 @@ public interface UserOAuthMapper {
 
 	UserOAuth selectById(Long id);
 
+	UserOAuth selectByUserId(Integer userId);
+	
 	UserOAuth selectByIdentityInfo(@Param("identityType") Byte identityType, @Param("identifier") String identifier);
 
 	int update(UserOAuth userOAuth);

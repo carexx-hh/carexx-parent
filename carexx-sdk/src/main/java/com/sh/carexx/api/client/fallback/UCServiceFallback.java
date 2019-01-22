@@ -69,6 +69,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public UserOAuth getUserOAuth(Integer userId) {
+		return null;
+	}
+	
+	@Override
 	public BasicRetVal modifyUserBindMobile(Integer id, String mobile, String verifyCode) {
 		return null;
 	}

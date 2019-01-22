@@ -6,6 +6,8 @@ import com.sh.carexx.common.enums.TerChnl;
 import com.sh.carexx.common.util.WebUtils;
 import com.sh.carexx.common.web.SessionHolder;
 import com.sh.carexx.model.uc.UserInfo;
+import com.sh.carexx.model.uc.UserOAuth;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -19,6 +21,10 @@ public class BaseController {
 
 	public UserInfo getCurrentUser() {
 		return this.ucServiceClient.getUserInfo(SessionHolder.getUserId());
+	}
+	
+	public UserOAuth getCurrentUserOAuth() {
+		return this.ucServiceClient.getUserOAuth(SessionHolder.getUserId());
 	}
 
 	protected String getUserAgent(HttpServletRequest request) {

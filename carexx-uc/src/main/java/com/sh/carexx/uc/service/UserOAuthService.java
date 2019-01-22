@@ -6,6 +6,8 @@ import com.sh.carexx.model.uc.UserOAuth;
 public interface UserOAuthService {
 	UserOAuth getByIdentityInfo(Byte identityType, String identifier);
 
+	UserOAuth getByUserId(Integer userId);
+	
 	void save(UserOAuth userOAuth) throws BizException;
 
 	void update(UserOAuth userOAuth) throws BizException;

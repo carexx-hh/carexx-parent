@@ -27,7 +27,7 @@ public class CustomerOrderScheduleController extends BaseController {
 		if (bindingResult.hasErrors()) {
 			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
 		}
-		mappCustomerOrderScheduleFormBean.setUserId(SessionHolder.getUserId());
+		mappCustomerOrderScheduleFormBean.setUserId(this.getCurrentUserOAuth().getUserAcctId());
 		return this.ucServiceClient.mappAddCustomerOrderSchedule(mappCustomerOrderScheduleFormBean);
 	}
 	

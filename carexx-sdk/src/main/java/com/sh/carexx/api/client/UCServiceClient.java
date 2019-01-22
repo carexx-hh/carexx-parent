@@ -55,6 +55,9 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/user/get_user_info/{id}", method = RequestMethod.GET)
 	UserInfo getUserInfo(@PathVariable("id") Integer id);
 	
+	@RequestMapping(value = "/user/get_user_oauth/{userId}", method = RequestMethod.GET)
+	UserOAuth getUserOAuth(@PathVariable("userId") Integer userId);
+	
 	@RequestMapping(value = "/user/modify_bind_mobile/{id}/{mobile}/{verifyCode}", method = RequestMethod.GET)
 	BasicRetVal modifyUserBindMobile(@PathVariable("id") Integer id, @PathVariable("mobile") String mobile, @PathVariable("verifyCode") String verifyCode);
 

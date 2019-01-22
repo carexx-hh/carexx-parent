@@ -24,6 +24,13 @@
 			carexx_user_oauth
 		where id = #{id,jdbcType=BIGINT}
 	</select>
+	<select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			carexx_user_oauth
+		where user_id = #{userId,jdbcType=INTEGER}
+	</select>
 	<select id="selectByIdentityInfo" resultMap="BaseResultMap">
 		select
 			<include refid="Base_Column_List" />

@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sh.carexx.model.uc.UserInfo;
+import com.sh.carexx.model.uc.UserOAuth;
 import com.sh.carexx.uc.manager.UserManager;
+import com.sh.carexx.uc.service.UserOAuthService;
 import com.sh.carexx.uc.service.UserService;
 
 @RestController
@@ -20,6 +22,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserManager userManager;
+    @Autowired
+    private UserOAuthService userOAuthService;
 
     @RequestMapping(value = "/get_user_info/{id}", method = RequestMethod.GET)
     public UserInfo getUserInfo(@PathVariable("id") Integer id) {
@@ -36,4 +40,8 @@ public class UserController {
     	return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
     }
     
+    @RequestMapping(value = "/get_user_oauth/{userId}", method = RequestMethod.GET)
+    public UserOAuth getUserOAuth(@PathVariable("userId") Integer userId) {
+        return this.userOAuthService.getByUserId(userId);
+    }
 }
