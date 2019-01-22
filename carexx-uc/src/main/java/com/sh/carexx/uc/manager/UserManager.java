@@ -130,7 +130,9 @@ public class UserManager {
 		AclLoginFormBean aclLoginFormBean = new AclLoginFormBean();
 		aclLoginFormBean.setAcctNo(nursingSupervisorLoginFormBean.getAcctNo());
 		aclLoginFormBean.setLoginPass(nursingSupervisorLoginFormBean.getLoginPass());
+		//账号密码校验
 		Map<String, Object> loginMap = this.aclUserManager.login(aclLoginFormBean);
+		//护工管理员身份校验
 		int roleId = this.aclUserAcctService.getRoleId(nursingSupervisorLoginFormBean.getAcctNo());
 		
 		if(roleId != 4)
@@ -147,7 +149,11 @@ public class UserManager {
 		oAuthLoginFormBean.setSex(nursingSupervisorLoginFormBean.getSex());
 		oAuthLoginFormBean.setRegion(nursingSupervisorLoginFormBean.getRegion());
 		
+		//添加用户信息
 		UserInfo userInfo = this.add(oAuthLoginFormBean);
+		//绑定管理员身份至用户信息
+		this.userOAuthService.updateUserAcctId(userInfo.getId(), Integer.parseInt(loginMap.get("userAcctId").toString()));
+		//生成token
 		String token = Radix32Utils.encode(userInfo.getId());
 		try {
 			this.redisTemplate.opsForValue().set(CarexxConstant.CachePrefix.CAREXX_AUTH_TOKEN + token, token);

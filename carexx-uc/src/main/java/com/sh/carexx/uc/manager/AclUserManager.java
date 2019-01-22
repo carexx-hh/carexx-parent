@@ -170,7 +170,7 @@ public class AclUserManager {
 		}
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("token", token);
-		resultMap.put("userId", userAcct.getId());
+		resultMap.put("userAcctId", userAcct.getId());
 		resultMap.put("instId", userAcct.getInstId());
 		return resultMap;
 	}

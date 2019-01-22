@@ -17,6 +17,8 @@ public class UserOAuth {
 
 	private Integer staffId;
 	
+	private Integer userAcctId;
+	
 	private Byte identityStatus;
 
 	private Date createTime;
@@ -102,4 +104,13 @@ public class UserOAuth {
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
 	}
+
+	public Integer getUserAcctId() {
+		return userAcctId;
+	}
+
+	public void setUserAcctId(Integer userAcctId) {
+		this.userAcctId = userAcctId;
+	}
+	
 }
