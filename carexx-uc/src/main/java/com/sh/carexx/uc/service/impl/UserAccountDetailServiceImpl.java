@@ -23,8 +23,8 @@ public class UserAccountDetailServiceImpl implements UserAccountDetailService {
     }
 
     @Override
-    public List<UserAccountDetails> getByAccountId(UserAccountDetailQueryFormBean userAccountDetailQueryFormBean) {
-        return this.userAccountDetailMapper.selectByAccountId(userAccountDetailQueryFormBean);
+    public List<UserAccountDetails> selectByUserId(UserAccountDetailQueryFormBean userAccountDetailQueryFormBean) {
+        return this.userAccountDetailMapper.selectByUserId(userAccountDetailQueryFormBean);
     }
 
     @Override

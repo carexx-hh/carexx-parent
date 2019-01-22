@@ -39,7 +39,7 @@ public class UserAccountDetailController {
 
     @RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String queryUserAccountDetail(@RequestBody UserAccountDetailQueryFormBean userAccountDetailQueryFormBean) {
-        List<UserAccountDetails> result = this.userAccountDetailService.getByAccountId(userAccountDetailQueryFormBean);
+        List<UserAccountDetails> result = this.userAccountDetailService.selectByUserId(userAccountDetailQueryFormBean);
         return new DataRetVal(CarexxConstant.RetCode.SUCCESS,result).toJSON();
     }
 }
