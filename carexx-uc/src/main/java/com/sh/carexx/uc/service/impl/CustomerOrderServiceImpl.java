@@ -604,4 +604,18 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 	public Integer getOrderCountByStaffId(Integer staffId) {
 		return this.customerOrderMapper.selectOrderCountByStaffId(staffId);
 	}
+
+	@Override
+	public void updateOperatorId(CustomerOrder customerOrder) throws BizException {
+		int rows = 0;
+		try {
+			rows = this.customerOrderMapper.updateOperatorId(customerOrder);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+		
+	}
 }

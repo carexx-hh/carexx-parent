@@ -310,4 +310,15 @@ public interface CustomerOrderService {
 	 * @since JDK 1.8
 	 */
 	Integer getOrderCountByStaffId(Integer staffId);
+	
+	/**
+	 * 
+	 * updateOperatorId:(修改操作员). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param customerOrder
+	 * @throws BizException 
+	 * @since JDK 1.8
+	 */
+	void updateOperatorId(CustomerOrder customerOrder) throws BizException;
 }

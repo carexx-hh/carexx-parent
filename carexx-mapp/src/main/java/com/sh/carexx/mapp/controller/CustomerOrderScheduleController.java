@@ -3,6 +3,8 @@ package com.sh.carexx.mapp.controller;
 import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.web.BasicRetVal;
+import com.sh.carexx.common.web.SessionHolder;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,7 @@ public class CustomerOrderScheduleController extends BaseController {
 		if (bindingResult.hasErrors()) {
 			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
 		}
+		mappCustomerOrderScheduleFormBean.setUserId(SessionHolder.getUserId());
 		return this.ucServiceClient.mappAddCustomerOrderSchedule(mappCustomerOrderScheduleFormBean);
 	}
 	

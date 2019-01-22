@@ -309,4 +309,15 @@ public interface CustomerOrderMapper {
 	 * @since JDK 1.8
 	 */
 	int updateServiceEndTime(CustomerOrder customerOrder);
+	
+	/**
+	 * 
+	 * updateOperatorId:(修改操作员). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param customerOrder
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	int updateOperatorId(CustomerOrder customerOrder);
 }

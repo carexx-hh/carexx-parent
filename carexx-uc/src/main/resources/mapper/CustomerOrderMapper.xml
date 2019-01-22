@@ -940,4 +940,13 @@
 	  		order_no = #{orderNo,jdbcType=VARCHAR}
 	</update>
 
+	<update id="updateOperatorId" parameterType="com.sh.carexx.model.uc.CustomerOrder">
+		update
+			carexx_customer_order
+		set
+			operator_id = #{operatorId,jdbcType=TIMESTAMP},
+			modify_time = now()
+	  	where
+	  		order_no = #{orderNo,jdbcType=VARCHAR}
+	</update>
 </mapper>

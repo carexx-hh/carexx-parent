@@ -573,6 +573,10 @@ public class CustomerOrderScheduleManager {
 		this.customerOrderScheduleService.save(customerOrderSchedule);
 		// 添加结算记录
 		this.orderSettleManager.add(customerOrderSchedule);
+		
+		//将userId存入订单operatorId中供消息通知使用
+		customerOrder.setOperatorId(mappCustomerOrderScheduleFormBean.getUserId());
+		this.customerOrderService.updateOperatorId(customerOrder);
 	}
 	
 	/**
