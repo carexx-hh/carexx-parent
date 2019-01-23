@@ -41,8 +41,9 @@ public class CustomerOrderScheduleController extends BaseController {
 		return this.ucServiceClient.refusedSchedule(orderNo);
 	}
 
-	@RequestMapping(value = "/order_statistics/{staffId}/{serviceEndTime}")
-	public String queryOrderScheduleStatisticsByStaffId(@PathVariable("staffId") Integer staffId, @PathVariable("serviceEndTime") String serviceEndTime) {
+	@RequestMapping(value = "/order_statistics/{serviceEndTime}")
+	public String queryOrderScheduleStatisticsByStaffId(@PathVariable("serviceEndTime") String serviceEndTime) {
+		Integer staffId = this.getCurrentUserOAuth().getStaffId();
 		return this.ucServiceClient.queryOrderScheduleStatisticsByStaffId(staffId, serviceEndTime);
 	}
 }

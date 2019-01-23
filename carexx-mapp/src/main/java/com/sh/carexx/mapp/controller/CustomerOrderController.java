@@ -95,18 +95,21 @@ public class CustomerOrderController extends BaseController {
 				this.ucServiceClient.calcServiceFee(calcServiceFeeFormBean));
 	}
 	
-	@RequestMapping(value = "/by_orderStatus/{orderStatus}/{instId}")
-	public String queryMappByOrderStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("instId")Integer instId) {
+	@RequestMapping(value = "/by_orderStatus/{orderStatus}")
+	public String queryMappByOrderStatus(@PathVariable("orderStatus")String orderStatus) {
+		Integer instId = this.getCurrentUserOAuth().getInstId();
 		return this.ucServiceClient.queryMappByOrderStatus(orderStatus, instId);
 	}
 	
-	@RequestMapping(value = "/by_orderStatus_and_serviceStatus/{orderStatus}/{serviceStatus}/{instId}/{staffId}")
-	public String queryMappByOrderStatusAndServiceStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("serviceStatus")Integer serviceStatus, @PathVariable("instId")Integer instId, @PathVariable("staffId")Integer staffId) {
+	@RequestMapping(value = "/by_orderStatus_and_serviceStatus/{orderStatus}/{serviceStatus}/{staffId}")
+	public String queryMappByOrderStatusAndServiceStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("serviceStatus")Integer serviceStatus, @PathVariable("staffId")Integer staffId) {
+		Integer instId = this.getCurrentUserOAuth().getInstId();
 		return this.ucServiceClient.queryMappByOrderStatusAndServiceStatus(orderStatus, serviceStatus, instId, staffId);
 	}
 	
 	@RequestMapping(value="/staff_income_count")
 	public String queryStaffIncomeCountForList(@Valid CustomerOrderQueryFormBean customerOrderQueryFormBean){
+		customerOrderQueryFormBean.setServiceStaffId(this.getCurrentUserOAuth().getStaffId().toString());
 		return this.ucServiceClient.queryStaffIncomeCountForList(customerOrderQueryFormBean);
 	}
 }

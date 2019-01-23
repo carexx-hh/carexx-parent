@@ -226,7 +226,7 @@ public class InstStaffManager {
 				oAuthLoginFormBean.setRegion(applyCertificationFormBean.getRegion());
 				
 				UserInfo userInfo = this.userManager.add(oAuthLoginFormBean);
-				this.userOAuthService.updateStaffId(userInfo.getId(), InstStaff.getId());
+				this.userOAuthService.updateStaffId(userInfo.getId(), InstStaff.getId(), InstStaff.getInstId());
 			} else if (InstStaff.getCertificationStatus() == CertificationStatus.IN_CERTIFICATION.getValue()) {
 				throw new BizException(ErrorCode.IN_CERTIFICATION);
 			}else {

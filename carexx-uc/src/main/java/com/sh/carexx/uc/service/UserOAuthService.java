@@ -12,7 +12,7 @@ public interface UserOAuthService {
 
 	void update(UserOAuth userOAuth) throws BizException;
 	
-	void updateStaffId(int userId, int staffId) throws BizException;
+	void updateStaffId(int userId, int staffId, int instId) throws BizException;
 	
-	void updateUserAcctId(int userId, int userAcctId) throws BizException;
+	void updateUserAcctId(int userId, int userAcctId, int instId) throws BizException;
 }
