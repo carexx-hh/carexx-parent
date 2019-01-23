@@ -251,7 +251,7 @@
 		ORDER BY
 			co.create_time DESC
   	</select>
-  	<select id="selectMappByOrderStatusAndServiceStatus" resultType="java.util.Map">
+  	<select id="selectMappByOrderStatusAndServiceStatus" parameterType="com.sh.carexx.bean.order.MappCustomerOrderQueryFormBean" resultType="java.util.Map">
 	  	SELECT
 			co.id id,
 			co.order_no orderNo,
@@ -280,6 +280,9 @@
 		AND co.order_status IN (#{orderStatus,jdbcType=VARCHAR})
 		AND cos.service_status = #{serviceStatus,jdbcType=TINYINT}
 		AND co.inst_id = #{instId,jdbcType=INTEGER}
+		<if test="serviceStaffId != null and serviceStaffId > 0">
+			AND cos.service_staff_id = #{serviceStaffId,jdbcType=INTEGER}
+		</if>
 		GROUP BY
 			co.order_no
 		ORDER BY

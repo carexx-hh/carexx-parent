@@ -1,6 +1,7 @@
 package com.sh.carexx.uc.service.impl;
 
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
+import com.sh.carexx.bean.order.MappCustomerOrderQueryFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.enums.pay.PayMethod;
@@ -302,9 +303,8 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 	}
 
 	@Override
-	public List<Map<?, ?>> queryMappByOrderStatusAndServiceStatus(String orderStatus, Integer serviceStatus,
-			Integer instId) {
-		return this.customerOrderMapper.selectMappByOrderStatusAndServiceStatus(orderStatus, serviceStatus, instId);
+	public List<Map<?, ?>> queryMappByOrderStatusAndServiceStatus(MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
+		return this.customerOrderMapper.selectMappByOrderStatusAndServiceStatus(mappCustomerOrderQueryFormBean);
 	}
 	
 	@Override

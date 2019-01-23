@@ -235,10 +235,10 @@ public class CustomerOrderController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
 	
-	@RequestMapping(value = "/by_orderStatus_and_serviceStatus/{orderStatus}/{serviceStatus}/{instId}", method = RequestMethod.GET)
-	public String queryMappByOrderStatusAndServiceStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("serviceStatus")Integer serviceStatus, @PathVariable("instId")Integer instId) {
+	@RequestMapping(value = "/by_orderStatus_and_serviceStatus", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String queryMappByOrderStatusAndServiceStatus(@RequestBody MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
 		List<Map<?, ?>> resultList = null;
-		resultList = this.customerOrderService.queryMappByOrderStatusAndServiceStatus(orderStatus, serviceStatus, instId);
+		resultList = this.customerOrderService.queryMappByOrderStatusAndServiceStatus(mappCustomerOrderQueryFormBean);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
 
