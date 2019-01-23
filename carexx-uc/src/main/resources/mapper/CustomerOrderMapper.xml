@@ -280,7 +280,6 @@
 		AND co.order_status IN (#{orderStatus,jdbcType=VARCHAR})
 		AND cos.service_status = #{serviceStatus,jdbcType=TINYINT}
 		AND co.inst_id = #{instId,jdbcType=INTEGER}
-		AND cos.service_staff_id = #{staffId,jdbcType=INTEGER}
 		GROUP BY
 			co.order_no
 		ORDER BY

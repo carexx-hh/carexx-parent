@@ -1,16 +1,15 @@
 package com.sh.carexx.mapp.controller;
 
-import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
-import com.sh.carexx.common.CarexxConstant;
-import com.sh.carexx.common.web.BasicRetVal;
-import com.sh.carexx.common.web.SessionHolder;
+import javax.validation.Valid;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
+import com.sh.carexx.common.CarexxConstant;
+import com.sh.carexx.common.web.BasicRetVal;
 
 @RestController
 @RequestMapping("/customerorderschedule")
@@ -30,14 +29,14 @@ public class CustomerOrderScheduleController extends BaseController {
 		mappCustomerOrderScheduleFormBean.setUserId(this.getCurrentUserOAuth().getUserAcctId());
 		return this.ucServiceClient.mappAddCustomerOrderSchedule(mappCustomerOrderScheduleFormBean);
 	}
-	
+
 	@RequestMapping(value = "/accept_schedule/{orderNo}")
-	public BasicRetVal acceptSchedule(@PathVariable("orderNo")String orderNo) {
+	public BasicRetVal acceptSchedule(@PathVariable("orderNo") String orderNo) {
 		return this.ucServiceClient.acceptSchedule(orderNo);
 	}
-	
+
 	@RequestMapping(value = "/refused_schedule/{orderNo}")
-	public BasicRetVal refusedSchedule(@PathVariable("orderNo")String orderNo) {
+	public BasicRetVal refusedSchedule(@PathVariable("orderNo") String orderNo) {
 		return this.ucServiceClient.refusedSchedule(orderNo);
 	}
 

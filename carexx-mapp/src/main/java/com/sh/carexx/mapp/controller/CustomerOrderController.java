@@ -101,10 +101,10 @@ public class CustomerOrderController extends BaseController {
 		return this.ucServiceClient.queryMappByOrderStatus(orderStatus, instId);
 	}
 	
-	@RequestMapping(value = "/by_orderStatus_and_serviceStatus/{orderStatus}/{serviceStatus}/{staffId}")
+	@RequestMapping(value = "/by_orderStatus_and_serviceStatus/{orderStatus}/{serviceStatus}")
 	public String queryMappByOrderStatusAndServiceStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("serviceStatus")Integer serviceStatus, @PathVariable("staffId")Integer staffId) {
 		Integer instId = this.getCurrentUserOAuth().getInstId();
-		return this.ucServiceClient.queryMappByOrderStatusAndServiceStatus(orderStatus, serviceStatus, instId, staffId);
+		return this.ucServiceClient.queryMappByOrderStatusAndServiceStatus(orderStatus, serviceStatus, instId);
 	}
 	
 	@RequestMapping(value="/staff_income_count")
