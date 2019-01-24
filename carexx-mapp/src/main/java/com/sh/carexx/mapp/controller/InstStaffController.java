@@ -29,8 +29,14 @@ public class InstStaffController extends BaseController {
 		return this.ucServiceClient.queryMappAllInstStaff(instStaffQueryFormBean);
 	}
 	
-	@RequestMapping(value = "/get_id/{id}")
-	public String getId(@PathVariable("id") Integer id) {
+	@RequestMapping(value = "/get_id")
+	public String getId() {
+		Integer id = this.getCurrentUserOAuth().getStaffId();
+		return this.ucServiceClient.getInstStaffId(id);
+	}
+	
+	@RequestMapping(value = "/get_staffId/{id}")
+	public String getStaffId(@PathVariable("id") Integer id) {
 		return this.ucServiceClient.getInstStaffId(id);
 	}
 	
