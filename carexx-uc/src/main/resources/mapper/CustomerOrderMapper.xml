@@ -862,8 +862,9 @@
 		WHERE
 			co.order_type = 1
 		AND co.service_address = 1 AND co.order_status in (5,6)
+		AND ics.service_status != 0
 		AND cos.service_staff_id = #{serviceStaffId,jdbcType=INTEGER}
-		AND DATE_FORMAT(co.service_end_time,<![CDATA['%Y-%m']]>) = DATE_FORMAT(#{serviceEndTime},<![CDATA['%Y-%m']]>)
+		AND DATE_FORMAT(co.service_end_time,<![CDATA['%Y-%m']]>) = #{serviceEndTime}
 		GROUP BY
 			cos.order_no
 	</select>
