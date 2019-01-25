@@ -908,4 +908,19 @@ public class UCServiceFallback implements UCServiceClient {
 	public String queryUserAccountDetail(UserAccountDetailQueryFormBean userAccountDetailQueryFormBean) {
 		return null;
 	}
+
+	@Override
+	public BasicRetVal addScore(String scores) {
+		return null;
+	}
+
+	@Override
+	public String getScore() {
+		return null;
+	}
+
+	@Override
+	public BasicRetVal resetScore() {
+		return null;
+	}
 }

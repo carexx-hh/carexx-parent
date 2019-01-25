@@ -1604,5 +1604,14 @@ public interface UCServiceClient {
 	BasicRetVal addUserAccountDetail(@RequestBody UserAccountDetailFormBean userAccountDetailFormBean);
 
 	@RequestMapping(value = "/accountdetail/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String queryUserAccountDetail(@RequestBody UserAccountDetailQueryFormBean userAccountDetailQueryFormBean);
+	String queryUserAccountDetail(@RequestBody UserAccountDetailQueryFormBean userAccountDetailQueryFormBean);
+
+	@RequestMapping(value = "/play_cards/addScore/{scores}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	BasicRetVal addScore(@PathVariable("scores") String scores);
+
+	@RequestMapping(value = "/play_cards/getScore", method = RequestMethod.GET)
+	String getScore();
+
+	@RequestMapping(value = "/play_cards/resetScore", method = RequestMethod.POST)
+	BasicRetVal resetScore();
 }
