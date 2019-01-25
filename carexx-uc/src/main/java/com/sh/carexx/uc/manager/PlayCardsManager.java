@@ -1,5 +1,6 @@
 package com.sh.carexx.uc.manager;
 
+import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.PlayCards;
 import com.sh.carexx.uc.service.PlayCardsService;
@@ -21,7 +22,11 @@ public class PlayCardsManager {
         playCards.setStatus((byte) 1);
         playCards.setScore(scores);
         //每局记录
-        this.playCardsService.addScoreLog(playCards);
+        try {
+            this.playCardsService.addScoreLog(playCards);
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.DB_ERROR, e);
+        }
         if (StringUtils.isNotBlank(oldScore)) {
             //之前最后一条数据 lastScore+scores
             String[] newScores = scores.split(",");
@@ -33,11 +38,19 @@ public class PlayCardsManager {
             playCards.setOperantScore(this.operantScore(finalScores));
             playCards.setScore(StringUtils.join(finalScores, ","));
         }
-        this.playCardsService.addScore(playCards);
+        try {
+            this.playCardsService.addScore(playCards);
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.DB_ERROR, e);
+        }
     }
 
     public void resetScore() throws BizException {
-        this.playCardsService.resetScore();
+        try {
+            this.playCardsService.resetScore();
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.DB_ERROR, e);
+        }
     }
 
     private String operantScore(Integer[] scores) {
@@ -61,7 +74,7 @@ public class PlayCardsManager {
         for (int i : newScores) {
             operantScore = operantScore + "," + i;
         }
-        if(StringUtils.isBlank(operantScore.substring(1))){
+        if (StringUtils.isBlank(operantScore.substring(1))) {
             return "0,0,0,0";
         }
         return operantScore.substring(1);

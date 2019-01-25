@@ -1606,7 +1606,7 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/accountdetail/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryUserAccountDetail(@RequestBody UserAccountDetailQueryFormBean userAccountDetailQueryFormBean);
 
-	@RequestMapping(value = "/play_cards/addScore/{scores}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/play_cards/addScore/{scores}", method = RequestMethod.GET)
 	BasicRetVal addScore(@PathVariable("scores") String scores);
 
 	@RequestMapping(value = "/play_cards/getScore", method = RequestMethod.GET)

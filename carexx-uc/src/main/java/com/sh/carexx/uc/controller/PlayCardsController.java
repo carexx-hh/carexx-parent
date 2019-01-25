@@ -7,7 +7,6 @@ import com.sh.carexx.common.web.DataRetVal;
 import com.sh.carexx.uc.manager.PlayCardsManager;
 import com.sh.carexx.uc.service.PlayCardsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +24,7 @@ public class PlayCardsController {
     @Autowired
     private PlayCardsManager playCardsManager;
 
-    @RequestMapping(value = "/addScore/{scores}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/addScore/{scores}", method = RequestMethod.GET)
     public BasicRetVal addScore(@PathVariable(value = "scores") String scores) {
         try {
             playCardsManager.addScore(scores);
