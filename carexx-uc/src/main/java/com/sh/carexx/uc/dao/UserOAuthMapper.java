@@ -9,9 +9,13 @@ public interface UserOAuthMapper {
 
 	UserOAuth selectById(Long id);
 
+	UserOAuth selectByUserId(Integer userId);
+	
 	UserOAuth selectByIdentityInfo(@Param("identityType") Byte identityType, @Param("identifier") String identifier);
 
 	int update(UserOAuth userOAuth);
 	
-	int updateStaffId(@Param("userId")int userId, @Param("staffId")int staffId);
+	int updateStaffId(@Param("userId")int userId, @Param("staffId")int staffId, @Param("instId")int instId);
+	
+	int updateUserAcctId(@Param("userId")int userId, @Param("userAcctId")int userAcctId, @Param("instId")int instId);
 }

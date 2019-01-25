@@ -1,6 +1,7 @@
 package com.sh.carexx.uc.service.impl;
 
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
+import com.sh.carexx.bean.order.MappCustomerOrderQueryFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.enums.pay.PayMethod;
@@ -302,9 +303,8 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 	}
 
 	@Override
-	public List<Map<?, ?>> queryMappByOrderStatusAndServiceStatus(String orderStatus, Integer serviceStatus,
-			Integer instId, Integer staffId) {
-		return this.customerOrderMapper.selectMappByOrderStatusAndServiceStatus(orderStatus, serviceStatus, instId, staffId);
+	public List<Map<?, ?>> queryMappByOrderStatusAndServiceStatus(MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
+		return this.customerOrderMapper.selectMappByOrderStatusAndServiceStatus(mappCustomerOrderQueryFormBean);
 	}
 	
 	@Override
@@ -603,5 +603,19 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 	@Override
 	public Integer getOrderCountByStaffId(Integer staffId) {
 		return this.customerOrderMapper.selectOrderCountByStaffId(staffId);
+	}
+
+	@Override
+	public void updateOperatorId(CustomerOrder customerOrder) throws BizException {
+		int rows = 0;
+		try {
+			rows = this.customerOrderMapper.updateOperatorId(customerOrder);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+		
 	}
 }

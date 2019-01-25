@@ -1,6 +1,7 @@
 package com.sh.carexx.uc.dao;
 
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
+import com.sh.carexx.bean.order.MappCustomerOrderQueryFormBean;
 import com.sh.carexx.model.uc.CustomerOrder;
 import org.apache.ibatis.annotations.Param;
 
@@ -186,7 +187,7 @@ public interface CustomerOrderMapper {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> selectMappByOrderStatusAndServiceStatus(@Param("orderStatus") String orderStatus, @Param("serviceStatus") Integer serviceStatus, @Param("instId") Integer instId, @Param("staffId") Integer staffId);
+	List<Map<?, ?>> selectMappByOrderStatusAndServiceStatus(MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean);
 	/**
 	 * 
 	 * selectOrderCountByStaffId:(通过人员id统计订单). <br/> 
@@ -309,4 +310,15 @@ public interface CustomerOrderMapper {
 	 * @since JDK 1.8
 	 */
 	int updateServiceEndTime(CustomerOrder customerOrder);
+	
+	/**
+	 * 
+	 * updateOperatorId:(修改操作员). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param customerOrder
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	int updateOperatorId(CustomerOrder customerOrder);
 }

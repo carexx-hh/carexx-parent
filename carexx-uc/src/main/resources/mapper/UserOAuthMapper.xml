@@ -9,12 +9,14 @@
 		<result column="identity" jdbcType="TINYINT" property="identity" />
 		<result column="credential" jdbcType="VARCHAR" property="credential" />
 		<result column="staff_id" jdbcType="INTEGER" property="staffId" />
+		<result column="user_acct_id" jdbcType="INTEGER" property="userAcctId" />
+		<result column="inst_id" jdbcType="INTEGER" property="instId" />
 		<result column="identity_status" jdbcType="TINYINT" property="identityStatus" />
 		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
 		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, user_id, identity_type, identifier, identity, credential, staff_id, identity_status, create_time, modify_time
+		id, user_id, identity_type, identifier, identity, credential, staff_id, user_acct_id, inst_id, identity_status, create_time, modify_time
 	</sql>
 	<select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		select
@@ -22,6 +24,13 @@
 		from 
 			carexx_user_oauth
 		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			carexx_user_oauth
+		where user_id = #{userId,jdbcType=INTEGER}
 	</select>
 	<select id="selectByIdentityInfo" resultMap="BaseResultMap">
 		select
@@ -54,6 +63,16 @@
 			carexx_user_oauth
 		set 
 			staff_id = #{staffId,jdbcType=INTEGER},
+			inst_id = #{instId, jdbcType=INTEGER},
+			modify_time = now()
+		where user_id = #{userId,jdbcType=INTEGER}
+	</update>
+	<update id="updateUserAcctId">
+		update
+			carexx_user_oauth
+		set 
+			user_acct_id = #{userAcctId,jdbcType=INTEGER},
+			inst_id = #{instId, jdbcType=INTEGER},
 			modify_time = now()
 		where user_id = #{userId,jdbcType=INTEGER}
 	</update>

@@ -29,6 +29,8 @@ public class UserAccountDetailManager {
     private UserAccountService userAccountService;
     @Autowired
     private OrderPaymentManager orderPaymentManager;
+    @Autowired
+    private CustomerOrderScheduleManager customerOrderScheduleManager;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
     public void add(UserAccountDetailFormBean userAccountDetailFormBean) throws BizException{
@@ -56,6 +58,7 @@ public class UserAccountDetailManager {
             orderPayment.setOrderNo(userAccountDetailFormBean.getOrderNo());
             orderPayment.setPayStatus(PayStatus.PAY_SUCCESS.getValue());
             this.orderPaymentManager.syncPayResult(orderPayment);
+            this.customerOrderScheduleManager.finishScheduling(userAccountDetailFormBean.getOrderNo());
             userAccountDetailFormBean.setPayStatus(PayStatus.PAY_SUCCESS.getValue());
             userAccountDetailFormBean.setPayTime(new Date());
         }

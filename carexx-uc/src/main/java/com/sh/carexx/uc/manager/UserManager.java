@@ -12,6 +12,7 @@ import com.sh.carexx.common.enums.staff.CertificationStatus;
 import com.sh.carexx.common.enums.user.IdentityType;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.util.Radix32Utils;
+import com.sh.carexx.model.uc.AclUserAcct;
 import com.sh.carexx.model.uc.InstStaff;
 import com.sh.carexx.model.uc.UserAccount;
 import com.sh.carexx.model.uc.UserInfo;
@@ -130,7 +131,9 @@ public class UserManager {
 		AclLoginFormBean aclLoginFormBean = new AclLoginFormBean();
 		aclLoginFormBean.setAcctNo(nursingSupervisorLoginFormBean.getAcctNo());
 		aclLoginFormBean.setLoginPass(nursingSupervisorLoginFormBean.getLoginPass());
+		//账号密码校验
 		Map<String, Object> loginMap = this.aclUserManager.login(aclLoginFormBean);
+		//护工管理员身份校验
 		int roleId = this.aclUserAcctService.getRoleId(nursingSupervisorLoginFormBean.getAcctNo());
 		
 		if(roleId != 4)
@@ -147,7 +150,12 @@ public class UserManager {
 		oAuthLoginFormBean.setSex(nursingSupervisorLoginFormBean.getSex());
 		oAuthLoginFormBean.setRegion(nursingSupervisorLoginFormBean.getRegion());
 		
+		//添加用户信息
 		UserInfo userInfo = this.add(oAuthLoginFormBean);
+		AclUserAcct aclUserAcct = this.aclUserAcctService.getById(Integer.parseInt(loginMap.get("userAcctId").toString()));
+		//绑定管理员身份至用户信息
+		this.userOAuthService.updateUserAcctId(userInfo.getId(), Integer.parseInt(loginMap.get("userAcctId").toString()), aclUserAcct.getInstId());
+		//生成token
 		String token = Radix32Utils.encode(userInfo.getId());
 		try {
 			this.redisTemplate.opsForValue().set(CarexxConstant.CachePrefix.CAREXX_AUTH_TOKEN + token, token);
@@ -183,8 +191,6 @@ public class UserManager {
 				resultMap.put("certificationStatus", certificationStatus);
 				resultMap.put("token", token);
 				resultMap.put("openId", openId);
-				resultMap.put("instId", instStaff.getInstId());
-				resultMap.put("staffId", userOAuth.getStaffId());
 				return resultMap;
 			} else {
 				resultMap.put("certificationStatus", certificationStatus);

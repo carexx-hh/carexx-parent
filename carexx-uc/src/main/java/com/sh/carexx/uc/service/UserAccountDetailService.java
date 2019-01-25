@@ -28,13 +28,13 @@ public interface UserAccountDetailService {
 
     /**
      *
-     * getByAccountId:(通过账户id查询交易记录). <br/>
+     * selectByUserId:(通过用户id查询交易记录). <br/>
      *
      * @author hetao
      * @return
      * @since JDK 1.8
      */
-    List<UserAccountDetails> getByAccountId(UserAccountDetailQueryFormBean userAccountDetailQueryFormBean);
+    List<UserAccountDetails> selectByUserId(UserAccountDetailQueryFormBean userAccountDetailQueryFormBean);
 
     /**
      *

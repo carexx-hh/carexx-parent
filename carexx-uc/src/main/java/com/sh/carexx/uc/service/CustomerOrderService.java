@@ -1,6 +1,7 @@
 package com.sh.carexx.uc.service;
 
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
+import com.sh.carexx.bean.order.MappCustomerOrderQueryFormBean;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.CustomerOrder;
 
@@ -187,7 +188,7 @@ public interface CustomerOrderService {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> queryMappByOrderStatusAndServiceStatus(String orderStatus, Integer serviceStatus, Integer instId, Integer staffId);
+	List<Map<?, ?>> queryMappByOrderStatusAndServiceStatus(MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean);
 	/**
 	 * 
 	 * updateStatus:(修改订单状态). <br/>
@@ -310,4 +311,15 @@ public interface CustomerOrderService {
 	 * @since JDK 1.8
 	 */
 	Integer getOrderCountByStaffId(Integer staffId);
+	
+	/**
+	 * 
+	 * updateOperatorId:(修改操作员). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param customerOrder
+	 * @throws BizException 
+	 * @since JDK 1.8
+	 */
+	void updateOperatorId(CustomerOrder customerOrder) throws BizException;
 }

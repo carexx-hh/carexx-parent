@@ -102,8 +102,7 @@
 			carexx_customer_order co
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
 		LEFT JOIN carexx_inst_care_service ics ON co.inst_id = ics.inst_id
-		AND co.service_id = ics.service_id
-		AND ics.service_status > 0
+		AND co.service_id = ics.service_id AND ics.service_status > 0
 		WHERE
 			co.user_id = #{userId,jdbcType=INTEGER}
         and
@@ -130,7 +129,7 @@
 		carexx_customer_order co
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
 		LEFT JOIN carexx_inst_care_service ics ON co.inst_id = ics.inst_id
-		AND co.service_id = ics.service_id
+		AND co.service_id = ics.service_id AND ics.service_status > 0
 		WHERE
 		co.user_id = #{userId,jdbcType=INTEGER}
 		and co.order_status in (5,6)
@@ -174,7 +173,7 @@
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
 		LEFT JOIN carexx_work_type wt ON cs.work_type_id = wt.id
 		LEFT JOIN carexx_inst_care_service ics ON co.inst_id = ics.inst_id
-		AND co.service_id = ics.service_id
+		AND co.service_id = ics.service_id AND ics.service_status > 0
 		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
 		LEFT JOIN carexx_order_settle os ON cos.id = os.schedule_id
 		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
@@ -252,7 +251,7 @@
 		ORDER BY
 			co.create_time DESC
   	</select>
-  	<select id="selectMappByOrderStatusAndServiceStatus" resultType="java.util.Map">
+  	<select id="selectMappByOrderStatusAndServiceStatus" parameterType="com.sh.carexx.bean.order.MappCustomerOrderQueryFormBean" resultType="java.util.Map">
 	  	SELECT
 			co.id id,
 			co.order_no orderNo,
@@ -281,7 +280,9 @@
 		AND co.order_status IN (#{orderStatus,jdbcType=VARCHAR})
 		AND cos.service_status = #{serviceStatus,jdbcType=TINYINT}
 		AND co.inst_id = #{instId,jdbcType=INTEGER}
-		AND cos.service_staff_id = #{staffId,jdbcType=INTEGER}
+		<if test="serviceStaffId != null and serviceStaffId > 0">
+			AND cos.service_staff_id = #{serviceStaffId,jdbcType=INTEGER}
+		</if>
 		GROUP BY
 			co.order_no
 		ORDER BY
@@ -861,18 +862,13 @@
 		WHERE
 			co.order_type = 1
 		AND co.service_address = 1 AND co.order_status in (5,6)
-		<if test="instId != null and instId != '' ">
-			AND co.inst_id = #{instId,jdbcType=INTEGER}
-		</if>
-		<if test="serviceStaffId != null and serviceStaffId != '' ">
-			AND cos.service_staff_id = #{serviceStaffId,jdbcType=INTEGER}
-		</if>
-		<if test="serviceEndTime != null and serviceEndTime != '' ">
-			AND DATE_FORMAT(co.service_end_time,<![CDATA['%Y-%m']]>) = DATE_FORMAT(#{serviceEndTime},<![CDATA['%Y-%m']]>)
-		</if>
+		AND ics.service_status != 0
+		AND cos.service_staff_id = #{serviceStaffId,jdbcType=INTEGER}
+		AND DATE_FORMAT(co.service_end_time,<![CDATA['%Y-%m']]>) = #{serviceEndTime}
 		GROUP BY
 			cos.order_no
 	</select>
+
 	<update id="updateStatus">
 		UPDATE
 			carexx_customer_order
@@ -947,4 +943,13 @@
 	  		order_no = #{orderNo,jdbcType=VARCHAR}
 	</update>
 
+	<update id="updateOperatorId" parameterType="com.sh.carexx.model.uc.CustomerOrder">
+		update
+			carexx_customer_order
+		set
+			operator_id = #{operatorId,jdbcType=TIMESTAMP},
+			modify_time = now()
+	  	where
+	  		order_no = #{orderNo,jdbcType=VARCHAR}
+	</update>
 </mapper>

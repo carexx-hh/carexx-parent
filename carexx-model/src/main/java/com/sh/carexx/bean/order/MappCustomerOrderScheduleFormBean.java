@@ -25,6 +25,8 @@ public class MappCustomerOrderScheduleFormBean extends BasicFormBean {
 	
 	private String scheduleRemark;
 
+	private Integer userId;
+	
 	public String getOrderNo() {
 		return orderNo;
 	}
@@ -63,5 +65,12 @@ public class MappCustomerOrderScheduleFormBean extends BasicFormBean {
 		this.scheduleRemark = scheduleRemark;
 	}
 
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 	
 }

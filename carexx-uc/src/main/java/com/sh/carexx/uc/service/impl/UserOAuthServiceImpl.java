@@ -20,6 +20,11 @@ public class UserOAuthServiceImpl implements UserOAuthService {
 	}
 
 	@Override
+	public UserOAuth getByUserId(Integer userId) {
+		return this.userOAuthMapper.selectByUserId(userId);
+	}
+	
+	@Override
 	public void save(UserOAuth userOAuth) throws BizException {
 		int rows = 0;
 		try {
@@ -46,9 +51,18 @@ public class UserOAuthServiceImpl implements UserOAuthService {
 	}
 
 	@Override
-	public void updateStaffId(int userId, int staffId) throws BizException {
+	public void updateStaffId(int userId, int staffId, int instId) throws BizException {
 		try {
-			this.userOAuthMapper.updateStaffId(userId, staffId);
+			this.userOAuthMapper.updateStaffId(userId, staffId, instId);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+	}
+
+	@Override
+	public void updateUserAcctId(int userId, int userAcctId, int instId) throws BizException {
+		try {
+			this.userOAuthMapper.updateUserAcctId(userId, userAcctId, instId);
 		} catch (Exception e) {
 			throw new BizException(ErrorCode.DB_ERROR, e);
 		}

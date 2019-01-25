@@ -29,8 +29,14 @@ public class InstStaffController extends BaseController {
 		return this.ucServiceClient.queryMappAllInstStaff(instStaffQueryFormBean);
 	}
 	
-	@RequestMapping(value = "/get_id/{id}")
-	public String getId(@PathVariable("id") Integer id) {
+	@RequestMapping(value = "/get_id")
+	public String getId() {
+		Integer id = this.getCurrentUserOAuth().getStaffId();
+		return this.ucServiceClient.getInstStaffId(id);
+	}
+	
+	@RequestMapping(value = "/get_staffId/{id}")
+	public String getStaffId(@PathVariable("id") Integer id) {
 		return this.ucServiceClient.getInstStaffId(id);
 	}
 	
@@ -49,8 +55,9 @@ public class InstStaffController extends BaseController {
 		return this.ucServiceClient.cancelCertification(id);
 	}
 	
-	@RequestMapping(value = "/all_by_certification_status/{instId}/{certificationStatus}")
-	public String queryInstStaffByCertificationStatus(@PathVariable("instId") Integer instId, @PathVariable("certificationStatus") Byte certificationStatus) {
+	@RequestMapping(value = "/all_by_certification_status/{certificationStatus}")
+	public String queryInstStaffByCertificationStatus(@PathVariable("certificationStatus") Byte certificationStatus) {
+		Integer instId = this.getCurrentUserOAuth().getInstId();
 		return this.ucServiceClient.queryInstStaffByCertificationStatus(instId, certificationStatus);
 	}
 	

@@ -55,6 +55,9 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/user/get_user_info/{id}", method = RequestMethod.GET)
 	UserInfo getUserInfo(@PathVariable("id") Integer id);
 	
+	@RequestMapping(value = "/user/get_user_oauth/{userId}", method = RequestMethod.GET)
+	UserOAuth getUserOAuth(@PathVariable("userId") Integer userId);
+	
 	@RequestMapping(value = "/user/modify_bind_mobile/{id}/{mobile}/{verifyCode}", method = RequestMethod.GET)
 	BasicRetVal modifyUserBindMobile(@PathVariable("id") Integer id, @PathVariable("mobile") String mobile, @PathVariable("verifyCode") String verifyCode);
 
@@ -718,8 +721,8 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/customerorder/by_orderStatus/{orderStatus}/{instId}", method = RequestMethod.GET)
 	String queryMappByOrderStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("instId")Integer instId);
 
-	@RequestMapping(value = "/customerorder/by_orderStatus_and_serviceStatus/{orderStatus}/{serviceStatus}/{instId}/{staffId}", method = RequestMethod.GET)
-	String queryMappByOrderStatusAndServiceStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("serviceStatus")Integer serviceStatus, @PathVariable("instId")Integer instId, @PathVariable("staffId")Integer staffId);
+	@RequestMapping(value = "/customerorder/by_orderStatus_and_serviceStatus", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String queryMappByOrderStatusAndServiceStatus(@RequestBody MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean);
 	/**
 	 *
 	 * queryDoneOrderByUserId:(移动端通过客户id查询完成和已支付订单). <br/>

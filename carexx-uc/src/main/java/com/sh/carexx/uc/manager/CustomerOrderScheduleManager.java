@@ -496,6 +496,24 @@ public class CustomerOrderScheduleManager {
 	}
 
 	/**
+	 * finishScheduling:(完成排班). <br/>
+	 *
+	 * @param orderNo：排班id
+	 * @throws BizException
+	 * @author hetao
+	 * @since JDK 1.8
+	 */
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
+	public void finishScheduling(String orderNo) throws BizException {
+		List<CustomerOrderSchedule> scheduleList = this.customerOrderScheduleService.getByOrderNo(orderNo);
+		// 批量确认排班记录为已完成
+		for (CustomerOrderSchedule list : scheduleList) {
+			this.customerOrderScheduleService.updateStatus(list.getId(), OrderScheduleStatus.IN_SERVICE.getValue(),
+					OrderScheduleStatus.COMPLETED.getValue());
+		}
+	}
+
+	/**
 	 * modifySettleAmt:(调整结算金额). <br/>
 	 *
 	 * @param orderSettleAdjustAmtFormBean
@@ -540,7 +558,7 @@ public class CustomerOrderScheduleManager {
 		//获取订单开始结束时间
 		CustomerOrder customerOrder = customerOrderService.getByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
 		CustomerOrderSchedule customerOrderScheduleNear = this.customerOrderScheduleService.getNearByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
-		if(customerOrder.getOrderStatus() == OrderStatus.WAIT_PAY.getValue() && customerOrderScheduleNear.getServiceStatus() == OrderScheduleStatus.WAIT_ACCEPT.getValue()) {
+		if(customerOrder.getOrderStatus() == OrderStatus.WAIT_SCHEDULE.getValue() && customerOrderScheduleNear.getServiceStatus() == OrderScheduleStatus.WAIT_ACCEPT.getValue()) {
 			throw new BizException(ErrorCode.ORDER_HAS_BEEN_SCHEDULED);
 		}
 		Date serviceStartTime = null;
@@ -548,10 +566,6 @@ public class CustomerOrderScheduleManager {
 		if(customerOrder.getOrderStatus() == OrderStatus.WAIT_SCHEDULE.getValue()) {
 			serviceStartTime = customerOrder.getServiceStartTime();
 			serviceEndTime = DateUtils.addHour(serviceStartTime, 12);
-
-			//将订单状态从待排班改为待支付
-			this.customerOrderService.updateStatus(mappCustomerOrderScheduleFormBean.getOrderNo(),
-					OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.WAIT_PAY.getValue());
 		} else if(customerOrder.getOrderStatus() == OrderStatus.WAIT_PAY.getValue()) {
 			 CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
 			 serviceStartTime = customerOrderSchedule.getServiceEndTime();
@@ -573,6 +587,10 @@ public class CustomerOrderScheduleManager {
 		this.customerOrderScheduleService.save(customerOrderSchedule);
 		// 添加结算记录
 		this.orderSettleManager.add(customerOrderSchedule);
+		
+		//将userId存入订单operatorId中供消息通知使用
+		customerOrder.setOperatorId(mappCustomerOrderScheduleFormBean.getUserId());
+		this.customerOrderService.updateOperatorId(customerOrder);
 	}
 	
 	/**

@@ -3,6 +3,7 @@ package com.sh.carexx.mapp.controller;
 import com.sh.carexx.bean.order.CalcServiceFeeFormBean;
 import com.sh.carexx.bean.order.CustomerAppointOrderFormBean;
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
+import com.sh.carexx.bean.order.MappCustomerOrderQueryFormBean;
 import com.sh.carexx.bean.order.OrderPaymentFormBean;
 import com.sh.carexx.bean.user.UserAccountDetailFormBean;
 import com.sh.carexx.common.CarexxConstant;
@@ -95,18 +96,28 @@ public class CustomerOrderController extends BaseController {
 				this.ucServiceClient.calcServiceFee(calcServiceFeeFormBean));
 	}
 	
-	@RequestMapping(value = "/by_orderStatus/{orderStatus}/{instId}")
-	public String queryMappByOrderStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("instId")Integer instId) {
+	@RequestMapping(value = "/by_orderStatus/{orderStatus}")
+	public String queryMappByOrderStatus(@PathVariable("orderStatus")String orderStatus) {
+		Integer instId = this.getCurrentUserOAuth().getInstId();
 		return this.ucServiceClient.queryMappByOrderStatus(orderStatus, instId);
 	}
 	
-	@RequestMapping(value = "/by_orderStatus_and_serviceStatus/{orderStatus}/{serviceStatus}/{instId}/{staffId}")
-	public String queryMappByOrderStatusAndServiceStatus(@PathVariable("orderStatus")String orderStatus, @PathVariable("serviceStatus")Integer serviceStatus, @PathVariable("instId")Integer instId, @PathVariable("staffId")Integer staffId) {
-		return this.ucServiceClient.queryMappByOrderStatusAndServiceStatus(orderStatus, serviceStatus, instId, staffId);
+	@RequestMapping(value = "/by_orderStatus_and_serviceStatus")
+	public String queryMappByOrderStatusAndServiceStatus(@Valid MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
+		mappCustomerOrderQueryFormBean.setInstId(this.getCurrentUserOAuth().getInstId());
+		return this.ucServiceClient.queryMappByOrderStatusAndServiceStatus(mappCustomerOrderQueryFormBean);
+	}
+	
+	@RequestMapping(value = "/staff_by_orderStatus_and_serviceStatus")
+	public String queryMappStaffByOrderStatusAndServiceStatus(@Valid MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
+		mappCustomerOrderQueryFormBean.setInstId(this.getCurrentUserOAuth().getInstId());
+		mappCustomerOrderQueryFormBean.setServiceStaffId(this.getCurrentUserOAuth().getStaffId());
+		return this.ucServiceClient.queryMappByOrderStatusAndServiceStatus(mappCustomerOrderQueryFormBean);
 	}
 	
 	@RequestMapping(value="/staff_income_count")
 	public String queryStaffIncomeCountForList(@Valid CustomerOrderQueryFormBean customerOrderQueryFormBean){
+		customerOrderQueryFormBean.setServiceStaffId(this.getCurrentUserOAuth().getStaffId().toString());
 		return this.ucServiceClient.queryStaffIncomeCountForList(customerOrderQueryFormBean);
 	}
 }
