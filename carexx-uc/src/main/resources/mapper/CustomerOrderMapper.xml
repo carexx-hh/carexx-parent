@@ -277,7 +277,9 @@
 		LEFT JOIN carexx_care_inst ci ON co.inst_id = ci.id
 		WHERE
 			co.order_type = 1
-		AND co.order_status IN (#{orderStatus,jdbcType=VARCHAR})
+		<if test="orderStatus != null and orderStatus > 0">
+			AND co.order_status IN (#{orderStatus,jdbcType=VARCHAR})
+		</if>
 		AND cos.service_status = #{serviceStatus,jdbcType=TINYINT}
 		AND co.inst_id = #{instId,jdbcType=INTEGER}
 		<if test="serviceStaffId != null and serviceStaffId > 0">
