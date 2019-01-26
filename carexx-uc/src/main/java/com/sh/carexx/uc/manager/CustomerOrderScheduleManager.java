@@ -558,8 +558,10 @@ public class CustomerOrderScheduleManager {
 		//获取订单开始结束时间
 		CustomerOrder customerOrder = customerOrderService.getByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
 		CustomerOrderSchedule customerOrderScheduleNear = this.customerOrderScheduleService.getNearByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
-		if(customerOrder.getOrderStatus() == OrderStatus.WAIT_SCHEDULE.getValue() && customerOrderScheduleNear.getServiceStatus() == OrderScheduleStatus.WAIT_ACCEPT.getValue()) {
-			throw new BizException(ErrorCode.ORDER_HAS_BEEN_SCHEDULED);
+		if(customerOrderScheduleNear != null) {
+			if(customerOrder.getOrderStatus() == OrderStatus.WAIT_SCHEDULE.getValue() && customerOrderScheduleNear.getServiceStatus() == OrderScheduleStatus.WAIT_ACCEPT.getValue()) {
+				throw new BizException(ErrorCode.ORDER_HAS_BEEN_SCHEDULED);
+			}
 		}
 		Date serviceStartTime = null;
 		Date serviceEndTime = null;
