@@ -138,4 +138,17 @@ public class InstStaffServiceImpl implements InstStaffService {
 		return this.instStaffMapper.selectInstStaffByCertificationStatus(instId, certificationStatus);
 	}
 
+	@Override
+	public void updateMobileById(Integer id, String mobile) throws BizException {
+		int rows = 0;
+		try {
+			rows = this.instStaffMapper.updateMobileById(id, mobile);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+	}
+
 }

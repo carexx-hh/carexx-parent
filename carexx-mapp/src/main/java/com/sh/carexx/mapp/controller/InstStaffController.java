@@ -68,4 +68,11 @@ public class InstStaffController extends BaseController {
 		}
 		return this.ucServiceClient.modifyInstStaff(instStaffFormBean);
 	}
+	
+	@RequestMapping(value = "/staff_bind_mobile/{mobile}/{verifyCode}")
+	public BasicRetVal staffBindMobile(@PathVariable("mobile") String mobile,
+			@PathVariable("verifyCode") String verifyCode) {
+		Integer id = this.getCurrentUserOAuth().getStaffId();
+		return this.ucServiceClient.modifyStaffBindMobile(id, mobile, verifyCode);
+	}
 }

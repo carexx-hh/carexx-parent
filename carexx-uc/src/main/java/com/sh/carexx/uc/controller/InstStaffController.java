@@ -168,4 +168,14 @@ public class InstStaffController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
+	
+	@RequestMapping(value = "/staff_bind_mobile/{id}/{mobile}/{verifyCode}", method = RequestMethod.GET)
+    public BasicRetVal modifyStaffBindMobile(@PathVariable("id") Integer id, @PathVariable("mobile") String mobile, @PathVariable("verifyCode") String verifyCode) {
+        try {
+        	this.instStaffManager.modifyStaffBindMobile(id, mobile, verifyCode);
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+		}
+    	return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+    }
 }

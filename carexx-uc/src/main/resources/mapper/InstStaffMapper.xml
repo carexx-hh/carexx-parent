@@ -459,4 +459,12 @@
 		WHERE
 			id = #{id,jdbcType=INTEGER} and certification_status IN (${srcStatus})
 	</update>
+	<update id="updateMobileById">
+		update
+			carexx_inst_staff
+		set 
+			phone = #{mobile,jdbcType=CHAR},
+			modify_time = now()
+		where id = #{id,jdbcType=INTEGER}
+	</update>
 </mapper>

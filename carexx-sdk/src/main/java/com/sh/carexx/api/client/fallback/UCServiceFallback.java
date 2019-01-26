@@ -619,6 +619,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public BasicRetVal modifyStaffBindMobile(Integer id, String mobile, String verifyCode) {
+		return null;
+	}
+	
+	@Override
 	public BasicRetVal addInstStaffWorkType(InstStaffWorkTypeFormBean instStaffWorkTypeFormBean) {
 		return null;
 	}

@@ -1024,6 +1024,8 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/inststaff/modify", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal modifyInstStaff(@RequestBody InstStaffFormBean instStaffFormBean);
 
+	@RequestMapping(value = "/inststaff/staff_bind_mobile/{id}/{mobile}/{verifyCode}", method = RequestMethod.GET)
+	BasicRetVal modifyStaffBindMobile(@PathVariable("id") Integer id, @PathVariable("mobile") String mobile, @PathVariable("verifyCode") String verifyCode);
 	/**
 	 * 
 	 * addInstStaffWorkType:(添加机构员工工种结算). <br/>

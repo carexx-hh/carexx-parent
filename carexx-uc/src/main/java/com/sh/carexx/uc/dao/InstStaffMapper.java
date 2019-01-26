@@ -181,4 +181,16 @@ public interface InstStaffMapper {
 	
 	int updateCertificationStatus(@Param("id") Integer id, @Param("srcStatus") String srcStatus,
 			@Param("targetStatus") Byte targetStatus);
+	
+	/**
+	 * 
+	 * updateMobileById:(手机绑定). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param id
+	 * @param mobile
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	int updateMobileById(@Param("id") Integer id, @Param("mobile") String mobile);
 }
