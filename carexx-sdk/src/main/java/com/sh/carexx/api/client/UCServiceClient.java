@@ -723,6 +723,9 @@ public interface UCServiceClient {
 
 	@RequestMapping(value = "/customerorder/by_orderStatus_and_serviceStatus", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryMappByOrderStatusAndServiceStatus(@RequestBody MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean);
+	
+	@RequestMapping(value = "/customerorder/wait_schedule/{instId}", method = RequestMethod.GET)
+	String queryMappWaitSchedule(@PathVariable("instId") Integer instId);
 
 	@RequestMapping(value = "/customerorder/do_orderSchedule", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryMappManagerDoOrderSchedule(@RequestBody MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean);

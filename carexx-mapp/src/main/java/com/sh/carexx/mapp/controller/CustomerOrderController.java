@@ -122,6 +122,12 @@ public class CustomerOrderController extends BaseController {
 		return this.ucServiceClient.queryMappManagerDoOrderSchedule(mappCustomerOrderQueryFormBean);
 	}
 	
+	@RequestMapping(value = "/wait_schedule")
+	public String queryMappWaitSchedule() {
+		Integer instId = this.getCurrentUserOAuth().getInstId();
+		return this.ucServiceClient.queryMappWaitSchedule(instId);
+	}
+	
 	@RequestMapping(value="/staff_income_count")
 	public String queryStaffIncomeCountForList(@Valid CustomerOrderQueryFormBean customerOrderQueryFormBean){
 		customerOrderQueryFormBean.setServiceStaffId(this.getCurrentUserOAuth().getStaffId().toString());

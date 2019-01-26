@@ -444,6 +444,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public String queryMappWaitSchedule(Integer instId) {
+		return null;
+	}
+	
+	@Override
 	public String queryMappManagerDoOrderSchedule(MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
 		return null;
 	}

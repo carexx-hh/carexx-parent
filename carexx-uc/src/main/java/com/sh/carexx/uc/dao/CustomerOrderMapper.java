@@ -200,6 +200,16 @@ public interface CustomerOrderMapper {
 	List<Map<?, ?>> selectMappByOrderStatusAndServiceStatus(MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean);
 
 	/**
+	 * 
+	 * selectMappWaitSchedule:(查询未派单). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param instId
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> selectMappWaitSchedule(Integer instId);
+	/**
 	 *
 	 * selectMappManagerDoOrderSchedule:(移动端管理端查询已派单订单). <br/>
 	 *

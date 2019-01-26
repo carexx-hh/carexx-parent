@@ -308,6 +308,11 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 	}
 
 	@Override
+	public List<Map<?, ?>> queryMappWaitSchedule(Integer instId) {
+		return this.customerOrderMapper.selectMappWaitSchedule(instId);
+	}
+	
+	@Override
 	public List<Map<?, ?>> queryMappManagerDoOrderSchedule(MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
 		return this.customerOrderMapper.selectMappManagerDoOrderSchedule(mappCustomerOrderQueryFormBean);
 	}

@@ -241,6 +241,13 @@ public class CustomerOrderController {
 		resultList = this.customerOrderService.queryMappByOrderStatusAndServiceStatus(mappCustomerOrderQueryFormBean);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
+	
+	@RequestMapping(value = "/wait_schedule/{instId}", method = RequestMethod.GET)
+	public String queryMappWaitSchedule(@PathVariable("instId") Integer instId) {
+		List<Map<?, ?>> resultList = null;
+		resultList = this.customerOrderService.queryMappWaitSchedule(instId);
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
+	}
 
 	@RequestMapping(value = "/do_orderSchedule", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryMappManagerDoOrderSchedule(@RequestBody MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
