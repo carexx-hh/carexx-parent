@@ -50,6 +50,16 @@ public interface CustomerOrderMapper {
 	List<CustomerOrder> selectAllOrder();
 
 	/**
+	 *
+	 * confirmCompleted:(根据instId查询订单). <br/>
+	 *
+	 * @author chenshichao
+	 * @return
+	 * @since JDK 1.8
+	 */
+	List<CustomerOrder> selectOrderByInstId(int instId);
+
+	/**
 	 * 
 	 * selectByUserId:(患者端通过客户id查询服务订单分页). <br/>
 	 * 
