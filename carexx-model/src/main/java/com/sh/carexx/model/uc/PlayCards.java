@@ -8,11 +8,31 @@ public class PlayCards {
 
 	private String score;
 
+	private String[] scores;
+
 	private String operantScore;
+
+	private String[] operantScores;
 
 	private Byte status;
 
 	private Byte isDeleted;
+
+	public String[] getOperantScores() {
+		return operantScores;
+	}
+
+	public void setOperantScores(String[] operantScores) {
+		this.operantScores = operantScores;
+	}
+
+	public String[] getScores() {
+		return scores;
+	}
+
+	public void setScores(String[] scores) {
+		this.scores = scores;
+	}
 
 	public Long getId() {
 		return id;

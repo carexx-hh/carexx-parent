@@ -4,6 +4,7 @@ import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.web.BasicRetVal;
 import com.sh.carexx.common.web.DataRetVal;
+import com.sh.carexx.model.uc.PlayCards;
 import com.sh.carexx.uc.manager.PlayCardsManager;
 import com.sh.carexx.uc.service.PlayCardsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/play_cards")
@@ -36,7 +36,7 @@ public class PlayCardsController {
 
     @RequestMapping(value = "/getScore", method = RequestMethod.GET)
     public String getScore() {
-        List<Map<String, Object>> resultList = null;
+        List<PlayCards> resultList = null;
         resultList = this.playCardsService.getAllScore();
         return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
     }

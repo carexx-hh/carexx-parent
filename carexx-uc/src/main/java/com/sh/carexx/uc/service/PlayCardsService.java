@@ -3,7 +3,6 @@ package com.sh.carexx.uc.service;
 import com.sh.carexx.model.uc.PlayCards;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -20,7 +19,7 @@ public interface PlayCardsService {
 
     void resetScore();
 
-    List<Map<String, Object>> getAllScore();
+    List<PlayCards> getAllScore();
 
     int getMaxJushu();
 

@@ -31,12 +31,16 @@ public class PlayCardsManager {
             //之前最后一条数据 lastScore+scores
             String[] newScores = scores.split(",");
             String[] lastScores = oldScore.split(",");
-            Integer[] finalScores = new Integer[newScores.length];
-            for (int i = 0; i < newScores.length; i++) {
-                finalScores[i] = Integer.parseInt(newScores[i]) + Integer.parseInt(lastScores[i]);
+            if (newScores.length != lastScores.length) {
+                throw new BizException(ErrorCode.DB_ERROR);
+            } else {
+                Integer[] finalScores = new Integer[newScores.length];
+                for (int i = 0; i < newScores.length; i++) {
+                    finalScores[i] = Integer.parseInt(newScores[i]) + Integer.parseInt(lastScores[i]);
+                }
+                playCards.setOperantScore(this.operantScore(finalScores));
+                playCards.setScore(StringUtils.join(finalScores, ","));
             }
-            playCards.setOperantScore(this.operantScore(finalScores));
-            playCards.setScore(StringUtils.join(finalScores, ","));
         }
         try {
             this.playCardsService.addScore(playCards);

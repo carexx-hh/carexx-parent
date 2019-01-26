@@ -4,7 +4,6 @@ package com.sh.carexx.uc.dao;
 import com.sh.carexx.model.uc.PlayCards;
 
 import java.util.List;
-import java.util.Map;
 
 public interface PlayCardsMapper {
 
@@ -14,7 +13,7 @@ public interface PlayCardsMapper {
 
 	void resetScore();
 
-	List<Map<String, Object>> getAllScore();
+	List<PlayCards> getAllScore();
 
 	int getMaxJushu();
 
