@@ -114,6 +114,13 @@ public class CustomerOrderController extends BaseController {
 		mappCustomerOrderQueryFormBean.setServiceStaffId(this.getCurrentUserOAuth().getStaffId());
 		return this.ucServiceClient.queryMappByOrderStatusAndServiceStatus(mappCustomerOrderQueryFormBean);
 	}
+
+	@RequestMapping(value = "/do_orderSchedule")
+	public String queryMappManagerDoOrderSchedule(@Valid MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
+		mappCustomerOrderQueryFormBean.setInstId(this.getCurrentUserOAuth().getInstId());
+		mappCustomerOrderQueryFormBean.setServiceStaffId(this.getCurrentUserOAuth().getStaffId());
+		return this.ucServiceClient.queryMappManagerDoOrderSchedule(mappCustomerOrderQueryFormBean);
+	}
 	
 	@RequestMapping(value="/staff_income_count")
 	public String queryStaffIncomeCountForList(@Valid CustomerOrderQueryFormBean customerOrderQueryFormBean){
