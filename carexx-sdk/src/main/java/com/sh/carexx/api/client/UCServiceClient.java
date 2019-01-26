@@ -723,6 +723,9 @@ public interface UCServiceClient {
 
 	@RequestMapping(value = "/customerorder/by_orderStatus_and_serviceStatus", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryMappByOrderStatusAndServiceStatus(@RequestBody MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean);
+
+	@RequestMapping(value = "/customerorder/do_orderSchedule", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String queryMappManagerDoOrderSchedule(@RequestBody MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean);
 	/**
 	 *
 	 * queryDoneOrderByUserId:(移动端通过客户id查询完成和已支付订单). <br/>

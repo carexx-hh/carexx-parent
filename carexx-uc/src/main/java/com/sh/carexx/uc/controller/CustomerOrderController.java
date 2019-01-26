@@ -242,6 +242,13 @@ public class CustomerOrderController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
 
+	@RequestMapping(value = "/do_orderSchedule", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String queryMappManagerDoOrderSchedule(@RequestBody MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
+		List<Map<?, ?>> resultList = null;
+		resultList = this.customerOrderService.queryMappManagerDoOrderSchedule(mappCustomerOrderQueryFormBean);
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
+	}
+
 	@RequestMapping(value = "/modify_endTime/{orderNo}", method = RequestMethod.GET)
 	public BasicRetVal modifyServiceEndTime(@PathVariable("orderNo") String orderNo) throws BizException{
 		try {

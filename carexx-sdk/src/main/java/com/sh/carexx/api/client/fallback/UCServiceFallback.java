@@ -442,7 +442,12 @@ public class UCServiceFallback implements UCServiceClient {
 	public String queryMappByOrderStatusAndServiceStatus(MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
 		return null;
 	}
-	
+
+	@Override
+	public String queryMappManagerDoOrderSchedule(MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
+		return null;
+	}
+
 	@Override
 	public String queryDoneOrderByUserId(Integer userId) {
 		return null;
