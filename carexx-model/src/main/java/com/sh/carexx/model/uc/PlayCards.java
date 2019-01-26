@@ -14,9 +14,19 @@ public class PlayCards {
 
 	private String[] operantScores;
 
+	private String[] statuses;
+
 	private Byte status;
 
 	private Byte isDeleted;
+
+	public String[] getStatuses() {
+		return statuses;
+	}
+
+	public void setStatuses(String[] statuses) {
+		this.statuses = statuses;
+	}
 
 	public String[] getOperantScores() {
 		return operantScores;

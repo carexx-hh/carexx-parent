@@ -38,7 +38,18 @@ public class PlayCardsServiceImpl implements PlayCardsService {
                 playCards.setScores(playCards.getScore().split(","));
             }
             if (StringUtils.isNotBlank(playCards.getOperantScore())) {
-                playCards.setOperantScores(playCards.getOperantScore().split(","));
+                String[] operantScores = playCards.getOperantScore().split(",");
+                String[] statuses = new String[operantScores.length];
+                playCards.setOperantScores(operantScores);
+                for (int i = 0; i < operantScores.length; i++) {
+                    if (operantScores[i].indexOf("+") != -1) {
+                        statuses[i] = "1";
+                    }
+                    if (operantScores[i].indexOf("-") != -1) {
+                        statuses[i] = "-1";
+                    }
+                }
+                playCards.setStatuses(statuses);
             }
         }
         return result;

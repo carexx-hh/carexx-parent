@@ -76,11 +76,17 @@ public class PlayCardsManager {
         }
         String operantScore = "";
         for (int i : newScores) {
-            operantScore = operantScore + "," + i;
+            if (i > 0) {
+                operantScore = operantScore + ",+" + i;
+            } else if (i == 0) {
+                operantScore = operantScore + ",";
+            } else {
+                operantScore = operantScore + "," + i;
+            }
         }
-        if (StringUtils.isBlank(operantScore.substring(1))) {
-            return "0,0,0,0";
-        }
+//        if (StringUtils.isBlank(operantScore.substring(1))) {
+//            return "0,0,0,0";
+//        }
         return operantScore.substring(1);
     }
 
