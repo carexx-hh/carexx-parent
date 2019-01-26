@@ -1,6 +1,7 @@
 package com.sh.carexx.uc.service;
 
 import com.sh.carexx.model.uc.PlayCards;
+import com.sh.carexx.model.uc.User;
 
 import java.util.List;
 
@@ -24,5 +25,13 @@ public interface PlayCardsService {
     int getMaxJushu();
 
     String getLastScore();
+
+    void addUserName(User user);
+
+    void updateUserName(User user);
+
+    int getUserById(int id);
+
+    List<User> queryUserName();
 
 }

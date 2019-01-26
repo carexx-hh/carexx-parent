@@ -5,6 +5,7 @@ import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.web.BasicRetVal;
 import com.sh.carexx.common.web.DataRetVal;
 import com.sh.carexx.model.uc.PlayCards;
+import com.sh.carexx.model.uc.User;
 import com.sh.carexx.uc.manager.PlayCardsManager;
 import com.sh.carexx.uc.service.PlayCardsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,23 @@ public class PlayCardsController {
             return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
         }
         return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+    }
+
+    @RequestMapping(value = "/addUserName/{id}/{userName}", method = RequestMethod.GET)
+    public BasicRetVal addUserName(@PathVariable(value = "id") int id, @PathVariable(value = "userName") String userName) {
+        try {
+            playCardsManager.addUserName(id, userName);
+        } catch (BizException e) {
+            return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+        }
+        return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+    }
+
+    @RequestMapping(value = "/queryUserName", method = RequestMethod.GET)
+    public String queryUserName() {
+        List<User> resultList = null;
+        resultList = this.playCardsService.queryUserName();
+        return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
     }
 
 }

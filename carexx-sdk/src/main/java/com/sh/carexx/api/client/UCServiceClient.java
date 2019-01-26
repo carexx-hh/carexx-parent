@@ -1614,4 +1614,10 @@ public interface UCServiceClient {
 
 	@RequestMapping(value = "/play_cards/resetScore", method = RequestMethod.POST)
 	BasicRetVal resetScore();
+
+	@RequestMapping(value = "/play_cards/addUserName/{id}/{userName}", method = RequestMethod.GET)
+	BasicRetVal addUserName(@PathVariable(value = "id") int id, @PathVariable(value = "userName") String userName);
+
+	@RequestMapping(value = "/play_cards/queryUserName", method = RequestMethod.GET)
+	String queryUserName();
 }

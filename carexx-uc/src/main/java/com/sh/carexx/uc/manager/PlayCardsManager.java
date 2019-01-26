@@ -3,6 +3,7 @@ package com.sh.carexx.uc.manager;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.PlayCards;
+import com.sh.carexx.model.uc.User;
 import com.sh.carexx.uc.service.PlayCardsService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,22 @@ public class PlayCardsManager {
     public void resetScore() throws BizException {
         try {
             this.playCardsService.resetScore();
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.DB_ERROR, e);
+        }
+    }
+
+    public void addUserName(int id, String userName) throws BizException {
+        try {
+            int count = this.playCardsService.getUserById(id);
+            User user = new User();
+            user.setId(id);
+            user.setUserName(userName);
+            if (count > 0) {
+                this.playCardsService.updateUserName(user);
+            } else {
+                this.playCardsService.addUserName(user);
+            }
         } catch (Exception e) {
             throw new BizException(ErrorCode.DB_ERROR, e);
         }

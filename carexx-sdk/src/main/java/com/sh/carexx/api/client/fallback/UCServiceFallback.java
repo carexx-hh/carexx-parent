@@ -923,4 +923,14 @@ public class UCServiceFallback implements UCServiceClient {
 	public BasicRetVal resetScore() {
 		return null;
 	}
+
+	@Override
+	public BasicRetVal addUserName(int id, String userName) {
+		return null;
+	}
+
+	@Override
+	public String queryUserName() {
+		return null;
+	}
 }

@@ -5,10 +5,15 @@
 	<resultMap id="BaseResultMap" type="com.sh.carexx.model.uc.PlayCards">
 		<id column="id" jdbcType="BIGINT" property="id" />
 		<result column="jushu" jdbcType="BIGINT" property="jushu" />
-		<result column="score" jdbcType="TINYINT" property="score" />
-		<result column="operant_score" jdbcType="TINYINT" property="operantScore" />
+		<result column="score" jdbcType="VARCHAR" property="score" />
+		<result column="operant_score" jdbcType="VARCHAR" property="operantScore" />
 		<result column="status" jdbcType="TINYINT" property="status" />
 		<result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+	</resultMap>
+
+	<resultMap id="UserMap" type="com.sh.carexx.model.uc.User">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="user_name" jdbcType="VARCHAR" property="userName" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
@@ -55,6 +60,26 @@
 	<select id="getLastScore" resultType="string">
 		select score from dapai
 		where is_deleted = 0 order by id desc limit 0,1
+	</select>
+
+	<select id="addUserName" parameterType="com.sh.carexx.model.uc.User">
+		insert into user (id, user_name)
+		values (#{id,jdbcType=INTEGER},
+			#{userName,jdbcType=VARCHAR})
+	</select>
+
+	<select id="updateUserName" parameterType="com.sh.carexx.model.uc.User">
+		update user
+		set user_name = (#{userName,jdbcType=VARCHAR})
+		where id = (#{id,jdbcType=INTEGER})
+	</select>
+
+	<select id="getUserById" resultType="int">
+		select count(id) from user where id = (#{id,jdbcType=INTEGER})
+	</select>
+
+	<select id="queryUserName" resultMap="UserMap">
+		select id,user_name from user order by id asc
 	</select>
 
 </mapper>

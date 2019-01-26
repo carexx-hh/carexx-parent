@@ -1,6 +1,7 @@
 package com.sh.carexx.uc.service.impl;
 
 import com.sh.carexx.model.uc.PlayCards;
+import com.sh.carexx.model.uc.User;
 import com.sh.carexx.uc.dao.PlayCardsMapper;
 import com.sh.carexx.uc.service.PlayCardsService;
 import org.apache.commons.lang.StringUtils;
@@ -63,6 +64,26 @@ public class PlayCardsServiceImpl implements PlayCardsService {
     @Override
     public String getLastScore() {
         return this.playCardsMapper.getLastScore();
+    }
+
+    @Override
+    public void addUserName(User user) {
+        this.playCardsMapper.addUserName(user);
+    }
+
+    @Override
+    public void updateUserName(User user) {
+        this.playCardsMapper.updateUserName(user);
+    }
+
+    @Override
+    public int getUserById(int id) {
+        return this.playCardsMapper.getUserById(id);
+    }
+
+    @Override
+    public List<User> queryUserName() {
+        return this.playCardsMapper.queryUserName();
     }
 
 }
