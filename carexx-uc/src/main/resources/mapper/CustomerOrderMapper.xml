@@ -381,7 +381,7 @@
 		GROUP BY
 			co.order_no
 		ORDER BY
-			cos.create_time DESC
+			co.create_time DESC
   	</select>
 
 	<select id="selectMappManagerDoOrderSchedule" parameterType="com.sh.carexx.bean.order.MappCustomerOrderQueryFormBean" resultType="java.util.Map">
