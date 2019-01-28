@@ -331,7 +331,7 @@
 		LEFT JOIN carexx_care_inst ci ON co.inst_id = ci.id
 		WHERE
 			co.order_type = 1
-		<if test="orderStatus != null and orderStatus > 0">
+		<if test="orderStatus != null">
 			AND co.order_status IN (#{orderStatus,jdbcType=VARCHAR})
 		</if>
 		AND cos.service_status = #{serviceStatus,jdbcType=TINYINT}
@@ -1004,6 +1004,8 @@
 		AND DATE_FORMAT(co.service_end_time,<![CDATA['%Y-%m']]>) = #{serviceEndTime}
 		GROUP BY
 			cos.order_no
+		ORDER BY
+			co.create_time
 	</select>
 
 	<update id="updateStatus">
