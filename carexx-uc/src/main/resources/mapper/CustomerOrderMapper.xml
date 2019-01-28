@@ -314,6 +314,7 @@
 			co.inst_id instId,
 			ci.inst_name instName,
 			co.service_id serviceId,
+			co.service_start_time,
 			cs.service_name serviceName,
 			co.inpatient_area_id inpatientAreaId,
 			iia.inpatient_area inpatientArea,
