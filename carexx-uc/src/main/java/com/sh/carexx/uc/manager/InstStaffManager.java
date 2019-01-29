@@ -212,6 +212,7 @@ public class InstStaffManager {
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void applyCertification(ApplyCertificationFormBean applyCertificationFormBean) throws BizException {
+		//this.smsManager.checkSmsVerifyCode(applyCertificationFormBean.getPhone(), applyCertificationFormBean.getVerifyCode());
 		InstStaff InstStaff = this.instStaffService.getByIdNoAndPhone(applyCertificationFormBean.getIdNo(), applyCertificationFormBean.getPhone());
 		if (InstStaff != null) {
 			if (InstStaff.getCertificationStatus() == CertificationStatus.NO_CERTIFICATION.getValue()

@@ -1,5 +1,6 @@
 package com.sh.carexx.common.util;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,6 +23,7 @@ public final class DateUtils {
 	public static final String HHMMSS = "HHmmss";
 	public static final String YYYY_MM_DD = "yyyy-MM-dd";
 	public static final String HH_MM_SS = "HH:mm:ss";
+	public static final String YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
 	public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
 	public static String toString(Date date, String pattern) {
@@ -71,4 +73,24 @@ public final class DateUtils {
 		calendar.setTime(date);
 		return calendar.get(Calendar.HOUR_OF_DAY);
 	}
+	
+    public static int compareDate(String date1, String date2) {
+        DateFormat df = new SimpleDateFormat(YYYY_MM_DD_HH_MM);
+        try {
+            Date dt1 = df.parse(date1);
+            Date dt2 = df.parse(date2);
+            if (dt1.getTime() > dt2.getTime()) {
+                //dt1 在dt2前
+                return 1;
+            } else if (dt1.getTime() < dt2.getTime()) {
+                //dt1在dt2后
+                return -1;
+            } else {
+                return 0;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return 0;
+    }
 }
