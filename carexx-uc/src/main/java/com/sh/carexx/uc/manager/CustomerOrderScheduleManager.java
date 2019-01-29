@@ -348,8 +348,10 @@ public class CustomerOrderScheduleManager {
 			  CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(order.getOrderNo());
 	    	  SimpleDateFormat sdfHour = new SimpleDateFormat("HH"); 
 	    	  int hour = Integer.parseInt(sdfHour.format(customerOrderSchedule.getServiceEndTime()));
-	    	  int currentHours = DateUtils.getHourOfDay(new Date());
-	    	  if(hour == currentHours) {
+	    	  
+	    	  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    	  int compare = DateUtils.compareDate(sdf.format(customerOrderSchedule.getServiceEndTime()), sdf.format(new Date()));
+	    	  if(compare == -1 || compare == 0) {
 		    	  if(hour < 12) {
 					CustomerOrderSchedule newCustomerOrderSchedule = new CustomerOrderSchedule();
 					newCustomerOrderSchedule.setOrderNo(customerOrderSchedule.getOrderNo());
