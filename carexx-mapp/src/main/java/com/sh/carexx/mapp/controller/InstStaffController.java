@@ -1,17 +1,16 @@
 package com.sh.carexx.mapp.controller;
 
-import javax.validation.Valid;
-
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.web.BasicRetVal;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/inststaff")
@@ -67,5 +66,12 @@ public class InstStaffController extends BaseController {
 			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
 		}
 		return this.ucServiceClient.modifyInstStaff(instStaffFormBean);
+	}
+	
+	@RequestMapping(value = "/staff_bind_mobile/{mobile}/{verifyCode}")
+	public BasicRetVal staffBindMobile(@PathVariable("mobile") String mobile,
+			@PathVariable("verifyCode") String verifyCode) {
+		Integer id = this.getCurrentUserOAuth().getStaffId();
+		return this.ucServiceClient.modifyStaffBindMobile(id, mobile, verifyCode);
 	}
 }

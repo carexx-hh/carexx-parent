@@ -14,4 +14,9 @@ public class SmsController extends BaseController {
 	public BasicRetVal sendVerifyCode(@PathVariable("mobile") String mobile){
 		return this.ucServiceClient.sendVerifyCode(mobile);
 	}
+
+	@RequestMapping(value = "/send_verify_code_nurse/{mobile}")
+	public BasicRetVal sendVerifyCodeNurse(@PathVariable("mobile") String mobile){
+		return this.ucServiceClient.sendVerifyCode(mobile);
+	}
 }

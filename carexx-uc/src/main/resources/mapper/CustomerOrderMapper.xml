@@ -314,6 +314,7 @@
 			co.inst_id instId,
 			ci.inst_name instName,
 			co.service_id serviceId,
+			co.service_start_time,
 			cs.service_name serviceName,
 			co.inpatient_area_id inpatientAreaId,
 			iia.inpatient_area inpatientArea,
@@ -330,7 +331,7 @@
 		LEFT JOIN carexx_care_inst ci ON co.inst_id = ci.id
 		WHERE
 			co.order_type = 1
-		<if test="orderStatus != null and orderStatus > 0">
+		<if test="orderStatus != null">
 			AND co.order_status IN (#{orderStatus,jdbcType=VARCHAR})
 		</if>
 		AND cos.service_status = #{serviceStatus,jdbcType=TINYINT}
@@ -343,6 +344,87 @@
 		ORDER BY
 			cos.create_time DESC
   	</select>
+  	
+  	<select id="selectMappWaitSchedule" parameterType="java.lang.Integer" resultType="java.util.Map">
+	  	SELECT
+			co.id id,
+			co.order_no orderNo,
+			co.customer_id customerId,
+			ic.real_name patientName,
+			ic.phone patientPhone,
+			co.inst_id instId,
+			ci.inst_name instName,
+			co.service_id serviceId,
+			cs.service_name serviceName,
+			co.inpatient_area_id inpatientAreaId,
+			iia.inpatient_area inpatientArea,
+			co.accurate_address accurateAddress,
+			co.order_status orderStatus,
+			cos.service_status serviceStatus,
+			co.create_time createTime
+		FROM
+			carexx_customer_order co
+		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_inst_inpatient_area iia ON co.inpatient_area_id = iia.id
+		LEFT JOIN carexx_care_inst ci ON co.inst_id = ci.id
+		WHERE
+			co.order_type = 1
+		AND co.order_status = 1
+		AND co.order_no NOT IN (
+			SELECT
+				order_no
+			FROM
+				carexx_customer_order_schedule
+		)
+		AND co.inst_id = #{instId,jdbcType=INTEGER}
+		GROUP BY
+			co.order_no
+		ORDER BY
+			co.create_time DESC
+  	</select>
+
+	<select id="selectMappManagerDoOrderSchedule" parameterType="com.sh.carexx.bean.order.MappCustomerOrderQueryFormBean" resultType="java.util.Map">
+		SELECT
+		co.id id,
+		co.order_no orderNo,
+		co.customer_id customerId,
+		ic.real_name patientName,
+		ic.phone patientPhone,
+		co.inst_id instId,
+		ci.inst_name instName,
+		co.service_id serviceId,
+		cs.service_name serviceName,
+		co.inpatient_area_id inpatientAreaId,
+		iia.inpatient_area inpatientArea,
+		co.accurate_address accurateAddress,
+		co.order_status orderStatus,
+		cos.service_status serviceStatus,
+		co.create_time createTime
+		FROM
+		carexx_customer_order co
+		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_inst_inpatient_area iia ON co.inpatient_area_id = iia.id
+		LEFT JOIN carexx_care_inst ci ON co.inst_id = ci.id
+		WHERE
+		co.order_type = 1
+		<if test="orderStatus != null and orderStatus > 0">
+			AND co.order_status IN (#{orderStatus,jdbcType=VARCHAR})
+		</if>
+		AND (cos.service_status = 1 AND co.order_status = 4)
+		OR (cos.service_status = 3 AND co.order_status = 1)
+		AND co.inst_id = #{instId,jdbcType=INTEGER}
+		<if test="serviceStaffId != null and serviceStaffId > 0">
+			AND cos.service_staff_id = #{serviceStaffId,jdbcType=INTEGER}
+		</if>
+		GROUP BY
+		co.order_no
+		ORDER BY
+		cos.create_time DESC
+	</select>
 
 	<select id="selectCustomerOrderCount" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.lang.Integer">
 		SELECT
@@ -922,6 +1004,8 @@
 		AND DATE_FORMAT(co.service_end_time,<![CDATA['%Y-%m']]>) = #{serviceEndTime}
 		GROUP BY
 			cos.order_no
+		ORDER BY
+			co.create_time
 	</select>
 
 	<update id="updateStatus">

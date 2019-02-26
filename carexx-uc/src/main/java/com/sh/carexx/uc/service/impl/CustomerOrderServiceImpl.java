@@ -306,7 +306,17 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 	public List<Map<?, ?>> queryMappByOrderStatusAndServiceStatus(MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
 		return this.customerOrderMapper.selectMappByOrderStatusAndServiceStatus(mappCustomerOrderQueryFormBean);
 	}
+
+	@Override
+	public List<Map<?, ?>> queryMappWaitSchedule(Integer instId) {
+		return this.customerOrderMapper.selectMappWaitSchedule(instId);
+	}
 	
+	@Override
+	public List<Map<?, ?>> queryMappManagerDoOrderSchedule(MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
+		return this.customerOrderMapper.selectMappManagerDoOrderSchedule(mappCustomerOrderQueryFormBean);
+	}
+
 	@Override
 	public void updateStatus(String orderNo, Byte srcStatus, Byte targetStatus) throws BizException {
 		int rows = 0;

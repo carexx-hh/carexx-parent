@@ -348,31 +348,36 @@ public class CustomerOrderScheduleManager {
 			  CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(order.getOrderNo());
 	    	  SimpleDateFormat sdfHour = new SimpleDateFormat("HH"); 
 	    	  int hour = Integer.parseInt(sdfHour.format(customerOrderSchedule.getServiceEndTime()));
-	    	  if(hour < 12) {
-				CustomerOrderSchedule newCustomerOrderSchedule = new CustomerOrderSchedule();
-				newCustomerOrderSchedule.setOrderNo(customerOrderSchedule.getOrderNo());
-				newCustomerOrderSchedule.setServiceStaffId(customerOrderSchedule.getServiceStaffId());
-				newCustomerOrderSchedule.setServiceStartTime(customerOrderSchedule.getServiceEndTime());
-				newCustomerOrderSchedule.setServiceEndTime(DateUtils.addHour(customerOrderSchedule.getServiceEndTime(), 12));
-				newCustomerOrderSchedule.setServiceDuration(12);
-				newCustomerOrderSchedule.setWorkTypeSettleId(customerOrderSchedule.getWorkTypeSettleId());
-				newCustomerOrderSchedule.setServiceStatus(OrderScheduleStatus.IN_SERVICE.getValue());
-				// 添加排班一条记录
-				this.customerOrderScheduleService.save(newCustomerOrderSchedule);
-				// 添加结算记录
-				this.orderSettleManager.add(newCustomerOrderSchedule);
-			} else if(hour >= 12) {
-				CustomerOrderSchedule orderSchedule = new CustomerOrderSchedule();
-				orderSchedule.setId(customerOrderSchedule.getId());
-				Date time = DateUtils.addHour(customerOrderSchedule.getServiceEndTime(), 12);
-				orderSchedule.setServiceEndTime(time);
-				orderSchedule.setServiceDuration(24);
-				this.customerOrderScheduleService.updateSchedule(orderSchedule);
-				OrderSettle orderSettle = this.orderSettleService.getByScheduleId(customerOrderSchedule.getId());
-				orderSettle.setInstSettleAmt(orderSettle.getInstSettleAmt().multiply(new BigDecimal(2)));
-				orderSettle.setStaffSettleAmt(orderSettle.getStaffSettleAmt().multiply(new BigDecimal(2)));
-				this.orderSettleService.updateSettleAmt(orderSettle);
-			}
+	    	  
+	    	  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    	  int compare = DateUtils.compareDate(sdf.format(customerOrderSchedule.getServiceEndTime()), sdf.format(new Date()));
+	    	  if(compare == -1 || compare == 0) {
+		    	  if(hour < 12) {
+					CustomerOrderSchedule newCustomerOrderSchedule = new CustomerOrderSchedule();
+					newCustomerOrderSchedule.setOrderNo(customerOrderSchedule.getOrderNo());
+					newCustomerOrderSchedule.setServiceStaffId(customerOrderSchedule.getServiceStaffId());
+					newCustomerOrderSchedule.setServiceStartTime(customerOrderSchedule.getServiceEndTime());
+					newCustomerOrderSchedule.setServiceEndTime(DateUtils.addHour(customerOrderSchedule.getServiceEndTime(), 12));
+					newCustomerOrderSchedule.setServiceDuration(12);
+					newCustomerOrderSchedule.setWorkTypeSettleId(customerOrderSchedule.getWorkTypeSettleId());
+					newCustomerOrderSchedule.setServiceStatus(OrderScheduleStatus.IN_SERVICE.getValue());
+					// 添加排班一条记录
+					this.customerOrderScheduleService.save(newCustomerOrderSchedule);
+					// 添加结算记录
+					this.orderSettleManager.add(newCustomerOrderSchedule);
+				} else if(hour >= 12) {
+					CustomerOrderSchedule orderSchedule = new CustomerOrderSchedule();
+					orderSchedule.setId(customerOrderSchedule.getId());
+					Date time = DateUtils.addHour(customerOrderSchedule.getServiceEndTime(), 12);
+					orderSchedule.setServiceEndTime(time);
+					orderSchedule.setServiceDuration(24);
+					this.customerOrderScheduleService.updateSchedule(orderSchedule);
+					OrderSettle orderSettle = this.orderSettleService.getByScheduleId(customerOrderSchedule.getId());
+					orderSettle.setInstSettleAmt(orderSettle.getInstSettleAmt().multiply(new BigDecimal(2)));
+					orderSettle.setStaffSettleAmt(orderSettle.getStaffSettleAmt().multiply(new BigDecimal(2)));
+					this.orderSettleService.updateSettleAmt(orderSettle);
+				}
+		    }
 		}
 	}
 
@@ -558,8 +563,10 @@ public class CustomerOrderScheduleManager {
 		//获取订单开始结束时间
 		CustomerOrder customerOrder = customerOrderService.getByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
 		CustomerOrderSchedule customerOrderScheduleNear = this.customerOrderScheduleService.getNearByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
-		if(customerOrder.getOrderStatus() == OrderStatus.WAIT_SCHEDULE.getValue() && customerOrderScheduleNear.getServiceStatus() == OrderScheduleStatus.WAIT_ACCEPT.getValue()) {
-			throw new BizException(ErrorCode.ORDER_HAS_BEEN_SCHEDULED);
+		if(customerOrderScheduleNear != null) {
+			if(customerOrder.getOrderStatus() == OrderStatus.WAIT_SCHEDULE.getValue() && customerOrderScheduleNear.getServiceStatus() == OrderScheduleStatus.WAIT_ACCEPT.getValue()) {
+				throw new BizException(ErrorCode.ORDER_HAS_BEEN_SCHEDULED);
+			}
 		}
 		Date serviceStartTime = null;
 		Date serviceEndTime = null;
