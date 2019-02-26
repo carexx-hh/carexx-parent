@@ -72,6 +72,10 @@ public class InstStaffManager {
 	@Autowired
 	public CareServiceService careServiceService;
 	
+	@Autowired
+	private SmsManager smsManager;
+	
+	
 	/**
 	 * 
 	 * add:(人员添加). <br/>
@@ -208,6 +212,7 @@ public class InstStaffManager {
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
 	public void applyCertification(ApplyCertificationFormBean applyCertificationFormBean) throws BizException {
+		//this.smsManager.checkSmsVerifyCode(applyCertificationFormBean.getPhone(), applyCertificationFormBean.getVerifyCode());
 		InstStaff InstStaff = this.instStaffService.getByIdNoAndPhone(applyCertificationFormBean.getIdNo(), applyCertificationFormBean.getPhone());
 		if (InstStaff != null) {
 			if (InstStaff.getCertificationStatus() == CertificationStatus.NO_CERTIFICATION.getValue()
@@ -245,5 +250,22 @@ public class InstStaffManager {
 		Byte srcStatus = CertificationStatus.HAS_CERTIFICATION.getValue();
 		this.instStaffService.updateCertificationStatus(id, srcStatus.toString(),
 				CertificationStatus.NO_CERTIFICATION.getValue());
+	}
+	
+	/**
+	 * 
+	 * modifyStaffBindMobile:(手机绑定). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param id
+	 * @param mobile
+	 * @param verifyCode
+	 * @throws BizException 
+	 * @since JDK 1.8
+	 */
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
+	public void modifyStaffBindMobile(Integer id, String mobile, String verifyCode) throws BizException {
+		this.smsManager.checkSmsVerifyCode(mobile, verifyCode);
+		this.instStaffService.updateMobileById(id, mobile);
 	}
 }
