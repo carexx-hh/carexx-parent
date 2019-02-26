@@ -1,8 +1,7 @@
 package com.sh.carexx.mapp.config;
 
-import java.nio.charset.Charset;
-import java.util.List;
-
+import com.google.common.collect.ImmutableList;
+import com.sh.carexx.mapp.interceptor.AuthInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -12,8 +11,8 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.config.annotation.*;
 
-import com.google.common.collect.ImmutableList;
-import com.sh.carexx.mapp.interceptor.AuthInterceptor;
+import java.nio.charset.Charset;
+import java.util.List;
 
 @EnableWebMvc
 @Configuration
@@ -77,7 +76,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(authInterceptor()).addPathPatterns("/**").excludePathPatterns("/auth/**")
-				.excludePathPatterns("/callback/**");
+				.excludePathPatterns("/callback/**").excludePathPatterns("/sms/send_verify_code_nurse/{mobile}");
 		super.addInterceptors(registry);
 	}
 }
