@@ -1,12 +1,5 @@
 package com.sh.carexx.uc.service.impl;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.exception.BizException;
@@ -14,6 +7,12 @@ import com.sh.carexx.model.uc.InstStaff;
 import com.sh.carexx.uc.dao.CustomerOrderMapper;
 import com.sh.carexx.uc.dao.InstStaffMapper;
 import com.sh.carexx.uc.service.InstStaffService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class InstStaffServiceImpl implements InstStaffService {
@@ -136,6 +135,19 @@ public class InstStaffServiceImpl implements InstStaffService {
 	@Override
 	public List<Map<?, ?>> queryInstStaffByCertificationStatus(Integer instId, Byte certificationStatus) {
 		return this.instStaffMapper.selectInstStaffByCertificationStatus(instId, certificationStatus);
+	}
+
+	@Override
+	public void updateMobileById(Integer id, String mobile) throws BizException {
+		int rows = 0;
+		try {
+			rows = this.instStaffMapper.updateMobileById(id, mobile);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
 	}
 
 }

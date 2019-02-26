@@ -176,4 +176,6 @@ public interface InstStaffService {
 	void delete(Integer id) throws BizException;
 	
 	void updateCertificationStatus(Integer id, String srcStatus, Byte targetStatus) throws BizException;
+	
+	void updateMobileById(Integer id, String mobile) throws BizException;
 }

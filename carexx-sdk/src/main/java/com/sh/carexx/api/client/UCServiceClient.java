@@ -639,7 +639,7 @@ public interface UCServiceClient {
     /**
      * queryCustomerOrderForListByWorkTypeId:(通过工种查询订单). <br/>
      *
-     * @param CustomerOrderQueryFormBean
+     * @param customerOrderQueryFormBean
      * @return
      * @author zhoulei
      * @since JDK 1.8
@@ -651,7 +651,7 @@ public interface UCServiceClient {
     /**
      * queryCustomerOrderForListStaffSchedule:(通过工种查询订单). <br/>
      *
-     * @param CustomerOrderQueryFormBean
+     * @param customerOrderQueryFormBean
      * @return
      * @author zhoulei
      * @since JDK 1.8
@@ -685,6 +685,12 @@ public interface UCServiceClient {
      */
     @RequestMapping(value = "/customerorder/done_order/{userId}", method = RequestMethod.GET)
     String queryDoneOrderByUserId(@PathVariable("userId") Integer userId);
+
+    @RequestMapping(value = "/customerorder/wait_schedule/{instId}", method = RequestMethod.GET)
+    String queryMappWaitSchedule(@PathVariable("instId") Integer instId);
+
+    @RequestMapping(value = "/customerorder/do_orderSchedule", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    String queryMappManagerDoOrderSchedule(@RequestBody MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean);
 
     /**
      * queryOrderDetail:(移动端通过客户id查询客户预约服务订单). <br/>
@@ -824,7 +830,7 @@ public interface UCServiceClient {
     /**
      * queryUserMsgList:(查询用户消息). <br/>
      *
-     * @param userMsgFormBean
+     * @param userId
      * @return
      * @author zhoulei
      * @since JDK 1.8
@@ -858,7 +864,7 @@ public interface UCServiceClient {
     /**
      * deleteUserMsg:(删除用户消息). <br/>
      *
-     * @param id
+     * @param ids
      * @return
      * @author zhoulei
      * @since JDK 1.8
@@ -970,6 +976,9 @@ public interface UCServiceClient {
      */
     @RequestMapping(value = "/inststaffworktype/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     BasicRetVal addInstStaffWorkType(@RequestBody InstStaffWorkTypeFormBean instStaffWorkTypeFormBean);
+
+    @RequestMapping(value = "/inststaff/staff_bind_mobile/{id}/{mobile}/{verifyCode}", method = RequestMethod.GET)
+    BasicRetVal modifyStaffBindMobile(@PathVariable("id") Integer id, @PathVariable("mobile") String mobile, @PathVariable("verifyCode") String verifyCode);
 
     /**
      * queryInstStaffWorkTypeForList:(查询机构员工工种结算分页). <br/>

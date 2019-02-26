@@ -1,16 +1,5 @@
 package com.sh.carexx.uc.controller;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
@@ -22,6 +11,12 @@ import com.sh.carexx.common.web.DataRetVal;
 import com.sh.carexx.common.web.PagerBean;
 import com.sh.carexx.uc.manager.InstStaffManager;
 import com.sh.carexx.uc.service.InstStaffService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/inststaff")

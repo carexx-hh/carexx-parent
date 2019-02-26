@@ -443,7 +443,17 @@ public class UCServiceFallback implements UCServiceClient {
 	public String queryMappByOrderStatusAndServiceStatus(MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
 		return null;
 	}
+
+	@Override
+	public String queryMappWaitSchedule(Integer instId) {
+		return null;
+	}
 	
+	@Override
+	public String queryMappManagerDoOrderSchedule(MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
+		return null;
+	}
+
 	@Override
 	public String queryDoneOrderByUserId(Integer userId) {
 		return null;
@@ -619,6 +629,11 @@ public class UCServiceFallback implements UCServiceClient {
 		return null;
 	}
 
+	@Override
+	public BasicRetVal modifyStaffBindMobile(Integer id, String mobile, String verifyCode) {
+		return null;
+	}
+	
 	@Override
 	public BasicRetVal addInstStaffWorkType(InstStaffWorkTypeFormBean instStaffWorkTypeFormBean) {
 		return null;
