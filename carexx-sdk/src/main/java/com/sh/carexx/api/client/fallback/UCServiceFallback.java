@@ -12,6 +12,7 @@ import com.sh.carexx.bean.dict.DictDataFormBean;
 import com.sh.carexx.bean.dict.DictFormBean;
 import com.sh.carexx.bean.holiday.InstHolidayFormBean;
 import com.sh.carexx.bean.order.*;
+import com.sh.carexx.bean.repository.RepositoryBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffWorkTypeFormBean;
@@ -931,6 +932,16 @@ public class UCServiceFallback implements UCServiceClient {
 
 	@Override
 	public String queryUserName() {
+		return null;
+	}
+
+	@Override
+	public String queryRepository(RepositoryBean repositoryBean) {
+		return null;
+	}
+
+	@Override
+	public String previewRepository(Long id) {
 		return null;
 	}
 }
