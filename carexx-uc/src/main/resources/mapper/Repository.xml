@@ -22,6 +22,12 @@
 		LIMIT ${rowIndex}, ${pageSize}
 	</select>
 
+	<select id="queryRepositoryCount" resultType="Integer">
+		select 	count(1)
+		from carexx_repository
+		where disease_name like CONCAT('%', '${diseaseName}', '%')
+	</select>
+
 	<select id="previewRepository" resultMap="BaseResultMap">
 		select 	<include refid="Base_Column_List" />
 		from carexx_repository

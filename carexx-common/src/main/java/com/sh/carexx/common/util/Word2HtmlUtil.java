@@ -40,8 +40,10 @@ public class Word2HtmlUtil {
             content = Word2HtmlUtil.Word2003ToHtml(in);
             return content;
         } catch (IOException e) {
+            logger.info("IOException");
             return null;
         } catch (Exception e) {
+            logger.info("Exception");
             return null;
         } finally {
             httpUrl.disconnect();

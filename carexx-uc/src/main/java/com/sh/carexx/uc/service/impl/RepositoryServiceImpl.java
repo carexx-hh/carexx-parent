@@ -5,26 +5,38 @@ import com.sh.carexx.common.util.Word2HtmlUtil;
 import com.sh.carexx.model.uc.Repository;
 import com.sh.carexx.uc.dao.RepositoryMapper;
 import com.sh.carexx.uc.service.RepositoryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RepositoryServiceImpl implements RepositoryService {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private RepositoryMapper repositoryMapper;
 
     @Override
-    public List<Repository> queryRepository(RepositoryBean repositoryBean) {
+    public List<Map<?, ?>> queryRepository(RepositoryBean repositoryBean) {
         return this.repositoryMapper.queryRepository(repositoryBean);
+    }
+
+    @Override
+    public Integer queryRepositoryCount(RepositoryBean repositoryBean) {
+        return this.repositoryMapper.queryRepositoryCount(repositoryBean);
     }
 
     @Override
     public String previewRepository(Long id) {
         Repository repository = this.repositoryMapper.previewRepository(id);
-        return Word2HtmlUtil.getPreviewContent("http://42.96.72.0:9596/demos/"+URLEncoder.encode(repository.getDiseaseName())+".doc");
+        String content = Word2HtmlUtil.getPreviewContent("http://pm6sh89dr.bkt.clouddn.com/" + URLEncoder.encode(repository.getDiseaseName()) + ".doc");
+        logger.info(content);
+        return content;
     }
 }
