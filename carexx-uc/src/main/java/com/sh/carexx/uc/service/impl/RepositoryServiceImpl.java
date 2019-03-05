@@ -35,7 +35,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     @Override
     public String previewRepository(Long id) {
         Repository repository = this.repositoryMapper.previewRepository(id);
-        String content = Word2HtmlUtil.getPreviewContent("http://pm6sh89dr.bkt.clouddn.com/" + URLEncoder.encode(repository.getDiseaseName()) + ".doc");
+        String content = Word2HtmlUtil.getPreviewContent("http://pntv8tnvj.bkt.clouddn.com/" + URLEncoder.encode(repository.getDiseaseName()) + ".doc");
         logger.info(content);
         return content;
     }
