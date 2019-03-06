@@ -1,16 +1,21 @@
 package com.sh.carexx.mapp.wechat;
 
+import com.sh.carexx.api.client.UCServiceClient;
 import com.sh.carexx.bean.order.OrderPaymentFormBean;
 import com.sh.carexx.bean.user.UserAccountDetailFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.enums.pay.PayStatus;
+import com.sh.carexx.common.enums.pay.PayType;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.util.*;
+import com.sh.carexx.mapp.wechat.bean.WeDoReFundUnifiedRep;
+import com.sh.carexx.mapp.wechat.bean.WeDoReFundUnifiedRsp;
 import com.sh.carexx.mapp.wechat.bean.WepayUnifiedOrderReq;
 import com.sh.carexx.mapp.wechat.bean.WepayUnifiedOrderRsp;
 import com.sh.carexx.model.uc.OrderPayment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +32,9 @@ public class WechatPayManager {
 	public static final String TRADE_FAIL = "FAIL";
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	@Autowired
+	protected UCServiceClient ucServiceClient;
 
 	@Value("${wechat.patient.appId}")
 	private String wechatAppId;
@@ -74,6 +82,31 @@ public class WechatPayManager {
 		return wepayUnifiedOrderRsp;
 	}
 
+	private WeDoReFundUnifiedRsp unifiedDoReFund(TreeMap<String, String> params) throws BizException {
+		WeDoReFundUnifiedRep req = new WeDoReFundUnifiedRep();
+		Set<String> keySet = params.keySet();
+		for (String key : keySet) {
+			BeanUtils.setPropertyValueByName(key, req, new Object[] { params.get(key) }, String.class);
+		}
+		WeDoReFundUnifiedRsp weDoReFundUnifiedRsp = null;
+		try {
+			String reqBody = JAXBUtils.convert2Xml(req, false, CHARSET);
+			this.logger.info("企业付款到用户零钱开始，请求报文：[{}]", reqBody);
+			String rspBody = HttpClientUtils.doRefund(WECHAT_PAY_GATEWAY + "mmpaymkttransfers/promotion/transfers", null, reqBody, true,
+					CHARSET);
+			this.logger.info("企业付款到用户零钱结束，响应报文：[{}]", rspBody);
+			weDoReFundUnifiedRsp = JAXBUtils.convert2JavaBean(rspBody, WeDoReFundUnifiedRsp.class);
+		} catch (Exception e) {
+			this.logger.error("企业付款到用户零钱异常", e);
+			throw new BizException(e);
+		}
+		if (!TRADE_SUCCESS.equals(weDoReFundUnifiedRsp.getReturn_code())
+				|| !TRADE_SUCCESS.equals(weDoReFundUnifiedRsp.getResult_code())) {
+			throw new BizException(ErrorCode.SYS_ERROR.getValue(), weDoReFundUnifiedRsp.getReturn_msg());
+		}
+		return weDoReFundUnifiedRsp;
+	}
+
 	public Map<String, String> getWechatPayInfo(OrderPayment orderPayment, OrderPaymentFormBean orderPaymentFormBean)
 			throws BizException {
 		TreeMap<String, String> params = new TreeMap<String, String>();
@@ -85,7 +118,7 @@ public class WechatPayManager {
 		params.put("notify_url", this.wechatPayNotifyUrl);
 		params.put("out_trade_no", orderPayment.getOrderNo());
 		params.put("spbill_create_ip", orderPaymentFormBean.getIp());
-		params.put("total_fee", String.valueOf((orderPayment.getPayAmt().add(new BigDecimal(4))).multiply(new BigDecimal(100)).intValue()));
+		params.put("total_fee", String.valueOf((orderPayment.getPayAmt()).multiply(new BigDecimal(100)).intValue()));
 		params.put("trade_type", "JSAPI");
 		params.put("openid", orderPaymentFormBean.getOpenId());
 		String reqSign = this.sign(params, this.wechatPaySignKey);
@@ -128,6 +161,34 @@ public class WechatPayManager {
 		String rspSign = this.sign(resultMap, this.wechatPaySignKey);
 		resultMap.put("paySign", rspSign);
 		return resultMap;
+	}
+
+	public WeDoReFundUnifiedRsp getReFundInfo(UserAccountDetailFormBean userAccountDetailFormBean)
+			throws BizException {
+		TreeMap<String, String> params = new TreeMap<String, String>();
+		params.put("mch_appid", this.wechatAppId);
+		params.put("mchid", this.wechatPayMchtId);
+		params.put("nonce_str", UUIDUtils.getShortUUID());
+		params.put("partner_trade_no", userAccountDetailFormBean.getPayNo());
+		params.put("openid", userAccountDetailFormBean.getOpenId());
+		params.put("check_name", "NO_CHECK");
+		params.put("amount", String.valueOf((userAccountDetailFormBean.getPayAmt()).multiply(new BigDecimal(100)).intValue()));
+		params.put("desc", "账户提现"+userAccountDetailFormBean.getPayAmt()+"元");
+		params.put("spbill_create_ip", userAccountDetailFormBean.getIp());
+		String reqSign = this.sign(params, this.wechatPaySignKey);
+		params.put("sign", reqSign);
+		WeDoReFundUnifiedRsp rsq = this.unifiedDoReFund(params);
+		if(this.TRADE_SUCCESS.equals(rsq.getResult_code()) && this.TRADE_SUCCESS.equals(rsq.getReturn_code())){
+			userAccountDetailFormBean.setUserId(userAccountDetailFormBean.getUserId());
+			userAccountDetailFormBean.setPayType(PayType.ReFund.getValue());
+			userAccountDetailFormBean.setPayChnlTransNo(rsq.getPayment_no());
+			userAccountDetailFormBean.setPayStatus(this.translateTradeStatus(rsq.getResult_code()));
+			userAccountDetailFormBean.setPayTime(DateUtils.toDate(rsq.getPayment_time(),DateUtils.YYYY_MM_DD_HH_MM_SS));
+			this.ucServiceClient.addUserAccountDetail(userAccountDetailFormBean);
+		} else{
+			throw new BizException(rsq.getErr_code()+","+rsq.getReturn_msg());
+		}
+		return rsq;
 	}
 
 	public Byte translateTradeStatus(String tradeStatus) {

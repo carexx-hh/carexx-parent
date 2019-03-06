@@ -1,7 +1,14 @@
 package com.sh.carexx.mapp.controller;
 
-import java.util.Map;
-
+import com.sh.carexx.bean.user.ApplyCertificationFormBean;
+import com.sh.carexx.bean.user.NursingSupervisorLoginFormBean;
+import com.sh.carexx.bean.user.PatientLoginFormBean;
+import com.sh.carexx.common.CarexxConstant;
+import com.sh.carexx.common.enums.Identity;
+import com.sh.carexx.common.enums.user.IdentityType;
+import com.sh.carexx.common.exception.BizException;
+import com.sh.carexx.common.web.BasicRetVal;
+import com.sh.carexx.mapp.wechat.WechatManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,19 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sh.carexx.bean.user.ApplyCertificationFormBean;
-import com.sh.carexx.bean.user.NursingSupervisorLoginFormBean;
-import com.sh.carexx.bean.user.OAuthLoginFormBean;
-import com.sh.carexx.bean.user.PatientLoginFormBean;
-import com.sh.carexx.common.CarexxConstant;
-import com.sh.carexx.common.enums.Identity;
-import com.sh.carexx.common.enums.user.IdentityType;
-import com.sh.carexx.common.exception.BizException;
-import com.sh.carexx.common.util.JSONUtils;
-import com.sh.carexx.common.web.BasicRetVal;
-import com.sh.carexx.common.web.DataRetVal;
-import com.sh.carexx.mapp.wechat.WechatManager;
-import com.sh.carexx.model.uc.UserInfo;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -41,7 +36,7 @@ public class AuthController extends BaseController {
 		} catch (BizException e) {
 			this.logger.error("微信登录失败", e);
 		}
-		/*patientLoginFormBean.setOpenId("1");*/
+		/*patientLoginFormBean.setOpenId("okfRG46zPZPWPHX-7ijGat7RU3d4");*/
 		return this.ucServiceClient.patientLogin(patientLoginFormBean);
 	}
 
@@ -58,7 +53,7 @@ public class AuthController extends BaseController {
 		} catch (BizException e) {
 			this.logger.error("微信登录失败", e);
 		}
-		/*nursingSupervisorLoginFormBean.setOpenId("1");*/
+		/*nursingSupervisorLoginFormBean.setOpenId("o2FTc4mNxMP8W0ElZ9l9UWektGPs");*/
 		return this.ucServiceClient.nursingSupervisorLogin(nursingSupervisorLoginFormBean);
 	}
 
@@ -77,7 +72,7 @@ public class AuthController extends BaseController {
 		return null;
 
 		/*
-		 * openId = "1"; // 用户唯一标识 Byte identityType =
+		 * openId = "oYfzH5eQa7yzFLY2dZXt-DV7BPxs"; // 用户唯一标识 Byte identityType =
 		 * IdentityType.WECHAT.getValue(); return
 		 * this.ucServiceClient.CaregiversLogin(identityType, openId);
 		 */

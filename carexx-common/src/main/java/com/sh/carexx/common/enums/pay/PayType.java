@@ -12,7 +12,7 @@ package com.sh.carexx.common.enums.pay;
  */
 public enum PayType {
     RECHARGE((byte) 1, "充值"),
-    DRAWMONEY((byte) 2, "提现"),
+    ReFund((byte) 2, "提现"),
     ORDERPAY((byte) 3, "订单支付");
 
     private Byte value;

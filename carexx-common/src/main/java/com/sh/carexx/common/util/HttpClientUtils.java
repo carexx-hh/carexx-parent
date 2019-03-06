@@ -1,14 +1,5 @@
 package com.sh.carexx.common.util;
 
-import java.io.IOException;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
@@ -27,7 +18,18 @@ import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
+import org.springframework.core.io.ClassPathResource;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import java.io.IOException;
+import java.security.KeyStore;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("deprecation")
 public final class HttpClientUtils {
@@ -35,6 +37,7 @@ public final class HttpClientUtils {
 	public static final int DEFAULT_CONN_TIMEOUT = 20000;
 	public static final int DEFAULT_SO_TIMEOUT = 20000;
 	public static final int DEFAULT_SEND_RETRY_TIMES = 3;
+	public static final String SSLCERT_PASSWORD = "1495613892";
 
 	/**
 	 * 
@@ -322,6 +325,40 @@ public final class HttpClientUtils {
 			}
 		}
 		post.setEntity(new StringEntity(body, charset));
+		return execute(httpClient, null, post, charset);
+	}
+
+	/**
+	 *
+	 * Function:退款时带上证书发送post请求, 指定编码<br/>
+	 * Condition:TODO <br/>
+	 * Notice:TODO <br/>
+	 * Date:2018年1月23日下午04:58:06 <br/>
+	 *
+	 * @author hetao
+	 * @since JDK 1.7
+	 */
+	public static String doRefund(String url, Map<String, String> headers, String body, boolean isSSL, String charset)
+			throws Exception {
+		CloseableHttpClient httpClient = getCloseableHttpClient(isSSL);
+		HttpPost post = new HttpPost(url);
+		if (headers != null && headers.size() > 0) {
+			for (Map.Entry<String, String> entry : headers.entrySet()) {
+				post.setHeader(entry.getKey(), entry.getValue());
+			}
+		}
+		post.setEntity(new StringEntity(body, charset));
+
+		KeyStore keyStore = KeyStore.getInstance("PKCS12");
+		ClassPathResource instream = new ClassPathResource("config/apiclient_cert.p12");//P12文件目录
+		//FileInputStream instream = new FileInputStream(new File(this.SSLCERT_PATH));//P12文件目录
+		try {
+			keyStore.load(instream.getInputStream(), SSLCERT_PASSWORD.toCharArray());
+		} finally {
+			SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, SSLCERT_PASSWORD.toCharArray()).build();
+			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext, new String[]{"TLSv1"}, null, SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+			httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+		}
 		return execute(httpClient, null, post, charset);
 	}
 
