@@ -212,6 +212,7 @@
 			cis.real_name staffName,
 			cis.phone staffPhone,
 			ci.inst_name instName,
+			ci.id instId,
 			cos.service_status serviceStatus,
 			co.proof_type proofType,
 			co.receipt_no receiptNo,
