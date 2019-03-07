@@ -1,10 +1,6 @@
 package com.sh.carexx.mapp.controller;
 
-import com.sh.carexx.bean.order.CalcServiceFeeFormBean;
-import com.sh.carexx.bean.order.CustomerAppointOrderFormBean;
-import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
-import com.sh.carexx.bean.order.MappCustomerOrderQueryFormBean;
-import com.sh.carexx.bean.order.OrderPaymentFormBean;
+import com.sh.carexx.bean.order.*;
 import com.sh.carexx.bean.user.UserAccountDetailFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.enums.pay.PayType;
@@ -132,5 +128,14 @@ public class CustomerOrderController extends BaseController {
 	public String queryStaffIncomeCountForList(@Valid CustomerOrderQueryFormBean customerOrderQueryFormBean){
 		customerOrderQueryFormBean.setServiceStaffId(this.getCurrentUserOAuth().getStaffId().toString());
 		return this.ucServiceClient.queryStaffIncomeCountForList(customerOrderQueryFormBean);
+	}
+
+	@RequestMapping(value = "/confirmcompleted")
+	public BasicRetVal confirmCompleted(@Valid ConfirmCompletedOrderFormBean confirmCompletedOrderFormBean,
+										BindingResult bindingResult) {
+		if (confirmCompletedOrderFormBean.getOrderNo() == null || bindingResult.hasErrors()) {
+			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
+		}
+		return this.ucServiceClient.confirmCompletedCustomerOrder(confirmCompletedOrderFormBean);
 	}
 }
