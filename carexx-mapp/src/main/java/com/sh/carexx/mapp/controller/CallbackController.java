@@ -31,7 +31,6 @@ public class CallbackController extends BaseController {
 
 	@Autowired
 	private WechatManager wechatManager;
-
 	@Autowired
 	private WechatPayManager wechatPayManager;
 
@@ -69,7 +68,7 @@ public class CallbackController extends BaseController {
 			}
 		}
 		try {
-			if (WechatPayManager.TRADE_SUCCESS.equals(req.getReturn_code())) {
+			if (WechatPayManager.TRADE_SUCCESS.equals(req.getResult_code()) && WechatPayManager.TRADE_SUCCESS.equals(req.getReturn_code())) {
 				this.ucServiceClient.modifyOrderServiceEndTime(req.getOut_trade_no());
 				OrderPayment orderPayment = new OrderPayment();
 				orderPayment.setPayType(PayMethod.ONLINE_PAY.getValue());
@@ -120,10 +119,11 @@ public class CallbackController extends BaseController {
 			}
 		}
 		try {
-			if (WechatPayManager.TRADE_SUCCESS.equals(req.getReturn_code())) {
+			if (WechatPayManager.TRADE_SUCCESS.equals(req.getReturn_code()) && WechatPayManager.TRADE_SUCCESS.equals(req.getResult_code())) {
 				UserAccountDetailFormBean userAccountDetailFormBean = new UserAccountDetailFormBean();
+				userAccountDetailFormBean.setUserId(this.getCurrentUser().getId());
 				userAccountDetailFormBean.setPayNo(req.getOut_trade_no());
-				BigDecimal payAmt = new BigDecimal(req.getTotal_fee()).multiply(new BigDecimal(100));
+				BigDecimal payAmt = new BigDecimal(req.getTotal_fee()).divide(new BigDecimal(100));
 				userAccountDetailFormBean.setPayAmt(payAmt);
 				userAccountDetailFormBean.setPayType(PayType.RECHARGE.getValue());
 				userAccountDetailFormBean.setPayChnl(PayChnl.WECHATPAY.getValue());

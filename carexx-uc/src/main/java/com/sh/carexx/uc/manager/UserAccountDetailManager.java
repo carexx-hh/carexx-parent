@@ -39,12 +39,12 @@ public class UserAccountDetailManager {
         BigDecimal payAmt = userAccountDetailFormBean.getPayAmt();
         UserAccountDetails userAccountDetails = new UserAccountDetails();
         userAccountDetails.setUserId(userAccountDetailFormBean.getUserId());
-        userAccountDetails.setPayNo(this.keyGenerator.generatePayNo());
+        userAccountDetails.setPayNo(userAccountDetailFormBean.getPayNo());
         userAccountDetails.setOrderNo(userAccountDetailFormBean.getOrderNo());
         userAccountDetails.setPayType(userAccountDetailFormBean.getPayType());
         if(userAccountDetailFormBean.getPayType() == PayType.RECHARGE.getValue()){
             balance = balance.add(payAmt);
-        }else if(userAccountDetailFormBean.getPayType() == PayType.DRAWMONEY.getValue()){
+        }else if(userAccountDetailFormBean.getPayType() == PayType.ReFund.getValue()){
             if(payAmt.compareTo(balance) == 1){
                 throw new BizException(ErrorCode.USER_ACCOUNT_BALANCE_NOT_ENOUGH);
             }
@@ -61,6 +61,7 @@ public class UserAccountDetailManager {
             this.customerOrderScheduleManager.finishScheduling(userAccountDetailFormBean.getOrderNo());
             userAccountDetailFormBean.setPayStatus(PayStatus.PAY_SUCCESS.getValue());
             userAccountDetailFormBean.setPayTime(new Date());
+            userAccountDetails.setPayNo(this.keyGenerator.generatePayNo());
         }
         userAccountDetails.setPayAmt(payAmt);
         userAccountDetails.setPayAmtAfter(balance);

@@ -42,4 +42,20 @@ public class UserAccountController extends BaseController {
             return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
         }
     }
+
+    @RequestMapping(value = "/refund")
+    public BasicRetVal refund(@Valid UserAccountDetailFormBean userAccountDetailFormBean, BindingResult bindingResult) {
+        this.fillFormBean(userAccountDetailFormBean);
+        if (bindingResult.hasErrors()) {
+            return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
+        }
+        try {
+            userAccountDetailFormBean.setUserId(this.getCurrentUser().getId());
+            userAccountDetailFormBean.setPayNo(this.keyGenerator.generatePayNo());
+            return new DataRetVal(CarexxConstant.RetCode.SUCCESS,
+                    this.wechatPayManager.getReFundInfo(userAccountDetailFormBean));
+        } catch (BizException e) {
+            return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+        }
+    }
 }
