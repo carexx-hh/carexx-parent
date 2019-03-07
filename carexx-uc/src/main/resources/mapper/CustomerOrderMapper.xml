@@ -1091,4 +1091,10 @@
 	  	where
 	  		order_no = #{orderNo,jdbcType=VARCHAR}
 	</update>
+
+	<select id="selectProofInfoByOrderNo" resultType="java.util.Map">
+  		select proof_type,receipt_no,invoice_no
+  		from carexx_customer_order
+  		where order_no = #{orderNo,jdbcType=VARCHAR}
+  	</select>
 </mapper>

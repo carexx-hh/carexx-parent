@@ -333,13 +333,23 @@ public interface CustomerOrderService {
 	Integer getOrderCountByStaffId(Integer staffId);
 	
 	/**
-	 * 
-	 * updateOperatorId:(修改操作员). <br/> 
-	 * 
-	 * @author zhoulei 
+	 *
+	 * updateOperatorId:(修改操作员). <br/>
+	 *
+	 * @author zhoulei
 	 * @param customerOrder
-	 * @throws BizException 
+	 * @throws BizException
 	 * @since JDK 1.8
 	 */
 	void updateOperatorId(CustomerOrder customerOrder) throws BizException;
+
+	/**
+	 * selectProofInfoByOrderNo
+	 *
+	 * @param orderNo
+	 * @return
+	 * @author chenshichao
+	 * @since JDK 1.8
+	 */
+	Map<?, ?> selectProofInfoByOrderNo(String orderNo);
 }

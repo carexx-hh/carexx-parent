@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -137,5 +138,10 @@ public class CustomerOrderController extends BaseController {
 			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
 		}
 		return this.ucServiceClient.confirmCompletedCustomerOrder(confirmCompletedOrderFormBean);
+	}
+
+	@RequestMapping(value = "/query_proofInfo/{orderNo}", method = RequestMethod.GET)
+	public String queryProofInfoByOrderNo(@PathVariable("orderNo") String orderNo) {
+		return this.ucServiceClient.queryProofInfoByOrderNo(orderNo);
 	}
 }

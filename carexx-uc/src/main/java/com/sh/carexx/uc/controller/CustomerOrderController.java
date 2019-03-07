@@ -265,4 +265,10 @@ public class CustomerOrderController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
+
+	@RequestMapping(value = "/get_proofInfo/{orderNo}", method = RequestMethod.GET)
+	public String queryProofInfoByOrderNo(@PathVariable("orderNo") String orderNo) {
+		Map<?, ?> result = this.customerOrderService.selectProofInfoByOrderNo(orderNo);
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,result).toJSON();
+	}
 }

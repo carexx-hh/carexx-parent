@@ -626,6 +626,10 @@ String serviceStartTime = customerOrderQueryFormBean.getServiceStartTime();
 		if (rows != 1) {
 			throw new BizException(ErrorCode.DB_ERROR);
 		}
-		
+	}
+
+	@Override
+	public Map<?, ?> selectProofInfoByOrderNo(String orderNo) {
+		return this.customerOrderMapper.selectProofInfoByOrderNo(orderNo);
 	}
 }

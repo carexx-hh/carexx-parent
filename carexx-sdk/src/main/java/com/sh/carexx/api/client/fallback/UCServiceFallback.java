@@ -959,4 +959,9 @@ public class UCServiceFallback implements UCServiceClient {
 	public String previewRepository(Long id) {
 		return null;
 	}
+
+	@Override
+	public String queryProofInfoByOrderNo(String orderNo) {
+		return null;
+	}
 }

@@ -1555,4 +1555,7 @@ public interface UCServiceClient {
 
     @RequestMapping(value = "/repository/previewRepository/{id}", method = RequestMethod.GET, consumes = MediaType.TEXT_HTML_VALUE)
     String previewRepository(@PathVariable(value = "id") Long id);
+
+    @RequestMapping(value = "/customerorder/get_proofInfo/{orderNo}", method = RequestMethod.GET)
+    String queryProofInfoByOrderNo(@PathVariable(value = "orderNo") String orderNo);
 }
