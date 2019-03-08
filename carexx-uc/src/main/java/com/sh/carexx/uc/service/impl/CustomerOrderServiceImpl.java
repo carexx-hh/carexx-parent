@@ -73,6 +73,11 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	}
 
 	@Override
+	public List<CustomerOrder> getOrderByInstId(int instId) {
+		return this.customerOrderMapper.selectOrderByInstId(instId);
+	}
+
+	@Override
 	public List<Map<?, ?>> getByUserId(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		return this.customerOrderMapper.selectByUserId(customerOrderQueryFormBean);
 	}

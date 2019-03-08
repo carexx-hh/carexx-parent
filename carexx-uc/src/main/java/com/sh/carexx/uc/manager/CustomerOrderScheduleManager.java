@@ -339,8 +339,9 @@ public class CustomerOrderScheduleManager {
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
-	public void timingShedule() throws BizException {
-		  List<CustomerOrder> list = this.customerOrderService.getAllOrder();
+	public void timingShedule(int instId) throws BizException {
+//		  List<CustomerOrder> list = this.customerOrderService.getAllOrder();
+		  List<CustomerOrder> list = this.customerOrderService.getOrderByInstId(instId);
 		  if(list == null) {
 			  return;
 		  }

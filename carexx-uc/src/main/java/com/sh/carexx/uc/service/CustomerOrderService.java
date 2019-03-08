@@ -48,6 +48,15 @@ public interface CustomerOrderService {
 	List<CustomerOrder> getAllOrder();
 
 	/**
+	 *
+	 * confirmCompleted:(查询所有线上订单). <br/>
+	 *
+	 * @author chenshichao
+	 * @since JDK 1.8
+	 */
+	List<CustomerOrder> getOrderByInstId(int instId);
+
+	/**
 	 * 
 	 * getByUserId:(客户端通过客户id查询服务订单分页). <br/>
 	 * 
