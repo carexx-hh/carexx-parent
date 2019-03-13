@@ -15,6 +15,7 @@ import com.sh.carexx.uc.dao.CareServiceRatioMapper;
 import com.sh.carexx.uc.dao.CustomerOrderMapper;
 import com.sh.carexx.uc.dao.CustomerOrderTimeMapper;
 import com.sh.carexx.uc.service.CustomerOrderService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -304,7 +305,10 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 
     @Override
     public List<Map<?, ?>> queryMappByOrderStatusAndServiceStatus(MappCustomerOrderQueryFormBean mappCustomerOrderQueryFormBean) {
-        mappCustomerOrderQueryFormBean.setOrderStatusList(Arrays.asList(mappCustomerOrderQueryFormBean.getOrderStatus().split(",")));
+        String orderStatus = mappCustomerOrderQueryFormBean.getOrderStatus();
+        if (StringUtils.isNotBlank(orderStatus)) {
+            mappCustomerOrderQueryFormBean.setOrderStatusList(Arrays.asList(orderStatus.split(",")));
+        }
         return this.customerOrderMapper.selectMappByOrderStatusAndServiceStatus(mappCustomerOrderQueryFormBean);
     }
 
