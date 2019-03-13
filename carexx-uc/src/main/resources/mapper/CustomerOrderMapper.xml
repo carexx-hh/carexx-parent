@@ -332,8 +332,14 @@
 		LEFT JOIN carexx_care_inst ci ON co.inst_id = ci.id
 		WHERE
 			co.order_type = 1
+		<!--<if test="orderStatus != null">-->
+			<!--AND co.order_status IN (#{orderStatus,jdbcType=VARCHAR})-->
+		<!--</if>-->
 		<if test="orderStatus != null">
-			AND co.order_status IN (#{orderStatus,jdbcType=VARCHAR})
+			AND co.order_status IN
+			<foreach collection="orderStatusList" item="status" separator="," open="(" close=")">
+				#{status}
+			</foreach>
 		</if>
 		AND cos.service_status = #{serviceStatus,jdbcType=TINYINT}
 		AND co.inst_id = #{instId,jdbcType=INTEGER}
@@ -897,27 +903,27 @@
 		<if  test="sortName == 'proofNo' and sortType == 0">
 			ORDER BY
 			co.invoice_no,co.receipt_no
-		</if >
+		</if>
 		<if  test="sortName == 'proofNo' and sortType == 1">
 			ORDER BY
 			co.invoice_no DESC,co.receipt_no DESC
-		</if >
+		</if>
 		<if  test="sortName == 'serviceStartTime' and sortType == 0">
 			ORDER BY
 			co.service_start_time ASC
-		</if >
+		</if>
 		<if  test="sortName == 'serviceStartTime' and sortType == 1">
 			ORDER BY
 			co.service_start_time DESC
-		</if >
+		</if>
 		<if  test="sortName == 'serviceEndTime' and sortType == 0">
 			ORDER BY
 			co.service_end_time ASC
-		</if >
+		</if>
 		<if  test="sortName == 'serviceEndTime' and sortType == 1">
 			ORDER BY
 			co.service_end_time DESC
-		</if >
+		</if>
 		<if test="sortName == null and sortType == null">
 			ORDER BY
 			co.create_time,cos.id DESC
