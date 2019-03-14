@@ -216,12 +216,14 @@
 			cos.service_status serviceStatus,
 			co.proof_type proofType,
 			co.receipt_no receiptNo,
+			co.receipt_no signingPerson,
 			co.invoice_no invoiceNo,
 			co.order_amt orderAmt,
 			co.holiday holiday,
 			os.settle_ratio settleRatio,
 			wt.id workTypeId,
-			wt.work_type_name workTypeName
+			wt.work_type_name workTypeName,
+			ccis.inst_sys_name
 		FROM
 			carexx_customer_order co
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
@@ -234,6 +236,7 @@
 		LEFT JOIN carexx_inst_inpatient_area cia ON cia.id = co.inpatient_area_id
 		LEFT JOIN carexx_inst_staff cis ON cos.service_staff_id = cis.id
 		LEFT JOIN carexx_care_inst ci ON cis.service_inst_id = ci.id
+		LEFT JOIN carexx_care_inst_sys ccis ON ccis.id = co.inst_sys_id
 		WHERE
 			co.order_no = #{orderNo,jdbcType=VARCHAR}
 		ORDER BY
