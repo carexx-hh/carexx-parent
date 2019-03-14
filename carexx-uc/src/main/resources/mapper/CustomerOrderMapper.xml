@@ -216,7 +216,7 @@
 			cos.service_status serviceStatus,
 			co.proof_type proofType,
 			co.receipt_no receiptNo,
-			co.receipt_no signingPerson,
+			co.signing_person signingPerson,
 			co.invoice_no invoiceNo,
 			co.order_amt orderAmt,
 			co.holiday holiday,
