@@ -223,7 +223,7 @@
 			os.settle_ratio settleRatio,
 			wt.id workTypeId,
 			wt.work_type_name workTypeName,
-			ccis.inst_sys_name
+			ccis.inst_sys_name instSysName
 		FROM
 			carexx_customer_order co
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
