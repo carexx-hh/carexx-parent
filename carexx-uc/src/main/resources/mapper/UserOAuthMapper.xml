@@ -37,7 +37,7 @@
 			<include refid="Base_Column_List" />
 		from 
 			carexx_user_oauth
-		where identity_type = #{identityType,jdbcType=TINYINT} and identifier = #{identifier,jdbcType=VARCHAR}
+		where identity_type = #{identityType,jdbcType=TINYINT} and identifier = #{identifier,jdbcType=VARCHAR} and identity_status = 1
 	</select>
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.UserOAuth">
 		insert into carexx_user_oauth (
@@ -75,5 +75,14 @@
 			inst_id = #{instId, jdbcType=INTEGER},
 			modify_time = now()
 		where user_id = #{userId,jdbcType=INTEGER}
+	</update>
+
+	<update id="deleteByStaffId">
+		update
+			carexx_user_oauth
+		set
+			identity_status = 0,
+			modify_time = now()
+		where staff_id = #{staffId,jdbcType=INTEGER} and identity_status = 1
 	</update>
 </mapper>

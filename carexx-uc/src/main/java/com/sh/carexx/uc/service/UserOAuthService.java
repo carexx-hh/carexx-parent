@@ -15,4 +15,6 @@ public interface UserOAuthService {
 	void updateStaffId(int userId, int staffId, int instId) throws BizException;
 	
 	void updateUserAcctId(int userId, int userAcctId, int instId) throws BizException;
+
+	void deleteByStaffId(int deleteByStaffId) throws BizException;
 }

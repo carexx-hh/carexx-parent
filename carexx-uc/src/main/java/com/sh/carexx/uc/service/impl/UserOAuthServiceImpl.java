@@ -67,4 +67,13 @@ public class UserOAuthServiceImpl implements UserOAuthService {
 			throw new BizException(ErrorCode.DB_ERROR, e);
 		}
 	}
+
+	@Override
+	public void deleteByStaffId(int staffId) throws BizException {
+		try {
+			this.userOAuthMapper.deleteByStaffId(staffId);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+	}
 }

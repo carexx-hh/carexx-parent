@@ -117,7 +117,7 @@ public class InstStaffController {
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public BasicRetVal delete(@PathVariable("id") Integer id) {
 		try {
-			this.instStaffService.delete(id);
+			this.instStaffManager.delete(id);
 		} catch (BizException e) {
 			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
 		}

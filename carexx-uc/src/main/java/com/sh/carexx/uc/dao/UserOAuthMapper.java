@@ -18,4 +18,6 @@ public interface UserOAuthMapper {
 	int updateStaffId(@Param("userId")int userId, @Param("staffId")int staffId, @Param("instId")int instId);
 	
 	int updateUserAcctId(@Param("userId")int userId, @Param("userAcctId")int userAcctId, @Param("instId")int instId);
+
+	int deleteByStaffId(@Param("staffId")int staffId);
 }

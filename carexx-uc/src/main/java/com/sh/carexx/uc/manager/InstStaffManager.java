@@ -268,4 +268,18 @@ public class InstStaffManager {
 		this.smsManager.checkSmsVerifyCode(mobile, verifyCode);
 		this.instStaffService.updateMobileById(id, mobile);
 	}
+
+	/**
+	 *
+	 * delete:(员工信息刪除). <br/>
+	 *
+	 * @author csc
+	 * @param id
+	 * @throws BizException
+	 * @since JDK 1.8
+	 */
+	public void delete(Integer id) throws BizException {
+		this.instStaffService.delete(id);
+		this.userOAuthService.deleteByStaffId(id);
+	}
 }

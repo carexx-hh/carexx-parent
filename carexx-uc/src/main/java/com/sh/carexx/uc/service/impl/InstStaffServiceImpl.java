@@ -38,9 +38,7 @@ public class InstStaffServiceImpl implements InstStaffService {
 
 	@Override
 	public InstStaff getById(Integer id) {
-
 		return this.instStaffMapper.selectById(id);
-
 	}
 
 
