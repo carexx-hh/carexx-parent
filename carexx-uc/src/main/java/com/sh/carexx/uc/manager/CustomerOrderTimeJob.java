@@ -1,11 +1,11 @@
 package com.sh.carexx.uc.manager;
 
 import com.sh.carexx.common.exception.BizException;
+import com.sh.carexx.common.util.SpringUtil;
 import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
@@ -18,11 +18,10 @@ public class CustomerOrderTimeJob implements Job {
 
     private Logger log = Logger.getLogger(CustomerOrderTimeJob.class);
 
-    @Autowired
-    private CustomerOrderManager customerOrderManager;
-
-    @Autowired
-    private CustomerOrderScheduleManager customerOrderScheduleManager;
+//    @Autowired
+//    private CustomerOrderManager customerOrderManager;
+//    @Autowired
+//    private CustomerOrderScheduleManager customerOrderScheduleManager;
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -30,8 +29,10 @@ public class CustomerOrderTimeJob implements Job {
         try {
             log.info("getMergedJobDataMap:" + context.getMergedJobDataMap());
             log.info("instId:" + context.getMergedJobDataMap().getInt("instId"));
-            this.customerOrderScheduleManager.timingShedule(context.getMergedJobDataMap().getInt("instId"));
-            this.customerOrderManager.modifyOrderAmtAndHoliday(context.getMergedJobDataMap().getInt("instId"));
+            CustomerOrderScheduleManager customerOrderScheduleManager = (CustomerOrderScheduleManager) SpringUtil.getBean("customerOrderScheduleManager");
+            CustomerOrderManager customerOrderManager = (CustomerOrderManager) SpringUtil.getBean("customerOrderManager");
+            customerOrderScheduleManager.timingShedule(context.getMergedJobDataMap().getInt("instId"));
+            customerOrderManager.modifyOrderAmtAndHoliday(context.getMergedJobDataMap().getInt("instId"));
         } catch (BizException e) {
             e.printStackTrace();
         }

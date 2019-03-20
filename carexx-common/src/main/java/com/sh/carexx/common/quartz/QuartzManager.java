@@ -18,7 +18,7 @@ public class QuartzManager {
     private SchedulerFactory sf = new StdSchedulerFactory();
 
     /**
-     * @Description: 设置起始时间和结束时间,间隔时间  进行定时任务
+     * @Description: 设置起始时间和结束时间, 间隔时间  进行定时任务
      * @Author: csc
      * @param: jobName 任务名
      * @param: jobGroupName 组名
