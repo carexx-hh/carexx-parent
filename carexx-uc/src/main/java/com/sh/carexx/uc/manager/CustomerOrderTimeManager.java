@@ -83,6 +83,10 @@ public class CustomerOrderTimeManager {
     public static void main(String[] args) {
         CustomerOrderTimeJob customerOrderTimeJob = new CustomerOrderTimeJob();
         QuartzManager quartzManager = new QuartzManager();
+
+        quartzManager.deleteJob(1 + "jobName" + 1,
+                1 + "jobGroupName" + 1);
+
         quartzManager.addJobByCronExpressions(1 + "jobName" + 1,
                 1 + "jobGroupName" + 1,
                 1 + "triggerName" + 1,

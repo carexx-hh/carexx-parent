@@ -1,6 +1,7 @@
 package com.sh.carexx.uc.manager;
 
 import com.sh.carexx.common.exception.BizException;
+import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -15,6 +16,8 @@ import java.util.Date;
  */
 public class CustomerOrderTimeJob implements Job {
 
+    private Logger log = Logger.getLogger(CustomerOrderTimeJob.class);
+
     @Autowired
     private CustomerOrderManager customerOrderManager;
 
@@ -23,16 +26,17 @@ public class CustomerOrderTimeJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        System.out.println("定时任务开始");
+        log.info("定时任务开始");
         try {
+            log.info("getMergedJobDataMap:" + context.getMergedJobDataMap());
+            log.info("instId:" + context.getMergedJobDataMap().getInt("instId"));
             this.customerOrderScheduleManager.timingShedule(context.getMergedJobDataMap().getInt("instId"));
             this.customerOrderManager.modifyOrderAmtAndHoliday(context.getMergedJobDataMap().getInt("instId"));
         } catch (BizException e) {
             e.printStackTrace();
         }
-        System.out.println(context.getMergedJobDataMap().getInt("instId"));
-        System.out.println("定时任务结束");
-        System.out.println(new Date());
+        log.info("定时任务结束");
+        log.info(new Date());
     }
 
 }
