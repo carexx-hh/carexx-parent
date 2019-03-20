@@ -43,7 +43,7 @@ public class CustomerOrderTimeManager {
                 customerOrderTimeFormBean.getInstId() + "triggerName" + customerOrderTimeFormBean.getJobType(),
                 customerOrderTimeFormBean.getInstId() + "triggerGroupName" + customerOrderTimeFormBean.getJobType(),
                 customerOrderTimeJob,
-                "0 0 " + customerOrderTimeFormBean.getStartTime().split(":")[0] + "," + customerOrderTimeFormBean.getEndTime().split(":")[0] + " * * ? *",
+                "0 0 " + customerOrderTimeFormBean.getStartTime().split(":")[0] + " * * ? *",
                 new Date(), null,
                 customerOrderTimeFormBean.getInstId(), customerOrderTimeFormBean.getJobType());
         this.customerOrderTimeService.save(customerOrderTime);
@@ -75,7 +75,7 @@ public class CustomerOrderTimeManager {
                 customerOrderTimeFormBean.getInstId() + "triggerName" + customerOrderTimeFormBean.getJobType(),
                 customerOrderTimeFormBean.getInstId() + "triggerGroupName" + customerOrderTimeFormBean.getJobType(),
                 customerOrderTimeJob,
-                "0 0 " + customerOrderTimeFormBean.getStartTime().split(":")[0] + "," + customerOrderTimeFormBean.getEndTime().split(":")[0] + " * * ? *",
+                "0 0 " + customerOrderTimeFormBean.getStartTime().split(":")[0] + " * * ? *",
 //                "0 * * * * ?",
                 new Date(), null,
                 customerOrderTimeFormBean.getInstId(), customerOrderTimeFormBean.getJobType());
