@@ -1,15 +1,14 @@
 package com.sh.carexx.mapp.controller;
 
-import javax.validation.Valid;
-
+import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
+import com.sh.carexx.common.CarexxConstant;
+import com.sh.carexx.common.web.BasicRetVal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sh.carexx.bean.order.MappCustomerOrderScheduleFormBean;
-import com.sh.carexx.common.CarexxConstant;
-import com.sh.carexx.common.web.BasicRetVal;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/customerorderschedule")
@@ -28,6 +27,16 @@ public class CustomerOrderScheduleController extends BaseController {
 		}
 		mappCustomerOrderScheduleFormBean.setUserId(this.getCurrentUserOAuth().getUserAcctId());
 		return this.ucServiceClient.mappAddCustomerOrderSchedule(mappCustomerOrderScheduleFormBean);
+	}
+
+	@RequestMapping("/mapp_add_again")
+	public BasicRetVal mappAddAgain(@Valid MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean,
+							   BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
+		}
+		mappCustomerOrderScheduleFormBean.setUserId(this.getCurrentUserOAuth().getUserAcctId());
+		return this.ucServiceClient.mappAddAgainCustomerOrderSchedule(mappCustomerOrderScheduleFormBean);
 	}
 
 	@RequestMapping(value = "/accept_schedule/{orderNo}")

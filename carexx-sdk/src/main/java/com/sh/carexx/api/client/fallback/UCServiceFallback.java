@@ -846,6 +846,12 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public BasicRetVal mappAddAgainCustomerOrderSchedule(
+			MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean) {
+		return null;
+	}
+
+	@Override
 	public BasicRetVal acceptSchedule(String orderNo) {
 		return null;
 	}
