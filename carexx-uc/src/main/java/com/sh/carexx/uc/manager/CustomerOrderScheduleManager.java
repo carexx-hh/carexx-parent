@@ -55,6 +55,8 @@ public class CustomerOrderScheduleManager {
     private UserMsgManager userMsgManager;
     @Autowired
     private CustomerOrderTimeService customerOrderTimeService;
+    @Autowired
+    private OrderPaymentManager orderPaymentManager;
 
     /**
      * add:(添加排班，拆分日期). <br/>
@@ -657,6 +659,7 @@ public class CustomerOrderScheduleManager {
         customerOrder.setHoliday(customerOrderManager.holidayCount(customerOrder.getInstId(), customerOrder.getServiceStartTime(),
                 customerOrderSchedule.getServiceEndTime()));
         this.customerOrderService.updateOrderAmtAndHoliday(customerOrder);
+        this.orderPaymentManager.modifyPayAmt(customerOrder);
 
         //将userId存入订单operatorId中供消息通知使用
         customerOrder.setOperatorId(mappCustomerOrderScheduleFormBean.getUserId());
