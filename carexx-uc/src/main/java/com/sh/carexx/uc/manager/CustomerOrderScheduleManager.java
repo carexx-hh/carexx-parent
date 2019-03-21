@@ -14,6 +14,7 @@ import com.sh.carexx.common.util.DateUtils;
 import com.sh.carexx.common.util.ValidUtils;
 import com.sh.carexx.model.uc.*;
 import com.sh.carexx.uc.service.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -37,6 +38,9 @@ import java.util.List;
  */
 @Service
 public class CustomerOrderScheduleManager {
+
+    private Logger log = Logger.getLogger(CustomerOrderScheduleManager.class);
+
     @Autowired
     private CustomerOrderScheduleService customerOrderScheduleService;
     @Autowired
@@ -658,6 +662,7 @@ public class CustomerOrderScheduleManager {
                 customerOrder.getServiceStartTime(), customerOrderSchedule.getServiceEndTime()));
         customerOrder.setHoliday(customerOrderManager.holidayCount(customerOrder.getInstId(), customerOrder.getServiceStartTime(),
                 customerOrderSchedule.getServiceEndTime()));
+        log.info(customerOrder.toString());
         this.customerOrderService.updateOrderAmtAndHoliday(customerOrder);
         this.orderPaymentManager.modifyPayAmt(customerOrder);
 

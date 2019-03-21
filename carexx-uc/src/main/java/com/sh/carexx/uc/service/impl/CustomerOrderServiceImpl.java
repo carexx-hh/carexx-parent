@@ -16,6 +16,7 @@ import com.sh.carexx.uc.dao.CustomerOrderMapper;
 import com.sh.carexx.uc.dao.CustomerOrderTimeMapper;
 import com.sh.carexx.uc.service.CustomerOrderService;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,8 @@ import java.util.*;
 
 @Service
 public class CustomerOrderServiceImpl implements CustomerOrderService {
+
+    private Logger log = Logger.getLogger(CustomerOrderServiceImpl.class);
 
     @Autowired
     private CustomerOrderMapper customerOrderMapper;
@@ -595,9 +598,11 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
         try {
             rows = this.customerOrderMapper.updateOrderAmtAndHoliday(customerOrder);
         } catch (Exception e) {
+            log.info(1111 + "updateOrderAmtAndHoliday");
             throw new BizException(ErrorCode.DB_ERROR, e);
         }
         if (rows != 1) {
+            log.info(2222 + "updateOrderAmtAndHoliday");
             throw new BizException(ErrorCode.DB_ERROR);
         }
     }

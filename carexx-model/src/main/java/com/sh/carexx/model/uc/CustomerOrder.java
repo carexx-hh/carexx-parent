@@ -264,4 +264,35 @@ public class CustomerOrder {
 		this.modifyTime = modifyTime;
 	}
 
+	@Override
+	public String toString() {
+		return "CustomerOrder{" +
+				"id=" + id +
+				", orderType=" + orderType +
+				", serviceAddress=" + serviceAddress +
+				", userId=" + userId +
+				", customerId=" + customerId +
+				", phone='" + phone + '\'' +
+				", instId=" + instId +
+				", serviceId=" + serviceId +
+				", orderNo='" + orderNo + '\'' +
+				", orderAmt=" + orderAmt +
+				", adjustAmt=" + adjustAmt +
+				", inpatientAreaId=" + inpatientAreaId +
+				", accurateAddress='" + accurateAddress + '\'' +
+				", serviceStartTime=" + serviceStartTime +
+				", serviceEndTime=" + serviceEndTime +
+				", holiday=" + holiday +
+				", orderStatus=" + orderStatus +
+				", operatorId=" + operatorId +
+				", orderRemark='" + orderRemark + '\'' +
+				", instSysId=" + instSysId +
+				", proofType=" + proofType +
+				", receiptNo='" + receiptNo + '\'' +
+				", invoiceNo='" + invoiceNo + '\'' +
+				", signingPerson='" + signingPerson + '\'' +
+				", createTime=" + createTime +
+				", modifyTime=" + modifyTime +
+				'}';
+	}
 }
