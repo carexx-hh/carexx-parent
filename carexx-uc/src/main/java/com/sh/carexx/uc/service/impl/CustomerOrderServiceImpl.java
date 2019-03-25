@@ -598,11 +598,9 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
         try {
             rows = this.customerOrderMapper.updateOrderAmtAndHoliday(customerOrder);
         } catch (Exception e) {
-            log.info(1111 + "updateOrderAmtAndHoliday");
             throw new BizException(ErrorCode.DB_ERROR, e);
         }
         if (rows != 1) {
-            log.info(2222 + "updateOrderAmtAndHoliday");
             throw new BizException(ErrorCode.DB_ERROR);
         }
     }
@@ -629,15 +627,15 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
     public void updateOperatorId(CustomerOrder customerOrder) throws BizException {
         int rows = 0;
         try {
-            log.info(customerOrder.getOrderNo()+":orderNo");
+            log.info("操作人id:" + customerOrder.getOperatorId());
+            log.info("orderNo:" + customerOrder.getOrderNo());
             rows = this.customerOrderMapper.updateOperatorId(customerOrder);
+            log.info("rows:" + rows);
         } catch (Exception e) {
-            log.info(e);
-            log.info(44444);
             throw new BizException(ErrorCode.DB_ERROR, e);
         }
         if (rows != 1) {
-            log.info(55555);
+            log.info("rows:" + rows);
             throw new BizException(ErrorCode.DB_ERROR);
         }
     }
