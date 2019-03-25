@@ -424,8 +424,7 @@
 		<if test="orderStatus != null and orderStatus > 0">
 			AND co.order_status IN (#{orderStatus,jdbcType=VARCHAR})
 		</if>
-		AND (cos.service_status = 1 AND co.order_status = 4)
-		OR (cos.service_status = 3 AND co.order_status = 1)
+		AND ((cos.service_status = 1 AND co.order_status = 4) OR (cos.service_status = 3 AND co.order_status = 1))
 		AND co.inst_id = #{instId,jdbcType=INTEGER}
 		<if test="serviceStaffId != null and serviceStaffId > 0">
 			AND cos.service_staff_id = #{serviceStaffId,jdbcType=INTEGER}
