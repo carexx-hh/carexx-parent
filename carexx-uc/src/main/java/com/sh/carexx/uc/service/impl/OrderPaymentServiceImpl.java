@@ -1,5 +1,6 @@
 package com.sh.carexx.uc.service.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,8 @@ import com.sh.carexx.uc.service.OrderPaymentService;
 
 @Service
 public class OrderPaymentServiceImpl implements OrderPaymentService {
+
+	private Logger log = Logger.getLogger(OrderPaymentServiceImpl.class);
 
 	@Autowired
 	public OrderPaymentMapper orderPaymentMapper;
@@ -44,8 +47,11 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
 	@Override
 	public void updatePayAmt(OrderPayment orderPayment) throws BizException {
 		try {
+			log.info("getPayAmt"+orderPayment.getPayAmt());
+			log.info("getOrderNo"+orderPayment.getOrderNo());
 			this.orderPaymentMapper.updatePayAmt(orderPayment);
 		} catch (Exception e) {
+			log.info(3333);
 			throw new BizException(ErrorCode.DB_ERROR, e);
 		}
 	}
