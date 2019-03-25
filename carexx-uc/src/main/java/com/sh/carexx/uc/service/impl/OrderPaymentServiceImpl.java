@@ -52,6 +52,7 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
 			this.orderPaymentMapper.updatePayAmt(orderPayment);
 		} catch (Exception e) {
 			log.info(3333);
+			log.info(e);
 			throw new BizException(ErrorCode.DB_ERROR, e);
 		}
 	}
