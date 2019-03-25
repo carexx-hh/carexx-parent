@@ -307,6 +307,16 @@ public interface CustomerOrderMapper {
     int updateOrderAmtAndHoliday(CustomerOrder customerOrder);
 
     /**
+     * updateOperatorIdAndOrderAmtAndHoliday:(修改操作人,订单金额和节假日天数). <br/>
+     *
+     * @param customerOrder
+     * @return
+     * @author csc
+     * @since JDK 1.8
+     */
+    int updateOperatorIdAndOrderAmtAndHoliday(CustomerOrder customerOrder);
+
+    /**
      * updateServiceEndTime:(修改订单结束时间). <br/>
      *
      * @param customerOrder

@@ -334,7 +334,8 @@
 			(
 				SELECT
 					cos.service_staff_id id,
-					count(*) patientNum
+					count(DISTINCT cos.order_no) patientNum
+-- 					count(*) patientNum
 				FROM
 					carexx_customer_order_schedule cos
 				JOIN carexx_inst_staff cis ON cos.service_staff_id = cis.id
@@ -352,8 +353,8 @@
 					cos.service_start_time <![CDATA[<=]]> #{currentTime,jdbcType=TIMESTAMP}
 					AND cos.service_end_time <![CDATA[>]]> #{currentTime,jdbcType=TIMESTAMP}
 				)
-				GROUP BY
-					cos.order_no
+-- 				GROUP BY
+-- 					cos.order_no
 				ORDER BY
 					ciswt.work_type_id, patientNum DESC
 			) cos

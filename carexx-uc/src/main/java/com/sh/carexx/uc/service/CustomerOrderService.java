@@ -321,6 +321,17 @@ public interface CustomerOrderService {
 
 	/**
 	 *
+	 * updateOperatorIdAndOrderAmtAndHoliday:(修改操作人,订单金额和节假日天数). <br/>
+	 *
+	 * @author hetao
+	 * @param customerOrder
+	 * @return
+	 * @since JDK 1.8
+	 */
+	void updateOperatorIdAndOrderAmtAndHoliday(CustomerOrder customerOrder) throws BizException;
+
+	/**
+	 *
 	 * updateServiceEndTime:(修改订单结束时间). <br/>
 	 *
 	 * @author hetao

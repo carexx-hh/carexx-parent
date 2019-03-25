@@ -1081,6 +1081,18 @@
 	  		order_no = #{orderNo,jdbcType=VARCHAR}
 	</update>
 
+	<update id="updateOperatorIdAndOrderAmtAndHoliday" parameterType="com.sh.carexx.model.uc.CustomerOrder">
+		update
+			carexx_customer_order
+		set
+			order_amt = #{orderAmt,jdbcType=DECIMAL},
+			holiday = #{holiday,jdbcType=DECIMAL},
+			operator_id = #{operatorId,jdbcType=INTEGER},
+			modify_time = now()
+	  	where
+	  		order_no = #{orderNo,jdbcType=VARCHAR}
+	</update>
+
 	<update id="updateServiceEndTime" parameterType="com.sh.carexx.model.uc.CustomerOrder">
 		update
 			carexx_customer_order

@@ -663,12 +663,13 @@ public class CustomerOrderScheduleManager {
         customerOrder.setHoliday(customerOrderManager.holidayCount(customerOrder.getInstId(), customerOrder.getServiceStartTime(),
                 customerOrderSchedule.getServiceEndTime()));
         log.info(customerOrder.toString());
-        this.customerOrderService.updateOrderAmtAndHoliday(customerOrder);
+//        this.customerOrderService.updateOrderAmtAndHoliday(customerOrder);
         this.orderPaymentManager.modifyPayAmt(customerOrder);
 
         //将userId存入订单operatorId中供消息通知使用
         customerOrder.setOperatorId(mappCustomerOrderScheduleFormBean.getUserId());
-        this.customerOrderService.updateOperatorId(customerOrder);
+//        this.customerOrderService.updateOperatorId(customerOrder);
+        this.customerOrderService.updateOperatorIdAndOrderAmtAndHoliday(customerOrder);
     }
 
     /**
