@@ -1095,7 +1095,7 @@
 		update
 			carexx_customer_order
 		set
-			operator_id = #{operatorId,jdbcType=TIMESTAMP},
+			operator_id = #{operatorId,jdbcType=INTEGER},
 			modify_time = now()
 	  	where
 	  		order_no = #{orderNo,jdbcType=VARCHAR}
