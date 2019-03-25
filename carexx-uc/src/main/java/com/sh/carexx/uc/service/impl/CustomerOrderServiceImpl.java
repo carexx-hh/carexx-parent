@@ -629,11 +629,15 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
     public void updateOperatorId(CustomerOrder customerOrder) throws BizException {
         int rows = 0;
         try {
+            log.info(customerOrder.getOrderNo()+":orderNo");
             rows = this.customerOrderMapper.updateOperatorId(customerOrder);
         } catch (Exception e) {
+            log.info(e);
+            log.info(44444);
             throw new BizException(ErrorCode.DB_ERROR, e);
         }
         if (rows != 1) {
+            log.info(55555);
             throw new BizException(ErrorCode.DB_ERROR);
         }
     }

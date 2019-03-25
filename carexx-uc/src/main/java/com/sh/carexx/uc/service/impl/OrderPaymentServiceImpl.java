@@ -47,12 +47,8 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
 	@Override
 	public void updatePayAmt(OrderPayment orderPayment) throws BizException {
 		try {
-			log.info("getPayAmt"+orderPayment.getPayAmt());
-			log.info("getOrderNo"+orderPayment.getOrderNo());
 			this.orderPaymentMapper.updatePayAmt(orderPayment);
 		} catch (Exception e) {
-			log.info(3333);
-			log.info(e);
 			throw new BizException(ErrorCode.DB_ERROR, e);
 		}
 	}
