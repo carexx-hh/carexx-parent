@@ -76,9 +76,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(authInterceptor()).addPathPatterns("/**").excludePathPatterns("/auth/**")
-				.excludePathPatterns("/callback/**").excludePathPatterns("/sms/send_verify_code_nurse/{mobile}")
-				.excludePathPatterns("/repository/**")
-				.excludePathPatterns("/repository/previewRepository/{id}");
+				.excludePathPatterns("/callback/**")
+				.excludePathPatterns("/sms/send_verify_code_nurse/{mobile}");
 		super.addInterceptors(registry);
 	}
 }

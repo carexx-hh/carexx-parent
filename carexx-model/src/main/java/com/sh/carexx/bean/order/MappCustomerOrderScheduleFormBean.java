@@ -1,13 +1,12 @@
 package com.sh.carexx.bean.order;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
+import com.sh.carexx.bean.BasicFormBean;
+import com.sh.carexx.common.CarexxConstant;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.sh.carexx.bean.BasicFormBean;
-import com.sh.carexx.common.CarexxConstant;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class MappCustomerOrderScheduleFormBean extends BasicFormBean {
 
@@ -26,7 +25,19 @@ public class MappCustomerOrderScheduleFormBean extends BasicFormBean {
 	private String scheduleRemark;
 
 	private Integer userId;
-	
+
+	@NotBlank
+	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
+	private Integer schedulingType;//排班状态 0是当前排班 1是新增一条排班
+
+	public Integer getSchedulingType() {
+		return schedulingType;
+	}
+
+	public void setSchedulingType(Integer schedulingType) {
+		this.schedulingType = schedulingType;
+	}
+
 	public String getOrderNo() {
 		return orderNo;
 	}

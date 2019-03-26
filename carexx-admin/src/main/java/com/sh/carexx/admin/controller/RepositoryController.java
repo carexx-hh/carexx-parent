@@ -1,4 +1,4 @@
-package com.sh.carexx.mapp.controller;
+package com.sh.carexx.admin.controller;
 
 import com.sh.carexx.bean.repository.RepositoryBean;
 import org.springframework.web.bind.annotation.PathVariable;
