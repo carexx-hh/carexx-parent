@@ -26,13 +26,13 @@ public class MappCustomerOrderScheduleFormBean extends BasicFormBean {
 
 	private Integer userId;
 
-	private int schedulingType;//排班状态 0是当前排班 1是新增一条排班
+	private Integer schedulingType;//排班状态 0是当前排班 1是新增一条排班
 
-	public int getSchedulingType() {
+	public Integer getSchedulingType() {
 		return schedulingType;
 	}
 
-	public void setSchedulingType(int schedulingType) {
+	public void setSchedulingType(Integer schedulingType) {
 		this.schedulingType = schedulingType;
 	}
 
