@@ -101,4 +101,16 @@ public interface OrderSettleService {
 	List<Map<?,?>> queryOrderSettleCount(WorkQuantityReportFormBean workQuantityReportFormBean);
 	
 	void deleteMappOrderSettle(Long scheduleId) throws BizException;
+
+	/**
+	 *
+	 * updateStaffIdByScheduleId:(根据scheduleId修改护工). <br/>
+	 *
+	 * @author csc
+	 * @param scheduleId
+	 * @param staffId
+	 * @return
+	 * @since JDK 1.8
+	 */
+	void updateStaffIdByScheduleId(Long scheduleId, Integer staffId) throws BizException;
 }

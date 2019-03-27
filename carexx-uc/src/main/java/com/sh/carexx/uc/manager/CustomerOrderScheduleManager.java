@@ -666,16 +666,18 @@ public class CustomerOrderScheduleManager {
             customerOrder.setHoliday(customerOrderManager.holidayCount(customerOrder.getInstId(), customerOrder.getServiceStartTime(),
                     customerOrderSchedule.getServiceEndTime()));
             log.info(customerOrder.toString());
-//        this.customerOrderService.updateOrderAmtAndHoliday(customerOrder);
             this.orderPaymentManager.modifyPayAmt(customerOrder);
 
             //将userId存入订单operatorId中供消息通知使用
             customerOrder.setOperatorId(mappCustomerOrderScheduleFormBean.getUserId());
-//        this.customerOrderService.updateOperatorId(customerOrder);
             this.customerOrderService.updateOperatorIdAndOrderAmtAndHoliday(customerOrder);
         } else {
             //更改当前班次的护工
-
+            //获取当前的排班信息
+            CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.selectOrderSchedulePresent(mappCustomerOrderScheduleFormBean.getOrderNo());
+            //修改当前班次的护工
+            this.customerOrderScheduleService.updateStaffIdPresentById(customerOrderSchedule.getId(), mappCustomerOrderScheduleFormBean.getServiceStaffId());
+            this.orderSettleService.updateStaffIdByScheduleId(customerOrderSchedule.getId(), mappCustomerOrderScheduleFormBean.getServiceStaffId());
         }
     }
 

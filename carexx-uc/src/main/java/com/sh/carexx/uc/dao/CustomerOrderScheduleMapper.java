@@ -9,166 +9,171 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * ClassName: CustomerOrderScheduleMapper <br/> 
- * Function: 订单排班 <br/> 
- * Date: 2018年5月25日 上午11:49:18 <br/> 
- * 
- * @author hetao 
+ * ClassName: CustomerOrderScheduleMapper <br/>
+ * Function: 订单排班 <br/>
+ * Date: 2018年5月25日 上午11:49:18 <br/>
+ *
+ * @author hetao
  * @since JDK 1.8
  */
 public interface CustomerOrderScheduleMapper {
 
-	/**
-	 * 
-	 * insert:(添加排班). <br/>
-	 * 
-	 * @author hetao
-	 * @param customerOrderSchedule
-	 * @return
-	 * @since JDK 1.8
-	 */
-	int insert(CustomerOrderSchedule customerOrderSchedule);
+    /**
+     * insert:(添加排班). <br/>
+     *
+     * @param customerOrderSchedule
+     * @return
+     * @author hetao
+     * @since JDK 1.8
+     */
+    int insert(CustomerOrderSchedule customerOrderSchedule);
 
-	/**
-	 * 
-	 * selectCustomerOrderSchedule:(查询所有排班). <br/>
-	 * 
-	 * @author hetao
-	 * @return
-	 * @since JDK 1.8
-	 */
-	List<Map<?, ?>> selectCustomerOrderSchedule();
-	
-	/**
-	 * 
-	 * selectById:(通过主键查询). <br/> 
-	 * 
-	 * @author hetao 
-	 * @param id
-	 * @return 
-	 * @since JDK 1.8
-	 */
-	CustomerOrderSchedule selectById(Long id);
+    /**
+     * selectCustomerOrderSchedule:(查询所有排班). <br/>
+     *
+     * @return
+     * @author hetao
+     * @since JDK 1.8
+     */
+    List<Map<?, ?>> selectCustomerOrderSchedule();
 
-	/**
-	 *
-	 * selectByOrderNo:(通过订单编号查询最近排班). <br/>
-	 *
-	 * @author zhoulei
-	 * @param orderNo
-	 * @return
-	 * @since JDK 1.8
-	 */
-	CustomerOrderSchedule selectNearByOrderNo(String orderNo);
-	
-	/**
-	 * 
-	 * selectByOrderNo:(通过订单编号查询). <br/>
-	 * 
-	 * @author zhoulei
-	 * @param orderNo
-	 * @return
-	 * @since JDK 1.8
-	 */
-	List<CustomerOrderSchedule> selectByOrderNo(String orderNo);
+    /**
+     * selectById:(通过主键查询). <br/>
+     *
+     * @param id
+     * @return
+     * @author hetao
+     * @since JDK 1.8
+     */
+    CustomerOrderSchedule selectById(Long id);
 
-	/**
-	 * 
-	 * selectOrderScheduleStaff:(通过订单号查排班). <br/>
-	 * 
-	 * @author hetao
-	 * @param orderNo
-	 * @return
-	 * @since JDK 1.8
-	 */
-	List<Map<?, ?>> selectScheduleByOrderNo(String orderNo);
+    /**
+     * selectByOrderNo:(通过订单编号查询最近排班). <br/>
+     *
+     * @param orderNo
+     * @return
+     * @author zhoulei
+     * @since JDK 1.8
+     */
+    CustomerOrderSchedule selectNearByOrderNo(String orderNo);
 
-	/**
-	 * 
-	 * selectScheduleByStaffId:(通过订单号和人员Id查询排班). <br/> 
-	 * 
-	 * @author zhoulei 
-	 * @param orderNo
-	 * @param StaffId
-	 * @return 
-	 * @since JDK 1.8
-	 */
-	List<Map<?, ?>> selectScheduleByStaffId(String orderNo, String StaffId);
-	/**
-	 * 
-	 * selectByExist:(添加排班时查询是否已排班). <br/>
-	 * 
-	 * @author hetao
-	 * @param orderNo
-	 * @param serviceStartTime
-	 * @param serviceEndTime
-	 * @return
-	 * @since JDK 1.8
-	 */
-	List<CustomerOrderSchedule> selectByExistence(@Param("orderNo") String orderNo,
-			@Param("serviceStartTime") Date serviceStartTime, @Param("serviceEndTime") Date serviceEndTime);
+    /**
+     * selectByOrderNo:(通过订单编号查询). <br/>
+     *
+     * @param orderNo
+     * @return
+     * @author zhoulei
+     * @since JDK 1.8
+     */
+    List<CustomerOrderSchedule> selectByOrderNo(String orderNo);
 
-	/**
-	 *
-	 * updateSchedule:(合并排班,修改排班信息). <br/>
-	 *
-	 * @author hetao
-	 * @return
-	 * @since JDK 1.8
-	 */
-	int updateSchedule(CustomerOrderSchedule customerOrderSchedule);
-	/**
-	 * 
-	 * updateStatus:(修改排班状态). <br/>
-	 * 
-	 * @author hetao
-	 * @return
-	 * @since JDK 1.8
-	 */
-	int updateStatus(@Param("id") Long id, @Param("srcStatus") Byte srcStatus, @Param("targetStatus") Byte targetStatus);
-	
-	/**
-	 * 
-	 * updateOrderScheduleCancel:(取消订单时同时删除排班). <br/> 
-	 * 
-	 * @author hetao
-	 * @param targetStatus
-	 * @return 
-	 * @since JDK 1.8
-	 */
-	int deleteOrderSchedule(@Param("id") Long id, @Param("targetStatus") Byte targetStatus);
-	
-	/**
-	 * 
-	 * selectByTimeBefore:(通过时间查询排班). <br/> 
-	 * 
-	 * @author hetao
-	 * @return 
-	 * @since JDK 1.8
-	 */
-	List<CustomerOrderSchedule> selectByTime(@Param("recentlySettleDate") Date recentlySettleDate, @Param("settleDate") Date settleDate,@Param("srcStatus") Byte srcStatus,@Param("instId")Integer instId);
-	
-	/**
-	 * 
-	 * selectWorkQuantityReport:(工量结算报表). <br/> 
-	 * 
-	 * @author hetao 
-	 * @param workQuantityReportFormBean
-	 * @return 
-	 * @since JDK 1.8
-	 */
-	List<Map<?,?>> selectWorkQuantityReport(WorkQuantityReportFormBean workQuantityReportFormBean);
-	
-	int deleteMappOrderSchedule(Long id);
+    /**
+     * selectOrderScheduleStaff:(通过订单号查排班). <br/>
+     *
+     * @param orderNo
+     * @return
+     * @author hetao
+     * @since JDK 1.8
+     */
+    List<Map<?, ?>> selectScheduleByOrderNo(String orderNo);
 
-	/**
-	 *
-	 * selectCustomerOrderSchedule:我的收入 订单统计
-	 *
-	 * @author chenshichao
-	 * @return
-	 * @since JDK 1.8
-	 */
-	Map<?, ?> selectOrderScheduleStatistics(@Param("staffId") Integer staffId,@Param("serviceEndTime") String serviceEndTime);
+    /**
+     * selectScheduleByStaffId:(通过订单号和人员Id查询排班). <br/>
+     *
+     * @param orderNo
+     * @param StaffId
+     * @return
+     * @author zhoulei
+     * @since JDK 1.8
+     */
+    List<Map<?, ?>> selectScheduleByStaffId(String orderNo, String StaffId);
+
+    /**
+     * selectByExist:(添加排班时查询是否已排班). <br/>
+     *
+     * @param orderNo
+     * @param serviceStartTime
+     * @param serviceEndTime
+     * @return
+     * @author hetao
+     * @since JDK 1.8
+     */
+    List<CustomerOrderSchedule> selectByExistence(@Param("orderNo") String orderNo,
+                                                  @Param("serviceStartTime") Date serviceStartTime, @Param("serviceEndTime") Date serviceEndTime);
+
+    /**
+     * updateSchedule:(合并排班,修改排班信息). <br/>
+     *
+     * @return
+     * @author hetao
+     * @since JDK 1.8
+     */
+    int updateSchedule(CustomerOrderSchedule customerOrderSchedule);
+
+    /**
+     * updateStatus:(修改排班状态). <br/>
+     *
+     * @return
+     * @author hetao
+     * @since JDK 1.8
+     */
+    int updateStatus(@Param("id") Long id, @Param("srcStatus") Byte srcStatus, @Param("targetStatus") Byte targetStatus);
+
+    /**
+     * updateOrderScheduleCancel:(取消订单时同时删除排班). <br/>
+     *
+     * @param targetStatus
+     * @return
+     * @author hetao
+     * @since JDK 1.8
+     */
+    int deleteOrderSchedule(@Param("id") Long id, @Param("targetStatus") Byte targetStatus);
+
+    /**
+     * selectByTimeBefore:(通过时间查询排班). <br/>
+     *
+     * @return
+     * @author hetao
+     * @since JDK 1.8
+     */
+    List<CustomerOrderSchedule> selectByTime(@Param("recentlySettleDate") Date recentlySettleDate, @Param("settleDate") Date settleDate, @Param("srcStatus") Byte srcStatus, @Param("instId") Integer instId);
+
+    /**
+     * selectWorkQuantityReport:(工量结算报表). <br/>
+     *
+     * @param workQuantityReportFormBean
+     * @return
+     * @author hetao
+     * @since JDK 1.8
+     */
+    List<Map<?, ?>> selectWorkQuantityReport(WorkQuantityReportFormBean workQuantityReportFormBean);
+
+    int deleteMappOrderSchedule(Long id);
+
+    /**
+     * selectCustomerOrderSchedule:我的收入 订单统计
+     *
+     * @return
+     * @author chenshichao
+     * @since JDK 1.8
+     */
+    Map<?, ?> selectOrderScheduleStatistics(@Param("staffId") Integer staffId, @Param("serviceEndTime") String serviceEndTime);
+
+    /**
+     * selectOrderSchedulePresent:(获取当前时间的排班信息). <br/>
+     *
+     * @return
+     * @author csc
+     * @since JDK 1.8
+     */
+    CustomerOrderSchedule selectOrderSchedulePresent(@Param("orderNo") String orderNo);
+
+    /**
+     * updateStaffIdPresentById:(更改当前班次的护工). <br/>
+     *
+     * @return
+     * @author csc
+     * @since JDK 1.8
+     */
+    int updateStaffIdPresentById(@Param("id") Long id, @Param("serviceStaffId") Integer serviceStaffId);
 }

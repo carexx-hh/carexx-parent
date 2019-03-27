@@ -167,4 +167,22 @@ public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleSe
         return this.customerOrderScheduleMapper.selectOrderScheduleStatistics(staffId, serviceEndTime);
     }
 
+    @Override
+    public CustomerOrderSchedule selectOrderSchedulePresent(String orderNo) {
+        return this.customerOrderScheduleMapper.selectOrderSchedulePresent(orderNo);
+    }
+
+    @Override
+    public void updateStaffIdPresentById(Long id, Integer serviceStaffId) throws BizException {
+        int rows = 0;
+        try {
+            rows = this.customerOrderScheduleMapper.updateStaffIdPresentById(id, serviceStaffId);
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.DB_ERROR, e);
+        }
+        if (rows != 1) {
+            throw new BizException(ErrorCode.DB_ERROR);
+        }
+    }
+
 }

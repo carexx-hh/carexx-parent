@@ -130,4 +130,15 @@ public interface OrderSettleMapper {
 	 * @since JDK 1.8
 	 */
 	int deleteMappOrderSettle(Long scheduleId);
+
+	/**
+	 *
+	 * updateStaffIdByScheduleId:(根据scheduleId修改护工). <br/>
+	 *
+	 * @author csc
+	 * @param scheduleId
+	 * @return
+	 * @since JDK 1.8
+	 */
+	int updateStaffIdByScheduleId(@Param("scheduleId") Long scheduleId, @Param("staffId") Integer staffId);
 }

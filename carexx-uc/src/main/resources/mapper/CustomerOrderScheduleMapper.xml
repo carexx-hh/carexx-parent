@@ -328,4 +328,25 @@
 		AND	cos.service_staff_id = #{staffId, jdbcType=INTEGER}
 		AND date_format(co.service_end_time,'%Y-%m') = #{serviceEndTime, jdbcType=VARCHAR}
 	</select>
+
+	<select id="selectOrderSchedulePresent" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from
+			carexx_customer_order_schedule
+		WHERE
+			order_no = #{orderNo, jdbcType=VARCHAR}
+		AND NOW( ) <![CDATA[<=]]> service_end_time
+		AND NOW( ) <![CDATA[>=]]> service_start_time
+		limit 0,1
+	</select>
+
+	<update id="updateStaffIdPresentById">
+		UPDATE
+			carexx_customer_order_schedule
+		SET
+			service_staff_id = #{serviceStaffId}
+		WHERE
+			id = #{id}
+	</update>
 </mapper>

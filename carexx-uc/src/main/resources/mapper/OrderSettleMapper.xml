@@ -165,6 +165,14 @@
 		DELETE FROM
 			carexx_order_settle
 		WHERE
-			schedule_id = #{scheduleId, jdbcType=BIGINT}
+			schedule_id = #{scheduleId}
 	</delete>
+
+	<update id="updateStaffIdByScheduleId">
+		update
+			carexx_order_settle
+		set
+			staff_id = #{staffId}
+		where schedule_id = #{scheduleId}
+	</update>
 </mapper>
