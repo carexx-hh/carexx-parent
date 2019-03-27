@@ -26,7 +26,6 @@ public class MappCustomerOrderScheduleFormBean extends BasicFormBean {
 
 	private Integer userId;
 
-	@NotBlank
 	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
 	private Integer schedulingType;//排班状态 0是当前排班 1是新增一条排班
 
