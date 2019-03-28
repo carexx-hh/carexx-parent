@@ -134,7 +134,6 @@ public class CustomerOrderScheduleController {
 	@RequestMapping(value = "/mapp_add_again", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public BasicRetVal mappAddAgain(@RequestBody MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean) {
 		try {
-			System.out.println(111);
 			this.customerOrderScheduleManager.mappAddAgain(mappCustomerOrderScheduleFormBean);
 		} catch (BizException e) {
 			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
