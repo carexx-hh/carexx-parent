@@ -183,8 +183,7 @@ public class InstStaffManager {
 	public List<Map<?, ?>> staffSchedule(CustomerOrderQueryFormBean customerOrderQueryFormBean) throws BizException {
 		String orderNo = customerOrderQueryFormBean.getOrderNo();
 		String realName = customerOrderQueryFormBean.getStaffName();
-		CustomerOrder customerOrder = new CustomerOrder();
-		customerOrder = customerOrderService.getByOrderNo(orderNo);
+		CustomerOrder customerOrder = customerOrderService.getByOrderNo(orderNo);
 		CareService careService = this.careServiceService.getById(customerOrder.getServiceId());
 		CustomerOrderSchedule customerOrderSchedule = customerOrderScheduleService.getNearByOrderNo(orderNo);
 		Integer serviceInstId = customerOrder.getInstId();

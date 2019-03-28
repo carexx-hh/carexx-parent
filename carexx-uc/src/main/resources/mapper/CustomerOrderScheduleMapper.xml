@@ -345,7 +345,8 @@
 		UPDATE
 			carexx_customer_order_schedule
 		SET
-			service_staff_id = #{serviceStaffId}
+			service_staff_id = #{serviceStaffId},
+			service_status = 3
 		WHERE
 			id = #{id}
 	</update>
