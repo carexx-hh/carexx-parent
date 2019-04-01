@@ -136,9 +136,9 @@ public interface OrderSettleMapper {
 	 * updateStaffIdByScheduleId:(根据scheduleId修改护工). <br/>
 	 *
 	 * @author csc
-	 * @param scheduleId
+	 * @param orderSettle
 	 * @return
 	 * @since JDK 1.8
 	 */
-	int updateStaffIdByScheduleId(@Param("scheduleId") Long scheduleId, @Param("staffId") Integer staffId);
+	int updateStaffIdByScheduleId(OrderSettle orderSettle);
 }
