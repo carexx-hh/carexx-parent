@@ -172,7 +172,11 @@
 		update
 			carexx_order_settle
 		set
-			staff_id = #{staffId}
+			settle_ratio = #{settleRatio},
+			staff_id = #{staffId},
+			staff_settle_amt = #{staffSettleAmt},
+			inst_settle_amt = #{instSettleAmt},
+			modify_time = now()
 		where schedule_id = #{scheduleId}
 	</update>
 </mapper>

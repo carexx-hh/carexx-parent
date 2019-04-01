@@ -123,16 +123,8 @@ public class OrderSettleServiceImpl implements OrderSettleService {
     }
 
     @Override
-    public void updateStaffIdByScheduleId(Long scheduleId, Integer staffId) throws BizException {
-        int rows = 0;
-        try {
-            rows = this.orderSettleMapper.updateStaffIdByScheduleId(scheduleId, staffId);
-        } catch (Exception e) {
-            throw new BizException(ErrorCode.DB_ERROR, e);
-        }
-        if (rows != 1) {
-            throw new BizException(ErrorCode.DB_ERROR);
-        }
+    public void updateStaffIdByScheduleId(OrderSettle orderSettle) throws BizException {
+        this.orderSettleMapper.updateStaffIdByScheduleId(orderSettle);
     }
 
 }

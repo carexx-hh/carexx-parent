@@ -677,7 +677,7 @@ public class CustomerOrderScheduleManager {
             CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.selectOrderSchedulePresent(mappCustomerOrderScheduleFormBean.getOrderNo());
             //修改当前班次的护工
             this.customerOrderScheduleService.updateStaffIdPresentById(customerOrderSchedule.getId(), mappCustomerOrderScheduleFormBean.getServiceStaffId());
-            this.orderSettleService.updateStaffIdByScheduleId(customerOrderSchedule.getId(), mappCustomerOrderScheduleFormBean.getServiceStaffId());
+            this.orderSettleManager.modify(customerOrderSchedule);
         }
     }
 
