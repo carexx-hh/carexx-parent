@@ -659,14 +659,14 @@ public class CustomerOrderScheduleManager {
             // 添加结算记录
             this.orderSettleManager.add(customerOrderSchedule);
 
-            //修改订单金额
-            customerOrder.setOrderNo(customerOrder.getOrderNo());
-            customerOrder.setOrderAmt(customerOrderManager.calcServiceFee(customerOrder.getInstId(), customerOrder.getServiceId(),
-                    customerOrder.getServiceStartTime(), customerOrderSchedule.getServiceEndTime()));
-            customerOrder.setHoliday(customerOrderManager.holidayCount(customerOrder.getInstId(), customerOrder.getServiceStartTime(),
-                    customerOrderSchedule.getServiceEndTime()));
-            log.info(customerOrder.toString());
-            this.orderPaymentManager.modifyPayAmt(customerOrder);
+//            //修改订单金额
+//            customerOrder.setOrderNo(customerOrder.getOrderNo());
+//            customerOrder.setOrderAmt(customerOrderManager.calcServiceFee(customerOrder.getInstId(), customerOrder.getServiceId(),
+//                    customerOrder.getServiceStartTime(), customerOrderSchedule.getServiceEndTime()));
+//            customerOrder.setHoliday(customerOrderManager.holidayCount(customerOrder.getInstId(), customerOrder.getServiceStartTime(),
+//                    customerOrderSchedule.getServiceEndTime()));
+//            log.info(customerOrder.toString());
+//            this.orderPaymentManager.modifyPayAmt(customerOrder);
 
             //将userId存入订单operatorId中供消息通知使用
             customerOrder.setOperatorId(mappCustomerOrderScheduleFormBean.getUserId());
@@ -677,6 +677,8 @@ public class CustomerOrderScheduleManager {
             CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.selectOrderSchedulePresent(mappCustomerOrderScheduleFormBean.getOrderNo());
             //修改当前班次的护工
             this.customerOrderScheduleService.updateStaffIdPresentById(customerOrderSchedule.getId(), mappCustomerOrderScheduleFormBean.getServiceStaffId());
+            customerOrderSchedule.setWorkTypeSettleId(mappCustomerOrderScheduleFormBean.getWorkTypeSettleId());
+            customerOrderSchedule.setServiceStaffId(mappCustomerOrderScheduleFormBean.getServiceStaffId());
             this.orderSettleManager.modify(customerOrderSchedule);
         }
     }
