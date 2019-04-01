@@ -75,13 +75,10 @@ public class OrderSettleManager {
 		BigDecimal staffSettleAmt = serviceAmt.multiply(instWorkTypeSettle.getSettleRatio());
 		BigDecimal instSettleAmt = serviceAmt.subtract(staffSettleAmt);
 
-		// 人员id
-		InstStaff instStaff = instStaffService.getById(customerOrderSchedule.getServiceStaffId());
-
 		OrderSettle orderSettle = new OrderSettle();
 		orderSettle.setScheduleId(customerOrderSchedule.getId());
 		orderSettle.setSettleRatio(instWorkTypeSettle.getSettleRatio());
-		orderSettle.setStaffId(instStaff.getId());
+		orderSettle.setStaffId(customerOrderSchedule.getServiceStaffId());
 		orderSettle.setStaffSettleAmt(staffSettleAmt);
 		orderSettle.setInstSettleAmt(instSettleAmt);
 		orderSettleService.updateStaffIdByScheduleId(orderSettle);
