@@ -80,10 +80,10 @@ public final class DateUtils {
             Date dt1 = df.parse(date1);
             Date dt2 = df.parse(date2);
             if (dt1.getTime() > dt2.getTime()) {
-                //dt1 在dt2前
+                //dt1 在dt2后
                 return 1;
             } else if (dt1.getTime() < dt2.getTime()) {
-                //dt1在dt2后
+                //dt1在dt2前
                 return -1;
             } else {
                 return 0;
@@ -93,4 +93,8 @@ public final class DateUtils {
         }
         return 0;
     }
+
+	public static void main(String[] args) {
+		System.out.println(compareDate("2014-11-11 11:11","2014-11-11 12:12"));
+	}
 }

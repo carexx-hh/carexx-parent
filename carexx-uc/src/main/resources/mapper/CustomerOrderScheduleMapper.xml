@@ -197,6 +197,15 @@
 			cos.service_end_time desc
 		LIMIT 0,1
 	</select>
+
+	<select id="modifySchedule" parameterType="java.lang.String" resultMap="BaseResultMap">
+		UPDATE
+			carexx_customer_order_schedule
+		SET
+			service_status = 2
+		WHERE
+			order_no = #{orderNo,jdbcType=VARCHAR} AND NOW() <![CDATA[>=]]> service_end_time
+	</select>
 	
 	<select id="selectByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
 		SELECT
@@ -336,8 +345,8 @@
 			carexx_customer_order_schedule
 		WHERE
 			order_no = #{orderNo, jdbcType=VARCHAR}
-		AND NOW( ) <![CDATA[<=]]> service_end_time
-		AND NOW( ) <![CDATA[>=]]> service_start_time
+		AND NOW() <![CDATA[<=]]> service_end_time
+		AND NOW() <![CDATA[>=]]> service_start_time
 		limit 0,1
 	</select>
 
@@ -345,8 +354,7 @@
 		UPDATE
 			carexx_customer_order_schedule
 		SET
-			service_staff_id = #{serviceStaffId},
-			service_status = 3
+			service_staff_id = #{serviceStaffId}
 		WHERE
 			id = #{id}
 	</update>

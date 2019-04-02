@@ -57,6 +57,16 @@ public interface CustomerOrderScheduleService {
     CustomerOrderSchedule getNearByOrderNo(String orderNo);
 
     /**
+     * modifySchedule:(修改排班状态). <br/>
+     *
+     * @param orderNo
+     * @return
+     * @author csc
+     * @since JDK 1.8
+     */
+    void modifySchedule(String orderNo);
+
+    /**
      * getByOrderNo:(通过订单号查询). <br/>
      *
      * @param orderNo
