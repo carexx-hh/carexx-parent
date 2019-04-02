@@ -622,7 +622,7 @@ public class CustomerOrderScheduleManager {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
     public void mappAddAgain(MappCustomerOrderScheduleFormBean mappCustomerOrderScheduleFormBean) throws BizException {
         //更改护工,往后延一个班次
-        if (mappCustomerOrderScheduleFormBean.getSchedulingType().equals(OrderScheduleType.POSTPONE)) {
+        if (mappCustomerOrderScheduleFormBean.getSchedulingType() == OrderScheduleType.POSTPONE.getValue()) {
             //获取订单开始结束时间
             CustomerOrder customerOrder = customerOrderService.getByOrderNo(mappCustomerOrderScheduleFormBean.getOrderNo());
 
