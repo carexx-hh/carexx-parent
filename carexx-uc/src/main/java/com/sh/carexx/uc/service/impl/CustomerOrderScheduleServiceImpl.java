@@ -49,6 +49,11 @@ public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleSe
     }
 
     @Override
+    public void modifySchedule(String orderNo) {
+        this.customerOrderScheduleMapper.modifySchedule(orderNo);
+    }
+
+    @Override
     public List<CustomerOrderSchedule> getByOrderNo(String orderNo) {
         return this.customerOrderScheduleMapper.selectByOrderNo(orderNo);
     }

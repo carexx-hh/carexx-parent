@@ -58,6 +58,16 @@ public interface CustomerOrderScheduleMapper {
     CustomerOrderSchedule selectNearByOrderNo(String orderNo);
 
     /**
+     * modifySchedule:(修改排班状态). <br/>
+     *
+     * @param orderNo
+     * @return
+     * @author csc
+     * @since JDK 1.8
+     */
+    int modifySchedule(String orderNo);
+
+    /**
      * selectByOrderNo:(通过订单编号查询). <br/>
      *
      * @param orderNo

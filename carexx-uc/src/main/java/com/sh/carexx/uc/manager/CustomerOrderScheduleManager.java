@@ -351,12 +351,15 @@ public class CustomerOrderScheduleManager {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
     public void timingShedule(int instId) throws BizException {
 //		  List<CustomerOrder> list = this.customerOrderService.getAllOrder();
+        //获取机构下所有订单
         List<CustomerOrder> list = this.customerOrderService.getOrderByInstId(instId);
         if (list == null) {
             return;
         }
         for (CustomerOrder order : list) {
             CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(order.getOrderNo());
+            //修改该订单当前时间前所有排班,修改成完成
+            this.customerOrderScheduleService.modifySchedule(order.getOrderNo());
             SimpleDateFormat sdfHour = new SimpleDateFormat("HH");
             int hour = Integer.parseInt(sdfHour.format(customerOrderSchedule.getServiceEndTime()));
 
