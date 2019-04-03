@@ -17,8 +17,6 @@ public class CustomerOrderTimeManager {
 
     @Autowired
     private CustomerOrderTimeService customerOrderTimeService;
-//    @Autowired
-//    private CustomerOrderTimeJob customerOrderTimeJob;
     private QuartzManager quartzManager = new QuartzManager();
 
     public void add(CustomerOrderTimeFormBean customerOrderTimeFormBean) throws BizException {
