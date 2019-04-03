@@ -358,8 +358,6 @@ public class CustomerOrderScheduleManager {
         }
         for (CustomerOrder order : list) {
             CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(order.getOrderNo());
-            //修改该订单当前时间前所有排班,修改成完成
-            this.customerOrderScheduleService.modifySchedule(order.getOrderNo());
             SimpleDateFormat sdfHour = new SimpleDateFormat("HH");
             int hour = Integer.parseInt(sdfHour.format(customerOrderSchedule.getServiceEndTime()));
 
@@ -392,6 +390,8 @@ public class CustomerOrderScheduleManager {
                     this.orderSettleService.updateSettleAmt(orderSettle);
                 }
             }
+            //修改该订单当前时间前所有排班,修改成完成
+            this.customerOrderScheduleService.modifySchedule(order.getOrderNo());
         }
     }
 
