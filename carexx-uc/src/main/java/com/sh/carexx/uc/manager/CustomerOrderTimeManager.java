@@ -2,6 +2,7 @@ package com.sh.carexx.uc.manager;
 
 import com.sh.carexx.bean.order.CustomerOrderTimeFormBean;
 import com.sh.carexx.common.ErrorCode;
+import com.sh.carexx.common.enums.staff.JobType;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.quartz.QuartzManager;
 import com.sh.carexx.common.util.DateUtils;
@@ -20,6 +21,17 @@ public class CustomerOrderTimeManager {
     private QuartzManager quartzManager = new QuartzManager();
 
     public void add(CustomerOrderTimeFormBean customerOrderTimeFormBean) throws BizException {
+        long time = DateUtils.toDate(customerOrderTimeFormBean.getStartTime(), DateUtils.HH_MM_SS).getTime();
+        if (time % 3600000 != 0) {
+            throw new BizException(ErrorCode.INST_JOB_TIME_ERROR);
+        }
+        int startHour = DateUtils.getHourOfDay(DateUtils.toDate(customerOrderTimeFormBean.getStartTime(), DateUtils.HH_MM_SS));
+        if (customerOrderTimeFormBean.getJobType() == JobType.DAY_JOB.getValue() && startHour > 11) {
+            throw new BizException(ErrorCode.INST_JOB_DAY_JOB_ERROR);
+        }
+        if (customerOrderTimeFormBean.getJobType() == JobType.NIGHT_JOB.getValue() && startHour < 12) {
+            throw new BizException(ErrorCode.INST_JOB_NIGHT_JOB_ERROR);
+        }
         CustomerOrderTime customerOrderTime = customerOrderTimeService.queryJobTypeExistence(customerOrderTimeFormBean.getInstId(),
                 customerOrderTimeFormBean.getJobType());
         if (customerOrderTime != null) {
@@ -48,6 +60,17 @@ public class CustomerOrderTimeManager {
     }
 
     public void modify(CustomerOrderTimeFormBean customerOrderTimeFormBean) throws BizException {
+        long time = DateUtils.toDate(customerOrderTimeFormBean.getStartTime(), DateUtils.HH_MM_SS).getTime();
+        if (time % 3600000 != 0) {
+            throw new BizException(ErrorCode.INST_JOB_TIME_ERROR);
+        }
+        int startHour = DateUtils.getHourOfDay(DateUtils.toDate(customerOrderTimeFormBean.getStartTime(), DateUtils.HH_MM_SS));
+        if (customerOrderTimeFormBean.getJobType() == JobType.DAY_JOB.getValue() && startHour > 11) {
+            throw new BizException(ErrorCode.INST_JOB_DAY_JOB_ERROR);
+        }
+        if (customerOrderTimeFormBean.getJobType() == JobType.NIGHT_JOB.getValue() && startHour < 12) {
+            throw new BizException(ErrorCode.INST_JOB_NIGHT_JOB_ERROR);
+        }
         CustomerOrderTime customerOrderTime = new CustomerOrderTime();
         customerOrderTime.setId(customerOrderTimeFormBean.getId());
         customerOrderTime.setInstId(customerOrderTimeFormBean.getInstId());

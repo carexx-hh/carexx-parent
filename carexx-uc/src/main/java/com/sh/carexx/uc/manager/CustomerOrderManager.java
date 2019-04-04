@@ -13,6 +13,7 @@ import com.sh.carexx.common.util.DateUtils;
 import com.sh.carexx.common.util.ValidUtils;
 import com.sh.carexx.model.uc.*;
 import com.sh.carexx.uc.service.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -55,6 +56,10 @@ public class CustomerOrderManager {
     private InstSettleService instSettleService;
     @Autowired
     private OrderPaymentService orderPaymentService;
+    @Autowired
+    private CustomerOrderTimeService customerOrderTimeService;
+
+    private Logger log = Logger.getLogger(CustomerOrderManager.class);
 
     /**
      * calcServiceFee:(计算订单金额). <br/>
@@ -71,6 +76,7 @@ public class CustomerOrderManager {
     public BigDecimal calcServiceFee(Integer instId, Integer serviceId, Date serviceStartTime, Date serviceEndTime) {
         // 订单总时长
         int hour = DateUtils.getHourDiff(serviceStartTime, serviceEndTime);
+        log.info("订单总时长  " + hour);
         // 节假日时长
         int holidayHour = 0;
         int checkHour = 0;
@@ -103,6 +109,7 @@ public class CustomerOrderManager {
         } else if (TimeUnit.MONTH.getValue() == instCareService.getServiceUnit()) {
             return instCareService.getServicePrice();
         }
+        log.info("节假日金额  " + holidayServiceFeeAmt + "正常服务金额  " + normalServiceFeeAmt);
         // 返回时节假日服务金额加上正常服务金额
         return normalServiceFeeAmt.add(holidayServiceFeeAmt).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
@@ -372,10 +379,28 @@ public class CustomerOrderManager {
                     .getNearByOrderNo(order.getOrderNo());
             CustomerOrder customerOrder = new CustomerOrder();
             customerOrder.setOrderNo(order.getOrderNo());
+            CustomerOrderTime customerOrderTime = this.customerOrderTimeService.getDayJobByInstId(instId);//当前机构白班时间
+            String today = DateUtils.toString(new Date(), DateUtils.YYYY_MM_DD);//当前日期
+            Date nowTime = DateUtils.toDate(DateUtils.toString(new Date(), DateUtils.HH_MM_SS), DateUtils.HH_MM_SS);//当前时间
+            Date afterTime = new Date(nowTime.getTime() - 60000);//推前一分钟时间
+            Date startTime = customerOrderTime.getStartTime();//早班时间
+            log.info("早班时间  " + startTime);
+            Date endTime = customerOrderTime.getEndTime();//晚班时间
+            log.info("晚班时间  " + endTime);
+            Date serviceEndTime = null;
+            if (afterTime.getTime() <= startTime.getTime()) {
+                serviceEndTime = DateUtils.toDate((today + " " + DateUtils.toString(endTime, DateUtils.HH_MM_SS)), DateUtils.YYYY_MM_DD_HH_MM_SS);
+                log.info(order.getOrderNo() + "  第一种情况  " + serviceEndTime);
+            } else {
+//              if (afterTime.getTime() > startTime.getTime() && afterTime.getTime() <= endTime.getTime())
+                Date time = DateUtils.toDate((today + " " + DateUtils.toString(endTime, DateUtils.HH_MM_SS)), DateUtils.YYYY_MM_DD_HH_MM_SS);
+                serviceEndTime = DateUtils.addHour(time, 12);
+                log.info(order.getOrderNo() + "  第二种情况  " + serviceEndTime);
+            }
             customerOrder.setOrderAmt(this.calcServiceFee(order.getInstId(), order.getServiceId(),
-                    order.getServiceStartTime(), customerOrderSchedule.getServiceEndTime()));
+                    order.getServiceStartTime(), serviceEndTime));
             customerOrder.setHoliday(this.holidayCount(order.getInstId(), order.getServiceStartTime(),
-                    customerOrderSchedule.getServiceEndTime()));
+                    serviceEndTime));
             this.customerOrderService.updateOrderAmtAndHoliday(customerOrder);
             this.orderPaymentManager.modifyPayAmt(customerOrder);
         }

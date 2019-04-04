@@ -78,6 +78,9 @@ public enum ErrorCode {
 	CARE_SERVICE_RATIO_EXISTS_ERROR("E091501", "服务比例已存在"),
 
 	INST_JOB_TYPE_EXISTS_ERROR("E091601", "该班次已存在"),
+	INST_JOB_TIME_ERROR("E091602", "请设置整点时间"),
+	INST_JOB_DAY_JOB_ERROR("E091603", "白班开始时间不能大于11点"),
+	INST_JOB_NIGHT_JOB_ERROR("E091604", "夜班开始时间不能小于12点"),
 
 	USER_ACCOUNT_BALANCE_NOT_ENOUGH("E091701", "账户余额不足"),
 	;
