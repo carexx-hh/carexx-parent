@@ -16,6 +16,7 @@ import com.sh.carexx.bean.repository.RepositoryBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffWorkTypeFormBean;
+import com.sh.carexx.bean.statistics.StatisticsBean;
 import com.sh.carexx.bean.user.*;
 import com.sh.carexx.bean.usermsg.UserMsgFormBean;
 import com.sh.carexx.bean.worktype.InstWorkTypeSettleFormBean;
@@ -1561,4 +1562,7 @@ public interface UCServiceClient {
 
     @RequestMapping(value = "/customerorder/get_proofInfo/{orderNo}", method = RequestMethod.GET)
     String queryProofInfoByOrderNo(@PathVariable(value = "orderNo") String orderNo);
+
+    @RequestMapping(value = "/statistics/queryStatistics", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    String queryStatistics(StatisticsBean statisticsBean);
 }
