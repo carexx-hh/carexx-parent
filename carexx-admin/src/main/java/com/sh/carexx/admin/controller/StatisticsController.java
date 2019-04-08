@@ -13,4 +13,9 @@ public class StatisticsController extends BaseController {
         return this.ucServiceClient.queryStatistics(statisticsBean);
     }
 
+    @RequestMapping(value = "/queryStatisticsSingle")
+    public String queryStatisticsSingle(StatisticsBean statisticsBean) {
+        statisticsBean.setInstId(this.getCurrentUser().getInstId());
+        return this.ucServiceClient.queryStatistics(statisticsBean);
+    }
 }

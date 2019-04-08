@@ -42,10 +42,10 @@
         from carexx_statistics
         where instId = #{instId}
         <if test="searchBeginDate != null">
-            and jsrq <![CDATA[>=]]> #{searchBeginDate}
+            and DATE_FORMAT(jsrq ,<![CDATA['%Y-%m-%d']]>) <![CDATA[>=]]> DATE_FORMAT(#{searchBeginDate} ,<![CDATA['%Y-%m-%d']]>)
         </if>
         <if test="searchEndDate != null">
-            and jsrq <![CDATA[<=]]> #{searchEndDate}
+            and DATE_FORMAT(jsrq ,<![CDATA['%Y-%m-%d']]>) <![CDATA[<=]]> DATE_FORMAT(#{searchEndDate} ,<![CDATA['%Y-%m-%d']]>)
         </if>
         <if test="hly != null and hly != '' ">
             and hly like CONCAT('%', '${hly}', '%')
@@ -53,6 +53,7 @@
         <if test="qdr != null and qdr != '' ">
             and qdr like CONCAT('%', '${qdr}', '%')
         </if>
+        order by jsrq desc
     </select>
 
 

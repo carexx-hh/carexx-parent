@@ -1,16 +1,15 @@
 package com.sh.carexx.bean.statistics;
 
 import com.sh.carexx.bean.BasicFormBean;
-
-import java.util.Date;
+import org.apache.commons.lang.StringUtils;
 
 public class StatisticsBean extends BasicFormBean {
 
     private Integer instId;  //机构Id
 
-    private Date searchBeginDate; //搜索时间
+    private String searchBeginDate; //搜索时间
 
-    private Date searchEndDate; //搜索时间
+    private String searchEndDate; //搜索时间
 
     private String hly;  //护理员
 
@@ -40,19 +39,25 @@ public class StatisticsBean extends BasicFormBean {
         this.instId = instId;
     }
 
-    public Date getSearchBeginDate() {
+    public String getSearchBeginDate() {
         return searchBeginDate;
     }
 
-    public void setSearchBeginDate(Date searchBeginDate) {
+    public void setSearchBeginDate(String searchBeginDate) {
+        if (StringUtils.isBlank(searchBeginDate)) {
+            this.searchBeginDate = null;
+        }
         this.searchBeginDate = searchBeginDate;
     }
 
-    public Date getSearchEndDate() {
+    public String getSearchEndDate() {
         return searchEndDate;
     }
 
-    public void setSearchEndDate(Date searchEndDate) {
+    public void setSearchEndDate(String searchEndDate) {
+        if (StringUtils.isBlank(searchBeginDate)) {
+            this.searchEndDate = null;
+        }
         this.searchEndDate = searchEndDate;
     }
 }
