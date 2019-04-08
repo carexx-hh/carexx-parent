@@ -1,7 +1,6 @@
 package com.sh.carexx.uc.service.impl;
 
 import com.sh.carexx.bean.statistics.StatisticsBean;
-import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.model.uc.Statistics;
 import com.sh.carexx.uc.dao.StatisticsMapper;
 import com.sh.carexx.uc.service.StatisticsService;
@@ -22,10 +21,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public List<Statistics> queryStatistics(StatisticsBean statisticsBean) {
-        statisticsBean.setSearchBeginDate(
-                statisticsBean.getSearchBeginDate() + CarexxConstant.Datetime.DAY_BEGIN_SUFFIX);
-        statisticsBean.setSearchEndDate(
-                statisticsBean.getSearchEndDate() + CarexxConstant.Datetime.DAY_END_SUFFIX);
         return statisticsMapper.queryStatistics(statisticsBean);
     }
 }

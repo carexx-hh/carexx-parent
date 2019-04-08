@@ -1,6 +1,7 @@
 package com.sh.carexx.bean.statistics;
 
 import com.sh.carexx.bean.BasicFormBean;
+import com.sh.carexx.common.CarexxConstant;
 import org.apache.commons.lang.StringUtils;
 
 public class StatisticsBean extends BasicFormBean {
@@ -47,7 +48,7 @@ public class StatisticsBean extends BasicFormBean {
         if (StringUtils.isBlank(searchBeginDate)) {
             this.searchBeginDate = null;
         }
-        this.searchBeginDate = searchBeginDate;
+        this.searchBeginDate = searchBeginDate + CarexxConstant.Datetime.DAY_BEGIN_SUFFIX;
     }
 
     public String getSearchEndDate() {
@@ -58,6 +59,6 @@ public class StatisticsBean extends BasicFormBean {
         if (StringUtils.isBlank(searchBeginDate)) {
             this.searchEndDate = null;
         }
-        this.searchEndDate = searchEndDate;
+        this.searchEndDate = searchEndDate + CarexxConstant.Datetime.DAY_END_SUFFIX;
     }
 }
