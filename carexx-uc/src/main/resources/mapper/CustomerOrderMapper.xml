@@ -146,7 +146,7 @@
 		FROM
 			carexx_customer_order
 		WHERE
-			co.inst_id = #{instId,jdbcType=INTEGER}
+			inst_id = #{instId,jdbcType=INTEGER}
 	</select>
 
 	<select id="selectByUserId" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">
