@@ -358,4 +358,15 @@
 		WHERE
 			id = #{id}
 	</update>
+
+	<update id="updateServiceTime" parameterType="com.sh.carexx.model.uc.CustomerOrderSchedule">
+		update
+			carexx_customer_order_schedule
+		set
+			service_start_time = #{serviceStartTime,jdbcType=TIMESTAMP},
+			service_end_time = #{serviceEndTime,jdbcType=TIMESTAMP},
+			modify_time = now()
+		where
+			order_no = #{orderNo,jdbcType=VARCHAR}
+	</update>
 </mapper>

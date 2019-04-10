@@ -184,4 +184,13 @@ public interface CustomerOrderScheduleService {
      * @since JDK 1.8
      */
     void updateStaffIdPresentById(Long id, Integer serviceStaffId) throws BizException;
+
+    /**
+     * updateStatus:(修改订单状态). <br/>
+     *
+     * @return
+     * @author hetao
+     * @since JDK 1.8
+     */
+    void updateServiceTime(CustomerOrderSchedule customerOrderSchedule) throws BizException;
 }

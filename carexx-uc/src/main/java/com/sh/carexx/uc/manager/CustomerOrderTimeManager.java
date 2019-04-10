@@ -7,7 +7,9 @@ import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.quartz.QuartzManager;
 import com.sh.carexx.common.util.DateUtils;
 import com.sh.carexx.model.uc.CustomerOrder;
+import com.sh.carexx.model.uc.CustomerOrderSchedule;
 import com.sh.carexx.model.uc.CustomerOrderTime;
+import com.sh.carexx.uc.service.CustomerOrderScheduleService;
 import com.sh.carexx.uc.service.CustomerOrderService;
 import com.sh.carexx.uc.service.CustomerOrderTimeService;
 import org.apache.log4j.Logger;
@@ -29,6 +31,10 @@ public class CustomerOrderTimeManager {
     private CustomerOrderService customerOrderService;
     @Autowired
     private CustomerOrderManager customerOrderManager;
+    @Autowired
+    private CustomerOrderScheduleService customerOrderScheduleService;
+    @Autowired
+    private CustomerOrderScheduleManager customerOrderScheduleManager;
     private QuartzManager quartzManager = new QuartzManager();
 
     public void add(CustomerOrderTimeFormBean customerOrderTimeFormBean) throws BizException {
@@ -96,7 +102,6 @@ public class CustomerOrderTimeManager {
 
         //修改之前订单的排班时间
         List<CustomerOrder> customerOrderList = customerOrderService.getAllOrderByInstId(customerOrderTimeFormBean.getInstId());
-        log.info("customerOrderList" + customerOrderList.toString());
         String dayTime = "";
         String nightTime = "";
         if (customerOrderTimeFormBean.getJobType() == JobType.DAY_JOB.getValue()) {
@@ -107,38 +112,61 @@ public class CustomerOrderTimeManager {
             dayTime = customerOrderTimeFormBean.getEndTime();
             nightTime = customerOrderTimeFormBean.getStartTime();
         }
+        //循环所有的订单
         for (CustomerOrder customerOrder : customerOrderList) {
-            log.info("customerOrder" + customerOrder.toString());
             SimpleDateFormat sdfHour = new SimpleDateFormat("HH");
             int hour = Integer.parseInt(sdfHour.format(customerOrder.getServiceStartTime()));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String date = sdf.format(customerOrder.getServiceStartTime());
+            String startDate = sdf.format(customerOrder.getServiceStartTime());
             String newStartDate;
-            String newEndDate = null;
+            String newEndDate = "";
             if (hour >= 12) {
-                newStartDate = date.split(" ")[0] + " " + nightTime;
+                newStartDate = startDate.split(" ")[0] + " " + nightTime;
                 if (customerOrder.getServiceEndTime() != null) {
-                    newEndDate = date.split(" ")[0] + " " + dayTime;
+                    newEndDate = sdf.format(customerOrder.getServiceEndTime()).split(" ")[0] + " " + dayTime;
                 }
             } else {
-                newStartDate = date.split(" ")[0] + " " + dayTime;
+                newStartDate = startDate.split(" ")[0] + " " + dayTime;
                 if (customerOrder.getServiceEndTime() != null) {
-                    newEndDate = date.split(" ")[0] + " " + nightTime;
+                    newEndDate = sdf.format(customerOrder.getServiceEndTime()).split(" ")[0] + " " + nightTime;
                 }
             }
             log.info("newStartDate" + newStartDate);
             log.info("newEndDate" + newEndDate);
-            customerOrderManager.modifyServiceStartTime(customerOrder.getOrderNo(), DateUtils.toDate(newStartDate, DateUtils.YYYY_MM_DD_HH_MM_SS), DateUtils.toDate(newEndDate, DateUtils.YYYY_MM_DD_HH_MM_SS));
+            customerOrderManager.modifyServiceTime(customerOrder.getOrderNo(),
+                    DateUtils.toDate(newStartDate, DateUtils.YYYY_MM_DD_HH_MM_SS),
+                    DateUtils.toDate(newEndDate, DateUtils.YYYY_MM_DD_HH_MM_SS));
+            //通过订单号获取排班信息
+            List<CustomerOrderSchedule> customerOrderScheduleList = customerOrderScheduleService.getByOrderNo(customerOrder.getOrderNo());
+            for (CustomerOrderSchedule customerOrderSchedule : customerOrderScheduleList) {
+                int scheduleStartHour = Integer.parseInt(sdfHour.format(customerOrderSchedule.getServiceStartTime()));
+                int scheduleEndHour = Integer.parseInt(sdfHour.format(customerOrderSchedule.getServiceEndTime()));
+                String scheduleStartTime = sdf.format(customerOrderSchedule.getServiceStartTime());
+                String scheduleEndTime = sdf.format(customerOrderSchedule.getServiceEndTime());
+                String newScheduleStartDate;
+                String newScheduleEndDate;
+                if (scheduleStartHour >= 12) {
+                    newScheduleStartDate = scheduleStartTime.split(" ")[0] + " " + nightTime;
+                } else {
+                    newScheduleStartDate = scheduleStartTime.split(" ")[0] + " " + dayTime;
+                }
+                if (scheduleEndHour >= 12) {
+                    newScheduleEndDate = scheduleEndTime.split(" ")[0] + " " + nightTime;
+                } else {
+                    newScheduleEndDate = scheduleEndTime.split(" ")[0] + " " + dayTime;
+                }
+                log.info("newScheduleStartDate" + newScheduleStartDate);
+                log.info("newScheduleEndDate" + newScheduleEndDate);
+                customerOrderScheduleManager.modifyServiceTime(customerOrder.getOrderNo(),
+                        DateUtils.toDate(newScheduleStartDate, DateUtils.YYYY_MM_DD_HH_MM_SS),
+                        DateUtils.toDate(newScheduleEndDate, DateUtils.YYYY_MM_DD_HH_MM_SS));
+            }
         }
 
         CustomerOrderTimeJob customerOrderTimeJob = new CustomerOrderTimeJob();
         //先删除之前的job
         quartzManager.deleteJob(customerOrderTimeFormBean.getInstId() + "jobName" + customerOrderTimeFormBean.getJobType(),
                 customerOrderTimeFormBean.getInstId() + "jobGroupName" + customerOrderTimeFormBean.getJobType());
-//        quartzManager.modifyJobTimeByCronExpressions(customerOrderTimeFormBean.getInstId() + "triggerName" + customerOrderTimeFormBean.getJobType(),
-//                customerOrderTimeFormBean.getInstId() + "triggerGroupName" + customerOrderTimeFormBean.getJobType(),
-//                "0 0 " + customerOrderTimeFormBean.getStartTime().split(":")[0] + "," + customerOrderTimeFormBean.getEndTime().split(":")[0] + " * * ? *",
-//                new Date(), null);
         //创建新的job
         quartzManager.addJobByCronExpressions(customerOrderTimeFormBean.getInstId() + "jobName" + customerOrderTimeFormBean.getJobType(),
                 customerOrderTimeFormBean.getInstId() + "jobGroupName" + customerOrderTimeFormBean.getJobType(),
@@ -151,28 +179,4 @@ public class CustomerOrderTimeManager {
                 customerOrderTimeFormBean.getInstId(), customerOrderTimeFormBean.getJobType());
     }
 
-//    public static void main(String[] args) {
-//        CustomerOrderTimeJob customerOrderTimeJob = new CustomerOrderTimeJob();
-//        QuartzManager quartzManager = new QuartzManager();
-//
-//        quartzManager.deleteJob(1 + "jobName" + 1,
-//                1 + "jobGroupName" + 1);
-//
-//        quartzManager.addJobByCronExpressions(1 + "jobName" + 1,
-//                1 + "jobGroupName" + 1,
-//                1 + "triggerName" + 1,
-//                1 + "triggerGroupName" + 1,
-//                customerOrderTimeJob,
-//            "* * * * * ? *",
-////                "0 0 " + customerOrderTimeFormBean.getStartTime().split(":")[0] + "," + customerOrderTimeFormBean.getEndTime().split(":")[0] + " * * ? *",
-//                new Date(), null,
-//                1, 2);
-//        try {
-//            Thread.sleep(10000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        quartzManager.deleteJob(1 + "jobName" + 1,
-//                1 + "jobGroupName" + 1);
-//    }
 }

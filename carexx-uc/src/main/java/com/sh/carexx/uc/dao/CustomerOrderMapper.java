@@ -336,14 +336,14 @@ public interface CustomerOrderMapper {
     int updateServiceEndTime(CustomerOrder customerOrder);
 
     /**
-     * updateServiceStartTime:(修改订单结束时间). <br/>
+     * updateServiceTime:(修改订单时间). <br/>
      *
      * @param customerOrder
      * @return
      * @author csc
      * @since JDK 1.8
      */
-    int updateServiceStartTime(CustomerOrder customerOrder);
+    int updateServiceTime(CustomerOrder customerOrder);
 
     /**
      * updateOperatorId:(修改操作员). <br/>

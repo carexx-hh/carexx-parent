@@ -637,10 +637,10 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
     }
 
     @Override
-    public void updateServiceStartTime(CustomerOrder customerOrder) throws BizException {
+    public void updateServiceTime(CustomerOrder customerOrder) throws BizException {
         int rows = 0;
         try {
-            rows = this.customerOrderMapper.updateServiceStartTime(customerOrder);
+            rows = this.customerOrderMapper.updateServiceTime(customerOrder);
         } catch (Exception e) {
             throw new BizException(ErrorCode.DB_ERROR, e);
         }

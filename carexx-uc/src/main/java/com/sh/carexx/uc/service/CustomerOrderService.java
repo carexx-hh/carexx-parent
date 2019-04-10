@@ -352,14 +352,14 @@ public interface CustomerOrderService {
 
 	/**
 	 *
-	 * updateServiceStartTime:(修改订单开始时间). <br/>
+	 * updateServiceTime:(修改订单开始时间). <br/>
 	 *
-	 * @author hetao
+	 * @author csc
 	 * @param customerOrder
 	 * @return
 	 * @since JDK 1.8
 	 */
-	void updateServiceStartTime(CustomerOrder customerOrder) throws BizException;
+	void updateServiceTime(CustomerOrder customerOrder) throws BizException;
 	
 	/**
 	 * 
