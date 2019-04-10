@@ -6,18 +6,29 @@ import com.sh.carexx.common.enums.staff.JobType;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.quartz.QuartzManager;
 import com.sh.carexx.common.util.DateUtils;
+import com.sh.carexx.model.uc.CustomerOrder;
 import com.sh.carexx.model.uc.CustomerOrderTime;
+import com.sh.carexx.uc.service.CustomerOrderService;
 import com.sh.carexx.uc.service.CustomerOrderTimeService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CustomerOrderTimeManager {
 
+    private Logger log = Logger.getLogger(CustomerOrderScheduleManager.class);
+
     @Autowired
     private CustomerOrderTimeService customerOrderTimeService;
+    @Autowired
+    private CustomerOrderService customerOrderService;
+    @Autowired
+    private CustomerOrderManager customerOrderManager;
     private QuartzManager quartzManager = new QuartzManager();
 
     public void add(CustomerOrderTimeFormBean customerOrderTimeFormBean) throws BizException {
@@ -47,6 +58,35 @@ public class CustomerOrderTimeManager {
         customerOrderTime.setStartTime(startTime);
         customerOrderTime.setEndTime(endTime);
         CustomerOrderTimeJob customerOrderTimeJob = new CustomerOrderTimeJob();
+        this.customerOrderTimeService.save(customerOrderTime);
+        //修改之前订单的排班时间
+        List<CustomerOrder> customerOrderList = customerOrderService.getAllOrderByInstId(customerOrderTimeFormBean.getInstId());
+        log.info("customerOrderList" + customerOrderList.toString());
+        String dayTime = "";
+        String nightTime = "";
+        if (customerOrderTimeFormBean.getJobType() == JobType.DAY_JOB.getValue()) {
+            dayTime = customerOrderTimeFormBean.getStartTime();
+            nightTime = customerOrderTimeFormBean.getEndTime();
+        }
+        if (customerOrderTimeFormBean.getJobType() == JobType.NIGHT_JOB.getValue()) {
+            dayTime = customerOrderTimeFormBean.getEndTime();
+            nightTime = customerOrderTimeFormBean.getStartTime();
+        }
+        for (CustomerOrder customerOrder : customerOrderList) {
+            log.info("customerOrder" + customerOrder.toString());
+            SimpleDateFormat sdfHour = new SimpleDateFormat("HH");
+            int hour = Integer.parseInt(sdfHour.format(customerOrder.getServiceStartTime()));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String date = sdf.format(customerOrder.getServiceStartTime());
+            String newDate;
+            if (hour >= 12) {
+                newDate = date.split(" ")[0] + " " + nightTime;
+            } else {
+                newDate = date.split(" ")[0] + " " + dayTime;
+            }
+            log.info("newDate" + newDate);
+            customerOrderManager.modifyServiceStartTime(customerOrder.getOrderNo(), DateUtils.toDate(newDate, DateUtils.YYYY_MM_DD_HH_MM_SS));
+        }
         //创建新的job
         quartzManager.addJobByCronExpressions(customerOrderTimeFormBean.getInstId() + "jobName" + customerOrderTimeFormBean.getJobType(),
                 customerOrderTimeFormBean.getInstId() + "jobGroupName" + customerOrderTimeFormBean.getJobType(),
@@ -56,7 +96,6 @@ public class CustomerOrderTimeManager {
                 "0 0 " + customerOrderTimeFormBean.getStartTime().split(":")[0] + " * * ? *",
                 new Date(), null,
                 customerOrderTimeFormBean.getInstId(), customerOrderTimeFormBean.getJobType());
-        this.customerOrderTimeService.save(customerOrderTime);
     }
 
     public void modify(CustomerOrderTimeFormBean customerOrderTimeFormBean) throws BizException {

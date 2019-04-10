@@ -46,13 +46,22 @@ public interface CustomerOrderMapper {
     List<CustomerOrder> selectAllOrder();
 
     /**
-     * confirmCompleted:(根据instId查询订单). <br/>
+     * selectOrderByInstId:(根据instId查询订单). <br/>
      *
      * @return
      * @author chenshichao
      * @since JDK 1.8
      */
     List<CustomerOrder> selectOrderByInstId(int instId);
+
+    /**
+     * selectAllOrderByInstId:(根据instId查询订单). <br/>
+     *
+     * @return
+     * @author chenshichao
+     * @since JDK 1.8
+     */
+    List<CustomerOrder> selectAllOrderByInstId(int instId);
 
     /**
      * selectByUserId:(患者端通过客户id查询服务订单分页). <br/>
@@ -325,6 +334,16 @@ public interface CustomerOrderMapper {
      * @since JDK 1.8
      */
     int updateServiceEndTime(CustomerOrder customerOrder);
+
+    /**
+     * updateServiceStartTime:(修改订单结束时间). <br/>
+     *
+     * @param customerOrder
+     * @return
+     * @author csc
+     * @since JDK 1.8
+     */
+    int updateServiceStartTime(CustomerOrder customerOrder);
 
     /**
      * updateOperatorId:(修改操作员). <br/>

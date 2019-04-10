@@ -49,12 +49,21 @@ public interface CustomerOrderService {
 
 	/**
 	 *
-	 * confirmCompleted:(查询所有线上订单). <br/>
+	 * getOrderByInstId:(查询所有线上订单). <br/>
 	 *
 	 * @author chenshichao
 	 * @since JDK 1.8
 	 */
 	List<CustomerOrder> getOrderByInstId(int instId);
+
+	/**
+	 *
+	 * getAllOrderByInstId:(查询所有线上订单). <br/>
+	 *
+	 * @author chenshichao
+	 * @since JDK 1.8
+	 */
+	List<CustomerOrder> getAllOrderByInstId(int instId);
 
 	/**
 	 * 
@@ -340,6 +349,17 @@ public interface CustomerOrderService {
 	 * @since JDK 1.8
 	 */
 	void updateServiceEndTime(CustomerOrder customerOrder) throws BizException;
+
+	/**
+	 *
+	 * updateServiceStartTime:(修改订单开始时间). <br/>
+	 *
+	 * @author hetao
+	 * @param customerOrder
+	 * @return
+	 * @since JDK 1.8
+	 */
+	void updateServiceStartTime(CustomerOrder customerOrder) throws BizException;
 	
 	/**
 	 * 

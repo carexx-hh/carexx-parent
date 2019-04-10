@@ -140,6 +140,15 @@
 		AND	co.service_start_time <![CDATA[<=]]> now()
 	</select>
 
+	<select id="selectAllOrderByInstId" resultMap="BaseResultMap">
+		SELECT
+			<include refid="Base_Column_List" />
+		FROM
+			carexx_customer_order
+		WHERE
+			co.inst_id = #{instId,jdbcType=INTEGER}
+	</select>
+
 	<select id="selectByUserId" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">
 		SELECT
 			co.id id,
@@ -1098,6 +1107,16 @@
 			carexx_customer_order
 		set
 			service_end_time = #{serviceEndTime,jdbcType=TIMESTAMP},
+			modify_time = now()
+	  	where
+	  		order_no = #{orderNo,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateServiceStartTime" parameterType="com.sh.carexx.model.uc.CustomerOrder">
+		update
+			carexx_customer_order
+		set
+			service_start_time = #{serviceStartTime,jdbcType=TIMESTAMP},
 			modify_time = now()
 	  	where
 	  		order_no = #{orderNo,jdbcType=VARCHAR}

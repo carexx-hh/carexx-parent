@@ -423,6 +423,21 @@ public class CustomerOrderManager {
     }
 
     /**
+     * updateServiceEndTime:(修改订单结束时间). <br/>
+     *
+     * @throws BizException
+     * @author hetao
+     * @since JDK 1.8
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
+    public void modifyServiceStartTime(String orderNo, Date serviceStartTime) throws BizException {
+        CustomerOrder customerOrder = new CustomerOrder();
+        customerOrder.setOrderNo(orderNo);
+        customerOrder.setServiceStartTime(serviceStartTime);
+        this.customerOrderService.updateServiceStartTime(customerOrder);
+    }
+
+    /**
      * cancel:(取消订单). <br/>
      *
      * @param orderNo：订单号
