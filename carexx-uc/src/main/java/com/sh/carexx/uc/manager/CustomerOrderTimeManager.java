@@ -59,34 +59,6 @@ public class CustomerOrderTimeManager {
         customerOrderTime.setEndTime(endTime);
         CustomerOrderTimeJob customerOrderTimeJob = new CustomerOrderTimeJob();
         this.customerOrderTimeService.save(customerOrderTime);
-        //修改之前订单的排班时间
-        List<CustomerOrder> customerOrderList = customerOrderService.getAllOrderByInstId(customerOrderTimeFormBean.getInstId());
-        log.info("customerOrderList" + customerOrderList.toString());
-        String dayTime = "";
-        String nightTime = "";
-        if (customerOrderTimeFormBean.getJobType() == JobType.DAY_JOB.getValue()) {
-            dayTime = customerOrderTimeFormBean.getStartTime();
-            nightTime = customerOrderTimeFormBean.getEndTime();
-        }
-        if (customerOrderTimeFormBean.getJobType() == JobType.NIGHT_JOB.getValue()) {
-            dayTime = customerOrderTimeFormBean.getEndTime();
-            nightTime = customerOrderTimeFormBean.getStartTime();
-        }
-        for (CustomerOrder customerOrder : customerOrderList) {
-            log.info("customerOrder" + customerOrder.toString());
-            SimpleDateFormat sdfHour = new SimpleDateFormat("HH");
-            int hour = Integer.parseInt(sdfHour.format(customerOrder.getServiceStartTime()));
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String date = sdf.format(customerOrder.getServiceStartTime());
-            String newDate;
-            if (hour >= 12) {
-                newDate = date.split(" ")[0] + " " + nightTime;
-            } else {
-                newDate = date.split(" ")[0] + " " + dayTime;
-            }
-            log.info("newDate" + newDate);
-            customerOrderManager.modifyServiceStartTime(customerOrder.getOrderNo(), DateUtils.toDate(newDate, DateUtils.YYYY_MM_DD_HH_MM_SS));
-        }
         //创建新的job
         quartzManager.addJobByCronExpressions(customerOrderTimeFormBean.getInstId() + "jobName" + customerOrderTimeFormBean.getJobType(),
                 customerOrderTimeFormBean.getInstId() + "jobGroupName" + customerOrderTimeFormBean.getJobType(),
@@ -120,6 +92,36 @@ public class CustomerOrderTimeManager {
                 DateUtils.HH_MM_SS);
         customerOrderTime.setStartTime(startTime);
         customerOrderTime.setEndTime(endTime);
+        this.customerOrderTimeService.update(customerOrderTime);
+
+        //修改之前订单的排班时间
+        List<CustomerOrder> customerOrderList = customerOrderService.getAllOrderByInstId(customerOrderTimeFormBean.getInstId());
+        log.info("customerOrderList" + customerOrderList.toString());
+        String dayTime = "";
+        String nightTime = "";
+        if (customerOrderTimeFormBean.getJobType() == JobType.DAY_JOB.getValue()) {
+            dayTime = customerOrderTimeFormBean.getStartTime();
+            nightTime = customerOrderTimeFormBean.getEndTime();
+        }
+        if (customerOrderTimeFormBean.getJobType() == JobType.NIGHT_JOB.getValue()) {
+            dayTime = customerOrderTimeFormBean.getEndTime();
+            nightTime = customerOrderTimeFormBean.getStartTime();
+        }
+        for (CustomerOrder customerOrder : customerOrderList) {
+            log.info("customerOrder" + customerOrder.toString());
+            SimpleDateFormat sdfHour = new SimpleDateFormat("HH");
+            int hour = Integer.parseInt(sdfHour.format(customerOrder.getServiceStartTime()));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String date = sdf.format(customerOrder.getServiceStartTime());
+            String newDate;
+            if (hour >= 12) {
+                newDate = date.split(" ")[0] + " " + nightTime;
+            } else {
+                newDate = date.split(" ")[0] + " " + dayTime;
+            }
+            log.info("newDate" + newDate);
+            customerOrderManager.modifyServiceStartTime(customerOrder.getOrderNo(), DateUtils.toDate(newDate, DateUtils.YYYY_MM_DD_HH_MM_SS));
+        }
 
         CustomerOrderTimeJob customerOrderTimeJob = new CustomerOrderTimeJob();
         //先删除之前的job
@@ -139,7 +141,6 @@ public class CustomerOrderTimeManager {
 //                "0 * * * * ?",
                 new Date(), null,
                 customerOrderTimeFormBean.getInstId(), customerOrderTimeFormBean.getJobType());
-        this.customerOrderTimeService.update(customerOrderTime);
     }
 
 //    public static void main(String[] args) {
