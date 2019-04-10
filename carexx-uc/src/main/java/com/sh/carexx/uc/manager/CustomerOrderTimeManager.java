@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public class CustomerOrderTimeManager {
 
-    private Logger log = Logger.getLogger(CustomerOrderScheduleManager.class);
+    private Logger log = Logger.getLogger(CustomerOrderTimeManager.class);
 
     @Autowired
     private CustomerOrderTimeService customerOrderTimeService;
@@ -113,14 +113,22 @@ public class CustomerOrderTimeManager {
             int hour = Integer.parseInt(sdfHour.format(customerOrder.getServiceStartTime()));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String date = sdf.format(customerOrder.getServiceStartTime());
-            String newDate;
+            String newStartDate;
+            String newEndDate = null;
             if (hour >= 12) {
-                newDate = date.split(" ")[0] + " " + nightTime;
+                newStartDate = date.split(" ")[0] + " " + nightTime;
+                if (customerOrder.getServiceEndTime() != null) {
+                    newEndDate = date.split(" ")[0] + " " + dayTime;
+                }
             } else {
-                newDate = date.split(" ")[0] + " " + dayTime;
+                newStartDate = date.split(" ")[0] + " " + dayTime;
+                if (customerOrder.getServiceEndTime() != null) {
+                    newEndDate = date.split(" ")[0] + " " + nightTime;
+                }
             }
-            log.info("newDate" + newDate);
-            customerOrderManager.modifyServiceStartTime(customerOrder.getOrderNo(), DateUtils.toDate(newDate, DateUtils.YYYY_MM_DD_HH_MM_SS));
+            log.info("newStartDate" + newStartDate);
+            log.info("newEndDate" + newEndDate);
+            customerOrderManager.modifyServiceStartTime(customerOrder.getOrderNo(), DateUtils.toDate(newStartDate, DateUtils.YYYY_MM_DD_HH_MM_SS), DateUtils.toDate(newEndDate, DateUtils.YYYY_MM_DD_HH_MM_SS));
         }
 
         CustomerOrderTimeJob customerOrderTimeJob = new CustomerOrderTimeJob();

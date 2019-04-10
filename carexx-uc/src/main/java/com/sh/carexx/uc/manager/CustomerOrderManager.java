@@ -430,10 +430,11 @@ public class CustomerOrderManager {
      * @since JDK 1.8
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
-    public void modifyServiceStartTime(String orderNo, Date serviceStartTime) throws BizException {
+    public void modifyServiceStartTime(String orderNo, Date serviceStartTime, Date serviceEndTime) throws BizException {
         CustomerOrder customerOrder = new CustomerOrder();
         customerOrder.setOrderNo(orderNo);
         customerOrder.setServiceStartTime(serviceStartTime);
+        customerOrder.setServiceEndTime(serviceEndTime);
         this.customerOrderService.updateServiceStartTime(customerOrder);
     }
 
