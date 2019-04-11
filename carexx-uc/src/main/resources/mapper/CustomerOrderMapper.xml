@@ -1117,7 +1117,7 @@
 			carexx_customer_order
 		set
 			service_start_time = #{serviceStartTime,jdbcType=TIMESTAMP},
-		<if test="serviceEndTime != null and serviceEndTime != '' ">
+		<if test="serviceEndTime != null">
 			service_end_time = #{serviceEndTime,jdbcType=TIMESTAMP},
 		</if>
 			modify_time = now()

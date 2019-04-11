@@ -15,6 +15,8 @@ import com.sh.carexx.uc.service.CustomerOrderTimeService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -76,6 +78,7 @@ public class CustomerOrderTimeManager {
                 customerOrderTimeFormBean.getInstId(), customerOrderTimeFormBean.getJobType());
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
     public void modify(CustomerOrderTimeFormBean customerOrderTimeFormBean) throws BizException {
         long time = DateUtils.toDate(customerOrderTimeFormBean.getStartTime(), DateUtils.HH_MM_SS).getTime();
         if (time % 3600000 != 0) {
@@ -115,20 +118,25 @@ public class CustomerOrderTimeManager {
         //循环所有的订单
         for (CustomerOrder customerOrder : customerOrderList) {
             SimpleDateFormat sdfHour = new SimpleDateFormat("HH");
-            int hour = Integer.parseInt(sdfHour.format(customerOrder.getServiceStartTime()));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            //开始时间
+            int orderStartHour = Integer.parseInt(sdfHour.format(customerOrder.getServiceStartTime()));
             String startDate = sdf.format(customerOrder.getServiceStartTime());
             String newStartDate;
-            String newEndDate = "";
-            if (hour >= 12) {
+            if (orderStartHour >= 12) {
                 newStartDate = startDate.split(" ")[0] + " " + nightTime;
-                if (customerOrder.getServiceEndTime() != null) {
-                    newEndDate = sdf.format(customerOrder.getServiceEndTime()).split(" ")[0] + " " + dayTime;
-                }
             } else {
                 newStartDate = startDate.split(" ")[0] + " " + dayTime;
-                if (customerOrder.getServiceEndTime() != null) {
-                    newEndDate = sdf.format(customerOrder.getServiceEndTime()).split(" ")[0] + " " + nightTime;
+            }
+            //结束时间 可能为空
+            String newEndDate = "";
+            if (customerOrder.getServiceEndTime() != null) {
+                int orderEndhour = Integer.parseInt(sdfHour.format(customerOrder.getServiceEndTime()));
+                String endDate = sdf.format(customerOrder.getServiceEndTime());
+                if (orderEndhour >= 12) {
+                    newEndDate = endDate.split(" ")[0] + " " + nightTime;
+                } else {
+                    newEndDate = endDate.split(" ")[0] + " " + dayTime;
                 }
             }
             log.info("newStartDate" + newStartDate);
