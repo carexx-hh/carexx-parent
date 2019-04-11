@@ -367,6 +367,6 @@
 			service_end_time = #{serviceEndTime,jdbcType=TIMESTAMP},
 			modify_time = now()
 		where
-			order_no = #{orderNo,jdbcType=VARCHAR}
+			id = #{id}
 	</update>
 </mapper>

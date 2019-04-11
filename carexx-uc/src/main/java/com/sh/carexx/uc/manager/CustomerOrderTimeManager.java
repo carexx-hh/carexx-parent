@@ -165,7 +165,7 @@ public class CustomerOrderTimeManager {
                 }
                 log.info("newScheduleStartDate" + newScheduleStartDate);
                 log.info("newScheduleEndDate" + newScheduleEndDate);
-                customerOrderScheduleManager.modifyServiceTime(customerOrder.getOrderNo(),
+                customerOrderScheduleManager.modifyServiceTime(customerOrder.getId(),
                         DateUtils.toDate(newScheduleStartDate, DateUtils.YYYY_MM_DD_HH_MM_SS),
                         DateUtils.toDate(newScheduleEndDate, DateUtils.YYYY_MM_DD_HH_MM_SS));
             }

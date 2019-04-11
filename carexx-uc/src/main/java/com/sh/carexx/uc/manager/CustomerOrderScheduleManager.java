@@ -566,7 +566,7 @@ public class CustomerOrderScheduleManager {
     /**
      * modifySettleAmt:(调整结算金额). <br/>
      *
-     * @param orderNo
+     * @param id
      * @param serviceStartTime
      * @param serviceEndTime
      * @throws BizException
@@ -574,9 +574,9 @@ public class CustomerOrderScheduleManager {
      * @since JDK 1.8
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
-    public void modifyServiceTime(String orderNo, Date serviceStartTime, Date serviceEndTime) throws BizException {
+    public void modifyServiceTime(Long id, Date serviceStartTime, Date serviceEndTime) throws BizException {
         CustomerOrderSchedule customerOrderSchedule = new CustomerOrderSchedule();
-        customerOrderSchedule.setOrderNo(orderNo);
+        customerOrderSchedule.setId(id);
         customerOrderSchedule.setServiceStartTime(serviceStartTime);
         customerOrderSchedule.setServiceEndTime(serviceEndTime);
         this.customerOrderScheduleService.updateServiceTime(customerOrderSchedule);
