@@ -47,8 +47,9 @@ public class StatisticsBean extends BasicFormBean {
     public void setSearchBeginDate(String searchBeginDate) {
         if (StringUtils.isBlank(searchBeginDate)) {
             this.searchBeginDate = null;
+        } else {
+            this.searchBeginDate = searchBeginDate + CarexxConstant.Datetime.DAY_BEGIN_SUFFIX;
         }
-        this.searchBeginDate = searchBeginDate + CarexxConstant.Datetime.DAY_BEGIN_SUFFIX;
     }
 
     public String getSearchEndDate() {
@@ -58,7 +59,8 @@ public class StatisticsBean extends BasicFormBean {
     public void setSearchEndDate(String searchEndDate) {
         if (StringUtils.isBlank(searchBeginDate)) {
             this.searchEndDate = null;
+        } else {
+            this.searchEndDate = searchEndDate + CarexxConstant.Datetime.DAY_END_SUFFIX;
         }
-        this.searchEndDate = searchEndDate + CarexxConstant.Datetime.DAY_END_SUFFIX;
     }
 }
