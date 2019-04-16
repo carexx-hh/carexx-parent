@@ -354,7 +354,7 @@
 		UPDATE
 			carexx_customer_order_schedule
 		SET
-			service_staff_id = #{serviceStaffId}
+			service_staff_id = #{serviceStaffId},
 			work_type_settle_id = #{workTypeSettleId}
 		WHERE
 			id = #{id}
