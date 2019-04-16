@@ -178,8 +178,8 @@ public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleSe
     }
 
     @Override
-    public void updateStaffIdPresentById(Long id, Integer serviceStaffId) throws BizException {
-        this.customerOrderScheduleMapper.updateStaffIdPresentById(id, serviceStaffId);
+    public void updateStaffIdPresentById(Long id, Integer serviceStaffId, Integer workTypeSettleId) throws BizException {
+        this.customerOrderScheduleMapper.updateStaffIdPresentById(id, serviceStaffId, workTypeSettleId);
     }
 
     @Override

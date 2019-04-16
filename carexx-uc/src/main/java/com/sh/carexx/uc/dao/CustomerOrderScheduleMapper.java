@@ -185,7 +185,7 @@ public interface CustomerOrderScheduleMapper {
      * @author csc
      * @since JDK 1.8
      */
-    int updateStaffIdPresentById(@Param("id") Long id, @Param("serviceStaffId") Integer serviceStaffId);
+    int updateStaffIdPresentById(@Param("id") Long id, @Param("serviceStaffId") Integer serviceStaffId, @Param("workTypeSettleId") Integer workTypeSettleId);
 
     /**
      * updateServiceTime:(修改订单结束时间). <br/>
