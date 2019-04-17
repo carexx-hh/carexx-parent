@@ -222,6 +222,11 @@ public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleSe
     }
 
     @Override
+    public Integer countOrderSchedule(String orderNo) {
+        return this.customerOrderScheduleMapper.countOrderSchedule(orderNo);
+    }
+
+    @Override
     public void updateStaffIdPresentById(Long id, Integer serviceStaffId, Integer workTypeSettleId) throws BizException {
         this.customerOrderScheduleMapper.updateStaffIdPresentById(id, serviceStaffId, workTypeSettleId);
     }
