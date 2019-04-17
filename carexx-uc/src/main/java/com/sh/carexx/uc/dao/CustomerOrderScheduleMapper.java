@@ -179,6 +179,15 @@ public interface CustomerOrderScheduleMapper {
     CustomerOrderSchedule selectOrderSchedulePresent(@Param("orderNo") String orderNo);
 
     /**
+     * countOrderSchedule:(获取当前订单进行中的排班数). <br/>
+     *
+     * @return
+     * @author csc
+     * @since JDK 1.8
+     */
+    Integer countOrderSchedule(@Param("orderNo") String orderNo);
+
+    /**
      * updateStaffIdPresentById:(更改当前班次的护工). <br/>
      *
      * @return

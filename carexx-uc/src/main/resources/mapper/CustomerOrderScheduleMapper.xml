@@ -350,6 +350,15 @@
 		limit 0,1
 	</select>
 
+	<select id="countOrderSchedule"  resultType="java.lang.Integer">
+		select
+			count(1)
+		from
+			carexx_customer_order_schedule
+		WHERE
+			order_no = #{orderNo, jdbcType=VARCHAR} AND service_status = 1
+	</select>
+
 	<update id="updateStaffIdPresentById">
 		UPDATE
 			carexx_customer_order_schedule

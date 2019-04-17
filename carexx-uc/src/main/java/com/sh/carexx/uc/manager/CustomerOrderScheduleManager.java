@@ -749,10 +749,12 @@ public class CustomerOrderScheduleManager {
         this.userMsgManager.add(userMsgFormBean);
 
         if (customerOrder.getOrderStatus() == OrderStatus.WAIT_PAY.getValue()) {
-
-            //将订单状态从待支付改为待排班
-            this.customerOrderService.updateStatus(orderNo,
-                    OrderStatus.WAIT_PAY.getValue(), OrderStatus.WAIT_SCHEDULE.getValue());
+            Integer count = this.customerOrderScheduleService.countOrderSchedule(orderNo);
+            if (count <= 0) {
+                //将订单状态从待支付改为待排班
+                this.customerOrderService.updateStatus(orderNo,
+                        OrderStatus.WAIT_PAY.getValue(), OrderStatus.WAIT_SCHEDULE.getValue());
+            }
         }
         this.customerOrderScheduleService.deleteMappOrderSchedule(customerOrderSchedule.getId());
         this.orderSettleService.deleteMappOrderSettle(customerOrderSchedule.getId());
