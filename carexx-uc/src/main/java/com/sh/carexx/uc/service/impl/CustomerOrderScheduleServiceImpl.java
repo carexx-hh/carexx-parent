@@ -178,6 +178,50 @@ public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleSe
     }
 
     @Override
+    public List<CustomerOrderSchedule> queryNoWantSchedule(CustomerOrderSchedule customerOrderSchedule) {
+        return this.customerOrderScheduleMapper.selectNoWantSchedule(customerOrderSchedule);
+    }
+
+    @Override
+    public void updateServiceEndTime(CustomerOrderSchedule customerOrderSchedule) throws BizException{
+        int rows = 0;
+        try {
+            rows = this.customerOrderScheduleMapper.updateServiceEndTime(customerOrderSchedule);
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.DB_ERROR, e);
+        }
+        if (rows != 1) {
+            throw new BizException(ErrorCode.DB_ERROR);
+        }
+    }
+
+    @Override
+    public void updateServiceStatus(List<CustomerOrderSchedule> customerOrderScheduleList) throws BizException{
+        int rows = 0;
+        try {
+            rows = this.customerOrderScheduleMapper.updateServiceStatus(customerOrderScheduleList);
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.DB_ERROR, e);
+        }
+        if (rows != 1) {
+            throw new BizException(ErrorCode.DB_ERROR);
+        }
+    }
+
+    @Override
+    public void deleteNoWantSchedule(List<CustomerOrderSchedule> customerOrderScheduleList) throws BizException{
+        int rows = 0;
+        try {
+            rows = this.customerOrderScheduleMapper.deleteNoWantSchedule(customerOrderScheduleList);
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.DB_ERROR, e);
+        }
+        if (rows != 1) {
+            throw new BizException(ErrorCode.DB_ERROR);
+        }
+    }
+
+    @Override
     public void updateStaffIdPresentById(Long id, Integer serviceStaffId, Integer workTypeSettleId) throws BizException {
         this.customerOrderScheduleMapper.updateStaffIdPresentById(id, serviceStaffId, workTypeSettleId);
     }

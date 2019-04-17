@@ -179,6 +179,42 @@ public interface CustomerOrderScheduleMapper {
     CustomerOrderSchedule selectOrderSchedulePresent(@Param("orderNo") String orderNo);
 
     /**
+     * selectNoWantSchedule:(查询支付时不需要的排班信息). <br/>
+     *
+     * @return
+     * @author ht
+     * @since JDK 1.8
+     */
+    List<CustomerOrderSchedule> selectNoWantSchedule(CustomerOrderSchedule customerOrderSchedule);
+
+    /**
+     * updateServiceEndTime:(支付时修改排班结束时间和小时数). <br/>
+     *
+     * @return
+     * @author ht
+     * @since JDK 1.8
+     */
+    int updateServiceEndTime(CustomerOrderSchedule customerOrderSchedule);
+
+    /**
+     * updateServiceStatus:(支付时修改排班服务状态). <br/>
+     *
+     * @return
+     * @author ht
+     * @since JDK 1.8
+     */
+    int updateServiceStatus(List<CustomerOrderSchedule> customerOrderScheduleList);
+
+    /**
+     * deleteNoWantSchedule:(支付时删除不需要的排班信息). <br/>
+     *
+     * @return
+     * @author ht
+     * @since JDK 1.8
+     */
+    int deleteNoWantSchedule(List<CustomerOrderSchedule> customerOrderScheduleList);
+
+    /**
      * updateStaffIdPresentById:(更改当前班次的护工). <br/>
      *
      * @return

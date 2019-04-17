@@ -103,6 +103,15 @@ public interface OrderSettleService {
 	void deleteMappOrderSettle(Long scheduleId) throws BizException;
 
 	/**
+	 * deleteNoWantSettle:(支付时删除不需要的结算信息). <br/>
+	 *
+	 * @return
+	 * @author ht
+	 * @since JDK 1.8
+	 */
+	void deleteNoWantSettle(List<CustomerOrderSchedule> customerOrderScheduleList) throws BizException;
+
+	/**
 	 *
 	 * updateStaffIdByScheduleId:(根据scheduleId修改护工). <br/>
 	 *

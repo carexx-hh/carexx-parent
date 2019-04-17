@@ -123,6 +123,19 @@ public class OrderSettleServiceImpl implements OrderSettleService {
     }
 
     @Override
+    public void deleteNoWantSettle(List<CustomerOrderSchedule> customerOrderScheduleList) throws BizException{
+        int rows = 0;
+        try {
+            rows = this.orderSettleMapper.deleteNoWantSettle(customerOrderScheduleList);
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.DB_ERROR, e);
+        }
+        if (rows != 1) {
+            throw new BizException(ErrorCode.DB_ERROR);
+        }
+    }
+
+    @Override
     public void updateStaffIdByScheduleId(OrderSettle orderSettle) throws BizException {
         this.orderSettleMapper.updateStaffIdByScheduleId(orderSettle);
     }

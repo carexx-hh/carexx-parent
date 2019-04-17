@@ -350,15 +350,67 @@
 		limit 0,1
 	</select>
 
+	<select id="selectNoWantSchedule" parameterType="com.sh.carexx.model.uc.CustomerOrderSchedule"  resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from
+			carexx_customer_order_schedule
+		WHERE
+			order_no = #{orderNo, jdbcType=VARCHAR}
+		<if test="serviceStatus != null and serviceStatus != '' ">
+			AND service_status = #{serviceStatus, jdbcType=TINYINT}
+		</if>
+		<if test="serviceEndTime != null and serviceEndTime != '' ">
+			AND service_start_time >= #{serviceStartTime}
+		</if>
+	</select>
+
 	<update id="updateStaffIdPresentById">
 		UPDATE
 			carexx_customer_order_schedule
 		SET
 			service_staff_id = #{serviceStaffId},
-			work_type_settle_id = #{workTypeSettleId}
+			work_type_settle_id = #{workTypeSettleId},
+			modify_time = now()
 		WHERE
 			id = #{id}
 	</update>
+
+	<update id="updateServiceEndTime" parameterType="com.sh.carexx.model.uc.CustomerOrderSchedule">
+		UPDATE
+			carexx_customer_order_schedule
+		SET
+			service_end_time = #{serviceEndTime},
+			service_duration = 12,
+			modify_time = now()
+		WHERE
+			id = #{id, jdbcType=BIGINT}
+	</update>
+
+	<update id="updateServiceStatus" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index"
+				 separator="," open="(" close=")">
+		UPDATE
+			carexx_customer_order_schedule
+		SET
+			service_status = 1,
+			modify_time = now()
+		WHERE
+			id = #{item.id}
+		</foreach>
+	</update>
+
+	<delete id="deleteNoWantSchedule" parameterType="java.util.List">
+		DELETE
+		FROM
+			carexx_customer_order_schedule
+		WHERE
+			id IN
+		<foreach collection="list" item="item" index="index"
+				 separator="," open="(" close=")">
+			#{item.id}
+		</foreach>
+	</delete>
 
 	<update id="updateServiceTime" parameterType="com.sh.carexx.model.uc.CustomerOrderSchedule">
 		update

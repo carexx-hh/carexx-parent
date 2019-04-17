@@ -121,6 +121,7 @@
             #{item.id}
         </foreach>
  	</update>
+
 	<update id="batchOpenUpdate" parameterType="java.util.List">
 	    update 
 	    	carexx_order_settle 
@@ -132,6 +133,7 @@
             #{item.id}
         </foreach>
  	</update>
+
 	<update id="updateStatus">
 		UPDATE
 			carexx_order_settle
@@ -141,6 +143,7 @@
 		WHERE
 			schedule_id = #{scheduleId, jdbcType=BIGINT} and settle_status = #{srcStatus, jdbcType=TINYINT}
 	</update>
+
 	<update id="updateSettleDelete">
 		UPDATE
 			carexx_order_settle
@@ -150,6 +153,7 @@
 		WHERE
 			schedule_id = #{scheduleId, jdbcType=BIGINT} and settle_status in (1,2)
 	</update>
+
 	<update id="updateSettleAmt" parameterType="com.sh.carexx.model.uc.OrderSettle">
 		update
 			carexx_order_settle
@@ -166,6 +170,17 @@
 			carexx_order_settle
 		WHERE
 			schedule_id = #{scheduleId}
+	</delete>
+
+	<delete id="deleteNoWantSettle" parameterType="java.util.List">
+		DELETE FROM
+			carexx_order_settle
+		WHERE
+			schedule_id IN
+		<foreach collection="list" item="item" index="index"
+				 separator="," open="(" close=")">
+			#{item.id}
+		</foreach>
 	</delete>
 
 	<update id="updateStaffIdByScheduleId">

@@ -25,6 +25,8 @@ public class WorkQuantityReportFormBean extends BasicFormBean {
 
 	private String settleStatus;
 
+	private String serviceStatus;
+
 	public String getServiceStartTime() {
 		return serviceStartTime;
 	}
@@ -107,5 +109,16 @@ public class WorkQuantityReportFormBean extends BasicFormBean {
 
 	public void setSettleStatus(String settleStatus) {
 		this.settleStatus = settleStatus;
+	}
+
+	public Byte getServiceStatus() {
+		if (ValidUtils.isInteger(serviceStatus)) {
+			return Byte.parseByte(serviceStatus);
+		}
+		return null;
+	}
+
+	public void setServiceStatus(String serviceStatus) {
+		this.serviceStatus = serviceStatus;
 	}
 }

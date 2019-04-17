@@ -76,7 +76,6 @@ public class CustomerOrderManager {
     public BigDecimal calcServiceFee(Integer instId, Integer serviceId, Date serviceStartTime, Date serviceEndTime) {
         // 订单总时长
         int hour = DateUtils.getHourDiff(serviceStartTime, serviceEndTime);
-        log.info("订单总时长  " + hour);
         // 节假日时长
         int holidayHour = 0;
         int checkHour = 0;
@@ -109,7 +108,6 @@ public class CustomerOrderManager {
         } else if (TimeUnit.MONTH.getValue() == instCareService.getServiceUnit()) {
             return instCareService.getServicePrice();
         }
-        log.info("节假日金额  " + holidayServiceFeeAmt + "正常服务金额  " + normalServiceFeeAmt);
         // 返回时节假日服务金额加上正常服务金额
         return normalServiceFeeAmt.add(holidayServiceFeeAmt).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
@@ -375,8 +373,8 @@ public class CustomerOrderManager {
             return;
         }
         for (CustomerOrder order : list) {
-            CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService
-                    .getNearByOrderNo(order.getOrderNo());
+//            CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService
+//                    .getNearByOrderNo(order.getOrderNo());
             CustomerOrder customerOrder = new CustomerOrder();
             customerOrder.setOrderNo(order.getOrderNo());
             CustomerOrderTime customerOrderTime = this.customerOrderTimeService.getDayJobByInstId(instId);//当前机构白班时间
@@ -384,18 +382,13 @@ public class CustomerOrderManager {
             Date nowTime = DateUtils.toDate(DateUtils.toString(new Date(), DateUtils.HH_MM_SS), DateUtils.HH_MM_SS);//当前时间
             Date afterTime = new Date(nowTime.getTime() - 60000);//推前一分钟时间
             Date startTime = customerOrderTime.getStartTime();//早班时间
-            log.info("早班时间  " + startTime);
             Date endTime = customerOrderTime.getEndTime();//晚班时间
-            log.info("晚班时间  " + endTime);
             Date serviceEndTime = null;
             if (afterTime.getTime() <= startTime.getTime()) {
                 serviceEndTime = DateUtils.toDate((today + " " + DateUtils.toString(endTime, DateUtils.HH_MM_SS)), DateUtils.YYYY_MM_DD_HH_MM_SS);
-                log.info(order.getOrderNo() + "  第一种情况  " + serviceEndTime);
             } else {
-//              if (afterTime.getTime() > startTime.getTime() && afterTime.getTime() <= endTime.getTime())
                 Date time = DateUtils.toDate((today + " " + DateUtils.toString(endTime, DateUtils.HH_MM_SS)), DateUtils.YYYY_MM_DD_HH_MM_SS);
                 serviceEndTime = DateUtils.addHour(time, 12);
-                log.info(order.getOrderNo() + "  第二种情况  " + serviceEndTime);
             }
             customerOrder.setOrderAmt(this.calcServiceFee(order.getInstId(), order.getServiceId(),
                     order.getServiceStartTime(), serviceEndTime));
@@ -415,11 +408,55 @@ public class CustomerOrderManager {
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
     public void modifyServiceEndTime(String orderNo) throws BizException {
-        CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(orderNo);
-        CustomerOrder customerOrder = new CustomerOrder();
-        customerOrder.setOrderNo(orderNo);
-        customerOrder.setServiceEndTime(customerOrderSchedule.getServiceEndTime());
+        CustomerOrder customerOrder = this.customerOrderService.getByOrderNo(orderNo);
+        CustomerOrderTime customerOrderTime = this.customerOrderTimeService.getDayJobByInstId(customerOrder.getInstId());//当前机构白班时间
+        String today = DateUtils.toString(new Date(), DateUtils.YYYY_MM_DD);//当前日期
+        Date nowTime = DateUtils.toDate(DateUtils.toString(new Date(), DateUtils.HH_MM_SS), DateUtils.HH_MM_SS);//当前时间
+        Date startTime = customerOrderTime.getStartTime();//早班时间
+        Date endTime = customerOrderTime.getEndTime();//晚班时间
+        Date serviceEndTime = null;
+        if (nowTime.getTime() <= startTime.getTime()) { //如果当前时间小于早班开始时间
+            serviceEndTime = DateUtils.toDate((today + " " + DateUtils.toString(startTime, DateUtils.HH_MM_SS)), DateUtils.YYYY_MM_DD_HH_MM_SS);
+        } else if(nowTime.getTime() >= endTime.getTime()){ //如果当前时间大于晚班开始时间
+            Date time = DateUtils.toDate((today + " " + DateUtils.toString(endTime, DateUtils.HH_MM_SS)), DateUtils.YYYY_MM_DD_HH_MM_SS);
+            serviceEndTime = DateUtils.addHour(time, 12);
+        }else{
+            serviceEndTime = DateUtils.toDate((today + " " + DateUtils.toString(endTime, DateUtils.HH_MM_SS)), DateUtils.YYYY_MM_DD_HH_MM_SS);
+        }
+        customerOrder.setServiceEndTime(serviceEndTime);
         this.customerOrderService.updateServiceEndTime(customerOrder);
+        this.noWantSchedule(orderNo, serviceEndTime);
+    }
+
+    /**
+     * noWantSchedule:(删除多余排班和结算记录). <br/>
+     *
+     * @throws BizException
+     * @author hetao
+     * @since JDK 1.8
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
+    public void noWantSchedule(String orderNo, Date serviceEndTime) throws BizException {
+        CustomerOrderSchedule customerOrderSchedule = new CustomerOrderSchedule();
+        customerOrderSchedule.setOrderNo(orderNo);
+        customerOrderSchedule.setServiceStatus(OrderScheduleStatus.WAIT_ACCEPT.getValue());
+        List<CustomerOrderSchedule> customerOrderScheduleList = this.customerOrderScheduleService.queryNoWantSchedule(customerOrderSchedule);
+        this.customerOrderScheduleService.updateServiceStatus(customerOrderScheduleList);
+        customerOrderSchedule = new CustomerOrderSchedule();
+        customerOrderSchedule.setOrderNo(orderNo);
+        customerOrderSchedule.setServiceEndTime(serviceEndTime);
+        customerOrderScheduleList = this.customerOrderScheduleService.queryNoWantSchedule(customerOrderSchedule);
+        this.customerOrderScheduleService.deleteNoWantSchedule(customerOrderScheduleList);
+        this.orderSettleService.deleteNoWantSettle(customerOrderScheduleList);
+        customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(orderNo);
+        if (customerOrderSchedule.getServiceEndTime().getTime() > serviceEndTime.getTime()) {
+            customerOrderSchedule.setServiceEndTime(serviceEndTime);
+            this.customerOrderScheduleService.updateServiceEndTime(customerOrderSchedule);
+            OrderSettle orderSettle = this.orderSettleService.getByScheduleId(customerOrderSchedule.getId());
+            orderSettle.setStaffSettleAmt((orderSettle.getStaffSettleAmt().divide(new BigDecimal(2))).setScale(2, BigDecimal.ROUND_HALF_UP));
+            orderSettle.setInstSettleAmt((orderSettle.getInstSettleAmt().divide(new BigDecimal(2))).setScale(2, BigDecimal.ROUND_HALF_UP));
+            this.orderSettleService.updateSettleAmt(orderSettle);
+        }
     }
 
     /**

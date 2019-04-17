@@ -177,6 +177,42 @@ public interface CustomerOrderScheduleService {
     CustomerOrderSchedule selectOrderSchedulePresent(String orderNo);
 
     /**
+     * selectNoWantSchedule:(查询支付时不需要的排班信息). <br/>
+     *
+     * @return
+     * @author ht
+     * @since JDK 1.8
+     */
+    List<CustomerOrderSchedule> queryNoWantSchedule(CustomerOrderSchedule customerOrderSchedule);
+
+    /**
+     * updateServiceEndTime:(支付时修改排班结束时间和小时数). <br/>
+     *
+     * @return
+     * @author ht
+     * @since JDK 1.8
+     */
+    void updateServiceEndTime(CustomerOrderSchedule customerOrderSchedule) throws BizException;
+
+    /**
+     * updateServiceStatus:(支付时修改排班服务状态). <br/>
+     *
+     * @return
+     * @author ht
+     * @since JDK 1.8
+     */
+    void updateServiceStatus(List<CustomerOrderSchedule> customerOrderScheduleList) throws BizException;
+
+    /**
+     * deleteNoWantSchedule:(支付时删除不需要的排班信息). <br/>
+     *
+     * @return
+     * @author ht
+     * @since JDK 1.8
+     */
+    void deleteNoWantSchedule(List<CustomerOrderSchedule> customerOrderScheduleList) throws BizException;
+
+    /**
      * updateStaffIdPresentById:(更改当前班次的护工). <br/>
      *
      * @return

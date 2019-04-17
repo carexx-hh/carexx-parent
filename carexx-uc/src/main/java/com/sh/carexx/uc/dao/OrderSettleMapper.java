@@ -132,6 +132,15 @@ public interface OrderSettleMapper {
 	int deleteMappOrderSettle(Long scheduleId);
 
 	/**
+	 * deleteNoWantSettle:(支付时删除不需要的结算信息). <br/>
+	 *
+	 * @return
+	 * @author ht
+	 * @since JDK 1.8
+	 */
+	int deleteNoWantSettle(List<CustomerOrderSchedule> customerOrderScheduleList);
+
+	/**
 	 *
 	 * updateStaffIdByScheduleId:(根据scheduleId修改护工). <br/>
 	 *
