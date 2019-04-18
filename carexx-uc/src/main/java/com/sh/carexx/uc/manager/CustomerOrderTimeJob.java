@@ -18,11 +18,6 @@ public class CustomerOrderTimeJob implements Job {
 
     private Logger log = Logger.getLogger(CustomerOrderTimeJob.class);
 
-//    @Autowired
-//    private CustomerOrderManager customerOrderManager;
-//    @Autowired
-//    private CustomerOrderScheduleManager customerOrderScheduleManager;
-
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         log.info("定时任务开始");
