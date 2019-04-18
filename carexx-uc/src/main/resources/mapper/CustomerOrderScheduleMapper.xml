@@ -202,7 +202,7 @@
 		UPDATE
 			carexx_customer_order_schedule
 		SET
-			service_status = 1
+			service_status = 2
 		WHERE
 			order_no = #{orderNo,jdbcType=VARCHAR} AND NOW() <![CDATA[>=]]> service_end_time
 	</update>
@@ -371,7 +371,7 @@
 		from
 			carexx_customer_order_schedule
 		WHERE
-			order_no = #{orderNo, jdbcType=VARCHAR} AND service_status = 1
+			order_no = #{orderNo, jdbcType=VARCHAR} AND service_status in (1,2)
 	</select>
 
 	<update id="updateStaffIdPresentById">

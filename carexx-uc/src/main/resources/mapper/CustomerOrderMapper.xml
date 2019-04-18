@@ -129,7 +129,7 @@
 							MAX(create_time)
 						FROM
 							carexx_customer_order_schedule
-						WHERE service_status = 1
+						WHERE service_status in (1,2)
 						GROUP BY
 							order_no
 					)
