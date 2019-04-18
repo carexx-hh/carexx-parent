@@ -270,7 +270,7 @@ public class CustomerOrderScheduleManager {
      * @since JDK 1.8
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
-    private void doShedule(CustomerOrderScheduleFormBean customerOrderScheduleFormBean, Date amountStartDate,
+    public void doShedule(CustomerOrderScheduleFormBean customerOrderScheduleFormBean, Date amountStartDate,
                            Date amountEndDate) throws BizException {
         CustomerOrder customerOrder = this.customerOrderService
                 .getByOrderNo(customerOrderScheduleFormBean.getOrderNo());
@@ -527,8 +527,10 @@ public class CustomerOrderScheduleManager {
         List<CustomerOrderSchedule> scheduleList = this.customerOrderScheduleService.getByOrderNo(orderNo);
         // 批量确认排班记录为已完成
         for (CustomerOrderSchedule list : scheduleList) {
-            this.customerOrderScheduleService.updateStatus(list.getId(), OrderScheduleStatus.IN_SERVICE.getValue(),
-                    OrderScheduleStatus.COMPLETED.getValue());
+            if(list.getServiceStatus() == OrderScheduleStatus.IN_SERVICE.getValue()){
+                this.customerOrderScheduleService.updateStatus(list.getId(), OrderScheduleStatus.IN_SERVICE.getValue(),
+                        OrderScheduleStatus.COMPLETED.getValue());
+            }
         }
     }
 
