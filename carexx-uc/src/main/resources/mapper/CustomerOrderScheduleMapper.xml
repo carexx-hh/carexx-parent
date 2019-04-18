@@ -251,14 +251,7 @@
 			now()
 		)
 	</insert>
-	
-	<select id="selectCustomerOrderScheduleCount" resultType="java.lang.Integer">
-		SELECT
-			count(1) totalNum
-		FROM
-			carexx_customer_order_schedule
-	</select>
-	
+
 	<select id="selectCustomerOrderSchedule" resultType="java.util.Map">
 		SELECT
 			cos.id id,
@@ -357,11 +350,11 @@
 			carexx_customer_order_schedule
 		WHERE
 			order_no = #{orderNo, jdbcType=VARCHAR}
-		<if test="serviceStatus != null and serviceStatus != '' ">
+		<if test="serviceStatus != null">
 			AND service_status = #{serviceStatus, jdbcType=TINYINT}
 		</if>
-		<if test="serviceEndTime != null and serviceEndTime != '' ">
-			AND service_start_time >= #{serviceStartTime}
+		<if test="serviceEndTime != null">
+			AND service_start_time >= #{serviceEndTime, jdbcType=TIMESTAMP}
 		</if>
 	</select>
 
@@ -397,15 +390,16 @@
 	</update>
 
 	<update id="updateServiceStatus" parameterType="java.util.List">
-		<foreach collection="list" item="item" index="index"
-				 separator="," open="(" close=")">
 		UPDATE
 			carexx_customer_order_schedule
 		SET
 			service_status = 1,
 			modify_time = now()
 		WHERE
-			id = #{item.id}
+        id IN
+        <foreach collection="list" item="item" index="index"
+                 separator="," open="(" close=")">
+			#{item.id}
 		</foreach>
 	</update>
 
