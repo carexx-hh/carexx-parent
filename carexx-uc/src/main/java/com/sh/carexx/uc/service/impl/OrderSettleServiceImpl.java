@@ -130,7 +130,7 @@ public class OrderSettleServiceImpl implements OrderSettleService {
         } catch (Exception e) {
             throw new BizException(ErrorCode.DB_ERROR, e);
         }
-        if (rows != 1) {
+        if (rows != customerOrderScheduleList.size()) {
             throw new BizException(ErrorCode.DB_ERROR);
         }
     }

@@ -441,13 +441,17 @@ public class CustomerOrderManager {
         customerOrderSchedule.setOrderNo(orderNo);
         customerOrderSchedule.setServiceStatus(OrderScheduleStatus.WAIT_ACCEPT.getValue());
         List<CustomerOrderSchedule> customerOrderScheduleList = this.customerOrderScheduleService.queryNoWantSchedule(customerOrderSchedule);
-        this.customerOrderScheduleService.updateServiceStatus(customerOrderScheduleList);
+        if(customerOrderScheduleList.size() > 0){
+            this.customerOrderScheduleService.updateServiceStatus(customerOrderScheduleList);
+        }
         customerOrderSchedule = new CustomerOrderSchedule();
         customerOrderSchedule.setOrderNo(orderNo);
         customerOrderSchedule.setServiceEndTime(serviceEndTime);
         customerOrderScheduleList = this.customerOrderScheduleService.queryNoWantSchedule(customerOrderSchedule);
-        this.customerOrderScheduleService.deleteNoWantSchedule(customerOrderScheduleList);
-        this.orderSettleService.deleteNoWantSettle(customerOrderScheduleList);
+        if(customerOrderScheduleList.size() > 0){
+            this.customerOrderScheduleService.deleteNoWantSchedule(customerOrderScheduleList);
+            this.orderSettleService.deleteNoWantSettle(customerOrderScheduleList);
+        }
         customerOrderSchedule = this.customerOrderScheduleService.getNearByOrderNo(orderNo);
         if (customerOrderSchedule.getServiceEndTime().getTime() > serviceEndTime.getTime()) {
             customerOrderSchedule.setServiceEndTime(serviceEndTime);
