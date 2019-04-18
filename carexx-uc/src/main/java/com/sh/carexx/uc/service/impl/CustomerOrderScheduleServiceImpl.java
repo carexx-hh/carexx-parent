@@ -203,7 +203,7 @@ public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleSe
         } catch (Exception e) {
             throw new BizException(ErrorCode.DB_ERROR, e);
         }
-        if (rows != 1) {
+        if (rows != customerOrderScheduleList.size()) {
             throw new BizException(ErrorCode.DB_ERROR);
         }
     }
@@ -216,7 +216,7 @@ public class CustomerOrderScheduleServiceImpl implements CustomerOrderScheduleSe
         } catch (Exception e) {
             throw new BizException(ErrorCode.DB_ERROR, e);
         }
-        if (rows != 1) {
+        if (rows != customerOrderScheduleList.size()) {
             throw new BizException(ErrorCode.DB_ERROR);
         }
     }
