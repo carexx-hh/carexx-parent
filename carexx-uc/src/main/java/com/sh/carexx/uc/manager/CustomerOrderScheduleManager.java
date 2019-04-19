@@ -271,7 +271,7 @@ public class CustomerOrderScheduleManager {
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
     public void doShedule(CustomerOrderScheduleFormBean customerOrderScheduleFormBean, Date amountStartDate,
-                           Date amountEndDate) throws BizException {
+                          Date amountEndDate) throws BizException {
         CustomerOrder customerOrder = this.customerOrderService
                 .getByOrderNo(customerOrderScheduleFormBean.getOrderNo());
         if (customerOrder.getOrderType() == 1) {
@@ -527,7 +527,7 @@ public class CustomerOrderScheduleManager {
         List<CustomerOrderSchedule> scheduleList = this.customerOrderScheduleService.getByOrderNo(orderNo);
         // 批量确认排班记录为已完成
         for (CustomerOrderSchedule list : scheduleList) {
-            if(list.getServiceStatus() == OrderScheduleStatus.IN_SERVICE.getValue()){
+            if (list.getServiceStatus() == OrderScheduleStatus.IN_SERVICE.getValue()) {
                 this.customerOrderScheduleService.updateStatus(list.getId(), OrderScheduleStatus.IN_SERVICE.getValue(),
                         OrderScheduleStatus.COMPLETED.getValue());
             }
@@ -699,13 +699,46 @@ public class CustomerOrderScheduleManager {
             //更改当前班次的护工
             //获取当前的排班信息
             CustomerOrderSchedule customerOrderSchedule = this.customerOrderScheduleService.selectOrderSchedulePresent(mappCustomerOrderScheduleFormBean.getOrderNo());
-            //修改当前班次的护工
-            this.customerOrderScheduleService.updateStaffIdPresentById(customerOrderSchedule.getId(),
-                    mappCustomerOrderScheduleFormBean.getServiceStaffId(),
-                    mappCustomerOrderScheduleFormBean.getWorkTypeSettleId());
-            customerOrderSchedule.setWorkTypeSettleId(mappCustomerOrderScheduleFormBean.getWorkTypeSettleId());
-            customerOrderSchedule.setServiceStaffId(mappCustomerOrderScheduleFormBean.getServiceStaffId());
-            this.orderSettleManager.modify(customerOrderSchedule);
+            if (customerOrderSchedule.getServiceDuration() == 24) {
+                CustomerOrderSchedule newCustomerOrderSchedule = new CustomerOrderSchedule();
+                newCustomerOrderSchedule.setOrderNo(customerOrderSchedule.getOrderNo());
+                newCustomerOrderSchedule.setServiceStaffId(customerOrderSchedule.getServiceStaffId());
+                newCustomerOrderSchedule.setServiceStartTime(customerOrderSchedule.getServiceStartTime());
+                newCustomerOrderSchedule.setServiceEndTime(DateUtils.addHour(customerOrderSchedule.getServiceStartTime(), 12));
+                newCustomerOrderSchedule.setServiceDuration(12);
+                newCustomerOrderSchedule.setWorkTypeSettleId(customerOrderSchedule.getWorkTypeSettleId());
+                newCustomerOrderSchedule.setServiceStatus(OrderScheduleStatus.COMPLETED.getValue());
+                newCustomerOrderSchedule.setScheduleRemark(customerOrderSchedule.getScheduleRemark());
+                // 添加排班一条记录
+                this.customerOrderScheduleService.save(newCustomerOrderSchedule);
+                // 添加结算记录
+                this.orderSettleManager.add(newCustomerOrderSchedule);
+
+                CustomerOrderSchedule newCustomerOrderSchedule2 = new CustomerOrderSchedule();
+                newCustomerOrderSchedule2.setOrderNo(customerOrderSchedule.getOrderNo());
+                newCustomerOrderSchedule2.setServiceStaffId(mappCustomerOrderScheduleFormBean.getServiceStaffId());
+                newCustomerOrderSchedule2.setServiceStartTime(DateUtils.addHour(customerOrderSchedule.getServiceEndTime(), -12));
+                newCustomerOrderSchedule2.setServiceEndTime(customerOrderSchedule.getServiceEndTime());
+                newCustomerOrderSchedule2.setServiceDuration(12);
+                newCustomerOrderSchedule2.setWorkTypeSettleId(mappCustomerOrderScheduleFormBean.getWorkTypeSettleId());
+                newCustomerOrderSchedule2.setServiceStatus(OrderScheduleStatus.IN_SERVICE.getValue());
+                newCustomerOrderSchedule2.setScheduleRemark(customerOrderSchedule.getScheduleRemark());
+                // 添加排班一条记录
+                this.customerOrderScheduleService.save(newCustomerOrderSchedule2);
+                // 添加结算记录
+                this.orderSettleManager.add(newCustomerOrderSchedule2);
+
+                this.customerOrderScheduleService.deleteMappOrderSchedule(customerOrderSchedule.getId());
+                this.orderSettleService.deleteMappOrderSettle(customerOrderSchedule.getId());
+            } else {
+                //修改当前班次的护工
+                this.customerOrderScheduleService.updateStaffIdPresentById(customerOrderSchedule.getId(),
+                        mappCustomerOrderScheduleFormBean.getServiceStaffId(),
+                        mappCustomerOrderScheduleFormBean.getWorkTypeSettleId());
+                customerOrderSchedule.setWorkTypeSettleId(mappCustomerOrderScheduleFormBean.getWorkTypeSettleId());
+                customerOrderSchedule.setServiceStaffId(mappCustomerOrderScheduleFormBean.getServiceStaffId());
+                this.orderSettleManager.modify(customerOrderSchedule);
+            }
         }
     }
 
