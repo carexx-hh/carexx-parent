@@ -52,6 +52,16 @@ public interface CareInstService {
 	CareInst getByInstName(CareInstFormBean careInstFormBean);
 
 	/**
+	 *
+	 * selectInstRegion:(查询机构地区). <br/>
+	 *
+	 * @author ht
+	 * @return
+	 * @since JDK 1.8
+	 */
+	List<Map<?,?>> getInstRegion();
+
+	/**
 	 * 
 	 * getCareInstCount:(医疗机构分页统计). <br/>
 	 * 

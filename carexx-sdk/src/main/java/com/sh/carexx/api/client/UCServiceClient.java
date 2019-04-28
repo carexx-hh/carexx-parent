@@ -167,6 +167,16 @@ public interface UCServiceClient {
     String queryAllCareInst(@RequestBody CareInstFormBean careInstFormBean);
 
     /**
+     * queryInstRegion:(移动端查询所有机构地区). <br/>
+     *
+     * @return
+     * @author ht
+     * @since JDK 1.8
+     */
+    @RequestMapping(value = "/careinst/list_Region", method = RequestMethod.GET)
+    String queryInstRegion();
+
+    /**
      * modifyCareInst:(修改医护机构信息). <br/>
      *
      * @param careInstFormBean

@@ -33,11 +33,19 @@
 			carexx_care_inst
 		WHERE inst_name = #{instName,jdbcType=VARCHAR}
 	</select>
+    <select id="selectInstRegion" resultType="java.util.Map">
+        SELECT
+	      DISTINCT inst_region
+        FROM
+	      carexx_care_inst
+	    WHERE
+	      inst_status = 1
+    </select>
 	<select id="selectCareInstCount" parameterType="com.sh.carexx.bean.care.CareInstFormBean" resultType="java.lang.Integer">
 		SELECT
 			count(1) totalCount
 		FROM
-			carexx_care_inst 
+			carexx_care_inst
 		<where>
 			<if test="instName != null and instName != '' ">
 				inst_name like CONCAT('%', '${instName}', '%')
@@ -64,7 +72,7 @@
 			create_time createTime,
 			modify_time modifyTime
 		FROM
-			carexx_care_inst 
+			carexx_care_inst
 		<where>
 			<if test="instName != null and instName != '' ">
 				inst_name like CONCAT('%', '${instName}', '%')

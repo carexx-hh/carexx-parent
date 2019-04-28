@@ -201,6 +201,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public String queryInstRegion() {
+		return null;
+	}
+
+	@Override
 	public BasicRetVal disableCareInst(Integer id) {
 		return null;
 	}

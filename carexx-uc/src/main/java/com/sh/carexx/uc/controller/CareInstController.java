@@ -1,16 +1,5 @@
 package com.sh.carexx.uc.controller;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.sh.carexx.bean.care.CareInstFormBean;
 import com.sh.carexx.common.CarexxConstant;
 import com.sh.carexx.common.exception.BizException;
@@ -19,6 +8,12 @@ import com.sh.carexx.common.web.DataRetVal;
 import com.sh.carexx.common.web.PagerBean;
 import com.sh.carexx.uc.manager.CareInstManager;
 import com.sh.carexx.uc.service.CareInstService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/careinst")
@@ -58,6 +53,11 @@ public class CareInstController {
 			resultList = this.careInstService.queryCareInstList(careInstFormBean);
 		}
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, new PagerBean(totalNum, resultList)).toJSON();
+	}
+
+	@RequestMapping(value = "/list_Region", method = RequestMethod.GET)
+	public String queryInstRegion(){
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS,this.careInstService.getInstRegion()).toJSON();
 	}
 
 	@RequestMapping(value = "/all", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)

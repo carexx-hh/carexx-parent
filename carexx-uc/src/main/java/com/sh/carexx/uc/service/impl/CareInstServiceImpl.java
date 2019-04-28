@@ -1,17 +1,16 @@
 package com.sh.carexx.uc.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sh.carexx.bean.care.CareInstFormBean;
 import com.sh.carexx.common.ErrorCode;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.model.uc.CareInst;
 import com.sh.carexx.uc.dao.CareInstMapper;
 import com.sh.carexx.uc.service.CareInstService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class CareInstServiceImpl implements CareInstService {
@@ -39,6 +38,11 @@ public class CareInstServiceImpl implements CareInstService {
 	@Override
 	public CareInst getByInstName(CareInstFormBean careInstFormBean) {
 		return this.careInstMapper.selectByInstName(careInstFormBean);
+	}
+
+	@Override
+	public List<Map<?, ?>> getInstRegion() {
+		return this.careInstMapper.selectInstRegion();
 	}
 
 	@Override
