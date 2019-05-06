@@ -16,6 +16,8 @@ public class UserAccountDetails {
 
     private BigDecimal payAmt;
 
+    private BigDecimal payPoundage;
+
     private BigDecimal payAmtAfter;
 
     private Byte payChnl;
@@ -72,6 +74,14 @@ public class UserAccountDetails {
 
     public void setPayAmt(BigDecimal payAmt) {
         this.payAmt = payAmt;
+    }
+
+    public BigDecimal getPayPoundage() {
+        return payPoundage;
+    }
+
+    public void setPayPoundage(BigDecimal payPoundage) {
+        this.payPoundage = payPoundage;
     }
 
     public BigDecimal getPayAmtAfter() {

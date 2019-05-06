@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/customerorder")
@@ -78,7 +77,7 @@ public class CustomerOrderController extends BaseController {
 		OrderPayment orderPayment = this.ucServiceClient.getOrderPayment(userAccountDetailFormBean.getOrderNo());
 		userAccountDetailFormBean.setUserId(this.getCurrentUser().getId());
 		userAccountDetailFormBean.setPayType(PayType.ORDERPAY.getValue());
-		userAccountDetailFormBean.setPayAmt(orderPayment.getPayAmt().add(new BigDecimal(4)));
+		userAccountDetailFormBean.setPayAmt(orderPayment.getPayAmt());
 		return this.ucServiceClient.addUserAccountDetail(userAccountDetailFormBean);
 	}
 

@@ -65,7 +65,12 @@ public class UserAccountDetailManager {
             if(payAmt.compareTo(balance) == 1){
                 throw new BizException(ErrorCode.USER_ACCOUNT_BALANCE_NOT_ENOUGH);
             }
-            balance = balance.subtract(payAmt);
+            BigDecimal poundage = (payAmt.multiply(new BigDecimal("0.002"))).setScale(2,BigDecimal.ROUND_HALF_UP);
+            if(poundage.compareTo(new BigDecimal("0.02")) == -1){
+                poundage = new BigDecimal("0.02");
+            }
+            userAccountDetails.setPayPoundage(poundage);
+            balance = balance.subtract(payAmt.add(poundage));
         }else if(userAccountDetailFormBean.getPayType() == PayType.ORDERPAY.getValue()){ //订单支付
             if(payAmt.compareTo(balance) == 1){
                 throw new BizException(ErrorCode.USER_ACCOUNT_BALANCE_NOT_ENOUGH);

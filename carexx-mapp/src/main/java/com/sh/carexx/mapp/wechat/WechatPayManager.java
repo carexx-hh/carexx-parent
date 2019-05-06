@@ -8,6 +8,7 @@ import com.sh.carexx.common.enums.pay.PayStatus;
 import com.sh.carexx.common.enums.pay.PayType;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.util.*;
+import com.sh.carexx.common.web.BasicRetVal;
 import com.sh.carexx.mapp.wechat.bean.WeDoReFundUnifiedRep;
 import com.sh.carexx.mapp.wechat.bean.WeDoReFundUnifiedRsp;
 import com.sh.carexx.mapp.wechat.bean.WepayUnifiedOrderReq;
@@ -92,8 +93,8 @@ public class WechatPayManager {
 		try {
 			String reqBody = JAXBUtils.convert2Xml(req, false, CHARSET);
 			this.logger.info("企业付款到用户零钱开始，请求报文：[{}]", reqBody);
-			String rspBody = HttpClientUtils.doRefund(WECHAT_PAY_GATEWAY + "mmpaymkttransfers/promotion/transfers", null, reqBody, true,
-					CHARSET);
+			String rspBody = HttpClientUtils.doRefund(WECHAT_PAY_GATEWAY + "mmpaymkttransfers/promotion/transfers", null,
+					reqBody, this.wechatPayMchtId, CHARSET);
 			this.logger.info("企业付款到用户零钱结束，响应报文：[{}]", rspBody);
 			weDoReFundUnifiedRsp = JAXBUtils.convert2JavaBean(rspBody, WeDoReFundUnifiedRsp.class);
 		} catch (Exception e) {
@@ -163,7 +164,7 @@ public class WechatPayManager {
 		return resultMap;
 	}
 
-	public WeDoReFundUnifiedRsp getReFundInfo(UserAccountDetailFormBean userAccountDetailFormBean)
+	public BasicRetVal getReFundInfo(UserAccountDetailFormBean userAccountDetailFormBean)
 			throws BizException {
 		TreeMap<String, String> params = new TreeMap<String, String>();
 		params.put("mch_appid", this.wechatAppId);
@@ -178,17 +179,12 @@ public class WechatPayManager {
 		String reqSign = this.sign(params, this.wechatPaySignKey);
 		params.put("sign", reqSign);
 		WeDoReFundUnifiedRsp rsq = this.unifiedDoReFund(params);
-		if(this.TRADE_SUCCESS.equals(rsq.getResult_code()) && this.TRADE_SUCCESS.equals(rsq.getReturn_code())){
-			userAccountDetailFormBean.setUserId(userAccountDetailFormBean.getUserId());
-			userAccountDetailFormBean.setPayType(PayType.ReFund.getValue());
-			userAccountDetailFormBean.setPayChnlTransNo(rsq.getPayment_no());
-			userAccountDetailFormBean.setPayStatus(this.translateTradeStatus(rsq.getResult_code()));
-			userAccountDetailFormBean.setPayTime(DateUtils.toDate(rsq.getPayment_time(),DateUtils.YYYY_MM_DD_HH_MM_SS));
-			this.ucServiceClient.addUserAccountDetail(userAccountDetailFormBean);
-		} else{
-			throw new BizException(rsq.getErr_code()+","+rsq.getReturn_msg());
-		}
-		return rsq;
+		userAccountDetailFormBean.setUserId(userAccountDetailFormBean.getUserId());
+		userAccountDetailFormBean.setPayType(PayType.ReFund.getValue());
+		userAccountDetailFormBean.setPayChnlTransNo(rsq.getPayment_no());
+		userAccountDetailFormBean.setPayStatus(this.translateTradeStatus(rsq.getResult_code()));
+		userAccountDetailFormBean.setPayTime(DateUtils.toDate(rsq.getPayment_time(),DateUtils.YYYY_MM_DD_HH_MM_SS));
+		return this.ucServiceClient.addUserAccountDetail(userAccountDetailFormBean);
 	}
 
 	public Byte translateTradeStatus(String tradeStatus) {

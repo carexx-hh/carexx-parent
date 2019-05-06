@@ -8,6 +8,7 @@
         <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
         <result column="pay_type" property="payType" jdbcType="TINYINT"/>
         <result column="pay_amt" property="payAmt" jdbcType="DECIMAL"/>
+        <result column="pay_poundage" property="payPoundage" jdbcType="DECIMAL"/>
         <result column="pay_amt_after" property="payAmtAfter" jdbcType="DECIMAL"/>
         <result column="pay_chnl" property="payChnl" jdbcType="TINYINT"/>
         <result column="pay_chnl_trans_no" property="payChnlTransNo" jdbcType="VARCHAR"/>
@@ -16,7 +17,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, user_id, pay_no, order_no, pay_type, pay_amt, pay_amt_after, pay_chnl, pay_chnl_trans_no,
+        id, user_id, pay_no, order_no, pay_type, pay_amt, pay_poundage, pay_amt_after, pay_chnl, pay_chnl_trans_no,
         pay_status, pay_time
     </sql>
 
@@ -68,13 +69,13 @@
 
     <insert id="insert" parameterType="com.sh.carexx.model.uc.UserAccountDetails">
         insert into carexx_user_account_details (user_id, pay_no,
-          order_no, pay_type, pay_amt,
+          order_no, pay_type, pay_amt, pay_poundage,
           pay_amt_after, pay_chnl, pay_chnl_trans_no,
           pay_status, pay_time)
         values (#{userId,jdbcType=INTEGER}, #{payNo,jdbcType=VARCHAR},
           #{orderNo,jdbcType=VARCHAR}, #{payType,jdbcType=TINYINT}, #{payAmt,jdbcType=DECIMAL},
-          #{payAmtAfter,jdbcType=DECIMAL}, #{payChnl,jdbcType=TINYINT}, #{payChnlTransNo,jdbcType=VARCHAR},
-          #{payStatus,jdbcType=TINYINT}, #{payTime,jdbcType=TIMESTAMP})
+          #{payPoundage,jdbcType=DECIMAL}, #{payAmtAfter,jdbcType=DECIMAL}, #{payChnl,jdbcType=TINYINT},
+          #{payChnlTransNo,jdbcType=VARCHAR}, #{payStatus,jdbcType=TINYINT}, #{payTime,jdbcType=TIMESTAMP})
     </insert>
 
 </mapper>

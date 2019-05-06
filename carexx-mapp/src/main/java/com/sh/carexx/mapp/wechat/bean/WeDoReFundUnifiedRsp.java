@@ -22,6 +22,8 @@ public class WeDoReFundUnifiedRsp {
     private String result_code;
     @XmlElement(name = "err_code")
     private String err_code;
+    @XmlElement(name = "err_code_des")
+    private String err_code_des;
     @XmlElement(name = "partner_trade_no")
     private String partner_trade_no;
     @XmlElement(name = "payment_no")
@@ -83,6 +85,14 @@ public class WeDoReFundUnifiedRsp {
 
     public void setErr_code(String err_code) {
         this.err_code = err_code;
+    }
+
+    public String getErr_code_des() {
+        return err_code_des;
+    }
+
+    public void setErr_code_des(String err_code_des) {
+        this.err_code_des = err_code_des;
     }
 
     public String getPartner_trade_no() {
