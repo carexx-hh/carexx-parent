@@ -613,7 +613,7 @@ public interface UCServiceClient {
     BasicRetVal deleteInstCustomer(@PathVariable("id") Integer id);
 
     /**
-     * addCustomerOrder:(添加客户服务订单). <br/>
+     * addCustomerOrder:(添加医院订单). <br/>
      *
      * @param customerOrderFormBean
      * @return
@@ -623,11 +623,19 @@ public interface UCServiceClient {
     @RequestMapping(value = "/customerorder/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     BasicRetVal addCustomerOrder(@RequestBody CustomerOrderFormBean customerOrderFormBean);
 
+    /**
+     * addCommunityCustomerOrder:(添加社区订单). <br/>
+     *
+     * @param customerOrderFormBean
+     * @return
+     * @author hetao
+     * @since JDK 1.8
+     */
     @RequestMapping(value = "/customerorder/add_community", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     BasicRetVal addCommunityCustomerOrder(@RequestBody CustomerOrderFormBean customerOrderFormBean);
 
     /**
-     * addCustomerOrder:(移动端添加客户服务预约订单). <br/>
+     * addCustomerOrder:(移动端添加医院订单). <br/>
      *
      * @return
      * @author hetao
@@ -635,6 +643,16 @@ public interface UCServiceClient {
      */
     @RequestMapping(value = "/customerorder/add_appointOrder", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     BasicRetVal addCustomerAppointOrder(@RequestBody CustomerAppointOrderFormBean customerAppointOrderFormBean);
+
+    /**
+     * addCustomerOrder:(社区端添加订单). <br/>
+     *
+     * @return
+     * @author hetao
+     * @since JDK 1.8
+     */
+    @RequestMapping(value = "/customerorder/add_communityOrder", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    BasicRetVal addCommunityOrder(@RequestBody CustomerAppointOrderFormBean customerAppointOrderFormBean);
 
     /**
      * queryCustomerOrderForList:(分页查询客户预约服务订单). <br/>

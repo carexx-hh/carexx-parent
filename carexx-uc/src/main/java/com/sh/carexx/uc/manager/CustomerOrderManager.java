@@ -189,7 +189,8 @@ public class CustomerOrderManager {
         customerOrder.setServiceAddress(ServiceAddress.INST.getValue());
         customerOrder.setInstId(customerOrderFormBean.getInstId());
         customerOrder.setCustomerId(customerOrderFormBean.getCustomerId());
-        customerOrder.setPhone(customerOrderFormBean.getPhone());
+        InstCustomer instCustomer = this.instCustomerService.getById(customerOrderFormBean.getCustomerId());
+        customerOrder.setPhone(instCustomer.getPhone());
         customerOrder.setServiceId(customerOrderFormBean.getServiceId());
         String orderNo = this.keyGenerator.generateOrderNo();
         customerOrder.setOrderNo(orderNo);
@@ -262,7 +263,6 @@ public class CustomerOrderManager {
         customerOrder.setServiceId(customerOrderFormBean.getServiceId());
         String orderNo = this.keyGenerator.generateOrderNo();
         customerOrder.setOrderNo(orderNo);
-        customerOrder.setInpatientAreaId(customerOrderFormBean.getInpatientAreaId());
         customerOrder.setAccurateAddress(customerOrderFormBean.getAccurateAddress());
         customerOrder.setServiceStartTime(serviceStartTime);
         customerOrder.setServiceEndTime(serviceEndTime);
@@ -311,17 +311,17 @@ public class CustomerOrderManager {
         }
         // 客户下单同时添加一条客户信息
         Integer customerId = 0;
-        UserInfo userInfo = this.userService.getById(customerAppointOrderFormBean.getuserId());
+        UserInfo userInfo = this.userService.getById(customerAppointOrderFormBean.getUserId());
         InstCustomer customer = new InstCustomer();
         customer.setInstId(customerAppointOrderFormBean.getInstId());
-        customer.setUserId(customerAppointOrderFormBean.getuserId());
+        customer.setUserId(customerAppointOrderFormBean.getUserId());
         customer.setRealName(customerAppointOrderFormBean.getPatientName());
         customer.setPhone(customerAppointOrderFormBean.getPhone());
         InstCustomer instCustomer = this.instCustomerService.queryCustomerExistence(customer);
         if (instCustomer == null) {
             instCustomer = new InstCustomer();
             instCustomer.setInstId(customerAppointOrderFormBean.getInstId());
-            instCustomer.setUserId(customerAppointOrderFormBean.getuserId());
+            instCustomer.setUserId(customerAppointOrderFormBean.getUserId());
             instCustomer.setRealName(customerAppointOrderFormBean.getPatientName());
             instCustomer.setPhone(customerAppointOrderFormBean.getPhone());
             instCustomer.setSex(userInfo.getSex());
@@ -337,8 +337,9 @@ public class CustomerOrderManager {
         customerOrder.setOrderType(OrderType.ONLINE_ORDER.getValue());
         customerOrder.setServiceAddress(ServiceAddress.INST.getValue());
         customerOrder.setInstId(customerAppointOrderFormBean.getInstId());
-        customerOrder.setUserId(customerAppointOrderFormBean.getuserId());
+        customerOrder.setUserId(customerAppointOrderFormBean.getUserId());
         customerOrder.setCustomerId(customerId);
+        customerOrder.setPhone(customerAppointOrderFormBean.getPhone());
         customerOrder.setServiceId(customerAppointOrderFormBean.getServiceId());
         String orderNo = this.keyGenerator.generateOrderNo();
         customerOrder.setOrderNo(orderNo);
@@ -349,6 +350,86 @@ public class CustomerOrderManager {
                 customerOrder.getServiceStartTime(), serviceEndTime));
         customerOrder.setHoliday(
                 this.holidayCount(customerOrder.getInstId(), customerOrder.getServiceStartTime(), serviceEndTime));
+        customerOrder.setAdjustAmt(new BigDecimal(0));
+        customerOrder.setOrderStatus(OrderStatus.WAIT_SCHEDULE.getValue());
+        customerOrder.setOrderRemark(customerAppointOrderFormBean.getOrderRemark());
+        // 添加订单
+        this.customerOrderService.save(customerOrder);
+        // 添加一条订单支付信息
+        this.orderPaymentManager.add(customerOrder);
+    }
+
+    /**
+     * addCommunityOrder:(社区端下单). <br/>
+     *
+     * @param customerAppointOrderFormBean
+     * @throws BizException
+     * @author hetao
+     * @since JDK 1.8
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
+    public void addCommunityOrder(CustomerAppointOrderFormBean customerAppointOrderFormBean) throws BizException {
+        Date serviceStartTime = null;
+        Date serviceEndTime = null;
+        if (ValidUtils.isDateTime(customerAppointOrderFormBean.getServiceStartTime())) {
+            serviceStartTime = DateUtils.toDate(customerAppointOrderFormBean.getServiceStartTime(),
+                    DateUtils.YYYY_MM_DD_HH_MM_SS);
+        }
+        if (ValidUtils.isDateTime(customerAppointOrderFormBean.getServiceEndTime())) {
+            serviceEndTime = DateUtils.toDate(customerAppointOrderFormBean.getServiceEndTime(), DateUtils.YYYY_MM_DD_HH_MM_SS);
+        }
+        // 检查结束时间必须大于开始时间
+        if (!serviceStartTime.before(serviceEndTime)) {
+            throw new BizException(ErrorCode.TIME_END_BEFORE_START_ERROR);
+        }
+
+        // 检查下单时间是否已关账
+        Date da = this.instSettleService.queryMaxSettleDateBySettleStatus(customerAppointOrderFormBean.getInstId());
+        if (da != null) {
+            if (!da.before(serviceStartTime)) {
+                throw new BizException(ErrorCode.ORDER_SETTLE_EXISTS_ERROR);
+            }
+        }
+        // 客户下单同时添加一条客户信息
+        Integer customerId = 0;
+        UserInfo userInfo = this.userService.getById(customerAppointOrderFormBean.getUserId());
+        InstCustomer customer = new InstCustomer();
+        customer.setInstId(customerAppointOrderFormBean.getInstId());
+        customer.setUserId(customerAppointOrderFormBean.getUserId());
+        customer.setRealName(customerAppointOrderFormBean.getPatientName());
+        customer.setPhone(customerAppointOrderFormBean.getPhone());
+        InstCustomer instCustomer = this.instCustomerService.queryCustomerExistence(customer);
+        if (instCustomer == null) {
+            instCustomer = new InstCustomer();
+            instCustomer.setInstId(customerAppointOrderFormBean.getInstId());
+            instCustomer.setUserId(customerAppointOrderFormBean.getUserId());
+            instCustomer.setRealName(customerAppointOrderFormBean.getPatientName());
+            instCustomer.setPhone(customerAppointOrderFormBean.getPhone());
+            instCustomer.setSex(customerAppointOrderFormBean.getSex());
+            instCustomer.setAddress(userInfo.getRegion());
+            instCustomer.setCustomerStatus(UseStatus.ENABLED.getValue());
+            this.instCustomerService.save(instCustomer);
+            customerId = instCustomer.getId();
+        } else {
+            customerId = instCustomer.getId();
+        }
+
+        CustomerOrder customerOrder = new CustomerOrder();
+        customerOrder.setOrderType(OrderType.ONLINE_ORDER.getValue());
+        customerOrder.setServiceAddress(ServiceAddress.COMMUNITY.getValue());
+        customerOrder.setInstId(customerAppointOrderFormBean.getInstId());
+        customerOrder.setUserId(customerAppointOrderFormBean.getUserId());
+        customerOrder.setCustomerId(customerId);
+        customerOrder.setPhone(customerAppointOrderFormBean.getPhone());
+        customerOrder.setServiceId(customerAppointOrderFormBean.getServiceId());
+        String orderNo = this.keyGenerator.generateOrderNo();
+        customerOrder.setOrderNo(orderNo);
+        customerOrder.setAccurateAddress(customerAppointOrderFormBean.getAccurateAddress());
+        customerOrder.setServiceStartTime(serviceStartTime);
+        customerOrder.setServiceEndTime(serviceEndTime);
+        customerOrder.setOrderAmt(this.calcServiceFee(customerOrder.getInstId(), customerOrder.getServiceId(),
+                serviceStartTime, serviceEndTime));
+        customerOrder.setHoliday(this.holidayCount(customerOrder.getInstId(), serviceStartTime, serviceEndTime));
         customerOrder.setAdjustAmt(new BigDecimal(0));
         customerOrder.setOrderStatus(OrderStatus.WAIT_SCHEDULE.getValue());
         customerOrder.setOrderRemark(customerAppointOrderFormBean.getOrderRemark());

@@ -421,6 +421,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public BasicRetVal addCommunityOrder(CustomerAppointOrderFormBean customerAppointOrderFormBean) {
+		return null;
+	}
+
+	@Override
 	public String queryCustomerOrderForList(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		return null;
 	}

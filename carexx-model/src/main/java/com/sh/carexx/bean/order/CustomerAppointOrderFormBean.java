@@ -2,6 +2,7 @@ package com.sh.carexx.bean.order;
 
 import com.sh.carexx.bean.BasicFormBean;
 import com.sh.carexx.common.CarexxConstant;
+import com.sh.carexx.common.util.ValidUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -12,9 +13,13 @@ public class CustomerAppointOrderFormBean extends BasicFormBean {
 
 	private String userId;
 
+	@Pattern(regexp = "[0,1,2]")
+	private String sex;
+
 	@NotBlank
 	private String patientName;
 
+	@NotBlank
 	@Size(max = 20)
 	private String phone;
 
@@ -26,7 +31,6 @@ public class CustomerAppointOrderFormBean extends BasicFormBean {
 	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
 	private String serviceId;
 
-	@NotBlank
 	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
 	private String inpatientAreaId;
 
@@ -37,20 +41,33 @@ public class CustomerAppointOrderFormBean extends BasicFormBean {
 	@Pattern(regexp = CarexxConstant.Regex.DATETIME)
 	private String serviceStartTime;
 
+	@Pattern(regexp = CarexxConstant.Regex.DATETIME)
+	private String serviceEndTime;
+
 	@Size(max = 255)
 	private String orderRemark;
 
-	public Integer getuserId() {
+	public Integer getUserId() {
 		if (StringUtils.isNotBlank(userId)) {
 			return Integer.parseInt(userId);
 		}
 		return null;
 	}
 
-	public void setuserId(String userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
+	public Byte getSex() {
+		if (ValidUtils.isInteger(sex)) {
+			return Byte.parseByte(sex);
+		}
+		return null;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
 
 	public String getPhone() {
 		return phone;
@@ -115,6 +132,14 @@ public class CustomerAppointOrderFormBean extends BasicFormBean {
 
 	public void setServiceStartTime(String serviceStartTime) {
 		this.serviceStartTime = serviceStartTime;
+	}
+
+	public String getServiceEndTime() {
+		return serviceEndTime;
+	}
+
+	public void setServiceEndTime(String serviceEndTime) {
+		this.serviceEndTime = serviceEndTime;
 	}
 
 	public String getOrderRemark() {

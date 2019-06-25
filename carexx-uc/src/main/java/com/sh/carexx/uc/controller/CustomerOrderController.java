@@ -67,6 +67,16 @@ public class CustomerOrderController {
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
 
+	@RequestMapping(value = "/add_communityOrder", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public BasicRetVal addCommunityOrder(@RequestBody CustomerAppointOrderFormBean customerAppointOrderFormBean) {
+		try {
+			this.customerOrderManager.addCommunityOrder(customerAppointOrderFormBean);
+		} catch (BizException e) {
+			return new BasicRetVal(CarexxConstant.RetCode.SERVER_ERROR, e.getCode(), e.getDesc());
+		}
+		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
+	}
+
 	@RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryForList(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		Integer totalNum = this.customerOrderService.getCustomerOrderCount(customerOrderQueryFormBean);

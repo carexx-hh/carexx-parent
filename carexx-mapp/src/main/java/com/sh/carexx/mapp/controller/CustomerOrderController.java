@@ -46,10 +46,22 @@ public class CustomerOrderController extends BaseController {
 	@RequestMapping(value = "/add_appointOrder")
 	public BasicRetVal addAppointOrder(@Valid CustomerAppointOrderFormBean customerAppointOrderFormBean,
 			BindingResult bindingResult) {
-		if (customerAppointOrderFormBean.getuserId() == null || customerAppointOrderFormBean.getInpatientAreaId() == null) {
-			customerAppointOrderFormBean.setuserId(this.getCurrentUser().getId().toString());
+		if (customerAppointOrderFormBean.getUserId() == null) {
+			customerAppointOrderFormBean.setUserId(this.getCurrentUser().getId().toString());
 		}
-		if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors() || customerAppointOrderFormBean.getInpatientAreaId() == null) {
+			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
+		}
+		return this.ucServiceClient.addCustomerAppointOrder(customerAppointOrderFormBean);
+	}
+
+	@RequestMapping(value = "/add_communityOrder")
+	public BasicRetVal addCommunityOrder(@Valid CustomerAppointOrderFormBean customerAppointOrderFormBean,
+									   BindingResult bindingResult) {
+		if (customerAppointOrderFormBean.getUserId() == null) {
+			customerAppointOrderFormBean.setUserId(this.getCurrentUser().getId().toString());
+		}
+		if (bindingResult.hasErrors() || customerAppointOrderFormBean.getServiceEndTime() == null) {
 			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
 		}
 		return this.ucServiceClient.addCustomerAppointOrder(customerAppointOrderFormBean);
